@@ -20,7 +20,7 @@ namespace Sqrat {
 
 		virtual void SetUp() {
 			vm = sq_open(1024);
-			sq_setprintfunc(vm, printfunc);
+			sq_setprintfunc(vm, printfunc, printfunc);
 
 			sq_newclosure(vm, errorhandler,0);
 			sq_seterrorhandler(vm);

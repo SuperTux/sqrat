@@ -36,6 +36,10 @@
 
 #include <windows.h>
 
+#elsif defned (__unix)
+
+#include <dlfcn.h>
+
 #endif
 
 typedef SQRESULT (*SQMODULELOAD)(HSQUIRRELVM v, HSQAPI sq);
@@ -205,7 +209,7 @@ SQRESULT sqrat_importscript(HSQUIRRELVM v, const SQChar* moduleName) {
 }
 
 SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
-	SQMODULELOAD modLoad;
+	SQMODULELOAD modLoad = 0;
 
 #if defined(_WIN32)
 	HMODULE mod;
@@ -221,6 +225,15 @@ SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
 	if(modLoad == NULL) {
 		return SQ_ERROR;
 	}
+#elif defined(__unix)
+/* adding .so to moduleName? */
+    void *so = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL /* reasonable default; may need further detailed control */);
+    if (so == 0)
+        return SQ_ERROR;
+    
+    modLoad = (SQMODULELOAD) dlsym(so, "sqmodule_load");
+    if (modLoad == 0)
+        return SQ_ERROR;
 #endif
 	
 	if(sqapi == NULL) {
