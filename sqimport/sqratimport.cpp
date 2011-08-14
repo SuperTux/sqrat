@@ -223,17 +223,22 @@ SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
 
 	modLoad = (SQMODULELOAD)GetProcAddress(mod, "sqmodule_load");
 	if(modLoad == NULL) {
+	    FreeLibrary(mod);
 		return SQ_ERROR;
 	}
 #elif defined(__unix)
 /* adding .so to moduleName? */
-    void *so = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL /* reasonable default; may need further detailed control */);
-    if (so == 0)
+    void *mod = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
+    if (mod == NULL) {
+        mod = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL);
+        if (mod == NULL)
+            return SQ_ERROR;
+    }
+    modLoad = (SQMODULELOAD) dlsym(mod, "sqmodule_load");
+    if (modLoad == NULL) {
+        dlclose(mod);
         return SQ_ERROR;
-    
-    modLoad = (SQMODULELOAD) dlsym(so, "sqmodule_load");
-    if (modLoad == 0)
-        return SQ_ERROR;
+    }
 #endif
 	
 	if(sqapi == NULL) {
