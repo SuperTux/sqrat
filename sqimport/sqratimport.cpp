@@ -36,9 +36,9 @@
 
 #include <windows.h>
 
-#elsif defned (__unix)
+#elif defined(__unix)
 
-#include <dlfcn.h>
+#include <dlfcn.h> 
 
 #endif
 
