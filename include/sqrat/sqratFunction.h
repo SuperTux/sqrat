@@ -4,6 +4,7 @@
 
 //
 // Copyright (c) 2009 Brandon Jones
+// Copyirght 2011 Li-Cheng (Andy) Tai
 //
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
