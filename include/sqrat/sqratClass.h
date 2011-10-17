@@ -74,7 +74,10 @@ public:
     }
 
     ~Class() {
-        ClassType<C>::deleteClassTypeData(vm);
+        /*ClassType<C>::deleteClassTypeData(vm);*/
+        /* it seems the original design by Tojo was that  ClassType objects are static
+           so they presist with the lifetime of the program; so we cannot delete the 
+           ClassType object here */
     }
 
     /// Get the Squirrel Object for this Class (const)
