@@ -56,6 +56,75 @@ int f4(int a1, int a2, int a3, int a4)
 }
 
 
+int f5(int a1, int a2, int a3, int a4, int a5)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5);
+}
+
+
+int f6(int a1, int a2, int a3, int a4, int a5, int a6)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6);
+}
+
+int f7(int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7);
+}
+
+int f8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8);
+}
+
+int f9(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+       int a9)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9);
+}
+
+int f10(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+        int a9, int a10)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10);
+}
+
+int f11(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+        int a9, int a10, int a11)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+        && (a11 == 11);
+}
+
+int f12(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+        int a9, int a10, int a11, int a12)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+        && (a11 == 11) && (a12 == 12);
+}
+
+int f13(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+        int a9, int a10, int a11, int a12, int a13)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10)
+        && (a11 == 11) && (a12 == 12) && (a13 == 13);
+}
+
+int f14(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+        int a9, int a10, int a11, int a12, int a13, int a14)
+{
+    return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
+        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+        && (a11 == 11) && (a12 == 12) && (a13 == 13) && (a14 == 14);
+}
 
 TEST_F(SqratTest, GlobalFunction) {
 	DefaultVM::Set(vm);
@@ -65,16 +134,36 @@ TEST_F(SqratTest, GlobalFunction) {
 	RootTable().Func("f2", &f2);
 	RootTable().Func("f3", &f3);
 	RootTable().Func("f4", &f4);
+	RootTable().Func("f5", &f5);
+	RootTable().Func("f6", &f6);
+	RootTable().Func("f7", &f7);
+	RootTable().Func("f8", &f8);
+	RootTable().Func("f9", &f9);
+	RootTable().Func("f10", &f10);
+	RootTable().Func("f11", &f11);
+	RootTable().Func("f12", &f12);
+	RootTable().Func("f13", &f13);
+	RootTable().Func("f14", &f14);
 
 	Script script;
 
 	try {
 		script.CompileString(_SC(" \
-			gTest.EXPECT_INT_EQ(1, f0()); \
-			gTest.EXPECT_INT_EQ(1, f1(1)); \
-			gTest.EXPECT_INT_EQ(1, f2(1, 2)); \
-			gTest.EXPECT_INT_EQ(1, f3(1, 2, 3)); \
-			gTest.EXPECT_INT_EQ(1, f4(1, 2, 3, 4)); \
+			gTest.EXPECT_INT_EQ(1, f0()); print(0);\
+			gTest.EXPECT_INT_EQ(1, f1(1)); print(1); \
+			gTest.EXPECT_INT_EQ(1, f2(1, 2)); print(2);\
+			gTest.EXPECT_INT_EQ(1, f3(1, 2, 3)); print(3);\
+			gTest.EXPECT_INT_EQ(1, f4(1, 2, 3, 4)); print(4);\
+			gTest.EXPECT_INT_EQ(1, f5(1, 2, 3, 4, 5)); print(5);\
+			gTest.EXPECT_INT_EQ(1, f6(1, 2, 3, 4, 5, 6)); print(6);\
+			gTest.EXPECT_INT_EQ(1, f7(1, 2, 3, 4, 5, 6, 7)); print(7);\
+			gTest.EXPECT_INT_EQ(1, f8(1, 2, 3, 4, 5, 6, 7, 8)); print(8);\
+			gTest.EXPECT_INT_EQ(1, f9(1, 2, 3, 4, 5, 6, 7, 8, 9)); print(9);\
+			gTest.EXPECT_INT_EQ(1, f10(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)); print(10);\
+			gTest.EXPECT_INT_EQ(1, f11(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)); print(11);\
+			gTest.EXPECT_INT_EQ(1, f12(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)); print(12);\
+			gTest.EXPECT_INT_EQ(1, f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
+			gTest.EXPECT_INT_EQ(1, f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
 			"));
 	} catch(Exception ex) {
 		FAIL() << _SC("Compile Failed: ") << ex.Message();

@@ -1,6 +1,6 @@
 #!/bin/sh -ex
 
-shopt -s nullglob
+#shopt -s nullglob
 
 SQUIRREL_INCLUDE=/usr/local/include/squirrel
 SQUIRREL_LIB=/usr/local/lib
@@ -21,7 +21,8 @@ TEST_CPPS="ClassBinding.cpp\
     FunctionOverload.cpp\
     ScriptLoading.cpp\
     SquirrelFunctions.cpp\
-    TableBinding.cpp"
+    TableBinding.cpp\
+    FunctionParams.cpp"
 
 for f in $TEST_CPPS; do
     gcc $CFLAGS \
