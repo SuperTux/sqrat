@@ -156,11 +156,11 @@ typedef struct {
     void			(*addref)(HSQUIRRELVM v,HSQOBJECT *po);
     SQBool			(*release)(HSQUIRRELVM v,HSQOBJECT *po);
     void			(*resetobject)(HSQOBJECT *po);
-    const SQChar*	(*objtostring)(HSQOBJECT *o);
-    SQBool			(*objtobool)(HSQOBJECT *o);
-    SQInteger		(*objtointeger)(HSQOBJECT *o);
-    SQFloat			(*objtofloat)(HSQOBJECT *o);
-    SQRESULT		(*getobjtypetag)(HSQOBJECT *o,SQUserPointer * typetag);
+    const SQChar*	(*objtostring)(const HSQOBJECT *o);
+    SQBool			(*objtobool)(const HSQOBJECT *o);
+    SQInteger		(*objtointeger)(const HSQOBJECT *o);
+    SQFloat			(*objtofloat)(const HSQOBJECT *o);
+    SQRESULT		(*getobjtypetag)(const HSQOBJECT *o,SQUserPointer * typetag);
 
 	/*GC*/
     SQInteger		(*collectgarbage)(HSQUIRRELVM v);
