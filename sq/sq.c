@@ -318,7 +318,11 @@ int main(int argc, char* argv[])
 #endif
 	
 	v=sq_open(1024);
-	sq_setprintfunc(v,printfunc);
+    #if SQUIRREL_VERSION_NUMBER > 300
+    sq_setprintfunc(v,printfunc,printfunc);
+    #else
+    sq_setprintfunc(v,printfunc);
+    #endif
 
 	sq_pushroottable(v);
 

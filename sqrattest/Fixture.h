@@ -20,7 +20,11 @@ namespace Sqrat {
 
 		virtual void SetUp() {
 			vm = sq_open(1024);
-			sq_setprintfunc(vm, printfunc, printfunc);
+            #if SQUIRREL_VERSION_NUMBER > 300
+            sq_setprintfunc(vm, printfunc, printfunc);
+            #else
+            sq_setprintfunc(vm, printfunc);
+            #endif
 
 			sq_newclosure(vm, errorhandler,0);
 			sq_seterrorhandler(vm);
