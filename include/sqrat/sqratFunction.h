@@ -36,6 +36,8 @@ namespace Sqrat {
 
 	class Function  {
 		friend class TableBase;
+                friend class Table;
+                friend class ArrayBase;
 		friend struct Var<Function>;
 	private:
 		HSQUIRRELVM vm;

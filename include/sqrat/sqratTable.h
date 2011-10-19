@@ -41,6 +41,10 @@ namespace Sqrat {
 	public:
 		TableBase(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, true) {
 		}
+
+        TableBase(const Object& obj) : Object(obj) {
+        }
+
 		// Bind a Table or Class to the Table (Can be used to facilitate Namespaces)
 		// Note: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
 		void Bind(const SQChar* name, Object& obj) {
@@ -71,6 +75,11 @@ namespace Sqrat {
 			BindValue<V>(name, val, false);
 			return *this;
 		}
+        template<class V>
+        TableBase& SetValue(const SQInteger index, const V& val) {
+            BindValue<V>(index, val, false);
+            return *this;
+        }
 
 		template<class V>
 		TableBase& SetInstance(const SQChar* name, V* val) {
@@ -102,10 +111,25 @@ namespace Sqrat {
 				sq_pushnull(vm);
 			}
 			sq_getstackobj(vm, -1, &funcObj);
+                        Function ret(vm, GetObject(), funcObj); // must addref before the pop!
+
 			sq_pop(vm, 2);
 
-			return Function(vm, GetObject(), funcObj);
+			return ret;
 		}
+        Function GetFunction(const SQInteger index) {
+            HSQOBJECT funcObj;
+            sq_pushobject(vm, GetObject());
+            sq_pushinteger(vm, index);
+            if(SQ_FAILED(sq_get(vm, -2))) {
+                sq_pushnull(vm);
+            }
+            sq_getstackobj(vm, -1, &funcObj);
+            Function ret(vm, GetObject(), funcObj);
+            sq_pop(vm, 2);
+
+            return ret;
+        }
 	};
 
 	class Table : public TableBase {
@@ -116,6 +140,8 @@ namespace Sqrat {
 			sq_addref(vm, &obj);
 			sq_pop(vm,1);
 		}
+        Table(const Object& obj) : TableBase(obj) {
+        }
 	};
 
 	//
@@ -130,7 +156,7 @@ namespace Sqrat {
 			sq_addref(vm, &obj);
 			sq_pop(v,1); // pop root table
 		}
-	};
+        };
 }
 
 #endif

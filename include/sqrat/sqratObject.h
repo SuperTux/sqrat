@@ -132,8 +132,9 @@ namespace Sqrat {
 				return Object(vm); // Return a NULL object
 			} else {
 				sq_getstackobj(vm, -1, &slotObj);
+                                Object ret(slotObj, vm); // must addref before the pop!
 				sq_pop(vm, 2);
-				return Object(slotObj, vm);
+				return ret;
 			}
 		}
 
@@ -154,8 +155,9 @@ namespace Sqrat {
                 return Object(vm); // Return a NULL object
             } else {
                 sq_getstackobj(vm, -1, &slotObj);
+                Object ret(slotObj, vm); // must addref before the pop!
                 sq_pop(vm, 2);
-                return Object(slotObj, vm);
+                return ret;
             }
         }
 
@@ -165,6 +167,14 @@ namespace Sqrat {
             return GetSlot(slot);
 		}
 		
+
+        SQInteger GetSize() const {
+            sq_pushobject(vm, GetObject());
+            SQInteger ret = sq_getsize(vm, -1);
+            sq_pop(vm, 1);
+            return ret;
+        }
+
 	protected:
 		// Bind a function and it's associated Squirrel closure to the object
 		inline void BindFunc(const SQChar* name, void* method, size_t methodSize, SQFUNCTION func, bool staticVar = false) {
@@ -178,6 +188,19 @@ namespace Sqrat {
 			sq_newslot(vm, -3, staticVar);
 			sq_pop(vm,1); // pop table
 		}
+
+        inline void BindFunc(const SQInteger index, void* method, size_t methodSize, SQFUNCTION func, bool staticVar = false) {
+            sq_pushobject(vm, GetObject());
+            sq_pushinteger(vm, index);
+
+            SQUserPointer methodPtr = sq_newuserdata(vm, static_cast<SQUnsignedInteger>(methodSize));
+            memcpy(methodPtr, method, methodSize);
+
+            sq_newclosure(vm, func, 1);
+            sq_newslot(vm, -3, staticVar);
+            sq_pop(vm,1); // pop table
+        }
+
 
 		// Bind a function and it's associated Squirrel closure to the object
 		inline void BindOverload(const SQChar* name, void* method, size_t methodSize, SQFUNCTION func, SQFUNCTION overload, int argCount, bool staticVar = false) {
@@ -210,6 +233,14 @@ namespace Sqrat {
 			sq_newslot(vm, -3, staticVar);
 			sq_pop(vm,1); // pop table
 		}
+        template<class V>
+        inline void BindValue(const SQInteger index, const V& val, bool staticVar = false) {
+            sq_pushobject(vm, GetObject());
+            sq_pushinteger(vm, index);
+            PushVar(vm, val);
+            sq_newslot(vm, -3, staticVar);
+            sq_pop(vm,1); // pop table
+        }
 
 		// Set the value of an instance on the object. Changes to values set this way are reciprocated back to the source instance
 		template<class V>
@@ -220,7 +251,16 @@ namespace Sqrat {
 			sq_newslot(vm, -3, staticVar);
 			sq_pop(vm,1); // pop table
 		}
+        template<class V>
+        inline void BindInstance(const SQInteger index, V* val, bool staticVar = false) {
+            sq_pushobject(vm, GetObject());
+            sq_pushinteger(vm, index);
+            PushVar(vm, val);
+            sq_newslot(vm, -3, staticVar);
+            sq_pop(vm,1); // pop table
+        }
 	};
+
 
 	//
 	// Overridden Getter/Setter
