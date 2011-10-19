@@ -9,16 +9,16 @@
 // including commercial applications, and to alter it and redistribute it
 // freely, subject to the following restrictions:
 //
-//	1. The origin of this software must not be misrepresented; you must not
-//	claim that you wrote the original software. If you use this software
-//	in a product, an acknowledgment in the product documentation would be
-//	appreciated but is not required.
+//  1. The origin of this software must not be misrepresented; you must not
+//  claim that you wrote the original software. If you use this software
+//  in a product, an acknowledgment in the product documentation would be
+//  appreciated but is not required.
 //
-//	2. Altered source versions must be plainly marked as such, and must not be
-//	misrepresented as being the original software.
+//  2. Altered source versions must be plainly marked as such, and must not be
+//  misrepresented as being the original software.
 //
-//	3. This notice may not be removed or altered from any source
-//	distribution.
+//  3. This notice may not be removed or altered from any source
+//  distribution.
 //
 
 #include "Vector.h"
@@ -26,55 +26,55 @@
 
 using namespace Sqrat;
 
-Vec2::Vec2( void ) : x(0.0f), y(0.0f) {};								
-Vec2::Vec2( const Vec2 &v ) : x(v.x), y(v.y) {};			
-Vec2::Vec2( const float vx, const float vy ) : x(vx), y(vy) {};	
-				
+Vec2::Vec2( void ) : x(0.0f), y(0.0f) {};
+Vec2::Vec2( const Vec2 &v ) : x(v.x), y(v.y) {};
+Vec2::Vec2( const float vx, const float vy ) : x(vx), y(vy) {};
+
 bool Vec2::operator ==( const Vec2 &v ) const {
-	return (x == v.x && y == v.y);
+    return (x == v.x && y == v.y);
 }
 
 Vec2 Vec2::operator -( void ) const {
-	return Vec2(-x, -y);
+    return Vec2(-x, -y);
 }
 
 Vec2 Vec2::operator +( const Vec2& v ) const {
-	return Vec2(x + v.x, y + v.y);
+    return Vec2(x + v.x, y + v.y);
 }
 
 Vec2 Vec2::operator -( const Vec2& v ) const {
-	return Vec2(x - v.x, y - v.y);
+    return Vec2(x - v.x, y - v.y);
 }
 
 Vec2 Vec2::operator *( const float f ) const {
-	return Vec2(x * f, y * f);
+    return Vec2(x * f, y * f);
 }
 
 Vec2 Vec2::operator /( const float f ) const {
-	return Vec2(x / f, y / f);
+    return Vec2(x / f, y / f);
 }
 
 Vec2& Vec2::operator =( const Vec2& v ) {
-	x = v.x;
-	y = v.y;
-	return *this;
+    x = v.x;
+    y = v.y;
+    return *this;
 }
 
 float Vec2::Length( void ) const {
-	return sqrt( (x * x) + (y * y) );
+    return sqrt( (x * x) + (y * y) );
 }
 
 float Vec2::Distance( const Vec2 &v ) const {
-	return sqrt( (x-v.x) * (x-v.x) + (y-v.y) * (y-v.y) );
+    return sqrt( (x-v.x) * (x-v.x) + (y-v.y) * (y-v.y) );
 }
 
 Vec2& Vec2::Normalize( void ) {
-	float invLen = 1.0f / Length();
-	x *= invLen;
-	y *= invLen;
-	return *this;
+    float invLen = 1.0f / Length();
+    x *= invLen;
+    y *= invLen;
+    return *this;
 }
 
 float Vec2::Dot( const Vec2 &v ) const {
-	return x*v.x + y*v.y;
+    return x*v.x + y*v.y;
 }

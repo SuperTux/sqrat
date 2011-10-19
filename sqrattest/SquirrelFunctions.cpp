@@ -9,16 +9,16 @@
 // including commercial applications, and to alter it and redistribute it
 // freely, subject to the following restrictions:
 //
-//	1. The origin of this software must not be misrepresented; you must not
-//	claim that you wrote the original software. If you use this software
-//	in a product, an acknowledgment in the product documentation would be
-//	appreciated but is not required.
+//  1. The origin of this software must not be misrepresented; you must not
+//  claim that you wrote the original software. If you use this software
+//  in a product, an acknowledgment in the product documentation would be
+//  appreciated but is not required.
 //
-//	2. Altered source versions must be plainly marked as such, and must not be
-//	misrepresented as being the original software.
+//  2. Altered source versions must be plainly marked as such, and must not be
+//  misrepresented as being the original software.
 //
-//	3. This notice may not be removed or altered from any source
-//	distribution.
+//  3. This notice may not be removed or altered from any source
+//  distribution.
 //
 
 #include <gtest/gtest.h>
@@ -28,12 +28,12 @@
 using namespace Sqrat;
 
 TEST_F(SqratTest, CallSquirrelFunction) {
-	DefaultVM::Set(vm);
+    DefaultVM::Set(vm);
 
-	Script script;
+    Script script;
 
-	try {
-		script.CompileString(_SC(" \
+    try {
+        script.CompileString(_SC(" \
 			function AddTwo(a, b) { \
 				return a + b; \
 			} \
@@ -41,53 +41,55 @@ TEST_F(SqratTest, CallSquirrelFunction) {
 				return a * b; \
 			} \
 			"));
-	} catch(Exception ex) {
-		FAIL() << _SC("Script Compile Failed: ") << ex.Message();
-	}
-	
-	try {
-		script.Run(); // Must run the script before the function will be available
-	} catch(Exception ex) {
-		FAIL() << _SC("Script Run Failed: ") << ex.Message();
-	}
-	
-	// Method one for function retrieval: via the constructor
-	Function addTwo(RootTable(), _SC("AddTwo"));
-	ASSERT_FALSE(addTwo.IsNull());
-	EXPECT_EQ(addTwo.Evaluate<int>(1, 2), 3);
+    } catch(Exception ex) {
+        FAIL() << _SC("Script Compile Failed: ") << ex.Message();
+    }
 
-	// Method two for function retrieval: from the class or table
-	Function multiplyTwo = RootTable().GetFunction(_SC("MultiplyTwo"));
-	ASSERT_FALSE(multiplyTwo.IsNull());
-	EXPECT_EQ(multiplyTwo.Evaluate<int>(2, 3), 6);
+    try {
+        script.Run(); // Must run the script before the function will be available
+    } catch(Exception ex) {
+        FAIL() << _SC("Script Run Failed: ") << ex.Message();
+    }
+
+    // Method one for function retrieval: via the constructor
+    Function addTwo(RootTable(), _SC("AddTwo"));
+    ASSERT_FALSE(addTwo.IsNull());
+    EXPECT_EQ(addTwo.Evaluate<int>(1, 2), 3);
+
+    // Method two for function retrieval: from the class or table
+    Function multiplyTwo = RootTable().GetFunction(_SC("MultiplyTwo"));
+    ASSERT_FALSE(multiplyTwo.IsNull());
+    EXPECT_EQ(multiplyTwo.Evaluate<int>(2, 3), 6);
 }
 
 int NativeOp(int a, int b, Function opFunc) {
-	if(opFunc.IsNull()) { return -1; }
-	return opFunc.Evaluate<int>(a, b);
+    if(opFunc.IsNull()) {
+        return -1;
+    }
+    return opFunc.Evaluate<int>(a, b);
 }
 
 TEST_F(SqratTest, FunctionAsArgument) {
-	DefaultVM::Set(vm);
+    DefaultVM::Set(vm);
 
-	RootTable().Func(_SC("NativeOp"), &NativeOp);
+    RootTable().Func(_SC("NativeOp"), &NativeOp);
 
-	Script script;
+    Script script;
 
-	try {
-		script.CompileString(_SC(" \
+    try {
+        script.CompileString(_SC(" \
 			function SubTwo(a, b) { \
 				return a - b; \
 			} \
 			gTest.EXPECT_INT_EQ(::NativeOp(5, 1, SubTwo), 4); \
 			"));
-	} catch(Exception ex) {
-		FAIL() << _SC("Script Compile Failed: ") << ex.Message();
-	}
-	
-	try {
-		script.Run();
-	} catch(Exception ex) {
-		FAIL() << _SC("Script Run Failed: ") << ex.Message();
-	}
+    } catch(Exception ex) {
+        FAIL() << _SC("Script Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Script Run Failed: ") << ex.Message();
+    }
 }

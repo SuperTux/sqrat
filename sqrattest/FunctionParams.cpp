@@ -9,16 +9,16 @@
 // including commercial applications, and to alter it and redistribute it
 // freely, subject to the following restrictions:
 //
-//	1. The origin of this software must not be misrepresented; you must not
-//	claim that you wrote the original software. If you use this software
-//	in a product, an acknowledgment in the product documentation would be
-//	appreciated but is not required.
+//  1. The origin of this software must not be misrepresented; you must not
+//  claim that you wrote the original software. If you use this software
+//  in a product, an acknowledgment in the product documentation would be
+//  appreciated but is not required.
 //
-//	2. Altered source versions must be plainly marked as such, and must not be
-//	misrepresented as being the original software.
+//  2. Altered source versions must be plainly marked as such, and must not be
+//  misrepresented as being the original software.
 //
-//	3. This notice may not be removed or altered from any source
-//	distribution.
+//  3. This notice may not be removed or altered from any source
+//  distribution.
 //
 
 #include <gtest/gtest.h>
@@ -65,90 +65,90 @@ int f5(int a1, int a2, int a3, int a4, int a5)
 int f6(int a1, int a2, int a3, int a4, int a5, int a6)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6);
+           && (a6 == 6);
 }
 
 int f7(int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7);
+           && (a6 == 6) && (a7 == 7);
 }
 
 int f8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8);
 }
 
 int f9(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
        int a9)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9);
 }
 
 int f10(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
         int a9, int a10)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10);
 }
 
 int f11(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
         int a9, int a10, int a11)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
-        && (a11 == 11);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+           && (a11 == 11);
 }
 
 int f12(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
         int a9, int a10, int a11, int a12)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
-        && (a11 == 11) && (a12 == 12);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+           && (a11 == 11) && (a12 == 12);
 }
 
 int f13(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
         int a9, int a10, int a11, int a12, int a13)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10)
-        && (a11 == 11) && (a12 == 12) && (a13 == 13);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10)
+           && (a11 == 11) && (a12 == 12) && (a13 == 13);
 }
 
 int f14(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
         int a9, int a10, int a11, int a12, int a13, int a14)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
-        && (a11 == 11) && (a12 == 12) && (a13 == 13) && (a14 == 14);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+           && (a11 == 11) && (a12 == 12) && (a13 == 13) && (a14 == 14);
 }
 
 TEST_F(SqratTest, GlobalFunction) {
-	DefaultVM::Set(vm);
+    DefaultVM::Set(vm);
 
-	RootTable().Func("f0", &f0);
-	RootTable().Func("f1", &f1);
-	RootTable().Func("f2", &f2);
-	RootTable().Func("f3", &f3);
-	RootTable().Func("f4", &f4);
-	RootTable().Func("f5", &f5);
-	RootTable().Func("f6", &f6);
-	RootTable().Func("f7", &f7);
-	RootTable().Func("f8", &f8);
-	RootTable().Func("f9", &f9);
-	RootTable().Func("f10", &f10);
-	RootTable().Func("f11", &f11);
-	RootTable().Func("f12", &f12);
-	RootTable().Func("f13", &f13);
-	RootTable().Func("f14", &f14);
+    RootTable().Func("f0", &f0);
+    RootTable().Func("f1", &f1);
+    RootTable().Func("f2", &f2);
+    RootTable().Func("f3", &f3);
+    RootTable().Func("f4", &f4);
+    RootTable().Func("f5", &f5);
+    RootTable().Func("f6", &f6);
+    RootTable().Func("f7", &f7);
+    RootTable().Func("f8", &f8);
+    RootTable().Func("f9", &f9);
+    RootTable().Func("f10", &f10);
+    RootTable().Func("f11", &f11);
+    RootTable().Func("f12", &f12);
+    RootTable().Func("f13", &f13);
+    RootTable().Func("f14", &f14);
 
-	Script script;
+    Script script;
 
-	try {
-		script.CompileString(_SC(" \
+    try {
+        script.CompileString(_SC(" \
 			gTest.EXPECT_INT_EQ(1, f0()); print(0);\
 			gTest.EXPECT_INT_EQ(1, f1(1)); print(1); \
 			gTest.EXPECT_INT_EQ(1, f2(1, 2)); print(2);\
@@ -165,15 +165,15 @@ TEST_F(SqratTest, GlobalFunction) {
 			gTest.EXPECT_INT_EQ(1, f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
 			gTest.EXPECT_INT_EQ(1, f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
 			"));
-	} catch(Exception ex) {
-		FAIL() << _SC("Compile Failed: ") << ex.Message();
-	}
-	
-	try {
-		script.Run();
-	} catch(Exception ex) {
-		FAIL() << _SC("Run Failed: ") << ex.Message();
-	}
+    } catch(Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
 }
 
 class C
@@ -240,93 +240,93 @@ int C::f5(int a1, int a2, int a3, int a4, int a5)
 int C::f6(int a1, int a2, int a3, int a4, int a5, int a6)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6);
+           && (a6 == 6);
 }
 
 int C::f7(int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7);
+           && (a6 == 6) && (a7 == 7);
 }
 
 int C::f8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8);
 }
 
 int C::f9(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
-       int a9)
+          int a9)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9);
 }
 
 int C::f10(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
-        int a9, int a10)
+           int a9, int a10)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10);
 }
 
 int C::f11(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
-        int a9, int a10, int a11)
+           int a9, int a10, int a11)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
-        && (a11 == 11);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+           && (a11 == 11);
 }
 
 int C::f12(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
-        int a9, int a10, int a11, int a12)
+           int a9, int a10, int a11, int a12)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
-        && (a11 == 11) && (a12 == 12);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+           && (a11 == 11) && (a12 == 12);
 }
 
 int C::f13(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
-        int a9, int a10, int a11, int a12, int a13)
+           int a9, int a10, int a11, int a12, int a13)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10)
-        && (a11 == 11) && (a12 == 12) && (a13 == 13);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8) && (a9 == 9) && (a10 == 10)
+           && (a11 == 11) && (a12 == 12) && (a13 == 13);
 }
 
 int C::f14(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
-        int a9, int a10, int a11, int a12, int a13, int a14)
+           int a9, int a10, int a11, int a12, int a13, int a14)
 {
     return (a1 == 1)&& (a2 == 2) && (a3 == 3) && (a4 == 4) && (a5 == 5)
-        && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
-        && (a11 == 11) && (a12 == 12) && (a13 == 13) && (a14 == 14);
+           && (a6 == 6) && (a7 == 7) && (a8 == 8)&& (a9 == 9) && (a10 == 10)
+           && (a11 == 11) && (a12 == 12) && (a13 == 13) && (a14 == 14);
 }
 
 TEST_F(SqratTest, MemberFunction) {
-	DefaultVM::Set(vm);
+    DefaultVM::Set(vm);
 
-	Class<C> CC;
-	CC.Func("f0", &C::f0);
-	CC.Func("f1", &C::f1);
-	CC.Func("f2", &C::f2);
-	CC.Func("f3", &C::f3);
-	CC.Func("f4", &C::f4);
-	CC.Func("f5", &C::f5);
-	CC.Func("f6", &C::f6);
-	CC.Func("f7", &C::f7);
-	CC.Func("f8", &C::f8);
-	CC.Func("f9", &C::f9);
-	CC.Func("f10", &C::f10);
-	CC.Func("f11", &C::f11);
-	CC.Func("f12", &C::f12);
-	CC.Func("f13", &C::f13);
-	CC.Func("f14", &C::f14);
-	
-	RootTable().Bind(_SC("C"), CC);
+    Class<C> CC;
+    CC.Func("f0", &C::f0);
+    CC.Func("f1", &C::f1);
+    CC.Func("f2", &C::f2);
+    CC.Func("f3", &C::f3);
+    CC.Func("f4", &C::f4);
+    CC.Func("f5", &C::f5);
+    CC.Func("f6", &C::f6);
+    CC.Func("f7", &C::f7);
+    CC.Func("f8", &C::f8);
+    CC.Func("f9", &C::f9);
+    CC.Func("f10", &C::f10);
+    CC.Func("f11", &C::f11);
+    CC.Func("f12", &C::f12);
+    CC.Func("f13", &C::f13);
+    CC.Func("f14", &C::f14);
 
-	Script script;
+    RootTable().Bind(_SC("C"), CC);
 
-	try {
-		script.CompileString(_SC(" \
+    Script script;
+
+    try {
+        script.CompileString(_SC(" \
 		    c <- C(); \
 			gTest.EXPECT_INT_EQ(1, c.f0()); print(0);\
 			gTest.EXPECT_INT_EQ(1, c.f1(1)); print(1); \
@@ -344,14 +344,14 @@ TEST_F(SqratTest, MemberFunction) {
 			gTest.EXPECT_INT_EQ(1, c.f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
 			gTest.EXPECT_INT_EQ(1, c.f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
 			"));
-	} catch(Exception ex) {
-		FAIL() << _SC("Compile Failed: ") << ex.Message();
-	}
-	
-	try {
-		script.Run();
-	} catch(Exception ex) {
-		FAIL() << _SC("Run Failed: ") << ex.Message();
-	}
+    } catch(Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
 }
 
