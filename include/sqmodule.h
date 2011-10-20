@@ -47,7 +47,7 @@ extern "C" {
         void            (*close)(HSQUIRRELVM v);
         void            (*setforeignptr)(HSQUIRRELVM v,SQUserPointer p);
         SQUserPointer   (*getforeignptr)(HSQUIRRELVM v);
-#if SQUIRREL_VERSION_NUMBER > 300
+#if SQUIRREL_VERSION_NUMBER >= 300
         void            (*setprintfunc)(HSQUIRRELVM v, SQPRINTFUNCTION printfunc, SQPRINTFUNCTION);
 #else
         void            (*setprintfunc)(HSQUIRRELVM v, SQPRINTFUNCTION printfunc);
@@ -71,7 +71,7 @@ extern "C" {
         void            (*remove)(HSQUIRRELVM v,SQInteger idx);
         SQInteger       (*gettop)(HSQUIRRELVM v);
         void            (*settop)(HSQUIRRELVM v,SQInteger newtop);
-#if SQUIRREL_VERSION_NUMBER > 300
+#if SQUIRREL_VERSION_NUMBER >= 300
         SQRESULT            (*reservestack)(HSQUIRRELVM v,SQInteger nsize);
 #else
         void            (*reservestack)(HSQUIRRELVM v,SQInteger nsize);
@@ -96,7 +96,7 @@ extern "C" {
         SQInteger       (*getsize)(HSQUIRRELVM v,SQInteger idx);
         SQRESULT        (*getbase)(HSQUIRRELVM v,SQInteger idx);
         SQBool          (*instanceof)(HSQUIRRELVM v);
-#if SQUIRREL_VERSION_NUMBER > 300
+#if SQUIRREL_VERSION_NUMBER >= 300
         SQRESULT            (*tostring)(HSQUIRRELVM v,SQInteger idx);
 #else
         void            (*tostring)(HSQUIRRELVM v,SQInteger idx);
