@@ -1,0 +1,9 @@
+sqrat_srcdir = $(top_srcdir)/..
+sqrat_builddir = $(top_builddir)
+
+
+AM_CFLAGS = $(CFLAGS) -D_REENTRANT -I$(sqrat_srcdir)/include -I/usr/local/include/squirrel
+AM_CXXFLAGS = $(CXXFLAGS) -D_REENTRANT -I$(sqrat_srcdir)/include -I/usr/local/include/squirrel
+LDADD=-L$(sqrat_builddir)/gtest-1.3.0 -L/usr/local/lib -lsquirrel -lsqstdlib -lstdc++ -lm
+
+

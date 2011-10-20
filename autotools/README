@@ -1,0 +1,6 @@
+Recommended way to configure for Squirrel, in the same setting as the upstream Makefiles:
+
+
+CXXFLAGS="-fno-exceptions -fno-rtti -Wall -fno-strict-aliasing" ../SQUIRREL3/autotool/configure
+
+
