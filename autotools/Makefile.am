@@ -5,6 +5,10 @@ ORIGPATH=$(sqrat_srcdir)
 noinst_libdir = $(sqrat_builddir)
 noinst_bindir = $(sqrat_builddir)
 
+TESTS = import_test \
+    class_binding class_properties const_bindings function_overload\
+    script_loading squirrel_functions table_binding function_params
+    
 noinst_bin_PROGRAMS = sq_interp import_test \
     class_binding class_properties const_bindings function_overload\
     script_loading squirrel_functions table_binding function_params
