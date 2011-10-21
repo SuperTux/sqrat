@@ -1,7 +1,15 @@
 include $(top_srcdir)/makerules
 
+    
+noinst_libdir = $(sqrat_builddir)
+noinst_bindir = $(sqrat_builddir)
 ORIGPATH=$(sqrat_srcdir)
 
+BUILT_SOURCES = scripts
+CLEANFILES = scripts
+scripts: Makefile
+	-ln -s $(ORIGPATH)/sqrattest/scripts $(sqrat_builddir)
+    
 nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
     $(ORIGPATH)/include/sqrat.h $(ORIGPATH)/include/sqratimport.h\
     $(ORIGPATH)/include/sqrat/sqratAllocator.h\
@@ -20,9 +28,6 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
     $(ORIGPATH)/include/sqrat/sqratUtil.h\
     $(ORIGPATH)/include/sqrat/sqratVM.h
     
-    
-noinst_libdir = $(sqrat_builddir)
-noinst_bindir = $(sqrat_builddir)
 
 TESTS = import_test \
     class_binding class_properties const_bindings function_overload\
