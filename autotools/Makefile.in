@@ -16,6 +16,7 @@
 @SET_MAKE@
 
 
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -36,16 +37,17 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(top_srcdir)/configure \
-	$(top_srcdir)/makerules AUTHORS COPYING ChangeLog INSTALL NEWS \
-	compile config.guess config.sub depcomp install-sh missing
+DIST_COMMON = README $(am__configure_deps) $(nobase_include_HEADERS) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/configure $(top_srcdir)/makerules AUTHORS \
+	COPYING ChangeLog INSTALL NEWS compile config.guess config.sub \
+	depcomp install-sh missing
 TESTS = import_test$(EXEEXT) class_binding$(EXEEXT) \
 	class_properties$(EXEEXT) const_bindings$(EXEEXT) \
 	function_overload$(EXEEXT) script_loading$(EXEEXT) \
 	squirrel_functions$(EXEEXT) table_binding$(EXEEXT) \
 	function_params$(EXEEXT)
-noinst_bin_PROGRAMS = sq_interp$(EXEEXT) import_test$(EXEEXT) \
+noinst_PROGRAMS = sq_interp$(EXEEXT) import_test$(EXEEXT) \
 	class_binding$(EXEEXT) class_properties$(EXEEXT) \
 	const_bindings$(EXEEXT) function_overload$(EXEEXT) \
 	script_loading$(EXEEXT) squirrel_functions$(EXEEXT) \
@@ -60,30 +62,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
-am__install_max = 40
-am__nobase_strip_setup = \
-  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
-am__nobase_strip = \
-  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
-am__nobase_list = $(am__nobase_strip_setup); \
-  for p in $$list; do echo "$$p $$p"; done | \
-  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
-  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
-    if (++n[$$2] == $(am__install_max)) \
-      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
-    END { for (dir in files) print dir, files[dir] }'
-am__base_list = \
-  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
-  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__installdirs = "$(DESTDIR)$(noinst_libdir)" \
-	"$(DESTDIR)$(noinst_bindir)"
-LIBRARIES = $(noinst_lib_LIBRARIES)
+LIBRARIES = $(noinst_LIBRARIES)
 AR = ar
 ARFLAGS = cru
 libgtest_a_AR = $(AR) $(ARFLAGS)
@@ -99,7 +78,7 @@ libsqrattestmain_a_LIBADD =
 am_libsqrattestmain_a_OBJECTS = libsqrattestmain_a-Main.$(OBJEXT) \
 	libsqrattestmain_a-Vector.$(OBJEXT)
 libsqrattestmain_a_OBJECTS = $(am_libsqrattestmain_a_OBJECTS)
-PROGRAMS = $(noinst_bin_PROGRAMS)
+PROGRAMS = $(noinst_PROGRAMS)
 am_class_binding_OBJECTS = class_binding-ClassBinding.$(OBJEXT)
 class_binding_OBJECTS = $(am_class_binding_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -179,6 +158,29 @@ DIST_SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(import_test_SOURCES) $(script_loading_SOURCES) \
 	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
 	$(table_binding_SOURCES)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__installdirs = "$(DESTDIR)$(includedir)"
+HEADERS = $(nobase_include_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 am__tty_colors = \
@@ -303,11 +305,29 @@ AM_CFLAGS = $(CFLAGS) -D_REENTRANT -I$(sqrat_srcdir)/include -I/usr/local/includ
 AM_CXXFLAGS = $(CXXFLAGS) -D_REENTRANT -I$(sqrat_srcdir)/include -I/usr/local/include/squirrel
 LDADD = -L$(sqrat_builddir)/gtest-1.3.0 -L/usr/local/lib -lsquirrel -lsqstdlib -lstdc++ -lm
 ORIGPATH = $(sqrat_srcdir)
+nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
+    $(ORIGPATH)/include/sqrat.h $(ORIGPATH)/include/sqratimport.h\
+    $(ORIGPATH)/include/sqrat/sqratAllocator.h\
+    $(ORIGPATH)/include/sqrat/sqratArray.h\
+    $(ORIGPATH)/include/sqrat/sqratClass.h\
+    $(ORIGPATH)/include/sqrat/sqratClassType.h\
+    $(ORIGPATH)/include/sqrat/sqratConst.h\
+    $(ORIGPATH)/include/sqrat/sqratFunction.h\
+    $(ORIGPATH)/include/sqrat/sqratGlobalMethods.h\
+    $(ORIGPATH)/include/sqrat/sqratMemberMethods.h\
+    $(ORIGPATH)/include/sqrat/sqratObject.h\
+    $(ORIGPATH)/include/sqrat/sqratOverloadMethods.h\
+    $(ORIGPATH)/include/sqrat/sqratScript.h\
+    $(ORIGPATH)/include/sqrat/sqratTable.h\
+    $(ORIGPATH)/include/sqrat/sqratTypes.h\
+    $(ORIGPATH)/include/sqrat/sqratUtil.h\
+    $(ORIGPATH)/include/sqrat/sqratVM.h
+
 noinst_libdir = $(sqrat_builddir)
 noinst_bindir = $(sqrat_builddir)
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
 sq_interp_LDADD = -L$(sqrat_builddir) -lsqratimport $(LDADD) -ldl
-noinst_lib_LIBRARIES = libgtest.a libsqratimport.a libsqrattestmain.a
+noinst_LIBRARIES = libgtest.a libsqratimport.a libsqrattestmain.a
 libgtest_a_SOURCES = $(ORIGPATH)/gtest-1.3.0/src/gtest-all.cc
 libgtest_a_CXXFLAGS = -I$(ORIGPATH)/gtest-1.3.0/ -I$(ORIGPATH)/gtest-1.3.0/include/
 libsqratimport_a_SOURCES = $(ORIGPATH)/sqimport/sqratimport.cpp
@@ -378,38 +398,9 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
-install-noinst_libLIBRARIES: $(noinst_lib_LIBRARIES)
-	@$(NORMAL_INSTALL)
-	test -z "$(noinst_libdir)" || $(MKDIR_P) "$(DESTDIR)$(noinst_libdir)"
-	@list='$(noinst_lib_LIBRARIES)'; test -n "$(noinst_libdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(INSTALL_DATA) $$list2 '$(DESTDIR)$(noinst_libdir)'"; \
-	  $(INSTALL_DATA) $$list2 "$(DESTDIR)$(noinst_libdir)" || exit $$?; }
-	@$(POST_INSTALL)
-	@list='$(noinst_lib_LIBRARIES)'; test -n "$(noinst_libdir)" || list=; \
-	for p in $$list; do \
-	  if test -f $$p; then \
-	    $(am__strip_dir) \
-	    echo " ( cd '$(DESTDIR)$(noinst_libdir)' && $(RANLIB) $$f )"; \
-	    ( cd "$(DESTDIR)$(noinst_libdir)" && $(RANLIB) $$f ) || exit $$?; \
-	  else :; fi; \
-	done
 
-uninstall-noinst_libLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(noinst_lib_LIBRARIES)'; test -n "$(noinst_libdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(noinst_libdir)' && rm -f "$$files" )"; \
-	cd "$(DESTDIR)$(noinst_libdir)" && rm -f $$files
-
-clean-noinst_libLIBRARIES:
-	-test -z "$(noinst_lib_LIBRARIES)" || rm -f $(noinst_lib_LIBRARIES)
+clean-noinstLIBRARIES:
+	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
 libgtest.a: $(libgtest_a_OBJECTS) $(libgtest_a_DEPENDENCIES) 
 	-rm -f libgtest.a
 	$(libgtest_a_AR) libgtest.a $(libgtest_a_OBJECTS) $(libgtest_a_LIBADD)
@@ -422,43 +413,9 @@ libsqrattestmain.a: $(libsqrattestmain_a_OBJECTS) $(libsqrattestmain_a_DEPENDENC
 	-rm -f libsqrattestmain.a
 	$(libsqrattestmain_a_AR) libsqrattestmain.a $(libsqrattestmain_a_OBJECTS) $(libsqrattestmain_a_LIBADD)
 	$(RANLIB) libsqrattestmain.a
-install-noinst_binPROGRAMS: $(noinst_bin_PROGRAMS)
-	@$(NORMAL_INSTALL)
-	test -z "$(noinst_bindir)" || $(MKDIR_P) "$(DESTDIR)$(noinst_bindir)"
-	@list='$(noinst_bin_PROGRAMS)'; test -n "$(noinst_bindir)" || list=; \
-	for p in $$list; do echo "$$p $$p"; done | \
-	sed 's/$(EXEEXT)$$//' | \
-	while read p p1; do if test -f $$p; \
-	  then echo "$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
-	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
-	sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
-	    else { print "f", $$3 "/" $$4, $$1; } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	    test -z "$$files" || { \
-	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(noinst_bindir)$$dir'"; \
-	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(noinst_bindir)$$dir" || exit $$?; \
-	    } \
-	; done
 
-uninstall-noinst_binPROGRAMS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(noinst_bin_PROGRAMS)'; test -n "$(noinst_bindir)" || list=; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
-	      -e 's/$$/$(EXEEXT)/' `; \
-	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(noinst_bindir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(noinst_bindir)" && rm -f $$files
-
-clean-noinst_binPROGRAMS:
-	-test -z "$(noinst_bin_PROGRAMS)" || rm -f $(noinst_bin_PROGRAMS)
+clean-noinstPROGRAMS:
+	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
 class_binding$(EXEEXT): $(class_binding_OBJECTS) $(class_binding_DEPENDENCIES) 
 	@rm -f class_binding$(EXEEXT)
 	$(class_binding_LINK) $(class_binding_OBJECTS) $(class_binding_LDADD) $(LIBS)
@@ -748,6 +705,29 @@ table_binding-TableBinding.obj: $(sqrat_srcdir)/sqrattest/TableBinding.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+install-nobase_includeHEADERS: $(nobase_include_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(includedir)" || $(MKDIR_P) "$(DESTDIR)$(includedir)"
+	@list='$(nobase_include_HEADERS)'; test -n "$(includedir)" || list=; \
+	$(am__nobase_list) | while read dir files; do \
+	  xfiles=; for file in $$files; do \
+	    if test -f "$$file"; then xfiles="$$xfiles $$file"; \
+	    else xfiles="$$xfiles $(srcdir)/$$file"; fi; done; \
+	  test -z "$$xfiles" || { \
+	    test "x$$dir" = x. || { \
+	      echo "$(MKDIR_P) '$(DESTDIR)$(includedir)/$$dir'"; \
+	      $(MKDIR_P) "$(DESTDIR)$(includedir)/$$dir"; }; \
+	    echo " $(INSTALL_HEADER) $$xfiles '$(DESTDIR)$(includedir)/$$dir'"; \
+	    $(INSTALL_HEADER) $$xfiles "$(DESTDIR)$(includedir)/$$dir" || exit $$?; }; \
+	done
+
+uninstall-nobase_includeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_include_HEADERS)'; test -n "$(includedir)" || list=; \
+	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(includedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(includedir)" && rm -f $$files
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -1043,9 +1023,9 @@ distcleancheck: distclean
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile $(LIBRARIES) $(PROGRAMS)
+all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(noinst_libdir)" "$(DESTDIR)$(noinst_bindir)"; do \
+	for dir in "$(DESTDIR)$(includedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1075,8 +1055,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-noinst_binPROGRAMS \
-	clean-noinst_libLIBRARIES mostlyclean-am
+clean-am: clean-generic clean-noinstLIBRARIES clean-noinstPROGRAMS \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -1097,8 +1077,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-noinst_binPROGRAMS \
-	install-noinst_libLIBRARIES
+install-data-am: install-nobase_includeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -1145,28 +1124,25 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-noinst_binPROGRAMS \
-	uninstall-noinst_libLIBRARIES
+uninstall-am: uninstall-nobase_includeHEADERS
 
 .MAKE: check-am install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am am--refresh check check-TESTS check-am \
-	clean clean-generic clean-noinst_binPROGRAMS \
-	clean-noinst_libLIBRARIES ctags dist dist-all dist-bzip2 \
-	dist-gzip dist-lzma dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-compile distclean-generic \
-	distclean-tags distcleancheck distdir distuninstallcheck dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man \
-	install-noinst_binPROGRAMS install-noinst_libLIBRARIES \
+	clean clean-generic clean-noinstLIBRARIES clean-noinstPROGRAMS \
+	ctags dist dist-all dist-bzip2 dist-gzip dist-lzma dist-shar \
+	dist-tarZ dist-xz dist-zip distcheck distclean \
+	distclean-compile distclean-generic distclean-tags \
+	distcleancheck distdir distuninstallcheck dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-nobase_includeHEADERS \
 	install-pdf install-pdf-am install-ps install-ps-am \
 	install-strip installcheck installcheck-am installdirs \
 	maintainer-clean maintainer-clean-generic mostlyclean \
 	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-noinst_binPROGRAMS \
-	uninstall-noinst_libLIBRARIES
+	tags uninstall uninstall-am uninstall-nobase_includeHEADERS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

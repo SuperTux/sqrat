@@ -2,6 +2,25 @@ include $(top_srcdir)/makerules
 
 ORIGPATH=$(sqrat_srcdir)
 
+nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
+    $(ORIGPATH)/include/sqrat.h $(ORIGPATH)/include/sqratimport.h\
+    $(ORIGPATH)/include/sqrat/sqratAllocator.h\
+    $(ORIGPATH)/include/sqrat/sqratArray.h\
+    $(ORIGPATH)/include/sqrat/sqratClass.h\
+    $(ORIGPATH)/include/sqrat/sqratClassType.h\
+    $(ORIGPATH)/include/sqrat/sqratConst.h\
+    $(ORIGPATH)/include/sqrat/sqratFunction.h\
+    $(ORIGPATH)/include/sqrat/sqratGlobalMethods.h\
+    $(ORIGPATH)/include/sqrat/sqratMemberMethods.h\
+    $(ORIGPATH)/include/sqrat/sqratObject.h\
+    $(ORIGPATH)/include/sqrat/sqratOverloadMethods.h\
+    $(ORIGPATH)/include/sqrat/sqratScript.h\
+    $(ORIGPATH)/include/sqrat/sqratTable.h\
+    $(ORIGPATH)/include/sqrat/sqratTypes.h\
+    $(ORIGPATH)/include/sqrat/sqratUtil.h\
+    $(ORIGPATH)/include/sqrat/sqratVM.h
+    
+    
 noinst_libdir = $(sqrat_builddir)
 noinst_bindir = $(sqrat_builddir)
 
@@ -9,14 +28,14 @@ TESTS = import_test \
     class_binding class_properties const_bindings function_overload\
     script_loading squirrel_functions table_binding function_params
     
-noinst_bin_PROGRAMS = sq_interp import_test \
+noinst_PROGRAMS = sq_interp import_test \
     class_binding class_properties const_bindings function_overload\
     script_loading squirrel_functions table_binding function_params
 
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
 sq_interp_LDADD = -L$(sqrat_builddir) -lsqratimport $(LDADD) -ldl
 
-noinst_lib_LIBRARIES = libgtest.a libsqratimport.a libsqrattestmain.a
+noinst_LIBRARIES = libgtest.a libsqratimport.a libsqrattestmain.a
 libgtest_a_SOURCES = $(ORIGPATH)/gtest-1.3.0/src/gtest-all.cc
 libgtest_a_CXXFLAGS = -I$(ORIGPATH)/gtest-1.3.0/ -I$(ORIGPATH)/gtest-1.3.0/include/
 
