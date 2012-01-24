@@ -30,6 +30,15 @@
 #include <sqrat.h>
 #include <map>
 
+#include <iostream>
+#include <stdarg.h>
+
+#include <sqstdio.h>
+#include <sqstdblob.h>
+#include <sqstdmath.h>
+#include <sqstdsystem.h>
+#include <sqstdstring.h>
+
 namespace Sqrat {
 
 class SqratVM
@@ -59,7 +68,7 @@ public:
         NO_ERROR, COMPILE_ERROR, RUNTIME_ERROR
     };
 
-    SqratVM();
+    SqratVM(int initialStackSize = 1024);
     ~SqratVM();
 
     HSQUIRRELVM getVM() { return m_vm; }
@@ -77,16 +86,6 @@ public:
 };
 
 
-
-#include <iostream>
-#include <stdarg.h>
-
-#include "sqratVM.h"
-#include <sqstdio.h>
-#include <sqstdblob.h>
-#include <sqstdmath.h>
-#include <sqstdsystem.h>
-#include <sqstdstring.h>
 
 
 #ifdef SQUNICODE
@@ -157,8 +156,8 @@ void SqratVM::compilerErrorHandler(HSQUIRRELVM v,
     s_getVM(v)->m_lastErrorMsg = buf;
 }
 
-SqratVM::SqratVM()
-    : m_vm(sq_open(1024))
+SqratVM::SqratVM(int initialStackSize /* = 1024 */)
+    : m_vm(sq_open(initialStackSize))
     , m_rootTable(new Sqrat::RootTable(m_vm))
     , m_script(new Sqrat::Script(m_vm))
     , m_lastErrorMsg()
