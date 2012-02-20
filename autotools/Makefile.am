@@ -31,11 +31,11 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
 
 TESTS = import_test \
     class_binding class_properties const_bindings function_overload\
-    script_loading squirrel_functions table_binding function_params
+    script_loading squirrel_functions table_binding function_params run_stack_handling
     
 noinst_PROGRAMS = sq_interp import_test \
     class_binding class_properties const_bindings function_overload\
-    script_loading squirrel_functions table_binding function_params
+    script_loading squirrel_functions table_binding function_params run_stack_handling
 
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
 sq_interp_LDADD = -L$(sqrat_builddir) -lsqratimport $(LDADD) -ldl
@@ -84,6 +84,10 @@ table_binding_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD)
 function_params_SOURCES = $(sqrat_srcdir)/sqrattest/FunctionParams.cpp 
 function_params_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 function_params_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+
+run_stack_handling_SOURCES = $(sqrat_srcdir)/sqrattest/RunStackHandling.cpp 
+run_stack_handling_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+run_stack_handling_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
 
 

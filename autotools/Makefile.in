@@ -46,12 +46,13 @@ TESTS = import_test$(EXEEXT) class_binding$(EXEEXT) \
 	class_properties$(EXEEXT) const_bindings$(EXEEXT) \
 	function_overload$(EXEEXT) script_loading$(EXEEXT) \
 	squirrel_functions$(EXEEXT) table_binding$(EXEEXT) \
-	function_params$(EXEEXT)
+	function_params$(EXEEXT) run_stack_handling$(EXEEXT)
 noinst_PROGRAMS = sq_interp$(EXEEXT) import_test$(EXEEXT) \
 	class_binding$(EXEEXT) class_properties$(EXEEXT) \
 	const_bindings$(EXEEXT) function_overload$(EXEEXT) \
 	script_loading$(EXEEXT) squirrel_functions$(EXEEXT) \
-	table_binding$(EXEEXT) function_params$(EXEEXT)
+	table_binding$(EXEEXT) function_params$(EXEEXT) \
+	run_stack_handling$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -112,6 +113,12 @@ import_test_OBJECTS = $(am_import_test_OBJECTS)
 import_test_DEPENDENCIES = $(am__DEPENDENCIES_1)
 import_test_LINK = $(CXXLD) $(import_test_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_run_stack_handling_OBJECTS =  \
+	run_stack_handling-RunStackHandling.$(OBJEXT)
+run_stack_handling_OBJECTS = $(am_run_stack_handling_OBJECTS)
+run_stack_handling_DEPENDENCIES = $(am__DEPENDENCIES_1)
+run_stack_handling_LINK = $(CXXLD) $(run_stack_handling_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_script_loading_OBJECTS = script_loading-ScriptLoading.$(OBJEXT)
 script_loading_OBJECTS = $(am_script_loading_OBJECTS)
 script_loading_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -148,16 +155,16 @@ SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(libsqrattestmain_a_SOURCES) $(class_binding_SOURCES) \
 	$(class_properties_SOURCES) $(const_bindings_SOURCES) \
 	$(function_overload_SOURCES) $(function_params_SOURCES) \
-	$(import_test_SOURCES) $(script_loading_SOURCES) \
-	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
-	$(table_binding_SOURCES)
+	$(import_test_SOURCES) $(run_stack_handling_SOURCES) \
+	$(script_loading_SOURCES) $(sq_interp_SOURCES) \
+	$(squirrel_functions_SOURCES) $(table_binding_SOURCES)
 DIST_SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(libsqrattestmain_a_SOURCES) $(class_binding_SOURCES) \
 	$(class_properties_SOURCES) $(const_bindings_SOURCES) \
 	$(function_overload_SOURCES) $(function_params_SOURCES) \
-	$(import_test_SOURCES) $(script_loading_SOURCES) \
-	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
-	$(table_binding_SOURCES)
+	$(import_test_SOURCES) $(run_stack_handling_SOURCES) \
+	$(script_loading_SOURCES) $(sq_interp_SOURCES) \
+	$(squirrel_functions_SOURCES) $(table_binding_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -362,6 +369,9 @@ table_binding_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD)
 function_params_SOURCES = $(sqrat_srcdir)/sqrattest/FunctionParams.cpp 
 function_params_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 function_params_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+run_stack_handling_SOURCES = $(sqrat_srcdir)/sqrattest/RunStackHandling.cpp 
+run_stack_handling_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+run_stack_handling_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -437,6 +447,9 @@ function_params$(EXEEXT): $(function_params_OBJECTS) $(function_params_DEPENDENC
 import_test$(EXEEXT): $(import_test_OBJECTS) $(import_test_DEPENDENCIES) 
 	@rm -f import_test$(EXEEXT)
 	$(import_test_LINK) $(import_test_OBJECTS) $(import_test_LDADD) $(LIBS)
+run_stack_handling$(EXEEXT): $(run_stack_handling_OBJECTS) $(run_stack_handling_DEPENDENCIES) 
+	@rm -f run_stack_handling$(EXEEXT)
+	$(run_stack_handling_LINK) $(run_stack_handling_OBJECTS) $(run_stack_handling_LDADD) $(LIBS)
 script_loading$(EXEEXT): $(script_loading_OBJECTS) $(script_loading_DEPENDENCIES) 
 	@rm -f script_loading$(EXEEXT)
 	$(script_loading_LINK) $(script_loading_OBJECTS) $(script_loading_LDADD) $(LIBS)
@@ -465,6 +478,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgtest_a-gtest-all.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsqrattestmain_a-Main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsqrattestmain_a-Vector.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/run_stack_handling-RunStackHandling.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/script_loading-ScriptLoading.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqratimport.Po@am__quote@
@@ -652,6 +666,20 @@ import_test-ImportTest.obj: $(sqrat_srcdir)/sqrattest/ImportTest.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/ImportTest.cpp' object='import_test-ImportTest.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(import_test_CXXFLAGS) $(CXXFLAGS) -c -o import_test-ImportTest.obj `if test -f '$(sqrat_srcdir)/sqrattest/ImportTest.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/ImportTest.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/ImportTest.cpp'; fi`
+
+run_stack_handling-RunStackHandling.o: $(sqrat_srcdir)/sqrattest/RunStackHandling.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(run_stack_handling_CXXFLAGS) $(CXXFLAGS) -MT run_stack_handling-RunStackHandling.o -MD -MP -MF $(DEPDIR)/run_stack_handling-RunStackHandling.Tpo -c -o run_stack_handling-RunStackHandling.o `test -f '$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/run_stack_handling-RunStackHandling.Tpo $(DEPDIR)/run_stack_handling-RunStackHandling.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp' object='run_stack_handling-RunStackHandling.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(run_stack_handling_CXXFLAGS) $(CXXFLAGS) -c -o run_stack_handling-RunStackHandling.o `test -f '$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp
+
+run_stack_handling-RunStackHandling.obj: $(sqrat_srcdir)/sqrattest/RunStackHandling.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(run_stack_handling_CXXFLAGS) $(CXXFLAGS) -MT run_stack_handling-RunStackHandling.obj -MD -MP -MF $(DEPDIR)/run_stack_handling-RunStackHandling.Tpo -c -o run_stack_handling-RunStackHandling.obj `if test -f '$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/run_stack_handling-RunStackHandling.Tpo $(DEPDIR)/run_stack_handling-RunStackHandling.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp' object='run_stack_handling-RunStackHandling.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(run_stack_handling_CXXFLAGS) $(CXXFLAGS) -c -o run_stack_handling-RunStackHandling.obj `if test -f '$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/RunStackHandling.cpp'; fi`
 
 script_loading-ScriptLoading.o: $(sqrat_srcdir)/sqrattest/ScriptLoading.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(script_loading_CXXFLAGS) $(CXXFLAGS) -MT script_loading-ScriptLoading.o -MD -MP -MF $(DEPDIR)/script_loading-ScriptLoading.Tpo -c -o script_loading-ScriptLoading.o `test -f '$(sqrat_srcdir)/sqrattest/ScriptLoading.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/ScriptLoading.cpp

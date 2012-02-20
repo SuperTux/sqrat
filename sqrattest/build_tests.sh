@@ -22,7 +22,8 @@ TEST_CPPS="ClassBinding.cpp\
     ScriptLoading.cpp\
     SquirrelFunctions.cpp\
     TableBinding.cpp\
-    FunctionParams.cpp"
+    FunctionParams.cpp \
+    RunStackHandling.cpp"
 
 for f in $TEST_CPPS; do
     gcc $CFLAGS \
