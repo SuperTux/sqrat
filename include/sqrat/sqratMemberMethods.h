@@ -1646,7 +1646,12 @@ inline SQInteger sqVarGet(HSQUIRRELVM vm) {
     // Find the get method in the get table
     sq_push(vm, 2);
     if (SQ_FAILED( sq_get(vm,-2) )) {
+#if (SQUIRREL_VERSION_NUMBER >= 200) && (SQUIRREL_VERSION_NUMBER < 300) // Squirrel 2.x
         return sq_throwerror(vm,_SC("Member Variable not found"));
+#else // Squirrel 3.x
+        sq_pushnull(vm);
+        return sq_throwobject(vm);
+#endif        
     }
 
     // push 'this'
@@ -1679,7 +1684,12 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
     // Find the set method in the set table
     sq_push(vm, 2);
     if (SQ_FAILED( sq_get(vm,-2) )) {
+#if (SQUIRREL_VERSION_NUMBER >= 200) && (SQUIRREL_VERSION_NUMBER < 300) // Squirrel 2.x
         return sq_throwerror(vm,_SC("Member Variable not found"));
+#else // Squirrel 3.x
+        sq_pushnull(vm);
+        return sq_throwobject(vm);
+#endif        
     }
 
     // push 'this'
