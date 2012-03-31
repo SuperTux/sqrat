@@ -40,12 +40,20 @@ class Script : public Object {
 public:
     Script(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, false) {
     }
-
+ 
+    ~Script()
+    {
+        if(!sq_isnull(obj)) {
+            sq_release(vm, &obj);
+        }
+    }
     void CompileString(const string& script) {
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() * sizeof(SQChar)), _SC(""), true))) {
             throw Exception(LastErrorString(vm));
         }
         sq_getstackobj(vm,-1,&obj);
+        sq_addref(vm, &obj);
+        sq_pop(vm, 1);
     }
     
     bool CompileString(const string& script, string& errMsg) {
@@ -54,6 +62,8 @@ public:
             return false;
         }
         sq_getstackobj(vm,-1,&obj);
+        sq_addref(vm, &obj);
+        sq_pop(vm, 1);
         return true;
     }
 
@@ -62,6 +72,8 @@ public:
             throw Exception(LastErrorString(vm));
         }
         sq_getstackobj(vm,-1,&obj);
+        sq_addref(vm, &obj);
+        sq_pop(vm, 1);
     }
 
     bool CompileFile(const string& path, string& errMsg) {
@@ -70,14 +82,19 @@ public:
             return false;
         }
         sq_getstackobj(vm,-1,&obj);
+        sq_addref(vm, &obj);
+        sq_pop(vm, 1);
         return true;
     }
 
     void Run() {
         if(!sq_isnull(obj)) {
+            SQRESULT result;
             sq_pushobject(vm, obj);
             sq_pushroottable(vm);
-            if(SQ_FAILED(sq_call(vm, 1, false, true))) {
+            result = sq_call(vm, 1, false, true);
+            sq_pop(vm, 1);
+            if(SQ_FAILED(result)) {
                 throw Exception(LastErrorString(vm));
             }
         }
@@ -85,9 +102,12 @@ public:
 
     bool Run(string& errMsg) {
         if(!sq_isnull(obj)) {
+            SQRESULT result;
             sq_pushobject(vm, obj);
             sq_pushroottable(vm);
-            if(SQ_FAILED(sq_call(vm, 1, false, true))) {
+            result = sq_call(vm, 1, false, true);
+            sq_pop(vm, 1);
+            if(SQ_FAILED(result)) {
                 errMsg = LastErrorString(vm);
                 return false;
             }
@@ -100,6 +120,7 @@ public:
         if(!sq_isnull(obj)) {
             sq_pushobject(vm, obj);
             sqstd_writeclosuretofile(vm, path.c_str());
+            //sq_pop(vm, 1);  // needed?
         }
     }
 };

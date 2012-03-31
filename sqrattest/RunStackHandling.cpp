@@ -26,12 +26,18 @@
 #include <sqrat.h>
 #include "Fixture.h"
 
+/* this test would generally not fail.  Its main purpose is to test for leaks 
+   when compiling scripts in memory multiple times; need to use valgrind or just watch
+   memory increase when run */
+   
 using namespace Sqrat;
 
+//#define DUMPSTACK sq_dumpstack(vm); /* require atai's version of Squirrel */
+#define DUMPSTACK 
 TEST_F(SqratTest, RunStackHandling)
 {
     DefaultVM::Set(vm);
-    static const int num_run = 1024 * 10; /* 10 times the typical Squirrel stack size */
+    static const int num_run = 1024 * 10 ; /* 10 times the typical Squirrel stack size */
     int i; 
     Script script;
 
@@ -46,12 +52,14 @@ TEST_F(SqratTest, RunStackHandling)
     try
     {
         script.Run();
-        
+        Script script2;
+        DUMPSTACK
         for (i = 0; i < num_run; i++)
         {
-            Script script2;
+            
             script2.CompileString(_SC("t = f(t); /*print(t.tostring() + \"\\n\");*/"));
-            script2.Run();    
+            script2.Run();  
+            DUMPSTACK
         }
     }
     catch (Exception ex)
@@ -69,6 +77,7 @@ TEST_F(SqratTest, RunStackHandling)
         b = script3.Run(err_msg);    
         ASSERT_TRUE(b);
         ASSERT_TRUE(err_msg == "");
+        DUMPSTACK
     }
     
 }
