@@ -48,6 +48,9 @@ public:
         }
     }
     void CompileString(const string& script) {
+        if(!sq_isnull(obj)) {
+            sq_release(vm, &obj);
+        }
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() * sizeof(SQChar)), _SC(""), true))) {
             throw Exception(LastErrorString(vm));
         }
@@ -57,6 +60,9 @@ public:
     }
     
     bool CompileString(const string& script, string& errMsg) {
+        if(!sq_isnull(obj)) {
+            sq_release(vm, &obj);
+        }
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() * sizeof(SQChar)), _SC(""), true))) {
             errMsg = LastErrorString(vm);
             return false;
@@ -68,6 +74,9 @@ public:
     }
 
     void CompileFile(const string& path) {
+        if(!sq_isnull(obj)) {
+            sq_release(vm, &obj);
+        }
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
             throw Exception(LastErrorString(vm));
         }
@@ -77,6 +86,9 @@ public:
     }
 
     bool CompileFile(const string& path, string& errMsg) {
+        if(!sq_isnull(obj)) {
+            sq_release(vm, &obj);
+        }
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
             errMsg = LastErrorString(vm);
             return false;
