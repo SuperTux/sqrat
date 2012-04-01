@@ -2729,7 +2729,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=sqrat
- VERSION=0.8.1.90 foreign
+ VERSION=0.8.1.91 foreign
 
 
 cat >>confdefs.h <<_ACEOF

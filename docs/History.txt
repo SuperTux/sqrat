@@ -1,8 +1,36 @@
 ﻿Sqrat - Squirrel Binding Utility
 (c) 2009 Brandon Jones
-Version 0.7
+Version 0.8.2
 
 === Version History ===
+
+0.8.1.91 (04/01/2012)
+    * note for Sourceforge Bug 3507590, documenting the limitations regarding 
+      calling sq_suspendvm() from C++ functions exposed to Squirrel, suggested
+      by firestar in the forum
+    * fix for Sourceforge bug 3426584, maintaining strong reference to the 
+      string value of the Var<SQChar*> struct (atai)
+    * extending the number of arguments supported in overloaded member methods 
+      to 14, in line with the rest of Sqrat (atai)
+    * memory leak in Script compile and run fix; properly track object lifetime 
+      by maintaining strong references from the Script class; based on 
+      suggestion by Marius C in the Squirrel forum and Lican in sourceforge 
+      fix for Sourceforge Bugs 3489212 and 3507596
+    * fix from Alberto and thaumaturgist on the Squirrel forum; for 
+      handling missing member varialbes in Squirrel 3.x
+    * patch from pjcabrera, compile and run functions without throwing 
+      exception but returning errors via an out string parameter
+    
+0.8.1.90 (10/21/2011)
+    * supporting up to 14 function arguments, with a new unit test (old limit was 9) (atai)
+    * sqratimport works for importing scripts on GNU/Linux (and likely other Unix-like systems) (atai)
+    * patch from Nimrof; change Visual C++ project files default encoding from Unicode to multi-byte
+    * patch from ejulien in the forum; throws an error when no overload exists
+    * patch from wayfarer99 (Alston Chen), multiple VMs with class binding fix
+    * patch from wayfarer99 (Alston Chen), new feature: sqratArray additions and bug fixes
+    * patch from Nimrof, to make sqrat work with both Squirrel 2.0 and 3.0; Squirrel 3.0 before 3.0.1 requires user to define -DSQUIRREL_VERSION_NUMBER=300
+    * build and run shell scripts for the unit tests on Unix-like systems (atai)
+    * optional autotools support in a single subdirectory so people can use autotools to build and to run the unit tests and to install sqrat header files if desired (atai); note this assumes squirrel is installed in /usr/local/   
 
 0.8.1 (09/23/2009)
  * Fixed heap corruption when binding enumerations (needed an addref)

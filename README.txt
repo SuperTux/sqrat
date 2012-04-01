@@ -1,3 +1,8 @@
+Sqrat - Squirrel Binding Utility
+
+© 2009 Brandon Jones
+© 2011 Li-Cheng (Andy) Tai
+
 
 Sqrat is a C++ binding utility for the Squirrel language.
 See the docs directory for usage info.
@@ -22,3 +27,17 @@ Alternatively you can follow the steps in
 running_tests.txt
 
 to directly run unit tests.
+
+For more information, see index.html in the docs subdirectory
+
+Discussion and User Support
+
+Discussion about Sqrat happens at the Squirrel language forum,
+the Bindings section
+http://squirrel-lang.org/forums/default.aspx?g=topics&f=4
+
+Bug Reporting
+
+Bug reports or feature enhancement requests and patches can 
+be submitted at the SourceForge Sqrat site
+https://sourceforge.net/tracker/?group_id=261661&atid=2349886
