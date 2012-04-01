@@ -10,7 +10,8 @@
 	
 	<div id="header">
 		<h1>Sqrat - Squirrel Binding Utility</h1>
-		<h3>(c) 2009 Brandon Jones</h3>
+		<h3>&copy; 2009 Brandon Jones</h3>
+		<h3>&copy; 2012 Li-Cheng (Andy) Tai</h3>
 	</div>
 		
 	<div id="index">
@@ -28,6 +29,7 @@
 					<li><a href="#class">Classes</a></li>
 					<li><a href="#const">Constants and Enumerations</a></li>
 					<li><a href="#function">Functions</a></li>
+					<li><a href="#limitations">Limitations</a></li>
 				</ul>
 			</li>
 			<li><a href="import.html">Module Import Library</a></li>
@@ -474,6 +476,15 @@
 		It is up to the developer to ensure that calls from C++ match their squirrel
 		counterparts.</p>
 
+		<h2 id="limitations">Limitations</h2>
+		<p>Note due to the design of the Squirrel API <A href="http://squirrel-lang.org/doc/squirrel3.html#sq_suspendvm">
+		sq_suspendvm()</A>, calling it from a
+		C++ function which is in turn called by Squirrel code will not suspend the VM successfully;
+		you can suspend a given VM by calling ::suspend() from Squirrel code.
+		(note from 
+		<A href="https://sourceforge.net/tracker/?func=detail&aid=3507590&group_id=261661&atid=2349886">SourceForge Bug 3507590</A>)
+		</p>
+		
 	</div>
 	</body>
 </html>

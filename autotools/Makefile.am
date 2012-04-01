@@ -31,11 +31,11 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
 
 TESTS = import_test \
     class_binding class_instances class_properties const_bindings function_overload\
-    script_loading squirrel_functions table_binding function_params run_stack_handling
+    script_loading squirrel_functions table_binding function_params run_stack_handling suspend_vm
     
 noinst_PROGRAMS = sq_interp import_test \
     class_binding class_instances class_properties const_bindings function_overload\
-    script_loading squirrel_functions table_binding function_params run_stack_handling
+    script_loading squirrel_functions table_binding function_params run_stack_handling suspend_vm
 
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
 sq_interp_LDADD = -L$(sqrat_builddir) -lsqratimport $(LDADD) -ldl
@@ -93,5 +93,8 @@ run_stack_handling_SOURCES = $(sqrat_srcdir)/sqrattest/RunStackHandling.cpp
 run_stack_handling_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 run_stack_handling_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
+suspend_vm_SOURCES = $(sqrat_srcdir)/sqrattest/SuspendVM.cpp 
+suspend_vm_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+suspend_vm_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
 

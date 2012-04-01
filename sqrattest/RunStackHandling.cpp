@@ -34,6 +34,7 @@ using namespace Sqrat;
 
 //#define DUMPSTACK sq_dumpstack(vm); /* require atai's version of Squirrel */
 #define DUMPSTACK 
+
 TEST_F(SqratTest, RunStackHandling)
 {
     DefaultVM::Set(vm);

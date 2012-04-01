@@ -23,7 +23,8 @@ TEST_CPPS="ClassBinding.cpp\
     SquirrelFunctions.cpp\
     TableBinding.cpp\
     FunctionParams.cpp \
-    RunStackHandling.cpp"
+    RunStackHandling.cpp \
+    SuspendVM.cpp "
 
 for f in $TEST_CPPS; do
     gcc $CFLAGS \
