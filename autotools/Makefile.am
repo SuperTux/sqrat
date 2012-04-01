@@ -30,11 +30,11 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
     
 
 TESTS = import_test \
-    class_binding class_properties const_bindings function_overload\
+    class_binding class_instances class_properties const_bindings function_overload\
     script_loading squirrel_functions table_binding function_params run_stack_handling
     
 noinst_PROGRAMS = sq_interp import_test \
-    class_binding class_properties const_bindings function_overload\
+    class_binding class_instances class_properties const_bindings function_overload\
     script_loading squirrel_functions table_binding function_params run_stack_handling
 
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
@@ -56,6 +56,10 @@ import_test_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest -lsqratimport $(
 class_binding_SOURCES = $(sqrat_srcdir)/sqrattest/ClassBinding.cpp 
 class_binding_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 class_binding_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+
+class_instances_SOURCES = $(sqrat_srcdir)/sqrattest/ClassInstances.cpp 
+class_instances_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+class_instances_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
 class_properties_SOURCES = $(sqrat_srcdir)/sqrattest/ClassProperties.cpp 
 class_properties_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)

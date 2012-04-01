@@ -59,7 +59,8 @@ public:
     int age;
     string department;
     float wage;
-
+    SQChar * middleName;
+    const SQChar * gender;
     Employee* supervisor;
 };
 
@@ -74,6 +75,8 @@ TEST_F(SqratTest, ClassInstances) {
     .Var(_SC("department"), &Employee::department)
     .Var(_SC("wage"), &Employee::wage)
     .Var(_SC("supervisor"), &Employee::supervisor)
+    .Var(_SC("middleName"), &Employee::middleName)
+    .Var(_SC("gender"), &Employee::gender)
 
     .Func(_SC("GiveRaise"), &Employee::GiveRaise)
     .Func(_SC("_tostring"), &Employee::ToString)
@@ -89,6 +92,8 @@ TEST_F(SqratTest, ClassInstances) {
     bob.age = 42;
     bob.department = _SC("Accounting");
     bob.wage = 21.95f;
+    bob.gender = _SC("Male");
+    bob.middleName = _SC("A");
 
     RootTable().SetInstance(_SC("bob"), &bob);
 
@@ -102,10 +107,14 @@ TEST_F(SqratTest, ClassInstances) {
 			steve.age = 34; \
 			steve.wage = 35.00; \
 			steve.department = \"Management\"; \
+			steve.gender = \"male\"; \
+			steve.middleName = \"B\"; \
 			\
 			gTest.EXPECT_INT_EQ(steve.age, 34); \
 			gTest.EXPECT_FLOAT_EQ(steve.wage, 35.00); \
 			gTest.EXPECT_STR_EQ(steve.lastName, \"Jones\"); \
+			gTest.EXPECT_STR_EQ(steve.middleName, \"B\"); \
+			gTest.EXPECT_STR_EQ(steve.gender, \"male\"); \
 			\
 			\
 			bob.age += 1; \
@@ -115,6 +124,8 @@ TEST_F(SqratTest, ClassInstances) {
 			gTest.EXPECT_INT_EQ(bob.age, 43); \
 			gTest.EXPECT_FLOAT_EQ(bob.wage, 22.389); \
 			gTest.EXPECT_STR_EQ(bob.lastName, \"Smith\"); \
+			gTest.EXPECT_STR_EQ(bob.middleName, \"A\"); \
+			gTest.EXPECT_STR_EQ(bob.gender, \"Male\"); \
 			\
 			// Uncomment the following to see _tostring demonstrated \
 			//::print(steve); \

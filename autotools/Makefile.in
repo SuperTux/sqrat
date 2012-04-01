@@ -43,16 +43,17 @@ DIST_COMMON = README $(am__configure_deps) $(nobase_include_HEADERS) \
 	COPYING ChangeLog INSTALL NEWS compile config.guess config.sub \
 	depcomp install-sh missing
 TESTS = import_test$(EXEEXT) class_binding$(EXEEXT) \
-	class_properties$(EXEEXT) const_bindings$(EXEEXT) \
-	function_overload$(EXEEXT) script_loading$(EXEEXT) \
-	squirrel_functions$(EXEEXT) table_binding$(EXEEXT) \
-	function_params$(EXEEXT) run_stack_handling$(EXEEXT)
-noinst_PROGRAMS = sq_interp$(EXEEXT) import_test$(EXEEXT) \
-	class_binding$(EXEEXT) class_properties$(EXEEXT) \
+	class_instances$(EXEEXT) class_properties$(EXEEXT) \
 	const_bindings$(EXEEXT) function_overload$(EXEEXT) \
 	script_loading$(EXEEXT) squirrel_functions$(EXEEXT) \
 	table_binding$(EXEEXT) function_params$(EXEEXT) \
 	run_stack_handling$(EXEEXT)
+noinst_PROGRAMS = sq_interp$(EXEEXT) import_test$(EXEEXT) \
+	class_binding$(EXEEXT) class_instances$(EXEEXT) \
+	class_properties$(EXEEXT) const_bindings$(EXEEXT) \
+	function_overload$(EXEEXT) script_loading$(EXEEXT) \
+	squirrel_functions$(EXEEXT) table_binding$(EXEEXT) \
+	function_params$(EXEEXT) run_stack_handling$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -86,6 +87,11 @@ am__DEPENDENCIES_1 =
 class_binding_DEPENDENCIES = $(am__DEPENDENCIES_1)
 class_binding_LINK = $(CXXLD) $(class_binding_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_class_instances_OBJECTS = class_instances-ClassInstances.$(OBJEXT)
+class_instances_OBJECTS = $(am_class_instances_OBJECTS)
+class_instances_DEPENDENCIES = $(am__DEPENDENCIES_1)
+class_instances_LINK = $(CXXLD) $(class_instances_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_class_properties_OBJECTS =  \
 	class_properties-ClassProperties.$(OBJEXT)
 class_properties_OBJECTS = $(am_class_properties_OBJECTS)
@@ -153,18 +159,20 @@ CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(libsqrattestmain_a_SOURCES) $(class_binding_SOURCES) \
-	$(class_properties_SOURCES) $(const_bindings_SOURCES) \
-	$(function_overload_SOURCES) $(function_params_SOURCES) \
-	$(import_test_SOURCES) $(run_stack_handling_SOURCES) \
-	$(script_loading_SOURCES) $(sq_interp_SOURCES) \
-	$(squirrel_functions_SOURCES) $(table_binding_SOURCES)
+	$(class_instances_SOURCES) $(class_properties_SOURCES) \
+	$(const_bindings_SOURCES) $(function_overload_SOURCES) \
+	$(function_params_SOURCES) $(import_test_SOURCES) \
+	$(run_stack_handling_SOURCES) $(script_loading_SOURCES) \
+	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
+	$(table_binding_SOURCES)
 DIST_SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(libsqrattestmain_a_SOURCES) $(class_binding_SOURCES) \
-	$(class_properties_SOURCES) $(const_bindings_SOURCES) \
-	$(function_overload_SOURCES) $(function_params_SOURCES) \
-	$(import_test_SOURCES) $(run_stack_handling_SOURCES) \
-	$(script_loading_SOURCES) $(sq_interp_SOURCES) \
-	$(squirrel_functions_SOURCES) $(table_binding_SOURCES)
+	$(class_instances_SOURCES) $(class_properties_SOURCES) \
+	$(const_bindings_SOURCES) $(function_overload_SOURCES) \
+	$(function_params_SOURCES) $(import_test_SOURCES) \
+	$(run_stack_handling_SOURCES) $(script_loading_SOURCES) \
+	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
+	$(table_binding_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -348,6 +356,9 @@ import_test_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest -lsqratimport $(
 class_binding_SOURCES = $(sqrat_srcdir)/sqrattest/ClassBinding.cpp 
 class_binding_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 class_binding_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+class_instances_SOURCES = $(sqrat_srcdir)/sqrattest/ClassInstances.cpp 
+class_instances_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+class_instances_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 class_properties_SOURCES = $(sqrat_srcdir)/sqrattest/ClassProperties.cpp 
 class_properties_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 class_properties_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
@@ -432,6 +443,9 @@ clean-noinstPROGRAMS:
 class_binding$(EXEEXT): $(class_binding_OBJECTS) $(class_binding_DEPENDENCIES) 
 	@rm -f class_binding$(EXEEXT)
 	$(class_binding_LINK) $(class_binding_OBJECTS) $(class_binding_LDADD) $(LIBS)
+class_instances$(EXEEXT): $(class_instances_OBJECTS) $(class_instances_DEPENDENCIES) 
+	@rm -f class_instances$(EXEEXT)
+	$(class_instances_LINK) $(class_instances_OBJECTS) $(class_instances_LDADD) $(LIBS)
 class_properties$(EXEEXT): $(class_properties_OBJECTS) $(class_properties_DEPENDENCIES) 
 	@rm -f class_properties$(EXEEXT)
 	$(class_properties_LINK) $(class_properties_OBJECTS) $(class_properties_LDADD) $(LIBS)
@@ -470,6 +484,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/class_binding-ClassBinding.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/class_instances-ClassInstances.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/class_properties-ClassProperties.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/const_bindings-ConstBindings.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/function_overload-FunctionOverload.Po@am__quote@
@@ -596,6 +611,20 @@ class_binding-ClassBinding.obj: $(sqrat_srcdir)/sqrattest/ClassBinding.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/ClassBinding.cpp' object='class_binding-ClassBinding.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(class_binding_CXXFLAGS) $(CXXFLAGS) -c -o class_binding-ClassBinding.obj `if test -f '$(sqrat_srcdir)/sqrattest/ClassBinding.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/ClassBinding.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/ClassBinding.cpp'; fi`
+
+class_instances-ClassInstances.o: $(sqrat_srcdir)/sqrattest/ClassInstances.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(class_instances_CXXFLAGS) $(CXXFLAGS) -MT class_instances-ClassInstances.o -MD -MP -MF $(DEPDIR)/class_instances-ClassInstances.Tpo -c -o class_instances-ClassInstances.o `test -f '$(sqrat_srcdir)/sqrattest/ClassInstances.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/ClassInstances.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/class_instances-ClassInstances.Tpo $(DEPDIR)/class_instances-ClassInstances.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/ClassInstances.cpp' object='class_instances-ClassInstances.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(class_instances_CXXFLAGS) $(CXXFLAGS) -c -o class_instances-ClassInstances.o `test -f '$(sqrat_srcdir)/sqrattest/ClassInstances.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/ClassInstances.cpp
+
+class_instances-ClassInstances.obj: $(sqrat_srcdir)/sqrattest/ClassInstances.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(class_instances_CXXFLAGS) $(CXXFLAGS) -MT class_instances-ClassInstances.obj -MD -MP -MF $(DEPDIR)/class_instances-ClassInstances.Tpo -c -o class_instances-ClassInstances.obj `if test -f '$(sqrat_srcdir)/sqrattest/ClassInstances.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/ClassInstances.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/ClassInstances.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/class_instances-ClassInstances.Tpo $(DEPDIR)/class_instances-ClassInstances.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/ClassInstances.cpp' object='class_instances-ClassInstances.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(class_instances_CXXFLAGS) $(CXXFLAGS) -c -o class_instances-ClassInstances.obj `if test -f '$(sqrat_srcdir)/sqrattest/ClassInstances.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/ClassInstances.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/ClassInstances.cpp'; fi`
 
 class_properties-ClassProperties.o: $(sqrat_srcdir)/sqrattest/ClassProperties.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(class_properties_CXXFLAGS) $(CXXFLAGS) -MT class_properties-ClassProperties.o -MD -MP -MF $(DEPDIR)/class_properties-ClassProperties.Tpo -c -o class_properties-ClassProperties.o `test -f '$(sqrat_srcdir)/sqrattest/ClassProperties.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/ClassProperties.cpp

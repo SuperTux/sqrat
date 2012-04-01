@@ -237,10 +237,21 @@ typedef std::basic_string<SQChar> string;
 template<>
 struct Var<SQChar*> {
     SQChar* value;
+    HSQOBJECT obj;/* hold a reference to the object holding value during the Var struct lifetime*/
+    HSQUIRRELVM v;
     Var(HSQUIRRELVM vm, SQInteger idx) {
         sq_tostring(vm, idx);
+        sq_getstackobj(vm, -1, &obj);
         sq_getstring(vm, -1, (const SQChar**)&value);
+        sq_addref(vm, &obj);
         sq_pop(vm,1);
+        v = vm;
+    }
+    ~Var()
+    {
+        if(v && !sq_isnull(obj)) {
+            sq_release(v, &obj);
+        }        
     }
     static void push(HSQUIRRELVM vm, SQChar* value) {
         sq_pushstring(vm, value, -1);
@@ -250,10 +261,21 @@ struct Var<SQChar*> {
 template<>
 struct Var<const SQChar*> {
     const SQChar* value;
+    HSQOBJECT obj; /* hold a reference to the object holding value during the Var struct lifetime*/
+    HSQUIRRELVM v;
     Var(HSQUIRRELVM vm, SQInteger idx) {
         sq_tostring(vm, idx);
+        sq_getstackobj(vm, -1, &obj);
         sq_getstring(vm, -1, &value);
+        sq_addref(vm, &obj);
         sq_pop(vm,1);
+        v = vm;
+    }
+    ~Var()
+    {
+        if(v && !sq_isnull(obj)) {
+            sq_release(v, &obj);
+        }        
     }
     static void push(HSQUIRRELVM vm, const SQChar* value) {
         sq_pushstring(vm, value, -1);
