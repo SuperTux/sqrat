@@ -477,14 +477,21 @@
 		counterparts.</p>
 
 		<h2 id="limitations">Limitations</h2>
-		<p>Note due to the design of the Squirrel API <A href="http://squirrel-lang.org/doc/squirrel3.html#sq_suspendvm">
+		<h3>Calling sq_suspendvm()</h3>
+		<p>Due to the design of the Squirrel API <A href="http://squirrel-lang.org/doc/squirrel3.html#sq_suspendvm">
 		sq_suspendvm()</A>, calling it from a
 		C++ function which is in turn called by Squirrel code will not suspend the VM successfully;
 		you can suspend a given VM by calling ::suspend() from Squirrel code.
 		(note from 
 		<A href="https://sourceforge.net/tracker/?func=detail&aid=3507590&group_id=261661&atid=2349886">SourceForge Bug 3507590</A>)
 		</p>
-		
+		<h3>Constructors with multiple arguments</h3>
+		<p>
+		Current Sqrat does not support binding C++ constructors with one or more arguments.  This is to be addressed in future versions. 
+		(note from 
+		<A href="https://sourceforge.net/tracker/?func=detail&aid=3514004&group_id=261661&atid=2349886">SourceForge Bug 3514004</A>)
+		</p>
+	
 	</div>
 	</body>
 </html>
