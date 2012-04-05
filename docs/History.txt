@@ -4,6 +4,9 @@ Version 0.8.2
 
 === Version History ===
 
+0.8.2   (04/04/2012)
+    * Minor documentation update
+    
 0.8.1.91 (04/01/2012)
     * note for Sourceforge Bug 3507590, documenting the limitations regarding 
       calling sq_suspendvm() from C++ functions exposed to Squirrel, suggested
