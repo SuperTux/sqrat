@@ -67,7 +67,7 @@ public:
 
         sq_pushstring(vm, overloadName.c_str(), -1);
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
-            return sq_throwerror(vm, "No overload matching this argument list found");// How to best appropriately error?
+            return sq_throwerror(vm, _SC("No overload matching this argument list found"));// How to best appropriately error?
         }
 
         // Push the args again
@@ -99,7 +99,7 @@ public:
 
         sq_pushstring(vm, overloadName.c_str(), -1);
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
-            return sq_throwerror(vm, "No overload matching this argument list found");// How to best appropriately error?
+            return sq_throwerror(vm, _SC("No overload matching this argument list found"));// How to best appropriately error?
         }
 
         // Push the args again
