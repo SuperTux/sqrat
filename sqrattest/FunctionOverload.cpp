@@ -44,6 +44,21 @@ int GlobalEcho(int val) {
     return val;
 }
 
+
+class StaticTestClass
+{
+public:
+    static int i1, i2;
+    
+    static void set(int a1) { i1 = a1; }
+    static void set(int a1, int a2) { i1 = a1; i2 = a2; }
+    static int get_i1() { return i1; }
+    static int get_i2() { return i2; }
+};
+
+int StaticTestClass::i1 = -1;
+int StaticTestClass::i2 = -1;
+
 TEST_F(SqratTest, OverloadedMemberFunction) {
     DefaultVM::Set(vm);
 
@@ -53,6 +68,14 @@ TEST_F(SqratTest, OverloadedMemberFunction) {
                      .Overload<int (Speaker::*)()>(_SC("Echo"), &Speaker::Echo)
                      .Overload<int (Speaker::*)(int)>(_SC("Echo"), &Speaker::Echo)
                     );
+    // static Member function overloads
+    RootTable().Bind(_SC("StaticTestClass"),
+                     Class<StaticTestClass>()
+                     .StaticOverload<void (*)(int)>(_SC("set"), &StaticTestClass::set)
+                     .StaticOverload<void (*)(int, int)>(_SC("set"), &StaticTestClass::set)
+                     .StaticFunc(_SC("get_i1"), &StaticTestClass::get_i1)
+                     .StaticFunc(_SC("get_i2"), &StaticTestClass::get_i2)
+                     );
 
     // Global Function overloads
     RootTable().Overload<int (*)()>(_SC("GlobalEcho"), &GlobalEcho);
@@ -68,6 +91,29 @@ TEST_F(SqratTest, OverloadedMemberFunction) {
 			gTest.EXPECT_INT_EQ(1, s.Echo(1)); \
 			gTest.EXPECT_INT_EQ(0, GlobalEcho()); \
 			gTest.EXPECT_INT_EQ(1, GlobalEcho(1)); \
+			"));
+    } catch(Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+
+    try {
+        script.CompileString(_SC(" \
+			s <- StaticTestClass(); \
+			\
+			gTest.EXPECT_INT_EQ(-1, s.get_i1()); \
+			gTest.EXPECT_INT_EQ(-1, s.get_i2()); \
+		    s.set(2); \
+			gTest.EXPECT_INT_EQ(2, s.get_i1()); \
+			gTest.EXPECT_INT_EQ(-1, s.get_i2()); \
+		    s.set(4, 6); \
+			gTest.EXPECT_INT_EQ(4, s.get_i1()); \
+			gTest.EXPECT_INT_EQ(6, s.get_i2()); \
 			"));
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
