@@ -2028,7 +2028,7 @@ void Test::Run() {
   if (!HasSameFixtureClass()) return;
 
   internal::UnitTestImpl* const impl = internal::GetUnitTestImpl();
-#if GTEST_OS_WINDOWS
+#if GTEST_OS_WINDOWS && !defined(__MINGW32__)
   // We are on Windows.
   impl->os_stack_trace_getter()->UponLeavingGTest();
   __try {
@@ -2262,7 +2262,7 @@ void TestInfoImpl::Run() {
   const TimeInMillis start = GetTimeInMillis();
 
   impl->os_stack_trace_getter()->UponLeavingGTest();
-#if GTEST_OS_WINDOWS
+#if GTEST_OS_WINDOWS && !defined(__MINGW32__)
   // We are on Windows.
   Test* test = NULL;
 
@@ -3349,7 +3349,7 @@ void UnitTest::RecordPropertyForCurrentTest(const char* key,
 // We don't protect this under mutex_, as we only support calling it
 // from the main thread.
 int UnitTest::Run() {
-#if GTEST_OS_WINDOWS
+#if GTEST_OS_WINDOWS && !defined(__MINGW32__)
 
   const bool in_death_test_child_process =
       internal::GTEST_FLAG(internal_run_death_test).GetLength() > 0;
