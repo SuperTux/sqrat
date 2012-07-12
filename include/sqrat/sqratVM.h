@@ -44,7 +44,10 @@ namespace Sqrat {
 class SqratVM
 {
 private:
-    static std::map<HSQUIRRELVM, SqratVM*> ms_sqratVMs;
+    //static std::map<HSQUIRRELVM, SqratVM*> ms_sqratVMs;
+    void setup_VMMaps();
+    static std::map<HSQUIRRELVM, SqratVM*> *ms_sqratVMs;
+    
     static void s_addVM(HSQUIRRELVM vm, SqratVM* sqratvm);
     static void s_deleteVM(HSQUIRRELVM vm);
     static SqratVM* s_getVM(HSQUIRRELVM vm);
@@ -83,6 +86,7 @@ public:
 
     ERROR_STATE doString(const Sqrat::string& str);
     ERROR_STATE doFile(const Sqrat::string& file);
+
 };
 
 
@@ -94,23 +98,30 @@ public:
     #define scvprintf vprintf
 #endif
 
+void SqratVM::setup_VMMaps()
+{   
+    if (ms_sqratVMs == 0)
+        ms_sqratVMs = new std::map<HSQUIRRELVM, SqratVM*> ;         
+    
+}
 
-std::map<HSQUIRRELVM, SqratVM*> SqratVM::ms_sqratVMs;
+//std::map<HSQUIRRELVM, SqratVM*> SqratVM::ms_sqratVMs;
+std::map<HSQUIRRELVM, SqratVM*> *SqratVM::ms_sqratVMs = 0;
 
 void SqratVM::s_addVM(HSQUIRRELVM vm, SqratVM* sqratvm)
 {
     //TODO: use mutex to lock ms_sqratVMs
-    ms_sqratVMs.insert(std::make_pair(vm, sqratvm));
+    (*ms_sqratVMs).insert(std::make_pair(vm, sqratvm));
 }
 void SqratVM::s_deleteVM(HSQUIRRELVM vm)
 {
     //TODO: use mutex to lock ms_sqratVMs
-    ms_sqratVMs.erase(vm);
+     (*ms_sqratVMs).erase(vm);
 }
 SqratVM* SqratVM::s_getVM(HSQUIRRELVM vm)
 {
     //TODO: use mutex to lock ms_sqratVMs
-    return ms_sqratVMs[vm];
+    return  (*ms_sqratVMs)[vm];
 }
 
 void SqratVM::printFunc(HSQUIRRELVM v, const SQChar *s, ...)
@@ -162,6 +173,7 @@ SqratVM::SqratVM(int initialStackSize /* = 1024 */)
     , m_script(new Sqrat::Script(m_vm))
     , m_lastErrorMsg()
 {
+    setup_VMMaps();
     s_addVM(m_vm, this);
 
     //register std libs
