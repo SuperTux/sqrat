@@ -47,14 +47,15 @@ TESTS = import_test$(EXEEXT) class_binding$(EXEEXT) \
 	const_bindings$(EXEEXT) function_overload$(EXEEXT) \
 	script_loading$(EXEEXT) squirrel_functions$(EXEEXT) \
 	table_binding$(EXEEXT) function_params$(EXEEXT) \
-	run_stack_handling$(EXEEXT) suspend_vm$(EXEEXT)
+	run_stack_handling$(EXEEXT) suspend_vm$(EXEEXT) \
+	sqrat_vm$(EXEEXT)
 noinst_PROGRAMS = sq_interp$(EXEEXT) import_test$(EXEEXT) \
 	class_binding$(EXEEXT) class_instances$(EXEEXT) \
 	class_properties$(EXEEXT) const_bindings$(EXEEXT) \
 	function_overload$(EXEEXT) script_loading$(EXEEXT) \
 	squirrel_functions$(EXEEXT) table_binding$(EXEEXT) \
 	function_params$(EXEEXT) run_stack_handling$(EXEEXT) \
-	suspend_vm$(EXEEXT)
+	suspend_vm$(EXEEXT) sqrat_vm$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -134,6 +135,12 @@ script_loading_LINK = $(CXXLD) $(script_loading_CXXFLAGS) $(CXXFLAGS) \
 am_sq_interp_OBJECTS = sq.$(OBJEXT)
 sq_interp_OBJECTS = $(am_sq_interp_OBJECTS)
 sq_interp_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_sqrat_vm_OBJECTS = sqrat_vm-SqratVM.$(OBJEXT) \
+	sqrat_vm-SqratVM2.$(OBJEXT)
+sqrat_vm_OBJECTS = $(am_sqrat_vm_OBJECTS)
+sqrat_vm_DEPENDENCIES = $(am__DEPENDENCIES_1)
+sqrat_vm_LINK = $(CXXLD) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_squirrel_functions_OBJECTS =  \
 	squirrel_functions-SquirrelFunctions.$(OBJEXT)
 squirrel_functions_OBJECTS = $(am_squirrel_functions_OBJECTS)
@@ -169,16 +176,18 @@ SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(const_bindings_SOURCES) $(function_overload_SOURCES) \
 	$(function_params_SOURCES) $(import_test_SOURCES) \
 	$(run_stack_handling_SOURCES) $(script_loading_SOURCES) \
-	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
-	$(suspend_vm_SOURCES) $(table_binding_SOURCES)
+	$(sq_interp_SOURCES) $(sqrat_vm_SOURCES) \
+	$(squirrel_functions_SOURCES) $(suspend_vm_SOURCES) \
+	$(table_binding_SOURCES)
 DIST_SOURCES = $(libgtest_a_SOURCES) $(libsqratimport_a_SOURCES) \
 	$(libsqrattestmain_a_SOURCES) $(class_binding_SOURCES) \
 	$(class_instances_SOURCES) $(class_properties_SOURCES) \
 	$(const_bindings_SOURCES) $(function_overload_SOURCES) \
 	$(function_params_SOURCES) $(import_test_SOURCES) \
 	$(run_stack_handling_SOURCES) $(script_loading_SOURCES) \
-	$(sq_interp_SOURCES) $(squirrel_functions_SOURCES) \
-	$(suspend_vm_SOURCES) $(table_binding_SOURCES)
+	$(sq_interp_SOURCES) $(sqrat_vm_SOURCES) \
+	$(squirrel_functions_SOURCES) $(suspend_vm_SOURCES) \
+	$(table_binding_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -346,7 +355,8 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
     $(ORIGPATH)/include/sqrat/sqratTable.h\
     $(ORIGPATH)/include/sqrat/sqratTypes.h\
     $(ORIGPATH)/include/sqrat/sqratUtil.h\
-    $(ORIGPATH)/include/sqrat/sqratVM.h
+    $(ORIGPATH)/include/sqrat/sqratVM.h \
+    $(ORIGPATH)/include/sqrat/sqratext_Ref.h
 
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
 sq_interp_LDADD = -L$(sqrat_builddir) -lsqratimport $(LDADD) -ldl
@@ -392,6 +402,9 @@ run_stack_handling_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD)
 suspend_vm_SOURCES = $(sqrat_srcdir)/sqrattest/SuspendVM.cpp 
 suspend_vm_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 suspend_vm_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+sqrat_vm_SOURCES = $(sqrat_srcdir)/sqrattest/SqratVM.cpp $(sqrat_srcdir)/sqrattest/SqratVM2.cpp
+sqrat_vm_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+sqrat_vm_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -479,6 +492,9 @@ script_loading$(EXEEXT): $(script_loading_OBJECTS) $(script_loading_DEPENDENCIES
 sq_interp$(EXEEXT): $(sq_interp_OBJECTS) $(sq_interp_DEPENDENCIES) 
 	@rm -f sq_interp$(EXEEXT)
 	$(LINK) $(sq_interp_OBJECTS) $(sq_interp_LDADD) $(LIBS)
+sqrat_vm$(EXEEXT): $(sqrat_vm_OBJECTS) $(sqrat_vm_DEPENDENCIES) 
+	@rm -f sqrat_vm$(EXEEXT)
+	$(sqrat_vm_LINK) $(sqrat_vm_OBJECTS) $(sqrat_vm_LDADD) $(LIBS)
 squirrel_functions$(EXEEXT): $(squirrel_functions_OBJECTS) $(squirrel_functions_DEPENDENCIES) 
 	@rm -f squirrel_functions$(EXEEXT)
 	$(squirrel_functions_LINK) $(squirrel_functions_OBJECTS) $(squirrel_functions_LDADD) $(LIBS)
@@ -508,6 +524,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/run_stack_handling-RunStackHandling.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/script_loading-ScriptLoading.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sq.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqrat_vm-SqratVM.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqrat_vm-SqratVM2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqratimport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/squirrel_functions-SquirrelFunctions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suspend_vm-SuspendVM.Po@am__quote@
@@ -736,6 +754,34 @@ script_loading-ScriptLoading.obj: $(sqrat_srcdir)/sqrattest/ScriptLoading.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/ScriptLoading.cpp' object='script_loading-ScriptLoading.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(script_loading_CXXFLAGS) $(CXXFLAGS) -c -o script_loading-ScriptLoading.obj `if test -f '$(sqrat_srcdir)/sqrattest/ScriptLoading.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/ScriptLoading.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/ScriptLoading.cpp'; fi`
+
+sqrat_vm-SqratVM.o: $(sqrat_srcdir)/sqrattest/SqratVM.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -MT sqrat_vm-SqratVM.o -MD -MP -MF $(DEPDIR)/sqrat_vm-SqratVM.Tpo -c -o sqrat_vm-SqratVM.o `test -f '$(sqrat_srcdir)/sqrattest/SqratVM.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/SqratVM.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sqrat_vm-SqratVM.Tpo $(DEPDIR)/sqrat_vm-SqratVM.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/SqratVM.cpp' object='sqrat_vm-SqratVM.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -c -o sqrat_vm-SqratVM.o `test -f '$(sqrat_srcdir)/sqrattest/SqratVM.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/SqratVM.cpp
+
+sqrat_vm-SqratVM.obj: $(sqrat_srcdir)/sqrattest/SqratVM.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -MT sqrat_vm-SqratVM.obj -MD -MP -MF $(DEPDIR)/sqrat_vm-SqratVM.Tpo -c -o sqrat_vm-SqratVM.obj `if test -f '$(sqrat_srcdir)/sqrattest/SqratVM.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/SqratVM.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/SqratVM.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sqrat_vm-SqratVM.Tpo $(DEPDIR)/sqrat_vm-SqratVM.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/SqratVM.cpp' object='sqrat_vm-SqratVM.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -c -o sqrat_vm-SqratVM.obj `if test -f '$(sqrat_srcdir)/sqrattest/SqratVM.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/SqratVM.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/SqratVM.cpp'; fi`
+
+sqrat_vm-SqratVM2.o: $(sqrat_srcdir)/sqrattest/SqratVM2.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -MT sqrat_vm-SqratVM2.o -MD -MP -MF $(DEPDIR)/sqrat_vm-SqratVM2.Tpo -c -o sqrat_vm-SqratVM2.o `test -f '$(sqrat_srcdir)/sqrattest/SqratVM2.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/SqratVM2.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sqrat_vm-SqratVM2.Tpo $(DEPDIR)/sqrat_vm-SqratVM2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/SqratVM2.cpp' object='sqrat_vm-SqratVM2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -c -o sqrat_vm-SqratVM2.o `test -f '$(sqrat_srcdir)/sqrattest/SqratVM2.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/SqratVM2.cpp
+
+sqrat_vm-SqratVM2.obj: $(sqrat_srcdir)/sqrattest/SqratVM2.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -MT sqrat_vm-SqratVM2.obj -MD -MP -MF $(DEPDIR)/sqrat_vm-SqratVM2.Tpo -c -o sqrat_vm-SqratVM2.obj `if test -f '$(sqrat_srcdir)/sqrattest/SqratVM2.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/SqratVM2.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/SqratVM2.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sqrat_vm-SqratVM2.Tpo $(DEPDIR)/sqrat_vm-SqratVM2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(sqrat_srcdir)/sqrattest/SqratVM2.cpp' object='sqrat_vm-SqratVM2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sqrat_vm_CXXFLAGS) $(CXXFLAGS) -c -o sqrat_vm-SqratVM2.obj `if test -f '$(sqrat_srcdir)/sqrattest/SqratVM2.cpp'; then $(CYGPATH_W) '$(sqrat_srcdir)/sqrattest/SqratVM2.cpp'; else $(CYGPATH_W) '$(srcdir)/$(sqrat_srcdir)/sqrattest/SqratVM2.cpp'; fi`
 
 squirrel_functions-SquirrelFunctions.o: $(sqrat_srcdir)/sqrattest/SquirrelFunctions.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(squirrel_functions_CXXFLAGS) $(CXXFLAGS) -MT squirrel_functions-SquirrelFunctions.o -MD -MP -MF $(DEPDIR)/squirrel_functions-SquirrelFunctions.Tpo -c -o squirrel_functions-SquirrelFunctions.o `test -f '$(sqrat_srcdir)/sqrattest/SquirrelFunctions.cpp' || echo '$(srcdir)/'`$(sqrat_srcdir)/sqrattest/SquirrelFunctions.cpp
