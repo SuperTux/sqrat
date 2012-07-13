@@ -418,6 +418,13 @@ public:
         PushVar(vm, a12);
 
         SQRESULT result = sq_call(vm, 13, true, ErrorHandling::IsEnabled());
+
+        //handle an error: only pop a single element and throw the exception
+        if(SQ_FAILED(result)) {
+            sq_pop(vm, 1);
+            throw Exception(LastErrorString(vm));
+        }
+        
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
