@@ -269,7 +269,8 @@ SQRESULT sqrat_import(HSQUIRRELVM v) {
 
     sq_settop(v, 0); // Clean up the stack (just in case the module load leaves it messy)
     sq_pushobject(v, table); // return the target table
-
+    sq_release(v, &table);
+    
     return res;
 }
 
