@@ -30,17 +30,17 @@
 #include <time.h>
 #include <string.h>
 
-HSQAPI sq;
+static HSQAPI sq;
 
 //
 // Thread lib utility functions (not visible externally)
 //
 
-SQFloat sqrat_clock() {
+static SQFloat sqrat_clock() {
     return ((SQFloat)clock())/(SQFloat)CLOCKS_PER_SEC;
 }
 
-SQInteger sqrat_strlen(const SQChar* str) {
+static SQInteger sqrat_strlen(const SQChar* str) {
 #if defined(_UNICODE)
     return static_cast<SQInteger>(wcslen(str) * sizeof(SQChar));
 #else
@@ -48,7 +48,7 @@ SQInteger sqrat_strlen(const SQChar* str) {
 #endif
 }
 
-void sqrat_pushtaskarray(HSQUIRRELVM v) {
+static void sqrat_pushtaskarray(HSQUIRRELVM v) {
     HSQOBJECT taskarray;
 
     sq->pushroottable(v);
@@ -67,7 +67,7 @@ void sqrat_pushtaskarray(HSQUIRRELVM v) {
     }
 }
 
-SQRESULT sqrat_pushclosure(HSQUIRRELVM v, const SQChar* script) {
+static SQRESULT sqrat_pushclosure(HSQUIRRELVM v, const SQChar* script) {
     if(SQ_FAILED(sq->compilebuffer(v, script, sqrat_strlen(script), _SC(""), true))) {
         return SQ_ERROR;
     }
@@ -81,7 +81,7 @@ SQRESULT sqrat_pushclosure(HSQUIRRELVM v, const SQChar* script) {
     return SQ_OK;
 }
 
-SQInteger sqrat_schedule_argcall(HSQUIRRELVM v) {
+static SQInteger sqrat_schedule_argcall(HSQUIRRELVM v) {
     SQInteger nparams = sq->gettop(v) - 2; // Get the number of parameters provided
 
     // The task table is the last argument (free variable), so we can operate on immediately
@@ -100,7 +100,7 @@ SQInteger sqrat_schedule_argcall(HSQUIRRELVM v) {
 }
 
 // This is a horrid way to get this functionality in there, but I can't find any alternatives right now.
-SQRESULT sqrat_pushsleep(HSQUIRRELVM v) {
+static SQRESULT sqrat_pushsleep(HSQUIRRELVM v) {
     SQChar* sleep_script = _SC(" \
 		__sqratsleep__ <- function(timeout) { \
 			local begin = clock(); \
@@ -136,7 +136,7 @@ SQRESULT sqrat_pushsleep(HSQUIRRELVM v) {
 // Thread lib main functions
 //
 
-SQRESULT sqrat_sleep(HSQUIRRELVM v, SQFloat timeout) {
+static SQRESULT sqrat_sleep(HSQUIRRELVM v, SQFloat timeout) {
     return sq->suspendvm(v);
 
     // Get "::suspend"
@@ -165,7 +165,7 @@ SQRESULT sqrat_sleep(HSQUIRRELVM v, SQFloat timeout) {
     return SQ_OK;*/
 }
 
-void sqrat_schedule(HSQUIRRELVM v, SQInteger idx) {
+static void sqrat_schedule(HSQUIRRELVM v, SQInteger idx) {
     HSQOBJECT thread;
     HSQOBJECT func;
     HSQOBJECT task;
@@ -200,7 +200,7 @@ void sqrat_schedule(HSQUIRRELVM v, SQInteger idx) {
 
 // Wow... this has to be one of the ugliest functions I've ever writter. Ever.
 // Building complex logic with the squirrel stack really sucks.
-void sqrat_run(HSQUIRRELVM v) {
+static void sqrat_run(HSQUIRRELVM v) {
 
     HSQOBJECT taskArray;
     HSQOBJECT thread;
@@ -303,19 +303,19 @@ void sqrat_run(HSQUIRRELVM v) {
 // Script interface functions
 //
 
-SQInteger sqratbase_sleep(HSQUIRRELVM v) {
+static SQInteger sqratbase_sleep(HSQUIRRELVM v) {
     SQFloat timeout;
     sq->getfloat(v, -1, &timeout);
     sqrat_sleep(v, timeout);
     return 0;
 }
 
-SQInteger sqratbase_schedule(HSQUIRRELVM v) {
+static SQInteger sqratbase_schedule(HSQUIRRELVM v) {
     sqrat_schedule(v, -1);
     return 1;
 }
 
-SQInteger sqratbase_run(HSQUIRRELVM v) {
+static SQInteger sqratbase_run(HSQUIRRELVM v) {
     sqrat_run(v);
     return 0;
 }
@@ -323,7 +323,7 @@ SQInteger sqratbase_run(HSQUIRRELVM v) {
 // This is a squirrel only function, since there's really no need to
 // expose a native api for it. Just use the VM that you would have passed
 // in anyway!
-SQInteger sqratbase_getthread(HSQUIRRELVM v) {
+static SQInteger sqratbase_getthread(HSQUIRRELVM v) {
     // For the record, this way of doing things really sucks.
     // I would love a better way of retrieving this object!
     HSQOBJECT threadObj;

@@ -44,11 +44,11 @@
 
 typedef SQRESULT (*SQMODULELOAD)(HSQUIRRELVM v, HSQAPI sq);
 
-HSQAPI sqapi = NULL;
+static HSQAPI sqapi = NULL;
 
 // Create and populate the HSQAPI structure with function pointers
 // If new functions are added to the Squirrel API, they should be added here too
-HSQAPI sqrat_newapi() {
+static HSQAPI sqrat_newapi() {
     HSQAPI sq = (HSQAPI)sq_malloc(sizeof(sq_api));
 
     /*vm*/
@@ -191,11 +191,11 @@ HSQAPI sqrat_newapi() {
     return sq;
 }
 
-void sqrat_deleteapi(HSQAPI sq) {
+static void sqrat_deleteapi(HSQAPI sq) {
     sq_free(sq, sizeof(sq_api));
 }
 
-SQRESULT sqrat_importscript(HSQUIRRELVM v, const SQChar* moduleName) {
+static SQRESULT sqrat_importscript(HSQUIRRELVM v, const SQChar* moduleName) {
     std::basic_string<SQChar> filename(moduleName);
     filename += _SC(".nut");
     if(SQ_FAILED(sqstd_loadfile(v, moduleName, true))) {
@@ -208,7 +208,7 @@ SQRESULT sqrat_importscript(HSQUIRRELVM v, const SQChar* moduleName) {
     return SQ_OK;
 }
 
-SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
+static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
     SQMODULELOAD modLoad = 0;
 
 #if defined(_WIN32)
@@ -273,7 +273,7 @@ SQRESULT sqrat_import(HSQUIRRELVM v) {
     return res;
 }
 
-SQInteger sqratbase_import(HSQUIRRELVM v) {
+static SQInteger sqratbase_import(HSQUIRRELVM v) {
     SQInteger args = sq_gettop(v);
     switch(args) {
     case 2:
