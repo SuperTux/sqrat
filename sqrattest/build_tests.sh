@@ -24,7 +24,8 @@ TEST_CPPS="ClassBinding.cpp\
     TableBinding.cpp\
     FunctionParams.cpp \
     RunStackHandling.cpp \
-    SuspendVM.cpp "
+    SuspendVM.cpp \
+    NullPointerReturn.cpp"
 
 for f in $TEST_CPPS; do
     gcc $CFLAGS \

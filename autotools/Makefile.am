@@ -32,11 +32,10 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
 
 TESTS = import_test \
     class_binding class_instances class_properties const_bindings function_overload\
-    script_loading squirrel_functions table_binding function_params run_stack_handling suspend_vm sqrat_vm
+    script_loading squirrel_functions table_binding function_params run_stack_handling suspend_vm sqrat_vm \
+    null_pointer_return
     
-noinst_PROGRAMS = sq_interp import_test \
-    class_binding class_instances class_properties const_bindings function_overload\
-    script_loading squirrel_functions table_binding function_params run_stack_handling suspend_vm sqrat_vm
+noinst_PROGRAMS = sq_interp $(TESTS)
 
 sq_interp_SOURCES = $(sqrat_srcdir)/sq/sq.c
 sq_interp_LDADD = -L$(sqrat_builddir) -lsqratimport $(LDADD) -ldl
@@ -101,5 +100,9 @@ suspend_vm_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD)
 sqrat_vm_SOURCES = $(sqrat_srcdir)/sqrattest/SqratVM.cpp $(sqrat_srcdir)/sqrattest/SqratVM2.cpp
 sqrat_vm_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 sqrat_vm_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+
+null_pointer_return_SOURCES = $(sqrat_srcdir)/sqrattest/SqratVM.cpp $(sqrat_srcdir)/sqrattest/NullPointerReturn.cpp
+null_pointer_return_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+null_pointer_return_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
 
