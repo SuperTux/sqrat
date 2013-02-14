@@ -33,7 +33,7 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
 TESTS = import_test \
     class_binding class_instances class_properties const_bindings function_overload\
     script_loading squirrel_functions table_binding function_params run_stack_handling suspend_vm sqrat_vm \
-    null_pointer_return
+    null_pointer_return func_input_argument_type
     
 noinst_PROGRAMS = sq_interp $(TESTS)
 
@@ -105,4 +105,7 @@ null_pointer_return_SOURCES = $(sqrat_srcdir)/sqrattest/SqratVM.cpp $(sqrat_srcd
 null_pointer_return_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 null_pointer_return_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
+func_input_argument_type_SOURCES = $(sqrat_srcdir)/sqrattest/SqratVM.cpp $(sqrat_srcdir)/sqrattest/FuncInputArgumentType.cpp
+func_input_argument_type_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
+func_input_argument_type_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
