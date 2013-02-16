@@ -51,11 +51,30 @@ public:
         return (*this) + v; //it crashes right here as it references to an nonexistent obj
     }
 
+    
+    bool boolFunc() 
+    {
+        return true;
+    }
+    
+    bool boolFunc2() 
+    {
+        return false;
+    }
+    
 };
 
 static const char *sq_code = "\
     local v = Vector2();\
     local v2 = Vector2();\
+    \
+    local b = v2.boolFunc(); \
+    \
+    print (b) ; \
+    b = v2.boolFunc2(); \
+    \
+    print (b) ; \
+    \
     v.add(v2); /*good*/  \
     print(\"1\");\
     v.add(10); /*crash*/  \
@@ -69,9 +88,14 @@ static const char *sq_code = "\
 static const char *sq_code0 = "\
     local v = Vector2();\
     local v2 = Vector2();\
-    v.add(v2); /*good*/  \
-    print(\"1\");\
-    v.add(10); /*crash*/  \
+    \
+    local b = v2.boolFunc(); \
+    \
+	gTest.EXPECT_TRUE(b); \
+    b = v2.boolFunc2(); \
+    \
+	gTest.EXPECT_FALSE(b); \
+    \
        ";
 
 
@@ -83,6 +107,8 @@ TEST_F(SqratTest, FuncInputArgumentType) {
     
     classVector2.Func("add", &Vector2::add);
     
+    classVector2.Func("boolFunc", &Vector2::boolFunc);
+    classVector2.Func("boolFunc2", &Vector2::boolFunc2);
     Sqrat::RootTable(vm).Bind("Vector2", classVector2);
             
     Script script;

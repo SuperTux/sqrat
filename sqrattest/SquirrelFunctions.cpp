@@ -40,6 +40,12 @@ TEST_F(SqratTest, CallSquirrelFunction) {
 			function MultiplyTwo(a, b) { \
 				return a * b; \
 			} \
+			function returnTrue() { \
+			    return true; \
+			}\
+			function returnFalse() { \
+			    return false; \
+			}\
 			"));
     } catch(Exception ex) {
         FAIL() << _SC("Script Compile Failed: ") << ex.Message();
@@ -60,6 +66,17 @@ TEST_F(SqratTest, CallSquirrelFunction) {
     Function multiplyTwo = RootTable().GetFunction(_SC("MultiplyTwo"));
     ASSERT_FALSE(multiplyTwo.IsNull());
     EXPECT_EQ(multiplyTwo.Evaluate<int>(2, 3), 6);
+    
+    Function returnTrue = RootTable().GetFunction(_SC("returnTrue"));
+    ASSERT_FALSE(returnTrue.IsNull());
+    ASSERT_TRUE(returnTrue.Evaluate<bool>());
+    ASSERT_TRUE(returnTrue.Evaluate<SQBool>());
+ 
+    Function returnFalse = RootTable().GetFunction(_SC("returnFalse"));
+    ASSERT_FALSE(returnFalse.IsNull());
+    ASSERT_FALSE(returnFalse.Evaluate<bool>());
+    ASSERT_FALSE(returnFalse.Evaluate<SQBool>());
+
 }
 
 int NativeOp(int a, int b, Function opFunc) {
