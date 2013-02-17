@@ -233,6 +233,7 @@ struct Var<const bool&> {
     }
 };
 
+#if defined(_SQ64)
 template<>
 struct Var<SQBool> {
     bool value;
@@ -271,6 +272,7 @@ struct Var<const SQBool&> {
         sq_pushbool(vm, (value));
     }
 };
+#endif
 
 // String Types
 typedef std::basic_string<SQChar> string;
