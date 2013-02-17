@@ -101,9 +101,22 @@ struct Var<const T*> {
  struct Var<type> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQInteger sqValue; \
-         sq_getinteger(vm, idx, &sqValue); \
-         value = static_cast<type>(sqValue); \
+         SQObjectType value_type = sq_gettype(vm, idx); \
+         switch(value_type) {\
+         case OT_BOOL:\
+             SQBool sqValueb; \
+             sq_getbool(vm, idx, &sqValueb); \
+             value = static_cast<type>(sqValueb); \
+             break; \
+         case OT_INTEGER: \
+             SQInteger sqValue; \
+             sq_getinteger(vm, idx, &sqValue); \
+             value = static_cast<type>(sqValue); \
+             break;\
+         default:\
+             /* TO DO */ \
+             break; \
+         }\
      } \
      static void push(HSQUIRRELVM vm, type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -144,6 +157,8 @@ SCRAT_INTEGER(unsigned short)
 SCRAT_INTEGER(signed short)
 SCRAT_INTEGER(unsigned char)
 SCRAT_INTEGER(signed char)
+SCRAT_INTEGER(unsigned long long)
+SCRAT_INTEGER(signed long long)
 
 #if defined(__int64)
 SCRAT_INTEGER(unsigned __int64)

@@ -70,12 +70,12 @@ TEST_F(SqratTest, CallSquirrelFunction) {
     Function returnTrue = RootTable().GetFunction(_SC("returnTrue"));
     ASSERT_FALSE(returnTrue.IsNull());
     ASSERT_TRUE(returnTrue.Evaluate<bool>());
-    //ASSERT_TRUE(returnTrue.Evaluate<SQBool>()); /* no fix for this at the current time */ /* use bool in place of SQBool */
+    ASSERT_TRUE(returnTrue.Evaluate<SQBool>()); 
  
     Function returnFalse = RootTable().GetFunction(_SC("returnFalse"));
     ASSERT_FALSE(returnFalse.IsNull());
     ASSERT_FALSE(returnFalse.Evaluate<bool>());
-    //ASSERT_FALSE(returnFalse.Evaluate<SQBool>());  /* no fix for this at the current time */ /* use bool in place of SQBool */
+    ASSERT_FALSE(returnFalse.Evaluate<SQBool>());  
  
 }
 
