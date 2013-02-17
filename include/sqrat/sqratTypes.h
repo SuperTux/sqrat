@@ -233,47 +233,6 @@ struct Var<const bool&> {
     }
 };
 
-#if defined(_SQ64)
-template<>
-struct Var<SQBool> {
-    bool value;
-    Var(HSQUIRRELVM vm, SQInteger idx) {
-        SQBool sqValue;
-        sq_tobool(vm, idx, &sqValue);
-        value = (sqValue != 0);
-    }
-    static void push(HSQUIRRELVM vm, SQBool& value) {
-        sq_pushbool(vm, (value));
-    }
-};
-
-template<>
-struct Var<const SQBool> {
-    bool value;
-    Var(HSQUIRRELVM vm, SQInteger idx) {
-        SQBool sqValue;
-        sq_tobool(vm, idx, &sqValue);
-        value = (sqValue != 0);
-    }
-    static void push(HSQUIRRELVM vm, const SQBool& value) {
-        sq_pushbool(vm, (value));
-    }
-};
-
-template<>
-struct Var<const SQBool&> {
-    bool value;
-    Var(HSQUIRRELVM vm, SQInteger idx) {
-        SQBool sqValue;
-        sq_tobool(vm, idx, &sqValue);
-        value = (sqValue != 0);
-    }
-    static void push(HSQUIRRELVM vm, const SQBool& value) {
-        sq_pushbool(vm, (value));
-    }
-};
-#endif
-
 // String Types
 typedef std::basic_string<SQChar> string;
 
