@@ -84,7 +84,7 @@ static const char *sq_code = "\
     v.add(\"text\"); /*crash*/  \
     print(\"4\");\
        ";
-
+/* crash cases work TO DO */
 static const char *sq_code0 = "\
     local v = Vector2();\
     local v2 = Vector2();\
@@ -92,9 +92,13 @@ static const char *sq_code0 = "\
     local b = v2.boolFunc(); \
     \
 	gTest.EXPECT_TRUE(b); \
+	gTest.EXPECT_INT_EQ(b, 1); \
+	gTest.EXPECT_FLOAT_EQ(b, 1.0); \
     b = v2.boolFunc2(); \
     \
 	gTest.EXPECT_FALSE(b); \
+	gTest.EXPECT_INT_EQ(b, 0); \
+	gTest.EXPECT_FLOAT_EQ(b, 0.0); \
     \
        ";
 

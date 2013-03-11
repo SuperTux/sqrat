@@ -262,6 +262,15 @@ protected:
 };
 
 
+template<>
+inline void Object::BindValue<int>(const SQChar* name, const int & val, bool staticVar /* = false */) {
+    sq_pushobject(vm, GetObject());
+    sq_pushstring(vm, name, -1);
+    PushVar<int>(vm, val);
+    sq_newslot(vm, -3, staticVar);
+    sq_pop(vm,1); // pop table
+}
+
 //
 // Overridden Getter/Setter
 //

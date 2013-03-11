@@ -113,6 +113,11 @@ struct Var<const T*> {
              sq_getinteger(vm, idx, &sqValue); \
              value = static_cast<type>(sqValue); \
              break;\
+         case OT_FLOAT:\
+             SQFloat sqValuef; \
+             sq_getfloat(vm, idx, &sqValuef); \
+             value = static_cast<type>(sqValuef); \
+             break;\
          default:\
              /* TO DO */ \
              break; \
@@ -127,9 +132,27 @@ struct Var<const T*> {
  struct Var<const type> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQInteger sqValue; \
-         sq_getinteger(vm, idx, &sqValue); \
-         value = static_cast<type>(sqValue); \
+         SQObjectType value_type = sq_gettype(vm, idx); \
+         switch(value_type) {\
+         case OT_BOOL:\
+             SQBool sqValueb; \
+             sq_getbool(vm, idx, &sqValueb); \
+             value = static_cast<type>(sqValueb); \
+             break; \
+         case OT_INTEGER: \
+             SQInteger sqValue; \
+             sq_getinteger(vm, idx, &sqValue); \
+             value = static_cast<type>(sqValue); \
+             break;\
+         case OT_FLOAT:\
+             SQFloat sqValuef; \
+             sq_getfloat(vm, idx, &sqValuef); \
+             value = static_cast<type>(sqValuef); \
+             break;\
+         default:\
+             /* TO DO */ \
+             break; \
+         }\
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -140,9 +163,27 @@ struct Var<const T*> {
  struct Var<const type&> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQInteger sqValue; \
-         sq_getinteger(vm, idx, &sqValue); \
-         value = static_cast<type>(sqValue); \
+         SQObjectType value_type = sq_gettype(vm, idx); \
+         switch(value_type) {\
+         case OT_BOOL:\
+             SQBool sqValueb; \
+             sq_getbool(vm, idx, &sqValueb); \
+             value = static_cast<type>(sqValueb); \
+             break; \
+         case OT_INTEGER: \
+             SQInteger sqValue; \
+             sq_getinteger(vm, idx, &sqValue); \
+             value = static_cast<type>(sqValue); \
+             break;\
+         case OT_FLOAT:\
+             SQFloat sqValuef; \
+             sq_getfloat(vm, idx, &sqValuef); \
+             value = static_cast<type>(sqValuef); \
+             break;\
+         default:\
+             /* TO DO */ \
+             break; \
+         }\
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -184,9 +225,27 @@ SCRAT_INTEGER(signed __int64)
  struct Var<const type> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQFloat sqValue; \
-         sq_getfloat(vm, idx, &sqValue); \
-         value = static_cast<type>(sqValue); \
+         SQObjectType value_type = sq_gettype(vm, idx); \
+         switch(value_type) {\
+         case OT_BOOL:\
+             SQBool sqValueb; \
+             sq_getbool(vm, idx, &sqValueb); \
+             value = static_cast<type>(sqValueb); \
+             break; \
+         case OT_INTEGER: \
+             SQInteger sqValue; \
+             sq_getinteger(vm, idx, &sqValue); \
+             value = static_cast<type>(sqValue); \
+             break;\
+         case OT_FLOAT:\
+             SQFloat sqValuef; \
+             sq_getfloat(vm, idx, &sqValuef); \
+             value = static_cast<type>(sqValuef); \
+             break;\
+         default:\
+             /* TO DO */ \
+             break; \
+         }\
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushfloat(vm, static_cast<SQFloat>(value)); \
@@ -196,9 +255,27 @@ SCRAT_INTEGER(signed __int64)
  struct Var<const type&> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQFloat sqValue; \
-         sq_getfloat(vm, idx, &sqValue); \
-         value = static_cast<type>(sqValue); \
+         SQObjectType value_type = sq_gettype(vm, idx); \
+         switch(value_type) {\
+         case OT_BOOL:\
+             SQBool sqValueb; \
+             sq_getbool(vm, idx, &sqValueb); \
+             value = static_cast<type>(sqValueb); \
+             break; \
+         case OT_INTEGER: \
+             SQInteger sqValue; \
+             sq_getinteger(vm, idx, &sqValue); \
+             value = static_cast<type>(sqValue); \
+             break;\
+         case OT_FLOAT: \
+             SQFloat sqValuef; \
+             sq_getfloat(vm, idx, &sqValuef); \
+             value = static_cast<type>(sqValuef); \
+             break;\
+         default:\
+             /* TO DO */ \
+             break; \
+         }\
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushfloat(vm, static_cast<SQFloat>(value)); \
@@ -353,6 +430,13 @@ template<class T>
 inline void PushVar(HSQUIRRELVM vm, T value) {
     Var<T>::push(vm, value);
 }
+
+    
+/* special version for enum values */ 
+template<>
+inline void PushVar<int>(HSQUIRRELVM vm, int value) { 
+    Var<int>::push(vm, value);    
 }
 
+}
 #endif

@@ -106,6 +106,11 @@ public:
         return *this;
     }
 
+    Class& SetStaticValue(const SQChar* name, int val) {
+        BindValue<int>(name, val, true);
+        return *this;
+    }
+
     /**
         @param name    name of the slot
         @param var    value to assign
@@ -331,6 +336,7 @@ protected:
     }
 
 };
+
 
 /**
     @tparam    C    class type to expose
