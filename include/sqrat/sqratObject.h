@@ -184,6 +184,40 @@ public:
         sq_pop(vm, 1);
         return *this;
     }
+       
+    struct iterator
+    {
+        iterator()
+        {
+            Index = 0;
+            sq_resetobject(&Key);
+            sq_resetobject(&Value);
+            Key._type = OT_NULL;
+            Value._type = OT_NULL;
+        }
+        HSQOBJECT Key;
+        HSQOBJECT Value;
+        SQInteger Index;
+    };
+
+    bool Next(iterator& iter) const
+    {
+        sq_pushobject(vm,obj);
+        sq_pushinteger(vm,iter.Index);
+        if(SQ_SUCCEEDED(sq_next(vm,-2)))
+        {
+            sq_getstackobj(vm,-1,&iter.Value);
+            sq_getstackobj(vm,-2,&iter.Key);
+            sq_getinteger(vm,-3,&iter.Index);
+            sq_pop(vm,4);
+            return true;
+        }
+        else
+        {
+            sq_pop(vm,2);
+            return false;
+        }
+    }    
     
 protected:
     // Bind a function and it's associated Squirrel closure to the object
@@ -323,6 +357,7 @@ struct Var<const Object&> {
         sq_pushobject(vm, value.GetObject());
     }
 };
+
 
 }
 

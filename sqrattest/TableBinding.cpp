@@ -23,6 +23,7 @@
 
 #include <gtest/gtest.h>
 #include <sqrat.h>
+#include <iostream>
 #include "Fixture.h"
 
 using namespace Sqrat;
@@ -39,6 +40,18 @@ struct Person {
     string name;
     int age;
 };
+
+static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, const SQChar **str)
+{    
+    sq_pushobject(vm, obj);
+    sq_tostring(vm, -1);
+    SQRESULT res = sq_getstring(vm, -1, str);
+    bool r = SQ_SUCCEEDED(res);
+    if (r) 
+        sq_pop(vm,1);
+    return r;
+    
+}
 
 TEST_F(SqratTest, SimpleTableBinding) {
     DefaultVM::Set(vm);
@@ -70,6 +83,19 @@ TEST_F(SqratTest, SimpleTableBinding) {
     // Bind the table to the root table
     RootTable().Bind(_SC("Test"), test);
 
+    Table::iterator it;
+    SQChar *str1, *str2;
+
+    while (test.Next(it)) 
+    {
+        get_object_string(vm, it.Key, &str1);
+        get_object_string(vm, it.Value, &str2);
+        
+        std::cout << "Key: " 
+        << str1 << " Value: " 
+        << str2 << std::endl;
+    }
+        
     Script script;
 
     try {
