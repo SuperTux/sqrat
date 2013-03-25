@@ -40,6 +40,7 @@ namespace Sqrat {
 
 template <class C, class R>
 class SqMember {
+    static const char STATICCALLERROR[] ;
 public:
     // Arg Count 0
     static SQInteger Func0(HSQUIRRELVM vm) {
@@ -51,6 +52,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        
         R ret = (ptr->*method)();
 
         PushVar(vm, ret);
@@ -65,6 +68,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)();
 
@@ -83,6 +88,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value
                 );
@@ -100,6 +107,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value
@@ -120,6 +129,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value
@@ -138,6 +149,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -159,6 +172,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -178,6 +193,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -200,6 +217,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -220,6 +239,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -243,6 +264,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -264,6 +287,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -288,6 +313,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -310,6 +337,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -335,6 +364,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -358,6 +389,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -384,6 +417,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -408,6 +443,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -435,6 +472,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -460,6 +499,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -489,6 +530,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -515,6 +558,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -545,6 +590,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -572,6 +619,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -603,6 +652,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -631,6 +682,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -662,6 +715,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -691,6 +746,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -723,6 +780,8 @@ public:
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
 
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
                     Var<A2>(vm, 3).value,
@@ -753,6 +812,8 @@ public:
 
         C* ptr = NULL;
         sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+
+        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         R ret = (ptr->*method)(
                     Var<A1>(vm, 2).value,
@@ -1701,6 +1762,10 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
 
     return 0;
 }
+
+template <class C, class R>
+const char SqMember<C, R>::STATICCALLERROR[] = _SC("This function isn't static");
+
 }
 
 #endif
