@@ -88,8 +88,8 @@ TEST_F(SqratTest, SimpleTableBinding) {
 
     while (test.Next(it)) 
     {
-        get_object_string(vm, it.Key, &str1);
-        get_object_string(vm, it.Value, &str2);
+        get_object_string(vm, it.getKey(), &str1);
+        get_object_string(vm, it.getValue(), &str2);
         
         std::cout << "Key: " 
         << str1 << " Value: " 

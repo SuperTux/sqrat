@@ -187,6 +187,7 @@ public:
        
     struct iterator
     {
+        friend class Object;
         iterator()
         {
             Index = 0;
@@ -195,6 +196,10 @@ public:
             Key._type = OT_NULL;
             Value._type = OT_NULL;
         }
+        HSQOBJECT getKey() { return Key; }
+        HSQOBJECT getValue() { return Value; }
+    private:
+        
         HSQOBJECT Key;
         HSQOBJECT Value;
         SQInteger Index;
