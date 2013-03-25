@@ -78,6 +78,8 @@ public:
         /* it seems the original design by Tojo was that  ClassType objects are static
            so they presist with the lifetime of the program; so we cannot delete the
            ClassType object here */
+           /* however, they are associated with the vm so when the vm is closed the data structure should be
+           removed.  However there is no callback mechanism when the app calls sq_close() on an vm */
     }
 
     /// Get the Squirrel Object for this Class (const)
