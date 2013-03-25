@@ -30,6 +30,8 @@
 
 #include <squirrel.h>
 #include <string.h>
+
+#include "sqratAllocator.h"
 #include "sqratTypes.h"
 #include "sqratOverloadMethods.h"
 #include "sqratUtil.h"
@@ -174,7 +176,15 @@ public:
         sq_pop(vm, 1);
         return ret;
     }
-
+    
+    template <class C>
+    Object& SetReleaseHook(){
+        sq_pushobject(vm, GetObject());
+        sq_setreleasehook(vm, -1, &DefaultAllocator<C>::Delete);
+        sq_pop(vm, 1);
+        return *this;
+    }
+    
 protected:
     // Bind a function and it's associated Squirrel closure to the object
     inline void BindFunc(const SQChar* name, void* method, size_t methodSize, SQFUNCTION func, bool staticVar = false) {
