@@ -159,6 +159,16 @@ public:
     
 };
 
+class RegistryTable : public TableBase {
+public:
+    RegistryTable(HSQUIRRELVM v = DefaultVM::Get()) : TableBase(v) {
+        sq_pushregistrytable(v);
+        sq_getstackobj(vm,-1,&obj);
+        sq_addref(vm, &obj);
+        sq_pop(v,1); // pop the registry table
+    }
+};
+
 template<>
 struct Var<Table> {
     Table value;
