@@ -53,6 +53,11 @@ namespace Sqrat
 template<class C, class A = DefaultAllocator<C> >
 class Class : public Object
 {
+    static int cleanup_hook(SQUserPointer p, SQInteger size)
+    {
+        HSQUIRRELVM v = *(HSQUIRRELVM *) p;
+        ClassType<C>::deleteClassTypeData(v);
+    }
 public:
     /**
         @param v    Squirrel virtual machine to bind to
@@ -70,16 +75,20 @@ public:
 
             InitClass();
             ClassType<C>::Initialized(v) = true;
+
+            // install cleanuo hook 
+            HSQUIRRELVM *p = (HSQUIRRELVM *) sq_newuserdata(v, sizeof(v));
+            *p = v;
+            
+            sq_setreleasehook(v, -1, cleanup_hook);
+            // finish install cleanup hook
+
         }
     }
 
     ~Class() {
         /*ClassType<C>::deleteClassTypeData(vm);*/
-        /* it seems the original design by Tojo was that  ClassType objects are static
-           so they presist with the lifetime of the program; so we cannot delete the
-           ClassType object here */
-           /* however, they are associated with the vm so when the vm is closed the data structure should be
-           removed.  However there is no callback mechanism when the app calls sq_close() on an vm */
+        /* done in cleanup_hook */
     }
 
     /// Get the Squirrel Object for this Class (const)

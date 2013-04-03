@@ -45,10 +45,14 @@ static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, const SQChar **str)
 {    
     sq_pushobject(vm, obj);
     sq_tostring(vm, -1);
-    SQRESULT res = sq_getstring(vm, -1, str);
+    const SQChar *s;
+    SQRESULT res = sq_getstring(vm, -1, &s);
     bool r = SQ_SUCCEEDED(res);
     if (r) 
+    {
+        *str = strdup(s);
         sq_pop(vm,1);
+    }
     return r;
     
 }
@@ -88,12 +92,14 @@ TEST_F(SqratTest, SimpleTableBinding) {
 
     while (test.Next(it)) 
     {
-        get_object_string(vm, it.getKey(), &str1);
-        get_object_string(vm, it.getValue(), &str2);
+        EXPECT_TRUE(get_object_string(vm, it.getKey(), &str1));
+        EXPECT_TRUE(get_object_string(vm, it.getValue(), &str2));
         
         std::cout << "Key: " 
         << str1 << " Value: " 
         << str2 << std::endl;
+        free(str1);
+        free(str2);
     }
         
     Script script;
