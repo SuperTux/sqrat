@@ -53,10 +53,11 @@ namespace Sqrat
 template<class C, class A = DefaultAllocator<C> >
 class Class : public Object
 {
-    static int cleanup_hook(SQUserPointer p, SQInteger size)
+    static SQInteger cleanup_hook(SQUserPointer p, SQInteger size)
     {
         HSQUIRRELVM v = *(HSQUIRRELVM *) p;
         ClassType<C>::deleteClassTypeData(v);
+        return 1;
     }
 public:
     /**
