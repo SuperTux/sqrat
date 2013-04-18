@@ -132,7 +132,7 @@ private:
 public:
     enum ERROR_STATE
     {
-        NO_ERROR, COMPILE_ERROR, RUNTIME_ERROR
+        SQRAT_NO_ERROR, SQRAT_COMPILE_ERROR, SQRAT_RUNTIME_ERROR
     };
 
     SqratVM(int initialStackSize = 1024): m_vm(sq_open(initialStackSize))
@@ -207,7 +207,7 @@ public:
             {
                 m_lastErrorMsg = msg;
             }
-            return COMPILE_ERROR;
+            return SQRAT_COMPILE_ERROR;
         }
         if(!m_script->Run(msg))
         {
@@ -215,9 +215,9 @@ public:
             {
                 m_lastErrorMsg = msg;
             }
-            return RUNTIME_ERROR;
+            return SQRAT_RUNTIME_ERROR;
         }
-        return NO_ERROR;
+        return SQRAT_NO_ERROR;
     }
 
     ERROR_STATE doFile(const Sqrat::string& file)
@@ -230,7 +230,7 @@ public:
             {
                 m_lastErrorMsg = msg;
             }
-            return COMPILE_ERROR;
+            return SQRAT_COMPILE_ERROR;
         }
         if(!m_script->Run(msg))
         {
@@ -238,9 +238,9 @@ public:
             {
                 m_lastErrorMsg = msg;
             }
-            return RUNTIME_ERROR;
+            return SQRAT_RUNTIME_ERROR;
         }
-        return NO_ERROR;
+        return SQRAT_NO_ERROR;
     }
 
 };

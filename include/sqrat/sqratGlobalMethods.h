@@ -53,6 +53,18 @@ public:
         return 1;
     }
 
+    // Arg Count 0
+    static SQInteger Func2_0(HSQUIRRELVM vm) {
+        typedef R (*M)();
+        M* method;
+        sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
+
+        R& ret = (*method)();
+
+        PushVar(vm, ret);
+        return 1;
+    }
+
 
     // Arg Count 1
     template <class A1, SQInteger startIdx>
@@ -655,6 +667,12 @@ public:
 template <class R>
 SQFUNCTION SqGlobalFunc(R (*method)()) {
     return &SqGlobal<R>::Func0;
+}
+
+// Arg Count 0
+template <class R&>
+SQFUNCTION SqGlobalFunc(R& (*method)()) {
+    return &SqGlobal<R>::Func2_0;
 }
 
 // Arg Count 1
