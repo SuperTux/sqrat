@@ -151,9 +151,7 @@ TEST_F(SqratTest, InheritedClassBinding) {
 				} \
 			} \
 			\
-			print(\"begin\\n\"); \
 			c <- Cat(); \
-			print(\"just made a Cat\\n\"); \
 			d <- Dog(); \
 			m <- Mouse(); \
 			\

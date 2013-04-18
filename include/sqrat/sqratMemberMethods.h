@@ -1533,10 +1533,6 @@ inline SQFUNCTION SqMemberFunc(R (C::*method)() const) {
     return &SqMember<C, R>::Func0C;
 }
 
-template <class C, class R&>
-inline SQFUNCTION SqMemberFunc(R & (C::*method)()) {
-    return &SqMember<C, R>::Func2_0;
-}
 
 // Arg Count 1
 template <class C, class R, class A1>
