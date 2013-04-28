@@ -5,6 +5,9 @@ Version 0.8.2
 === Version History ===
 
 0.8.2.90 (04/27/2013) 
+    * fix for Sourceforge Sqrat Issue 20, patch from mccdo, adaption to avoid symbol conflict on Windows
+    * fix for SourceForge bug #19 cleanup_hook returns no value in latest revision (compile error)
+    * suggestion from george@oss3d.com, use a user data item to install a release hook to do cleanup at sq_close() on an VM.
     * patch from minimn in the Squirrel forum, expose the RegistryTable
     * patch from minimn in the Squirrel forum, checks for member functions used as static functions: iterator implementation for traversing table
     * patch from minimn in the Squirrel forum, checks for member functions used as static functions: now an exception if thrown if the this member is null
