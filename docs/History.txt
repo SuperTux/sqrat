@@ -4,6 +4,25 @@ Version 0.8.2
 
 === Version History ===
 
+0.8.2.90 (04/27/2013) 
+    * patch from minimn in the Squirrel forum, expose the RegistryTable
+    * patch from minimn in the Squirrel forum, checks for member functions used as static functions: iterator implementation for traversing table
+    * patch from minimn in the Squirrel forum, checks for member functions used as static functions: now an exception if thrown if the this member is null
+    * patch from minimn in the Squirrel forum, the ability to return tables and arrays
+    * patch from minimn in the Squirrel forum, object data release hook
+    * supports conversion of Squirrel value from boolean to integer at Var<>() value retrieval; fix for SourceForge Bug 13
+    * fix for SourceForge Bug 13, template specialization for SQBools  for Squirrel function returning a bool and called from C/C++
+    * fix for Sourceforge Bug  3600072, On function sqrat_import we aquire reference for table but doesn't release it before return
+    * fix for SourceForge Bug 3600073, name space pollution cleanup
+    * fix for SourceForge Bug 3603644, for crash on function with 8-bit char parameters
+    * fix from slaj in forum, for crash at null pointer to class instances, Sourceforge Bug 3603971
+    * patch from Dex in the Squirrel forum, fix for 'Function.Execute and Function.Evaluate does not handle exceptions'
+    * fix for Sourceforge Bug 3541330: Multiple definition error occurs on sqratVM.h
+    * Mingw32 related build support in google test, to allow build in 32-bit MingW on Windows
+    * adding GlobalOverload and StaticOverload, for binding
+      overload global or staic functions in a class, with working test case for
+      overloaded static class member function
+
 0.8.2   (04/04/2012)
     * Minor documentation update
     
