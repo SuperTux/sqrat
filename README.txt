@@ -1,7 +1,7 @@
 Sqrat - Squirrel Binding Utility
 
 © 2009 Brandon Jones
-© 2011 Li-Cheng (Andy) Tai
+© 2011-2013 Li-Cheng (Andy) Tai
 
 
 Sqrat is a C++ binding utility for the Squirrel language.
