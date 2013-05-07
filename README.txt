@@ -11,8 +11,10 @@ Sqrat only contains C++ headers so for installation you just
 need to copy the files in the include directory to 
 some common header path, such as /usr/local/include.
 
-However, an autotool based build system is included which 
-allows you to install, on POSIX systems, with the familiar
+However, an autotool based build system can be checked out from
+the SVN repository (not in the relase tar file to reduce file size)
+which  allows you to install, on POSIX systems, with 
+the familiar commands of 
 
 autotool/configure --prefix=<prefix path>
 make && make install
@@ -22,6 +24,9 @@ You can then run
 make check
 
 to run the unit tests.
+
+(Note: with gcc 4.8, you have to pass the -fpermissive flag
+via CXXFLAGS due to old code in Google test)
 
 Alternatively you can follow the steps in 
 running_tests.txt

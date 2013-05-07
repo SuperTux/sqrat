@@ -4,6 +4,9 @@ Version 0.8.2
 
 === Version History ===
 
+0.8.3 (05/06/2013)
+    * only documentation update from RC1
+
 0.8.2.90 (04/27/2013) 
     * fix for Sourceforge Sqrat Issue 20, patch from mccdo, adaption to avoid symbol conflict on Windows
     * fix for SourceForge bug #19 cleanup_hook returns no value in latest revision (compile error)
