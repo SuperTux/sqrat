@@ -41,7 +41,7 @@ struct Person {
     int age;
 };
 
-static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, const SQChar **str)
+static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, SQChar **str)
 {    
     sq_pushobject(vm, obj);
     sq_tostring(vm, -1);
