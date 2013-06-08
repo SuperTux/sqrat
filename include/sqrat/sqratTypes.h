@@ -43,7 +43,11 @@ namespace Sqrat {
 template<class T>
 struct Var {
     T value;
-    Var(HSQUIRRELVM vm, SQInteger idx) : value(*ClassType<T>::GetInstance(vm, idx)) {
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        // check if return is NULL here because copying (not referencing)
+        T* ptr = ClassType<T>::GetInstance(vm, idx);
+        if (ptr != NULL)
+            value = *ptr;
     }
     static void push(HSQUIRRELVM vm, T value) {
         ClassType<T>::PushInstanceCopy(vm, value);
@@ -55,7 +59,7 @@ struct Var<T&> {
     T& value;
     Var(HSQUIRRELVM vm, SQInteger idx) : value(*ClassType<T>::GetInstance(vm, idx)) {
     }
-    static void push(HSQUIRRELVM vm, T value) {
+    static void push(HSQUIRRELVM vm, T& value) {
         ClassType<T>::PushInstance(vm, &value);
     }
 };
@@ -75,7 +79,7 @@ struct Var<const T&> {
     const T& value;
     Var(HSQUIRRELVM vm, SQInteger idx) : value(*ClassType<T>::GetInstance(vm, idx)) {
     }
-    static void push(HSQUIRRELVM vm, T value) {
+    static void push(HSQUIRRELVM vm, const T& value) {
         ClassType<T>::PushInstanceCopy(vm, value);
     }
 };
@@ -85,8 +89,8 @@ struct Var<const T*> {
     const T* value;
     Var(HSQUIRRELVM vm, SQInteger idx) : value(ClassType<T>::GetInstance(vm, idx)) {
     }
-    static void push(HSQUIRRELVM vm, T* value) {
-        ClassType<T>::PushInstance(vm, value);
+    static void push(HSQUIRRELVM vm, const T* value) {
+        ClassType<T>::PushInstance(vm, const_cast<T*>(value));
     }
 };
 

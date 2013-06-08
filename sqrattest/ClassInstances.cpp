@@ -21,6 +21,7 @@
 //  distribution.
 //
 
+#include <iostream>
 #include <gtest/gtest.h>
 #include <sqrat.h>
 #include "Fixture.h"
@@ -156,3 +157,77 @@ TEST_F(SqratTest, ClassInstances) {
     EXPECT_EQ(steve->age, 34);
     EXPECT_FLOAT_EQ(steve->wage, 35.00f);
 }
+
+
+class B 
+{
+private:
+    int value;
+public:
+    B(): value(-1) {}
+    
+    int set(int v)
+    {
+        value = v;
+    }
+    int get()
+    {
+        //std::cout << "B's address is " << (long) this << std::endl;
+        return value;
+    }
+    
+    B& getB()
+    {
+        return *this;
+    }
+    
+    B* getBPtr()
+    {
+        return this;
+    }
+};
+
+TEST_F(SqratTest, InstanceReferences) {
+    DefaultVM::Set(vm);
+
+    Class<B> _B;
+    _B
+    .Func("set", &B::set)
+    .Func("get", &B::get)
+    .Func("getB", &B::getB)
+    .Func("getBPtr", &B::getBPtr);
+    
+    RootTable().Bind("B", _B);
+    
+    Script script;
+    try {
+        script.CompileString(_SC(" \
+            b <- B();\
+			gTest.EXPECT_INT_EQ(b.get(), -1); \
+            b.set(12);\
+			gTest.EXPECT_INT_EQ(b.get(), 12); \
+			local b1 = b.getBPtr();\
+            b.set(20);\
+			gTest.EXPECT_INT_EQ(b1.get(), 20); \
+			local b2 = b.getB();\
+            b.set(40);\
+			gTest.EXPECT_INT_EQ(b1.get(), 40); \
+			//gTest.EXPECT_INT_EQ(b2.get(), 40); \
+            \
+            "));
+    }
+    catch (Sqrat::Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    }
+    catch (Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+    
+}
+        
+    
+    
