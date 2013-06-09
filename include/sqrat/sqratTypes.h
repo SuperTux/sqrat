@@ -32,6 +32,7 @@
 #include <string>
 
 #include "sqratClassType.h"
+#include "sqratUtil.h"
 
 namespace Sqrat {
 
@@ -118,7 +119,8 @@ struct Var<const T*> {
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             /* TO DO */ \
+             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("integer"))); \
+             value = 0; \
              break; \
          }\
      } \
@@ -149,7 +151,8 @@ struct Var<const T*> {
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             /* TO DO */ \
+             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("integer"))); \
+             value = 0; \
              break; \
          }\
      } \
@@ -180,7 +183,8 @@ struct Var<const T*> {
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             /* TO DO */ \
+             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("integer"))); \
+             value = 0; \
              break; \
          }\
      } \
@@ -211,9 +215,28 @@ SCRAT_INTEGER(signed __int64)
  struct Var<type> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQFloat sqValue; \
-         sq_getfloat(vm, idx, &sqValue); \
-         value = static_cast<type>(sqValue); \
+         SQObjectType value_type = sq_gettype(vm, idx); \
+         switch(value_type) {\
+         case OT_BOOL:\
+             SQBool sqValueb; \
+             sq_getbool(vm, idx, &sqValueb); \
+             value = static_cast<type>(sqValueb); \
+             break; \
+         case OT_INTEGER: \
+             SQInteger sqValue; \
+             sq_getinteger(vm, idx, &sqValue); \
+             value = static_cast<type>(sqValue); \
+             break;\
+         case OT_FLOAT:\
+             SQFloat sqValuef; \
+             sq_getfloat(vm, idx, &sqValuef); \
+             value = static_cast<type>(sqValuef); \
+             break;\
+         default:\
+             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("float"))); \
+             value = 0; \
+             break; \
+         }\
      } \
      static void push(HSQUIRRELVM vm, type& value) { \
          sq_pushfloat(vm, static_cast<SQFloat>(value)); \
@@ -242,7 +265,8 @@ SCRAT_INTEGER(signed __int64)
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             /* TO DO */ \
+             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("float"))); \
+             value = 0; \
              break; \
          }\
      } \
@@ -272,7 +296,7 @@ SCRAT_INTEGER(signed __int64)
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             /* TO DO */ \
+             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("float"))); \
              break; \
          }\
      } \

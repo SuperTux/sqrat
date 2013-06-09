@@ -49,8 +49,7 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
         
@@ -66,8 +65,7 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
@@ -78,40 +76,44 @@ public:
     }
 
     // Arg Count 1
-    template <class A1>
+    template <class A1, bool overloaded /*= false*/ >
     static SQInteger Func1(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value
+                    a1.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1>
+    template <class A1, bool overloaded /*= false*/ >
     static SQInteger Func1C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value
+                    a1.value
                 );
 
         PushVar(vm, ret);
@@ -119,42 +121,48 @@ public:
     }
 
     // Arg Count 2
-    template <class A1, class A2>
+    template <class A1, class A2, bool overloaded /*= false*/ >
     static SQInteger Func2(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value
+                    a1.value,
+                    a2.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2>
+    template <class A1, class A2, bool overloaded /*= false*/ >
     static SQInteger Func2C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value
+                    a1.value,
+                    a2.value
                 );
 
         PushVar(vm, ret);
@@ -162,44 +170,52 @@ public:
     }
 
     // Arg Count 3
-    template <class A1, class A2, class A3>
+    template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value
+                    a1.value,
+                    a2.value,
+                    a3.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3>
+    template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value
+                    a1.value,
+                    a2.value,
+                    a3.value
                 );
 
         PushVar(vm, ret);
@@ -207,46 +223,56 @@ public:
     }
 
     // Arg Count 4
-    template <class A1, class A2, class A3, class A4>
+    template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4>
+    template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value
                 );
 
         PushVar(vm, ret);
@@ -254,48 +280,60 @@ public:
     }
 
     // Arg Count 5
-    template <class A1, class A2, class A3, class A4, class A5>
+    template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5>
+    template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value
                 );
 
         PushVar(vm, ret);
@@ -303,50 +341,64 @@ public:
     }
 
     // Arg Count 6
-    template <class A1, class A2, class A3, class A4, class A5, class A6>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value
                 );
 
         PushVar(vm, ret);
@@ -354,52 +406,68 @@ public:
     }
 
     // Arg Count 7
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value
                 );
 
         PushVar(vm, ret);
@@ -407,54 +475,72 @@ public:
     }
 
     // Arg Count 8
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value
                 );
 
         PushVar(vm, ret);
@@ -462,56 +548,76 @@ public:
     }
 
     // Arg Count 9
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value
                 );
 
         PushVar(vm, ret);
@@ -520,58 +626,80 @@ public:
 
 
     // Arg Count 10
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded /*= false*/ >
     static SQInteger Func10(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded  /*= false*/ >
     static SQInteger Func10C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value
                 );
 
         PushVar(vm, ret);
@@ -580,60 +708,84 @@ public:
 
 
     // Arg Count 11
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>
     static SQInteger Func11(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>  
     static SQInteger Func11C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value
                 );
 
         PushVar(vm, ret);
@@ -642,62 +794,88 @@ public:
 
 
     // Arg Count 12
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/  >
     static SQInteger Func12(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value,
-                    Var<A12>(vm, 13).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value,
+                    a12.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/ >
     static SQInteger Func12C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value,
-                    Var<A12>(vm, 13).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value,
+                    a12.value
                 );
 
         PushVar(vm, ret);
@@ -705,64 +883,92 @@ public:
     }
 
     // Arg Count 13
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ >
     static SQInteger Func13(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value,
-                    Var<A12>(vm, 13).value,
-                    Var<A13>(vm, 14).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value,
+                    a12.value,
+                    a13.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ > 
     static SQInteger Func13C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value,
-                    Var<A12>(vm, 13).value,
-                    Var<A13>(vm, 14).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value,
+                    a12.value,
+                    a13.value
                 );
 
         PushVar(vm, ret);
@@ -770,66 +976,96 @@ public:
     }
 
     // Arg Count 14
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        Var<A14> a14(vm, 15);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value,
-                    Var<A12>(vm, 13).value,
-                    Var<A13>(vm, 14).value,
-                    Var<A14>(vm, 15).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value,
+                    a12.value,
+                    a13.value,
+                    a14.value
                 );
 
         PushVar(vm, ret);
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14C(HSQUIRRELVM vm) {
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        Var<A14> a14(vm, 15);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         R ret = (ptr->*method)(
-                    Var<A1>(vm, 2).value,
-                    Var<A2>(vm, 3).value,
-                    Var<A3>(vm, 4).value,
-                    Var<A4>(vm, 5).value,
-                    Var<A5>(vm, 6).value,
-                    Var<A6>(vm, 7).value,
-                    Var<A7>(vm, 8).value,
-                    Var<A8>(vm, 9).value,
-                    Var<A9>(vm, 10).value,
-                    Var<A10>(vm, 11).value,
-                    Var<A11>(vm, 12).value,
-                    Var<A12>(vm, 13).value,
-                    Var<A13>(vm, 14).value,
-                    Var<A14>(vm, 15).value
+                    a1.value,
+                    a2.value,
+                    a3.value,
+                    a4.value,
+                    a5.value,
+                    a6.value,
+                    a7.value,
+                    a8.value,
+                    a9.value,
+                    a10.value,
+                    a11.value,
+                    a12.value,
+                    a13.value,
+                    a14.value
                 );
 
         PushVar(vm, ret);
@@ -851,8 +1087,7 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         (ptr->*method)();
         return 0;
@@ -864,653 +1099,890 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         (ptr->*method)();
         return 0;
     }
 
     // Arg Count 1
-    template <class A1>
+    template <class A1, bool overloaded /*= false*/>
     static SQInteger Func1(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value
+            a1.value
         );
         return 0;
     }
 
-    template <class A1>
+    template <class A1, bool overloaded /*= false*/ >
     static SQInteger Func1C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value
+            a1.value
         );
         return 0;
     }
 
     // Arg Count 2
-    template <class A1, class A2>
+    template <class A1, class A2, bool overloaded /*= false*/>
     static SQInteger Func2(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value
+            a1.value,
+            a2.value
         );
         return 0;
     }
 
-    template <class A1, class A2>
+    template <class A1, class A2, bool overloaded /*= false*/>
     static SQInteger Func2C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value
+            a1.value,
+            a2.value
         );
         return 0;
     }
 
     // Arg Count 3
-    template <class A1, class A2, class A3>
+    template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value
+            a1.value,
+            a2.value,
+            a3.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3>
+    template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value
+            a1.value,
+            a2.value,
+            a3.value
         );
         return 0;
     }
 
     // Arg Count 4
-    template <class A1, class A2, class A3, class A4>
+    template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4>
+    template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value
         );
         return 0;
     }
 
     // Arg Count 5
-    template <class A1, class A2, class A3, class A4, class A5>
+    template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5>
+    template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value
         );
         return 0;
     }
 
     // Arg Count 6
-    template <class A1, class A2, class A3, class A4, class A5, class A6>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value
         );
         return 0;
     }
 
     // Arg Count 7
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value
         );
         return 0;
     }
 
     // Arg Count 8
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ > 
     static SQInteger Func8C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value
         );
         return 0;
     }
 
     // Arg Count 9
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value
         );
         return 0;
     }
 
     // Arg Count 10
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded /*= false*/ >
     static SQInteger Func10(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded /*= false*/ >
     static SQInteger Func10C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value
         );
         return 0;
     }
 
     // Arg Count 11
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/ >
     static SQInteger Func11(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/ >
     static SQInteger Func11C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A10>(vm, 12).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value
         );
         return 0;
     }
 
     // Arg Count 12
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/ >
     static SQInteger Func12(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value,
-            Var<A12>(vm, 13).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value,
+            a12.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/ >
     static SQInteger Func12C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value,
-            Var<A12>(vm, 13).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value,
+            a12.value
         );
         return 0;
     }
 
     // Arg Count 13
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/>
     static SQInteger Func13(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value,
-            Var<A12>(vm, 13).value,
-            Var<A13>(vm, 14).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value,
+            a12.value,
+            a13.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/>
     static SQInteger Func13C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value,
-            Var<A12>(vm, 13).value,
-            Var<A13>(vm, 14).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value,
+            a12.value,
+            a13.value
         );
         return 0;
     }
 
     // Arg Count 14
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        Var<A14> a14(vm, 15);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value,
-            Var<A12>(vm, 13).value,
-            Var<A13>(vm, 14).value,
-            Var<A14>(vm, 15).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value,
+            a12.value,
+            a13.value,
+            a14.value
         );
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >  
     static SQInteger Func14C(HSQUIRRELVM vm) {
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
         M method = *methodPtr;
 
-        C* ptr = NULL;
-        sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+        C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        Var<A10> a10(vm, 11);
+        Var<A11> a11(vm, 12);
+        Var<A12> a12(vm, 13);
+        Var<A13> a13(vm, 14);
+        Var<A14> a14(vm, 15);
+        if (!overloaded && TypeError::Instance().Occurred(vm))
+            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
         (ptr->*method)(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value,
-            Var<A10>(vm, 11).value,
-            Var<A11>(vm, 12).value,
-            Var<A12>(vm, 13).value,
-            Var<A13>(vm, 14).value,
-            Var<A14>(vm, 15).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value,
+            a10.value,
+            a11.value,
+            a12.value,
+            a13.value,
+            a14.value
         );
         return 0;
     }
@@ -1537,151 +2009,151 @@ inline SQFUNCTION SqMemberFunc(R (C::*method)() const) {
 // Arg Count 1
 template <class C, class R, class A1>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1)) {
-    return &SqMember<C, R>::template Func1<A1>;
+    return &SqMember<C, R>::template Func1<A1, false>;
 }
 
 template <class C, class R, class A1>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1) const) {
-    return &SqMember<C, R>::template Func1C<A1>;
+    return &SqMember<C, R>::template Func1C<A1, false>;
 }
 
 // Arg Count 2
 template <class C, class R, class A1, class A2>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2)) {
-    return &SqMember<C, R>::template Func2<A1, A2>;
+    return &SqMember<C, R>::template Func2<A1, A2, false>;
 }
 
 template <class C, class R, class A1, class A2>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2) const) {
-    return &SqMember<C, R>::template Func2C<A1, A2>;
+    return &SqMember<C, R>::template Func2C<A1, A2, false>;
 }
 
 // Arg Count 3
 template <class C, class R, class A1, class A2, class A3>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3)) {
-    return &SqMember<C, R>::template Func3<A1, A2, A3>;
+    return &SqMember<C, R>::template Func3<A1, A2, A3, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3) const) {
-    return &SqMember<C, R>::template Func3C<A1, A2, A3>;
+    return &SqMember<C, R>::template Func3C<A1, A2, A3, false>;
 }
 
 // Arg Count 4
 template <class C, class R, class A1, class A2, class A3, class A4>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4)) {
-    return &SqMember<C, R>::template Func4<A1, A2, A3, A4>;
+    return &SqMember<C, R>::template Func4<A1, A2, A3, A4, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4) const) {
-    return &SqMember<C, R>::template Func4C<A1, A2, A3, A4>;
+    return &SqMember<C, R>::template Func4C<A1, A2, A3, A4, false>;
 }
 
 // Arg Count 5
 template <class C, class R, class A1, class A2, class A3, class A4, class A5>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5)) {
-    return &SqMember<C, R>::template Func5<A1, A2, A3, A4, A5>;
+    return &SqMember<C, R>::template Func5<A1, A2, A3, A4, A5, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5) const) {
-    return &SqMember<C, R>::template Func5C<A1, A2, A3, A4, A5>;
+    return &SqMember<C, R>::template Func5C<A1, A2, A3, A4, A5, false>;
 }
 
 // Arg Count 6
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6)) {
-    return &SqMember<C, R>::template Func6<A1, A2, A3, A4, A5, A6>;
+    return &SqMember<C, R>::template Func6<A1, A2, A3, A4, A5, A6, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6) const) {
-    return &SqMember<C, R>::template Func6C<A1, A2, A3, A4, A5, A6>;
+    return &SqMember<C, R>::template Func6C<A1, A2, A3, A4, A5, A6, false>;
 }
 
 // Arg Count 7
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7)) {
-    return &SqMember<C, R>::template Func7<A1, A2, A3, A4, A5, A6, A7>;
+    return &SqMember<C, R>::template Func7<A1, A2, A3, A4, A5, A6, A7, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7) const) {
-    return &SqMember<C, R>::template Func7C<A1, A2, A3, A4, A5, A6, A7>;
+    return &SqMember<C, R>::template Func7C<A1, A2, A3, A4, A5, A6, A7, false>;
 }
 
 // Arg Count 8
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8)) {
-    return &SqMember<C, R>::template Func8<A1, A2, A3, A4, A5, A6, A7, A8>;
+    return &SqMember<C, R>::template Func8<A1, A2, A3, A4, A5, A6, A7, A8, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8) const) {
-    return &SqMember<C, R>::template Func8C<A1, A2, A3, A4, A5, A6, A7, A8>;
+    return &SqMember<C, R>::template Func8C<A1, A2, A3, A4, A5, A6, A7, A8, false>;
 }
 
 // Arg Count 9
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
-    return &SqMember<C, R>::template Func9<A1, A2, A3, A4, A5, A6, A7, A8, A9>;
+    return &SqMember<C, R>::template Func9<A1, A2, A3, A4, A5, A6, A7, A8, A9, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const) {
-    return &SqMember<C, R>::template Func9C<A1, A2, A3, A4, A5, A6, A7, A8, A9>;
+    return &SqMember<C, R>::template Func9C<A1, A2, A3, A4, A5, A6, A7, A8, A9, false>;
 }
 
 // Arg Count 10
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
-    return &SqMember<C, R>::template Func10<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>;
+    return &SqMember<C, R>::template Func10<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const) {
-    return &SqMember<C, R>::template Func10C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>;
+    return &SqMember<C, R>::template Func10C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, false>;
 }
 // Arg Count 11
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
-    return &SqMember<C, R>::template Func11<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11>;
+    return &SqMember<C, R>::template Func11<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const) {
-    return &SqMember<C, R>::template Func11C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11>;
+    return &SqMember<C, R>::template Func11C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, false>;
 }
 // Arg Count 12
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
-    return &SqMember<C, R>::template Func12<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12>;
+    return &SqMember<C, R>::template Func12<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const) {
-    return &SqMember<C, R>::template Func12C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12>;
+    return &SqMember<C, R>::template Func12C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, false>;
 }
 // Arg Count 13
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
-    return &SqMember<C, R>::template Func13<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13>;
+    return &SqMember<C, R>::template Func13<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const) {
-    return &SqMember<C, R>::template Func13C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13>;
+    return &SqMember<C, R>::template Func13C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, false>;
 }
 // Arg Count 14
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
-    return &SqMember<C, R>::template Func14<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14>;
+    return &SqMember<C, R>::template Func14<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, false>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
 inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const) {
-    return &SqMember<C, R>::template Func14C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14>;
+    return &SqMember<C, R>::template Func14C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, false>;
 }
 
 
@@ -1691,8 +2163,7 @@ inline SQFUNCTION SqMemberFunc(R (C::*method)(A1, A2, A3, A4, A5, A6, A7, A8, A9
 
 template <class C, class V>
 inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
-    C* ptr = NULL;
-    sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+    C* ptr = ClassType<C>::GetInstance(vm, 1);
 
     typedef V C::*M;
     M* memberPtr = NULL;
@@ -1721,6 +2192,8 @@ inline SQInteger sqVarGet(HSQUIRRELVM vm) {
 
     // Call the getter
     sq_call(vm, 1, true, ErrorHandling::IsEnabled());
+    if (TypeError::Instance().Occurred(vm))
+        return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
     return 1;
 }
 
@@ -1730,8 +2203,7 @@ inline SQInteger sqVarGet(HSQUIRRELVM vm) {
 
 template <class C, class V>
 inline SQInteger sqDefaultSet(HSQUIRRELVM vm) {
-    C* ptr = NULL;
-    sq_getinstanceup(vm, 1, (SQUserPointer*)&ptr, NULL);
+    C* ptr = ClassType<C>::GetInstance(vm, 1);
 
     typedef V C::*M;
     M* memberPtr = NULL;
@@ -1760,12 +2232,15 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
 
     // Call the setter
     sq_call(vm, 2, false, ErrorHandling::IsEnabled());
+    if (TypeError::Instance().Occurred(vm)) {
+        return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+    }
 
     return 0;
 }
 
 template <class C, class R>
-const char SqMember<C, R>::STATICCALLERROR[] = _SC("This function isn't static");
+const char SqMember<C, R>::STATICCALLERROR[] = _SC("this function isn't static");
 
 }
 

@@ -32,6 +32,7 @@
 #include <squirrel.h>
 #include <map>
 
+#include "sqratUtil.h"
 namespace Sqrat
 {
 
@@ -42,21 +43,36 @@ namespace Sqrat
 // Get the Copy Function for this Class
 typedef SQInteger (*COPYFUNC)(HSQUIRRELVM, SQInteger, const void*);
 
-struct ClassTypeData {
+struct ClassTypeDataBase {
     bool        initialized;
     HSQOBJECT    classObj;
     HSQOBJECT    getTable;
     HSQOBJECT    setTable;
     COPYFUNC    copyFunc;
-    ClassTypeData(): initialized(false) {}
+    string        className;
+    ClassTypeDataBase* baseClass;
+    virtual ~ClassTypeDataBase() {}
+    virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) = 0;
+    ClassTypeDataBase(): initialized(false) {}
+};
+
+template<class C, class B>
+struct ClassTypeData : public ClassTypeDataBase {
+    virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) {
+        ptr = static_cast<B*>(static_cast<C*>(ptr));
+        if (classType != this) {
+            ptr = baseClass->Cast(ptr, classType);
+        }
+        return ptr;
+    }
 };
 
 template<class C>
 struct ClassType {
 
-    static std::map< HSQUIRRELVM, ClassTypeData > s_classTypeDataMap;
+    static std::map< HSQUIRRELVM, ClassTypeDataBase* > s_classTypeDataMap;
 
-    static inline ClassTypeData& getClassTypeData(HSQUIRRELVM vm) {
+    static inline ClassTypeDataBase*& getClassTypeData(HSQUIRRELVM vm) {
         //TODO: use mutex to lock s_classTypeDataMap in multithreaded environment
         return s_classTypeDataMap[vm];
     }
@@ -68,7 +84,7 @@ struct ClassType {
 
     static inline void deleteClassTypeData(HSQUIRRELVM vm) {
         //TODO: use mutex to lock s_classTypeDataMap in multithreaded environment
-        std::map< HSQUIRRELVM, ClassTypeData >::iterator it = s_classTypeDataMap.find(vm);
+        std::map< HSQUIRRELVM, ClassTypeDataBase* >::iterator it = s_classTypeDataMap.find(vm);
         if(it != s_classTypeDataMap.end()) {
             s_classTypeDataMap.erase(it);
         }
@@ -76,25 +92,34 @@ struct ClassType {
 
     // Get the Squirrel Object for this Class
     static inline HSQOBJECT& ClassObject(HSQUIRRELVM vm) {
-        return getClassTypeData(vm).classObj;
+        return getClassTypeData(vm)->classObj;
     }
 
     // Get the Get Table for this Class
     static inline HSQOBJECT& GetTable(HSQUIRRELVM vm) {
-        return getClassTypeData(vm).getTable;
+        return getClassTypeData(vm)->getTable;
     }
 
     // Get the Set Table for this Class
     static inline HSQOBJECT& SetTable(HSQUIRRELVM vm) {
-        return getClassTypeData(vm).setTable;
+        return getClassTypeData(vm)->setTable;
     }
 
     static inline COPYFUNC& CopyFunc(HSQUIRRELVM vm) {
-        return getClassTypeData(vm).copyFunc;
+        return getClassTypeData(vm)->copyFunc;
     }
 
+    static inline string& ClassName(HSQUIRRELVM vm) {
+        return getClassTypeData(vm)->className;
+    }
+
+    static inline ClassTypeDataBase*& BaseClass(HSQUIRRELVM vm) {
+        return getClassTypeData(vm)->baseClass;
+    }
+
+
     static inline bool& Initialized(HSQUIRRELVM vm) {
-        return getClassTypeData(vm).initialized;
+        return getClassTypeData(vm)->initialized;
     }
 
     static void PushInstance(HSQUIRRELVM vm, C* ptr) {
@@ -108,7 +133,7 @@ struct ClassType {
             sq_pushnull(vm);
     }
 
-    static void PushInstanceCopy(HSQUIRRELVM vm, C& value) {
+    static void PushInstanceCopy(HSQUIRRELVM vm, const C& value) {
         sq_pushobject(vm, ClassObject(vm));
         sq_createinstance(vm, -1);
         sq_remove(vm, -2);
@@ -116,14 +141,32 @@ struct ClassType {
     }
 
     static C* GetInstance(HSQUIRRELVM vm, SQInteger idx) {
-        C* ptr = NULL;
-        sq_getinstanceup(vm, idx, (SQUserPointer*)&ptr, NULL);
-        return ptr;
+        SQUserPointer ptr = NULL;
+        ClassTypeDataBase* classType = getClassTypeData(vm);
+        if (SQ_FAILED(sq_getinstanceup(vm, idx, &ptr, classType))) {
+            TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, ClassName(vm)));
+            return NULL;
+        }
+        ClassTypeDataBase* actualType;
+        sq_gettypetag(vm, idx, (SQUserPointer*)&actualType);
+        if (actualType == NULL) {
+            SQInteger top = sq_gettop(vm);
+            sq_getclass(vm, idx);
+            while (actualType == NULL) {
+                sq_getbase(vm, -1);
+                sq_gettypetag(vm, -1, (SQUserPointer*)&actualType);
+            }
+            sq_settop(vm, top);
+        }
+        if (classType != actualType) {
+            return static_cast<C*>(actualType->Cast(ptr, classType));
+        }
+        return static_cast<C*>(ptr);
     }
 };
 
 template<class C>
-std::map< HSQUIRRELVM, ClassTypeData > ClassType<C>::s_classTypeDataMap;
+std::map< HSQUIRRELVM, ClassTypeDataBase* > ClassType<C>::s_classTypeDataMap;
 
 }
 

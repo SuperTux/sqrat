@@ -56,6 +56,8 @@ class Class : public Object
     static SQInteger cleanup_hook(SQUserPointer p, SQInteger size)
     {
         HSQUIRRELVM v = *(HSQUIRRELVM *) p;
+        ClassTypeData<C, void>* ptr = static_cast<ClassTypeData<C, void>*>(ClassType<C>::getClassTypeData(v));
+        delete ptr;
         ClassType<C>::deleteClassTypeData(v);
         return 1;
     }
@@ -64,8 +66,9 @@ public:
         @param v    Squirrel virtual machine to bind to
     */
     /// Constructor
-    Class(HSQUIRRELVM v = DefaultVM::Get(), bool createClass = true) : Object(v, false) {
-        if(createClass && !ClassType<C>::Initialized(v)) {
+    Class(HSQUIRRELVM v = DefaultVM::Get(), const string& className = string(), bool createClass = true) : Object(v, false) {
+        if(createClass && !ClassType<C>::hasClassTypeData(v)) {
+            ClassType<C>::getClassTypeData(v) = new ClassTypeData<C, void>;
             HSQOBJECT& classObj = ClassType<C>::ClassObject(v);
             sq_resetobject(&classObj);
 
@@ -74,10 +77,10 @@ public:
             sq_addref(vm, &classObj); // must addref before the pop!
             sq_pop(vm, 1);
 
-            InitClass();
+            InitClass(className);
             ClassType<C>::Initialized(v) = true;
 
-            // install cleanuo hook 
+            // install cleanup hook
             HSQUIRRELVM *p = (HSQUIRRELVM *) sq_newuserdata(v, sizeof(v));
             *p = v;
             
@@ -155,12 +158,12 @@ public:
     Class& Prop(const SQChar* name, V (C::*getMethod)() const, void (C::*setMethod)(const V&)) {
         if(getMethod != NULL) {
             // Add the getter
-            BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberFunc(getMethod), ClassType<C>::GetTable(vm));
+            BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
         }
 
         if(setMethod != NULL) {
             // Add the setter
-            BindAccessor(name, &setMethod, sizeof(setMethod), SqMemberFunc(setMethod), ClassType<C>::SetTable(vm));
+            BindAccessor(name, &setMethod, sizeof(setMethod), SqMemberOverloadedFunc(setMethod), ClassType<C>::SetTable(vm));
         }
 
         return *this;
@@ -171,12 +174,26 @@ public:
     Class& Prop(const SQChar* name, V (C::*getMethod)(), void (C::*setMethod)(V)) {
         if(getMethod != NULL) {
             // Add the getter
-            BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberFunc(getMethod), ClassType<C>::GetTable(vm));
+            BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
         }
 
         if(setMethod != NULL) {
             // Add the setter
-            BindAccessor(name, &setMethod, sizeof(setMethod), SqMemberFunc(setMethod), ClassType<C>::SetTable(vm));
+            BindAccessor(name, &setMethod, sizeof(setMethod), SqMemberOverloadedFunc(setMethod), ClassType<C>::SetTable(vm));
+        }
+
+        return *this;
+    }
+    template<class F1, class F2>
+    Class& GlobalProp(const SQChar* name, F1 getMethod, F2 setMethod) {
+        if(getMethod != NULL) {
+            // Add the getter
+            BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberGlobalOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
+        }
+
+        if(setMethod != NULL) {
+            // Add the setter
+            BindAccessor(name, &setMethod, sizeof(setMethod), SqMemberGlobalOverloadedFunc(setMethod), ClassType<C>::SetTable(vm));
         }
 
         return *this;
@@ -186,7 +203,7 @@ public:
     template<class V>
     Class& Prop(const SQChar* name, V (C::*getMethod)() const) {
         // Add the getter
-        BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberFunc(getMethod), ClassType<C>::GetTable(vm));
+        BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
 
         return *this;
     }
@@ -195,7 +212,14 @@ public:
     template<class V>
     Class& Prop(const SQChar* name, V (C::*getMethod)()) {
         // Add the getter
-        BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberFunc(getMethod), ClassType<C>::GetTable(vm));
+        BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
+
+        return *this;
+    }
+    template<class F>
+    Class& GlobalProp(const SQChar* name, F getMethod) {
+        // Add the getter
+        BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberGlobalOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
 
         return *this;
     }
@@ -214,7 +238,7 @@ public:
 
     template<class F>
     Class& Overload(const SQChar* name, F method) {
-        BindOverload(name, &method, sizeof(method), SqMemberFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
+        BindOverload(name, &method, sizeof(method), SqMemberOverloadedFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
         return *this;
     }
 
@@ -232,17 +256,16 @@ public:
 
     template<class F>
     Class& GlobalOverload(const SQChar* name, F method) {
-        BindOverload(name, &method, sizeof(method), SqMemberGlobalFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
+        BindOverload(name, &method, sizeof(method), SqMemberGlobalOverloadedFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
         return *this;
     }
 
     template<class F>
     Class& StaticOverload(const SQChar* name, F method) {
-        BindOverload(name, &method, sizeof(method), SqGlobalFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
+        BindOverload(name, &method, sizeof(method), SqGlobalOverloadedFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
         return *this;
     }
 
-    template<class F>
     Class& SquirrelFunc(const SQChar* name, SQFUNCTION func) {
         sq_pushobject(vm, ClassType<C>::ClassObject(vm));
         sq_pushstring(vm, name, -1);
@@ -276,13 +299,22 @@ protected:
         return 1;
     }
 
+    static SQInteger ClassTypeof(HSQUIRRELVM vm) {
+        sq_pushstring(vm, ClassType<C>::ClassName(vm).c_str(), -1);
+        return 1;
+    }
+
     // Initialize the required data structure for the class
-    void InitClass() {
+    void InitClass(const string& className) {
         ClassType<C>::CopyFunc(vm) = &A::Copy;
+        ClassType<C>::ClassName(vm) = className;
+        ClassType<C>::BaseClass(vm) = NULL;
 
         // push the class
         sq_pushobject(vm, ClassType<C>::ClassObject(vm));
 
+        // set the typetag of the class
+        sq_settypetag(vm, -1, ClassType<C>::getClassTypeData(vm));
         // add the default constructor
         sq_pushstring(vm,_SC("constructor"), -1);
         sq_newclosure(vm, &A::New, 0);
@@ -321,6 +353,11 @@ protected:
         // add weakref (apparently not provided by default)
         sq_pushstring(vm, _SC("weakref"), -1);
         sq_newclosure(vm, &Class::ClassWeakref, 0);
+        sq_newslot(vm, -3, false);
+
+        // add _typeof
+        sq_pushstring(vm, _SC("_typeof"), -1);
+        sq_newclosure(vm, &Class::ClassTypeof, 0);
         sq_newslot(vm, -3, false);
 
         // pop the class
@@ -367,9 +404,18 @@ protected:
 template<class C, class B, class A = DefaultAllocator<C> >
 class DerivedClass : public Class<C, A>
 {
+    static SQInteger cleanup_hook(SQUserPointer p, SQInteger size)
+    {
+        HSQUIRRELVM v = *(HSQUIRRELVM *) p;
+        ClassTypeData<C, B>* ptr = static_cast<ClassTypeData<C, B>*>(ClassType<C>::getClassTypeData(v));
+        delete ptr;
+        ClassType<C>::deleteClassTypeData(v);
+        return 1;
+    }
 public:
-    DerivedClass(HSQUIRRELVM v = DefaultVM::Get()) : Class<C, A>(v, false) {
-        if(!ClassType<C>::Initialized(v)) {
+    DerivedClass(HSQUIRRELVM v = DefaultVM::Get(), const string& className = string()) : Class<C, A>(v, string(), false) {
+        if(!ClassType<C>::hasClassTypeData(v)) {
+            ClassType<C>::getClassTypeData(v) = new ClassTypeData<C, B>;
             HSQOBJECT& classObj = ClassType<C>::ClassObject(v);
             sq_resetobject(&classObj);
 
@@ -379,18 +425,29 @@ public:
             sq_addref(v, &classObj); // must addref before the pop!
             sq_pop(v, 1);
 
-            InitDerivedClass(v);
+            InitDerivedClass(v, className);
             ClassType<C>::Initialized(v) = true;
+
+            // install cleanup hook
+            HSQUIRRELVM *p = (HSQUIRRELVM *) sq_newuserdata(v, sizeof(v));
+            *p = v;
+
+            sq_setreleasehook(v, -1, cleanup_hook);
+            // finish install cleanup hook
         }
     }
 
 protected:
-    void InitDerivedClass(HSQUIRRELVM vm) {
+    void InitDerivedClass(HSQUIRRELVM vm, const string& className) {
         ClassType<C>::CopyFunc(vm) = &A::Copy;
+        ClassType<C>::ClassName(vm) = className;
+        ClassType<C>::BaseClass(vm) = ClassType<B>::getClassTypeData(vm);
 
         // push the class
         sq_pushobject(vm, ClassType<C>::ClassObject(vm));
 
+        // set the typetag of the class
+        sq_settypetag(vm, -1, ClassType<C>::getClassTypeData(vm));
         // add the default constructor
         sq_pushstring(vm,_SC("constructor"), -1);
         sq_newclosure(vm, &A::New, 0);
@@ -433,6 +490,11 @@ protected:
         // add weakref (apparently not provided by default)
         sq_pushstring(vm, _SC("weakref"), -1);
         sq_newclosure(vm, &Class<C, A>::ClassWeakref, 0);
+        sq_newslot(vm, -3, false);
+
+        // add _typeof
+        sq_pushstring(vm, _SC("_typeof"), -1);
+        sq_newclosure(vm, &Class<C, A>::ClassTypeof, 0);
         sq_newslot(vm, -3, false);
 
         // pop the class

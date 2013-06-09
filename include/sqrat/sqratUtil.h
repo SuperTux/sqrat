@@ -31,9 +31,10 @@
 #include <squirrel.h>
 #include <string.h>
 
-#include "sqratTypes.h"
 
 namespace Sqrat {
+
+typedef std::basic_string<SQChar> string;
 
 class DefaultVM {
 private:
@@ -88,6 +89,51 @@ inline string LastErrorString( HSQUIRRELVM vm ) {
     sq_getstring(vm, -1, &sqErr);
     return string(sqErr);
 }
+class TypeError {
+public:
+    static TypeError& Instance() {
+        static TypeError instance;
+        return instance;
+    }
+    static string Format(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
+        string err = _SC("wrong type (") + expectedType + _SC(" expected");
+        if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
+            const SQChar* actualType;
+            sq_tostring(vm, -1);
+            sq_getstring(vm, -1, &actualType);
+            sq_pop(vm, 1);
+            err = err + _SC(", got ") + actualType;
+        }
+        sq_pop(vm, 1);
+        err = err + _SC(")");
+        return err;
+    }
+    void Clear(HSQUIRRELVM vm) {
+        //TODO: use mutex to lock errMap in multithreaded environment
+        errMap.erase(vm);
+    }
+    string Message(HSQUIRRELVM vm) {
+        //TODO: use mutex to lock errMap in multithreaded environment
+        string err = errMap[vm];
+        errMap.erase(vm);
+        return err;
+    }
+    bool Occurred(HSQUIRRELVM vm) {
+        //TODO: use mutex to lock errMap in multithreaded environment
+        return errMap.find(vm) != errMap.end();
+    }
+    void Throw(HSQUIRRELVM vm, const string& err) {
+        //TODO: use mutex to lock errMap in multithreaded environment
+        if (errMap.find(vm) == errMap.end()) {
+            errMap[vm] = err;
+        }
+    }
+
+private:
+    TypeError() {}
+
+    std::map< HSQUIRRELVM, string > errMap;
+};
 
 }
 

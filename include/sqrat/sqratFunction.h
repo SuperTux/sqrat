@@ -921,6 +921,10 @@ struct Var<Function> {
         sq_getstackobj(vm, 1, &sqEnv);
         sq_getstackobj(vm, idx, &sqValue);
         value = Function(vm, sqEnv, sqValue);
+        SQObjectType value_type = sq_gettype(vm, idx);
+        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+            TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("closure")));
+        }
     }
     static void push(HSQUIRRELVM vm, Function& value) {
         sq_pushobject(vm, value.GetFunc());

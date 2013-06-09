@@ -47,6 +47,8 @@ namespace Sqrat {
         ArrayBase(const Object& obj) : Object(obj) {
         }
 
+        ArrayBase(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : Object(o, v) {
+        }
         // Bind a Table or Class to the Array (Can be used to facilitate Namespaces)
         // Note: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
         void Bind(const SQInteger index, Object& obj) {
@@ -195,7 +197,10 @@ namespace Sqrat {
 
     class Array : public ArrayBase {
     public:
-        Array(HSQUIRRELVM v = DefaultVM::Get(), const SQInteger size = 0) : ArrayBase(v) {
+        Array() {
+        }
+
+        Array(HSQUIRRELVM v, const SQInteger size = 0) : ArrayBase(v) {
             sq_newarray(vm, size);
             sq_getstackobj(vm,-1,&obj);
             sq_addref(vm, &obj);
@@ -203,6 +208,9 @@ namespace Sqrat {
         }
 
         Array(const Object& obj) : ArrayBase(obj) {
+        }
+
+        Array(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : ArrayBase(o, v) {
         }
     };
     
@@ -213,7 +221,11 @@ namespace Sqrat {
             HSQOBJECT obj;
             sq_resetobject(&obj);
             sq_getstackobj(vm,idx,&obj);
-            value = Array(obj);
+            value = Array(obj, vm);
+            SQObjectType value_type = sq_gettype(vm, idx);
+            if (value_type != OT_ARRAY) {
+                TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("array")));
+            }
         }
         static void push(HSQUIRRELVM vm, Array value) {
             HSQOBJECT obj;
