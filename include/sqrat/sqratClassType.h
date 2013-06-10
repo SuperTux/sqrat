@@ -59,9 +59,9 @@ struct ClassTypeDataBase {
 template<class C, class B>
 struct ClassTypeData : public ClassTypeDataBase {
     virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) {
-        ptr = static_cast<B*>(static_cast<C*>(ptr));
+        //ptr = static_cast<B*>(static_cast<C*>(ptr));
         if (classType != this) {
-            ptr = baseClass->Cast(ptr, classType);
+            ptr = baseClass->Cast(static_cast<B*>(static_cast<C*>(ptr)), classType);
         }
         return ptr;
     }
@@ -144,7 +144,7 @@ struct ClassType {
         SQUserPointer ptr = NULL;
         ClassTypeDataBase* classType = getClassTypeData(vm);
         if (SQ_FAILED(sq_getinstanceup(vm, idx, &ptr, classType))) {
-            TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, ClassName(vm)));
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, ClassName(vm)));
             return NULL;
         }
         ClassTypeDataBase* actualType;

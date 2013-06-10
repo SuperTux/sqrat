@@ -89,13 +89,13 @@ inline string LastErrorString( HSQUIRRELVM vm ) {
     sq_getstring(vm, -1, &sqErr);
     return string(sqErr);
 }
-class TypeError {
+class Error {
 public:
-    static TypeError& Instance() {
-        static TypeError instance;
+    static Error& Instance() {
+        static Error instance;
         return instance;
     }
-    static string Format(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
+    static string FormatTypeError(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
         string err = _SC("wrong type (") + expectedType + _SC(" expected");
         if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
             const SQChar* actualType;
@@ -130,7 +130,7 @@ public:
     }
 
 private:
-    TypeError() {}
+    Error() {}
 
     std::map< HSQUIRRELVM, string > errMap;
 };

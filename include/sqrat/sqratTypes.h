@@ -119,7 +119,7 @@ struct Var<const T*> {
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("integer"))); \
+             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); \
              value = 0; \
              break; \
          }\
@@ -151,7 +151,7 @@ struct Var<const T*> {
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("integer"))); \
+             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); \
              value = 0; \
              break; \
          }\
@@ -183,7 +183,7 @@ struct Var<const T*> {
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("integer"))); \
+             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); \
              value = 0; \
              break; \
          }\
@@ -233,7 +233,7 @@ SCRAT_INTEGER(signed __int64)
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("float"))); \
+             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float"))); \
              value = 0; \
              break; \
          }\
@@ -265,7 +265,7 @@ SCRAT_INTEGER(signed __int64)
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("float"))); \
+             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float"))); \
              value = 0; \
              break; \
          }\
@@ -296,7 +296,7 @@ SCRAT_INTEGER(signed __int64)
              value = static_cast<type>(sqValuef); \
              break;\
          default:\
-             TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("float"))); \
+             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float"))); \
              break; \
          }\
      } \

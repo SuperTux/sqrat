@@ -224,7 +224,7 @@ namespace Sqrat {
             value = Array(obj, vm);
             SQObjectType value_type = sq_gettype(vm, idx);
             if (value_type != OT_ARRAY) {
-                TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("array")));
+                Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
             }
         }
         static void push(HSQUIRRELVM vm, Array value) {

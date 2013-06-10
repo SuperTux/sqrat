@@ -63,8 +63,8 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value
                 );
@@ -82,8 +82,8 @@ public:
 
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value
@@ -103,8 +103,8 @@ public:
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -126,8 +126,8 @@ public:
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -151,8 +151,8 @@ public:
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -178,8 +178,8 @@ public:
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -207,8 +207,8 @@ public:
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -238,8 +238,8 @@ public:
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -271,8 +271,8 @@ public:
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -306,8 +306,8 @@ public:
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -343,8 +343,8 @@ public:
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -382,8 +382,8 @@ public:
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -423,8 +423,8 @@ public:
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -466,8 +466,8 @@ public:
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
         Var<A14> a14(vm, startIdx + 13);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -514,8 +514,8 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value
         );
@@ -531,8 +531,8 @@ public:
 
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value
@@ -550,8 +550,8 @@ public:
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -571,8 +571,8 @@ public:
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -594,8 +594,8 @@ public:
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -619,8 +619,8 @@ public:
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -646,8 +646,8 @@ public:
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -675,8 +675,8 @@ public:
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -706,8 +706,8 @@ public:
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -739,8 +739,8 @@ public:
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -774,8 +774,8 @@ public:
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -811,8 +811,8 @@ public:
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -850,8 +850,8 @@ public:
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,
@@ -891,8 +891,8 @@ public:
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
         Var<A14> a14(vm, startIdx + 13);
-        if (!overloaded && TypeError::Instance().Occurred(vm))
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Instance().Occurred(vm))
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         (*method)(
             a1.value,
             a2.value,

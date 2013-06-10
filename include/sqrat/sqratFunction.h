@@ -923,7 +923,7 @@ struct Var<Function> {
         value = Function(vm, sqEnv, sqValue);
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
-            TypeError::Instance().Throw(vm, Sqrat::TypeError::Format(vm, idx, _SC("closure")));
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
         }
     }
     static void push(HSQUIRRELVM vm, Function& value) {

@@ -69,7 +69,7 @@ public:
 
         sq_pushstring(vm, overloadName.c_str(), -1);
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
-            return sq_throwerror(vm, _SC("No overload matching this argument list found"));// How to best appropriately error?
+            return sq_throwerror(vm, _SC("no overload matching this argument list found"));// How to best appropriately error?
         }
 
         // Push the args again
@@ -78,8 +78,8 @@ public:
         }
 
         sq_call(vm, argCount + 1, true, ErrorHandling::IsEnabled());
-        if (TypeError::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
 
         return 1;
@@ -104,7 +104,7 @@ public:
 
         sq_pushstring(vm, overloadName.c_str(), -1);
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
-            return sq_throwerror(vm, _SC("No overload matching this argument list found"));// How to best appropriately error?
+            return sq_throwerror(vm, _SC("no overload matching this argument list found"));// How to best appropriately error?
         }
 
         // Push the args again
@@ -113,8 +113,8 @@ public:
         }
 
         sq_call(vm, argCount + 1, false, ErrorHandling::IsEnabled());
-        if (TypeError::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, TypeError::Instance().Message(vm).c_str());
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
 
         return 0;
