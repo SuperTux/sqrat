@@ -45,6 +45,8 @@ public:
     TableBase(const Object& obj) : Object(obj) {
     }
 
+    TableBase(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : Object(o, v) {
+    }
     // Bind a Table or Class to the Table (Can be used to facilitate Namespaces)
     // Note: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
     void Bind(const SQChar* name, Object& obj) {
@@ -95,7 +97,7 @@ public:
 
     template<class F>
     TableBase& Overload(const SQChar* name, F method) {
-        BindOverload(name, &method, sizeof(method), SqGlobalFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
+        BindOverload(name, &method, sizeof(method), SqGlobalOverloadedFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
         return *this;
     }
 
@@ -141,6 +143,8 @@ public:
         sq_pop(vm,1);
     }
     Table(const Object& obj) : TableBase(obj) {
+    }
+    Table(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : TableBase(o, v) {
     }
 };
 
