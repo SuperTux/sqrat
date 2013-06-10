@@ -228,6 +228,168 @@ TEST_F(SqratTest, InstanceReferences) {
     }
     
 }
+
+class A
+{
+protected:
+    int v;
+public:
+    A(): v(-1) {}
+    int getv() 
+    {
+        return v;
+    }
+    
+    
+};
+
+
+class AA: public A
+{
+public:
+    int setv(int v_) 
+    {
+        v = v_;
+    }
+    
+    
+};
+
+
+class AAA: public AA
+{
+    
+    
+};
+
+class AB: public A, public B
+{
+    
+    
+};
+
+class BB: public B
+{
+    
+};
+
+int abc(A & a, AA & aa, AB *ab)
+{
+    aa.setv(12);    
+    ab->set(34);
+    return a.getv();
+}
+
+class W
+{
+public:
+    void f1(A &a) {}
+    void f2(A * a) {}
+
+    void f3(AAA aaa) 
+    {   
+    }
+
+    void f4(const AB ab) {}    
+    int abc(A * a, AA & aa, B *b)
+    {
+        aa.setv(12);    
+        b->set(34);
+        return a->getv();
+    }
+    
+};
+
         
     
+TEST_F(SqratTest, SimpleTypeChecking) {
+    DefaultVM::Set(vm);
+
+    Class<B> _B(vm, "B");
+    _B
+    .Func("set", &B::set)
+    .Func("get", &B::get)
+    .Func("getB", &B::getB)
+    .Func("getBPtr", &B::getBPtr);
+    
+    RootTable().Bind(_SC("B"), _B);
+
+    Class<BB> _BB(vm, "BB");
+    RootTable().Bind(_SC("BB"), _BB);
+    
+    Class<A> _A(vm, "A");
+    RootTable().Bind(_SC("A"), _A);
+    Class<AA> _AA(vm, "AA");
+    RootTable().Bind(_SC("AA"), _AA);
+    Class<AAA> _AAA(vm, "AAA");
+    RootTable().Bind(_SC("AAA"), _AAA);
+    Class<AB> _AB(vm, "AB");
+    RootTable().Bind(_SC("AB"), _AB);
+    Class<W> _W(vm, "W");
+    _W.Func("f1", &W::f1);
+    _W.Func("f2", &W::f2);
+    _W.Func("f3", &W::f3);
+    _W.Func("f4", &W::f4);
+    _W.Func("abc", &W::abc);
+    
+    RootTable().Bind(_SC("W"), _W);
+
+    RootTable().Func(_SC("abc"), &abc);
+    
+    Script script;
+    try {
+        script.CompileString(_SC(" \
+            b <- B();\
+            bb <- BB(); \
+            a <- A(); \
+            aa <- AA(); \
+            aaa <- AAA(); \
+            ab <- AB(); \
+            abc(a, aa, ab); \
+            w <- W(); \
+            w.f1(a); \
+            w.f1(aaa); \
+            w.f2(a); \
+            w.f3(aaa); \
+            w.f4(ab); \
+            w.abc(a, aa, bb); \
+            w.abc(aa, aa); \
+            \
+            local raised = false;\
+            try { \
+                w.f1(b);\
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
+            \
+            raised = false;\
+            try { \
+                w.abc(aa, a, ab); \
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
+            \
+            "));
+    }
+    catch (Sqrat::Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    }
+    catch (Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+    
+}
+
     
