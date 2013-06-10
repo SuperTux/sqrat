@@ -105,8 +105,8 @@ TEST_F(SqratTest, SimpleTableBinding) {
     Script script;
 
     try {
-        script.CompileString(_SC(" print(\"1\\n\"); \
-			gTest.EXPECT_STR_EQ(Test.version, \"1.0.0\"); print(\"2\\n\");\
+        script.CompileString(_SC("  \
+			gTest.EXPECT_STR_EQ(Test.version, \"1.0.0\"); \
 			gTest.EXPECT_STR_EQ(Test.GetGreeting(), \"Hello world!\"); \
 			gTest.EXPECT_INT_EQ(Test.AddTwo(1, 2), 3); \
 			Test.count += 3; \
