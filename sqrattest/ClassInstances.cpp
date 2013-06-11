@@ -314,16 +314,16 @@ TEST_F(SqratTest, SimpleTypeChecking) {
     
     RootTable().Bind(_SC("B"), _B);
 
-    Class<BB> _BB(vm, "BB");
+    DerivedClass<BB, B> _BB(vm, "BB");
     RootTable().Bind(_SC("BB"), _BB);
     
     Class<A> _A(vm, "A");
     RootTable().Bind(_SC("A"), _A);
-    Class<AA> _AA(vm, "AA");
+    DerivedClass<AA, A> _AA(vm, "AA");
     RootTable().Bind(_SC("AA"), _AA);
-    Class<AAA> _AAA(vm, "AAA");
+    DerivedClass<AAA, A> _AAA(vm, "AAA");
     RootTable().Bind(_SC("AAA"), _AAA);
-    Class<AB> _AB(vm, "AB");
+    DerivedClass<AB, B> _AB(vm, "AB");
     RootTable().Bind(_SC("AB"), _AB);
     Class<W> _W(vm, "W");
     _W.Func("f1", &W::f1);
@@ -352,8 +352,8 @@ TEST_F(SqratTest, SimpleTypeChecking) {
             w.f2(a); \
             w.f3(aaa); \
             w.f4(ab); \
-            w.abc(a, aa, bb); \
-            w.abc(aa, aa); \
+            w.abc(aaa, aa, bb); \
+            w.abc(aa, aa, b); \
             \
             local raised = false;\
             try { \
@@ -369,6 +369,18 @@ TEST_F(SqratTest, SimpleTypeChecking) {
             raised = false;\
             try { \
                 w.abc(aa, a, ab); \
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
+            \
+            \
+            raised = false;\
+            try { \
+                w.f3(a); \
 			    gTest.EXPECT_INT_EQ(0, 1); \
             }\
             catch (ex) {\
