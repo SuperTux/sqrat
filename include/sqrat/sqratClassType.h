@@ -59,7 +59,7 @@ struct ClassTypeDataBase {
 template<class C, class B>
 struct ClassTypeData : public ClassTypeDataBase {
     virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) {
-        //ptr = static_cast<B*>(static_cast<C*>(ptr));
+
         if (classType != this) {
             ptr = baseClass->Cast(static_cast<B*>(static_cast<C*>(ptr)), classType);
         }

@@ -180,7 +180,11 @@ struct Var<Table> {
         HSQOBJECT obj;
         sq_resetobject(&obj);
         sq_getstackobj(vm,idx,&obj);
-        value = Table(obj);
+        value = Table(obj, vm);
+        SQObjectType value_type = sq_gettype(vm, idx);
+        if (value_type != OT_TABLE) {
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
+        }
     }
     static void push(HSQUIRRELVM vm, Table value) {
         HSQOBJECT obj;

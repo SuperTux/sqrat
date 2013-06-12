@@ -352,7 +352,6 @@ TEST_F(SqratTest, SimpleTypeChecking) {
             w.f2(a); \
             w.f3(aaa); \
             w.f4(ab); \
-            w.f4(ab, b); /* ??? TO DO: to check for this extra argument and raising error */\
             w.abc(aaa, aa, bb); \
             w.abc(aa, aa, b); \
             \
@@ -393,7 +392,18 @@ TEST_F(SqratTest, SimpleTypeChecking) {
             \
             raised = false;\
             try { \
-                w.abc(a, aa); /* TO DO: to check for this extra argument and raising the correct error */\
+                w.abc(a, aa); \
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
+            \
+            raised = false;\
+            try { \
+                w.f4(ab, b); \
 			    gTest.EXPECT_INT_EQ(0, 1); \
             }\
             catch (ex) {\

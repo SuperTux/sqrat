@@ -69,7 +69,7 @@ public:
 
         sq_pushstring(vm, overloadName.c_str(), -1);
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
-            return sq_throwerror(vm, _SC("no overload matching this argument list found"));// How to best appropriately error?
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 
         // Push the args again
@@ -104,7 +104,7 @@ public:
 
         sq_pushstring(vm, overloadName.c_str(), -1);
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
-            return sq_throwerror(vm, _SC("no overload matching this argument list found"));// How to best appropriately error?
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 
         // Push the args again
@@ -127,7 +127,7 @@ public:
 // Arg Count 0
 template <class R>
 SQFUNCTION SqGlobalOverloadedFunc(R (*method)()) {
-    return &SqGlobal<R>::Func0;
+    return &SqGlobal<R>::template Func0<true>;
 }
 
 // Arg Count 1
@@ -309,12 +309,12 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (*method)(A1, A2, A3, A4, A5, A6, A7, 
 // Arg Count 0
 template <class C, class R>
 inline SQFUNCTION SqMemberOverloadedFunc(R (C::*method)()) {
-    return &SqMember<C, R>::Func0;
+    return &SqMember<C, R>::template Func0<true>;
 }
 
 template <class C, class R>
 inline SQFUNCTION SqMemberOverloadedFunc(R (C::*method)() const) {
-    return &SqMember<C, R>::Func0C;
+    return &SqMember<C, R>::template Func0C<true>;
 }
 
 // Arg Count 1

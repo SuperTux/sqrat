@@ -43,7 +43,11 @@ class SqMember {
     static const char STATICCALLERROR[] ;
 public:
     // Arg Count 0
+    template <bool overloaded /* = false */>
     static SQInteger Func0(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 2) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)();
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -59,7 +63,11 @@ public:
         return 1;
     }
 
+    template <bool overloaded  /* = false */ >
     static SQInteger Func0C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 2) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)() const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -78,6 +86,9 @@ public:
     // Arg Count 1
     template <class A1, bool overloaded /*= false*/ >
     static SQInteger Func1(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 3) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -88,8 +99,12 @@ public:
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         Var<A1> a1(vm, 2);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value
                 );
@@ -100,6 +115,9 @@ public:
 
     template <class A1, bool overloaded /*= false*/ >
     static SQInteger Func1C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 3) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -110,8 +128,12 @@ public:
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
 
         Var<A1> a1(vm, 2);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value
                 );
@@ -123,6 +145,9 @@ public:
     // Arg Count 2
     template <class A1, class A2, bool overloaded /*= false*/ >
     static SQInteger Func2(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 4) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -134,8 +159,12 @@ public:
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value
@@ -147,6 +176,9 @@ public:
 
     template <class A1, class A2, bool overloaded /*= false*/ >
     static SQInteger Func2C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 4) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -158,8 +190,12 @@ public:
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value
@@ -172,6 +208,9 @@ public:
     // Arg Count 3
     template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 5) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -184,8 +223,12 @@ public:
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -198,6 +241,9 @@ public:
 
     template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 5) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -210,8 +256,12 @@ public:
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -225,6 +275,9 @@ public:
     // Arg Count 4
     template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 6) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -238,8 +291,12 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -253,6 +310,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 6) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -266,8 +326,12 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -282,6 +346,9 @@ public:
     // Arg Count 5
     template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 7) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -296,8 +363,12 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -312,6 +383,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 7) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -326,8 +400,12 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -343,6 +421,9 @@ public:
     // Arg Count 6
     template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 8) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -358,8 +439,12 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -375,6 +460,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 8) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -390,8 +478,12 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -408,6 +500,9 @@ public:
     // Arg Count 7
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 9) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -424,8 +519,12 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -442,6 +541,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 9) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -458,8 +560,12 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -477,6 +583,9 @@ public:
     // Arg Count 8
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 10) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -494,8 +603,12 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -513,6 +626,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 10) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -530,8 +646,12 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -550,6 +670,9 @@ public:
     // Arg Count 9
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 11) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -568,8 +691,12 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -588,6 +715,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 11) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -606,8 +736,12 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -628,6 +762,9 @@ public:
     // Arg Count 10
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded /*= false*/ >
     static SQInteger Func10(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 12) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -647,8 +784,12 @@ public:
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -668,6 +809,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded  /*= false*/ >
     static SQInteger Func10C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 12) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -687,8 +831,12 @@ public:
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -710,6 +858,9 @@ public:
     // Arg Count 11
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>
     static SQInteger Func11(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 13) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -730,8 +881,12 @@ public:
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -752,6 +907,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>  
     static SQInteger Func11C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 13) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -772,8 +930,12 @@ public:
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -796,6 +958,9 @@ public:
     // Arg Count 12
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/  >
     static SQInteger Func12(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 14) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -817,8 +982,12 @@ public:
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -840,6 +1009,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/ >
     static SQInteger Func12C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 14) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -861,8 +1033,12 @@ public:
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -885,6 +1061,9 @@ public:
     // Arg Count 13
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ >
     static SQInteger Func13(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 15) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -907,8 +1086,12 @@ public:
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -931,6 +1114,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ > 
     static SQInteger Func13C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 15) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -953,8 +1139,12 @@ public:
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -978,6 +1168,9 @@ public:
     // Arg Count 14
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 16) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1001,8 +1194,12 @@ public:
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
         Var<A14> a14(vm, 15);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -1026,6 +1223,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 16) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef R (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1049,8 +1249,12 @@ public:
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
         Var<A14> a14(vm, 15);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         R ret = (ptr->*method)(
                     a1.value,
                     a2.value,
@@ -1081,7 +1285,11 @@ template <class C>
 class SqMember<C, void> {
 public:
     // Arg Count 0
+    template <bool overloaded  /* = false */ >
     static SQInteger Func0(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 2) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)();
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1093,7 +1301,11 @@ public:
         return 0;
     }
 
+    template <bool overloaded  /* = false */ >
     static SQInteger Func0C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 2) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)() const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1108,6 +1320,9 @@ public:
     // Arg Count 1
     template <class A1, bool overloaded /*= false*/>
     static SQInteger Func1(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 3) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1116,8 +1331,12 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         Var<A1> a1(vm, 2);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value
         );
@@ -1126,6 +1345,9 @@ public:
 
     template <class A1, bool overloaded /*= false*/ >
     static SQInteger Func1C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 3) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1134,8 +1356,12 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         Var<A1> a1(vm, 2);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value
         );
@@ -1145,6 +1371,9 @@ public:
     // Arg Count 2
     template <class A1, class A2, bool overloaded /*= false*/>
     static SQInteger Func2(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 4) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1154,8 +1383,12 @@ public:
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value
@@ -1165,6 +1398,9 @@ public:
 
     template <class A1, class A2, bool overloaded /*= false*/>
     static SQInteger Func2C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 4) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1174,8 +1410,12 @@ public:
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value
@@ -1186,6 +1426,9 @@ public:
     // Arg Count 3
     template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 5) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1196,8 +1439,12 @@ public:
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1208,6 +1455,9 @@ public:
 
     template <class A1, class A2, class A3, bool overloaded /*= false*/ >
     static SQInteger Func3C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 5) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1218,8 +1468,12 @@ public:
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1231,6 +1485,9 @@ public:
     // Arg Count 4
     template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 6) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1242,8 +1499,12 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1255,6 +1516,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, bool overloaded /*= false*/ >
     static SQInteger Func4C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 6) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1266,8 +1530,12 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1280,6 +1548,9 @@ public:
     // Arg Count 5
     template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 7) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1292,8 +1563,12 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1306,6 +1581,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, bool overloaded /*= false*/ >
     static SQInteger Func5C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 7) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1318,8 +1596,12 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1333,6 +1615,9 @@ public:
     // Arg Count 6
     template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 8) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1346,8 +1631,12 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1361,6 +1650,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, bool overloaded /*= false*/ >
     static SQInteger Func6C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 8) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1374,8 +1666,12 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1390,6 +1686,9 @@ public:
     // Arg Count 7
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 9) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1404,8 +1703,12 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1420,6 +1723,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, bool overloaded /*= false*/ >
     static SQInteger Func7C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 9) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1434,8 +1740,12 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1451,6 +1761,9 @@ public:
     // Arg Count 8
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 10) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1466,8 +1779,12 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1483,6 +1800,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ > 
     static SQInteger Func8C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 10) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1498,8 +1818,12 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1516,6 +1840,9 @@ public:
     // Arg Count 9
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 11) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1532,8 +1859,12 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1550,6 +1881,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, bool overloaded /*= false*/ >
     static SQInteger Func9C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 11) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1566,8 +1900,12 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1585,6 +1923,9 @@ public:
     // Arg Count 10
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded /*= false*/ >
     static SQInteger Func10(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 12) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1602,8 +1943,12 @@ public:
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1621,6 +1966,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, bool overloaded /*= false*/ >
     static SQInteger Func10C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 12) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1638,8 +1986,12 @@ public:
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1658,6 +2010,9 @@ public:
     // Arg Count 11
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/ >
     static SQInteger Func11(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 13) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1676,8 +2031,12 @@ public:
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1696,6 +2055,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/ >
     static SQInteger Func11C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 13) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1714,8 +2076,12 @@ public:
         Var<A9> a9(vm, 10);
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1735,6 +2101,9 @@ public:
     // Arg Count 12
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/ >
     static SQInteger Func12(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 14) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1754,8 +2123,12 @@ public:
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1775,6 +2148,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, bool overloaded /*= false*/ >
     static SQInteger Func12C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 14) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1794,8 +2170,12 @@ public:
         Var<A10> a10(vm, 11);
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1816,6 +2196,9 @@ public:
     // Arg Count 13
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/>
     static SQInteger Func13(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 15) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1836,8 +2219,12 @@ public:
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1858,6 +2245,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/>
     static SQInteger Func13C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 15) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1878,8 +2268,12 @@ public:
         Var<A11> a11(vm, 12);
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1901,6 +2295,9 @@ public:
     // Arg Count 14
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 16) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1922,8 +2319,12 @@ public:
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
         Var<A14> a14(vm, 15);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1945,6 +2346,9 @@ public:
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >  
     static SQInteger Func14C(HSQUIRRELVM vm) {
+        if (!overloaded && sq_gettop(vm) != 16) {
+            return sq_throwerror(vm, _SC("wrong number of parameters"));
+        }
         typedef void (C::*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const;
         M* methodPtr;
         sq_getuserdata(vm, -1, (SQUserPointer*)&methodPtr, NULL);
@@ -1966,8 +2370,12 @@ public:
         Var<A12> a12(vm, 13);
         Var<A13> a13(vm, 14);
         Var<A14> a14(vm, 15);
-        if (!overloaded && Error::Instance().Occurred(vm))
+        if (Error::Instance().Occurred(vm)) {
+            if (overloaded)
+                return 0;
+            else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         (ptr->*method)(
             a1.value,
             a2.value,
@@ -1997,12 +2405,12 @@ public:
 // Arg Count 0
 template <class C, class R>
 inline SQFUNCTION SqMemberFunc(R (C::*method)()) {
-    return &SqMember<C, R>::Func0;
+    return &SqMember<C, R>::template Func0<false>;
 }
 
 template <class C, class R>
 inline SQFUNCTION SqMemberFunc(R (C::*method)() const) {
-    return &SqMember<C, R>::Func0C;
+    return &SqMember<C, R>::template Func0C<false>;
 }
 
 
