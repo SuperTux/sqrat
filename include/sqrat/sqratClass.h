@@ -29,6 +29,7 @@
 #if !defined(_SCRAT_CLASS_H_)
 #define _SCRAT_CLASS_H_
 
+#include <typeinfo>
 #include <squirrel.h>
 #include <string.h>
 
@@ -66,7 +67,7 @@ public:
         @param v    Squirrel virtual machine to bind to
     */
     /// Constructor
-    Class(HSQUIRRELVM v = DefaultVM::Get(), const string& className = string(), bool createClass = true) : Object(v, false) {
+    Class(HSQUIRRELVM v = DefaultVM::Get(), const string& className = string() , bool createClass = true) : Object(v, false) {
         if(createClass && !ClassType<C>::hasClassTypeData(v)) {
             ClassType<C>::getClassTypeData(v) = new ClassTypeData<C, void>;
             HSQOBJECT& classObj = ClassType<C>::ClassObject(v);
@@ -76,8 +77,9 @@ public:
             sq_getstackobj(vm, -1, &classObj);
             sq_addref(vm, &classObj); // must addref before the pop!
             sq_pop(vm, 1);
-
-            InitClass(className);
+            if (className.empty()) 
+                InitClass(typeid(*this).name());
+            else InitClass(className);
             ClassType<C>::Initialized(v) = true;
 
             // install cleanup hook
@@ -424,8 +426,10 @@ public:
             sq_getstackobj(v, -1, &classObj);
             sq_addref(v, &classObj); // must addref before the pop!
             sq_pop(v, 1);
+            if (className.empty()) 
+                InitDerivedClass(v, typeid(*this).name());
+            else InitDerivedClass(v, className);
 
-            InitDerivedClass(v, className);
             ClassType<C>::Initialized(v) = true;
 
             // install cleanup hook
