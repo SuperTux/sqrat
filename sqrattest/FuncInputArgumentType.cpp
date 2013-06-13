@@ -70,24 +70,6 @@ static const char *sq_code = "\
     \
     local b = v2.boolFunc(); \
     \
-    print (b) ; \
-    b = v2.boolFunc2(); \
-    \
-    print (b) ; \
-    \
-    v.add(v2); /*good*/  \
-    print(\"1\");\
-    v.add(10); /*crash*/  \
-    print(\"2\");\
-    v.add(); /*crash*/  \
-    print(\"3\");\
-    v.add(\"text\"); /*crash*/  \
-    print(\"4\");\
-       ";
-/* crash cases work TO DO */
-static const char *sq_code0 = "\
-    local v = Vector2();\
-    local v2 = Vector2();\
     \
     local b = v2.boolFunc(); \
     \
@@ -100,11 +82,48 @@ static const char *sq_code0 = "\
 	gTest.EXPECT_INT_EQ(b, 0); \
 	gTest.EXPECT_FLOAT_EQ(b, 0.0); \
     \
+    print (b) ; \
+    b = v2.boolFunc2(); \
+    \
+    print (b) ; \
+    \
+    v.add(v2); /*good*/  \
+    print(\"1\\n\");\
+    local raised = false;\
+    try { \
+        v.add(10); /*was crashing*/  \
+		gTest.EXPECT_INT_EQ(0, 1); \
+	} catch (ex) {\
+        raised = true;\
+        print(ex + \"\\n\"); \
+    }\
+    gTest.EXPECT_TRUE(raised); \
+    print(\"2\\n\");\
+    raised = false;\
+    try { \
+        v.add(); /*was crashing*/  \
+		gTest.EXPECT_INT_EQ(0, 1); \
+	} catch (ex) {\
+        raised = true;\
+        print(ex + \"\\n\"); \
+    }\
+    gTest.EXPECT_TRUE(raised); \
+    print(\"3\\n\");\
+    raised = false;\
+    try {\
+        v.add(\"text\"); /*was crashing*/  \
+		gTest.EXPECT_INT_EQ(0, 1); \
+	} catch (ex) {\
+        raised = true;\
+        print(ex + \"\\n\"); \
+    }\
+    gTest.EXPECT_TRUE(raised); \
+    print(\"4\\n\");\
        ";
 
 
 
-TEST_F(SqratTest, FuncInputArgumentType) {
+TEST_F(SqratTest, NumericArgumentTypeConversionAndCheck) {
     DefaultVM::Set(vm);
     
     Sqrat::Class<Vector2> classVector2(vm);
@@ -117,7 +136,7 @@ TEST_F(SqratTest, FuncInputArgumentType) {
             
     Script script;
     try {
-        script.CompileString(_SC(sq_code0));
+        script.CompileString(_SC(sq_code));
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
