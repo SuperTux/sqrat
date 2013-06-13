@@ -180,6 +180,16 @@ public:
     {
         return *this;
     }
+
+    B& getB2(int, char *)
+    {
+        return *this;
+    }
+
+    B& getB4( const B, B *, const B, int)
+    {
+        return *this;
+    }
     
     B* getBPtr()
     {
@@ -195,6 +205,8 @@ TEST_F(SqratTest, InstanceReferences) {
     .Func("set", &B::set)
     .Func("get", &B::get)
     .Func("getB", &B::getB)
+    .Func("getB2", &B::getB2)
+    .Func("getB4", &B::getB4)
     .Func("getBPtr", &B::getBPtr);
     
     RootTable().Bind("B", _B);
@@ -212,7 +224,15 @@ TEST_F(SqratTest, InstanceReferences) {
 			local b2 = b.getB();\
             b.set(40);\
 			gTest.EXPECT_INT_EQ(b1.get(), 40); \
-			//gTest.EXPECT_INT_EQ(b2.get(), 40); \
+			gTest.EXPECT_INT_EQ(b2.get(), 40); \
+			local b3 = b.getB2(12, \"test\");\
+            b.set(60);\
+			gTest.EXPECT_INT_EQ(b2.get(), 60); \
+			gTest.EXPECT_INT_EQ(b3.get(), 60); \
+			local b4 = b.getB4(b, b, b, 33);\
+            b.set(80);\
+			gTest.EXPECT_INT_EQ(b3.get(), 80); \
+			gTest.EXPECT_INT_EQ(b4.get(), 80); \
             \
             "));
     }

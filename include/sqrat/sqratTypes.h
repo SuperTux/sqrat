@@ -454,11 +454,17 @@ inline void PushVar(HSQUIRRELVM vm, T value) {
     Var<T>::push(vm, value);
 }
 
-    
+   
 /* special version for enum values */ 
 template<>
 inline void PushVar<int>(HSQUIRRELVM vm, int value) { 
     Var<int>::push(vm, value);    
+}
+
+
+template<class T>
+inline void PushVarR(HSQUIRRELVM vm, T & value) {
+    Var<T&>::push(vm, value);
 }
 
 }
