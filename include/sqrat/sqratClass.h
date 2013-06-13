@@ -80,7 +80,6 @@ public:
             if (className.empty()) 
                 InitClass(typeid(*this).name());
             else InitClass(className);
-            ClassType<C>::Initialized(v) = true;
 
             // install cleanup hook
             HSQUIRRELVM *p = (HSQUIRRELVM *) sq_newuserdata(v, sizeof(v));
@@ -429,8 +428,6 @@ public:
             if (className.empty()) 
                 InitDerivedClass(v, typeid(*this).name());
             else InitDerivedClass(v, className);
-
-            ClassType<C>::Initialized(v) = true;
 
             // install cleanup hook
             HSQUIRRELVM *p = (HSQUIRRELVM *) sq_newuserdata(v, sizeof(v));

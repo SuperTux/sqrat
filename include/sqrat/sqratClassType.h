@@ -44,7 +44,6 @@ namespace Sqrat
 typedef SQInteger (*COPYFUNC)(HSQUIRRELVM, SQInteger, const void*);
 
 struct ClassTypeDataBase {
-    bool        initialized;
     HSQOBJECT    classObj;
     HSQOBJECT    getTable;
     HSQOBJECT    setTable;
@@ -53,7 +52,7 @@ struct ClassTypeDataBase {
     ClassTypeDataBase* baseClass;
     virtual ~ClassTypeDataBase() {}
     virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) = 0;
-    ClassTypeDataBase(): initialized(false) {}
+    ClassTypeDataBase(){}
 };
 
 template<class C, class B>
@@ -115,11 +114,6 @@ struct ClassType {
 
     static inline ClassTypeDataBase*& BaseClass(HSQUIRRELVM vm) {
         return getClassTypeData(vm)->baseClass;
-    }
-
-
-    static inline bool& Initialized(HSQUIRRELVM vm) {
-        return getClassTypeData(vm)->initialized;
     }
 
     static void PushInstance(HSQUIRRELVM vm, C* ptr) {
