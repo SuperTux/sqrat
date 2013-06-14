@@ -3663,7 +3663,7 @@ inline SQFUNCTION SqMemberFunc(R & (C::*method)()) {
 
 template <class C, class R>
 inline SQFUNCTION SqMemberFunc(R & (C::*method)() const) {
-    return &SqMember<C, R& >::template Func0R<false>;
+    return &SqMember<C, R& >::template Func0C<false>;
 }
 
 
