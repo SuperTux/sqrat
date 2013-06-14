@@ -312,7 +312,7 @@ public:
     static int bar;
 };
 
-/*
+
 enum  foo { bar = 123 };
 
 TEST_F(SqratTest, CEnumBinding)
@@ -346,4 +346,4 @@ TEST_F(SqratTest, CEnumBinding)
     }
     
 }
-*/ /* work in progress */
+ 

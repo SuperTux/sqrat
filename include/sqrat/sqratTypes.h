@@ -36,6 +36,23 @@
 
 namespace Sqrat {
 
+    // copied from http://www.experts-exchange.com/Programming/Languages/CPP/A_223-Determing-if-a-C-type-is-convertable-to-another-at-compile-time.html
+template <typename T1, typename T2>
+struct is_convertible
+{
+private:
+	struct True_ { char x[2]; };
+	struct False_ { };
+ 
+	static True_ helper(T2 const &);
+	static False_ helper(...);
+ 
+public:
+	static bool const YES = (
+		sizeof(True_) == sizeof(is_convertible::helper(T1()))
+	);
+}; 
+    
 //
 // Variable Accessors
 //
@@ -51,8 +68,27 @@ struct Var {
             value = *ptr;
     }
     static void push(HSQUIRRELVM vm, T value) {
-        ClassType<T>::PushInstanceCopy(vm, value);
+        if (ClassType<T>::hasClassTypeData(vm)) 
+            ClassType<T>::PushInstanceCopy(vm, value);
+        else /* try integral type */ 
+            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, (value)); 
+            
     }
+    
+private:
+    template <class T2, bool b>
+    struct pushAsInt {
+        void push(HSQUIRRELVM vm, T2 value) {
+            sq_pushnull(vm);            
+        }
+    }; 
+    
+    template <class T2> 
+    struct pushAsInt<T2, true> {       
+        void push(HSQUIRRELVM vm, T2 value) {
+            sq_pushinteger(vm, static_cast<SQInteger>(value)); 
+        }
+    };
 };
 
 template<class T>
