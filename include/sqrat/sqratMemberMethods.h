@@ -3979,6 +3979,20 @@ inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
     return 1;
 }
 
+
+template <class C, class V>
+inline SQInteger sqStaticGet(HSQUIRRELVM vm) {
+    typedef V *M;
+    M* memberPtr = NULL;
+    sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
+    M member = *memberPtr;
+
+    PushVar(vm, *member);
+
+    return 1;
+}
+
+
 inline SQInteger sqVarGet(HSQUIRRELVM vm) {
     // Find the get method in the get table
     sq_push(vm, 2);
@@ -4015,6 +4029,17 @@ inline SQInteger sqDefaultSet(HSQUIRRELVM vm) {
     M member = *memberPtr;
 
     ptr->*member = Var<V>(vm, 2).value;
+    return 0;
+}
+
+template <class C, class V>
+inline SQInteger sqStaticSet(HSQUIRRELVM vm) {
+    typedef V *M;
+    M* memberPtr = NULL;
+    sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
+    M member = *memberPtr;
+
+    *member = Var<V>(vm, 2).value;
     return 0;
 }
 

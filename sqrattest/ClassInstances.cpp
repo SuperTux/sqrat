@@ -63,7 +63,10 @@ public:
     SQChar * middleName;
     const SQChar * gender;
     Employee* supervisor;
+    static string sharedData;
 };
+
+string Employee::sharedData;
 
 TEST_F(SqratTest, ClassInstances) {
     DefaultVM::Set(vm);
@@ -78,6 +81,7 @@ TEST_F(SqratTest, ClassInstances) {
     .Var(_SC("supervisor"), &Employee::supervisor)
     .Var(_SC("middleName"), &Employee::middleName)
     .Var(_SC("gender"), &Employee::gender)
+    .StaticVar(_SC("sharedData"), &Employee::sharedData)
 
     .Func(_SC("GiveRaise"), &Employee::GiveRaise)
     .Func(_SC("_tostring"), &Employee::ToString)
@@ -95,7 +99,8 @@ TEST_F(SqratTest, ClassInstances) {
     bob.wage = 21.95f;
     bob.gender = _SC("Male");
     bob.middleName = _SC("A");
-
+    bob.sharedData = _SC("1234");
+    
     RootTable().SetInstance(_SC("bob"), &bob);
 
     Script script;
@@ -127,6 +132,7 @@ TEST_F(SqratTest, ClassInstances) {
 			gTest.EXPECT_STR_EQ(bob.lastName, \"Smith\"); \
 			gTest.EXPECT_STR_EQ(bob.middleName, \"A\"); \
 			gTest.EXPECT_STR_EQ(bob.gender, \"Male\"); \
+			gTest.EXPECT_STR_EQ(bob.sharedData, \"1234\"); \
 			\
 			// Uncomment the following to see _tostring demonstrated \
 			//::print(steve); \
@@ -195,9 +201,16 @@ public:
     {
         return this;
     }
+    
+    static string shared;
+    static int sharedInt;
 };
 
-TEST_F(SqratTest, InstanceReferences) {
+
+string B::shared ;
+int B::sharedInt = -1;
+
+TEST_F(SqratTest, InstanceReferencesAndStaticMembers) {
     DefaultVM::Set(vm);
 
     Class<B> _B;
@@ -207,7 +220,9 @@ TEST_F(SqratTest, InstanceReferences) {
     .Func("getB", &B::getB)
     .Func("getB2", &B::getB2)
     .Func("getB4", &B::getB4)
-    .Func("getBPtr", &B::getBPtr);
+    .Func("getBPtr", &B::getBPtr)
+    .StaticVar("shared", &B::shared)
+    .StaticVar("sharedInt", &B::sharedInt);
     
     RootTable().Bind("B", _B);
     
@@ -215,8 +230,17 @@ TEST_F(SqratTest, InstanceReferences) {
     try {
         script.CompileString(_SC(" \
             b <- B();\
+            bb <- B(); \
+            \
 			gTest.EXPECT_INT_EQ(b.get(), -1); \
+			gTest.EXPECT_INT_EQ(bb.sharedInt, -1); \
+			gTest.EXPECT_INT_EQ(b.sharedInt, -1); \
             b.set(12);\
+            b.shared = \"a long string\"; \
+            b.sharedInt = 1234; \
+            gTest.EXPECT_STR_EQ(bb.shared, \"a long string\"); \
+            gTest.EXPECT_STR_EQ(b.shared, \"a long string\"); \
+			gTest.EXPECT_INT_EQ(bb.sharedInt, 1234); \
 			gTest.EXPECT_INT_EQ(b.get(), 12); \
 			local b1 = b.getBPtr();\
             b.set(20);\
@@ -234,6 +258,22 @@ TEST_F(SqratTest, InstanceReferences) {
 			gTest.EXPECT_INT_EQ(b3.get(), 80); \
 			gTest.EXPECT_INT_EQ(b4.get(), 80); \
             \
+            bb.shared = \"short str\"; \
+            gTest.EXPECT_STR_EQ(b2.shared, \"short str\"); \
+            gTest.EXPECT_STR_EQ(b3.shared, \"short str\"); \
+            gTest.EXPECT_STR_EQ(b.shared, \"short str\"); \
+            gTest.EXPECT_STR_EQ(b1.shared, \"short str\"); \
+            gTest.EXPECT_STR_EQ(b4.shared, \"short str\"); \
+			gTest.EXPECT_INT_EQ(b.sharedInt, 1234); \
+			gTest.EXPECT_INT_EQ(b1.sharedInt, 1234); \
+			gTest.EXPECT_INT_EQ(b2.sharedInt, 1234); \
+			gTest.EXPECT_INT_EQ(b3.sharedInt, 1234); \
+			gTest.EXPECT_INT_EQ(b4.sharedInt, 1234); \
+            b4.shared = \"abcde\"; \
+            b4.sharedInt = 9999; \
+            gTest.EXPECT_STR_EQ(bb.shared, \"abcde\"); \
+			gTest.EXPECT_INT_EQ(bb.sharedInt, 9999); \
+			gTest.EXPECT_INT_EQ(b1.sharedInt, 9999); \
             "));
     }
     catch (Sqrat::Exception ex) {

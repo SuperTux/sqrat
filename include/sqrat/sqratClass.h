@@ -154,6 +154,22 @@ public:
         return *this;
     }
 
+    /**
+        @param name    name of the variable as it will appear in Squirrel
+        @param var    variable to bind
+    */
+    /// Bind a class static variable
+    template<class V>
+    Class& StaticVar(const SQChar* name, V * var) {
+        // Add the getter
+        BindAccessor(name, &var, sizeof(var), &sqStaticGet<C, V>, ClassType<C>::GetTable(vm), true);
+
+        // Add the setter
+        BindAccessor(name, &var, sizeof(var), &sqStaticSet<C, V>, ClassType<C>::SetTable(vm), true);
+
+        return *this;
+    }
+
     /// Bind a class property (variable accessed via a setter and getter)
     template<class V>
     Class& Prop(const SQChar* name, V (C::*getMethod)() const, void (C::*setMethod)(const V&)) {
@@ -366,7 +382,7 @@ protected:
     }
 
     // Helper function used to bind getters and setters
-    inline void BindAccessor(const SQChar* name, void* var, size_t varSize, SQFUNCTION func, HSQOBJECT table) {
+    inline void BindAccessor(const SQChar* name, void* var, size_t varSize, SQFUNCTION func, HSQOBJECT table, bool isStatic = false) {
         // Push the get or set table
         sq_pushobject(vm, table);
         sq_pushstring(vm, name, -1);
@@ -379,7 +395,7 @@ protected:
         sq_newclosure(vm, func, 1);
 
         // Add the accessor to the table
-        sq_newslot(vm, -3, false);
+        sq_newslot(vm, -3, isStatic);
 
         // Pop get/set table
         sq_pop(vm, 1);
