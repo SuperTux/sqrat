@@ -87,7 +87,6 @@ public:
             
             sq_setreleasehook(v, -1, cleanup_hook);
             // finish install cleanup hook
-
         }
     }
 
@@ -162,10 +161,10 @@ public:
     template<class V>
     Class& StaticVar(const SQChar* name, V * var) {
         // Add the getter
-        BindAccessor(name, &var, sizeof(var), &sqStaticGet<C, V>, ClassType<C>::GetTable(vm), true);
+        BindAccessor(name, &var, sizeof(var), &sqStaticGet<C, V>, ClassType<C>::GetTable(vm));
 
         // Add the setter
-        BindAccessor(name, &var, sizeof(var), &sqStaticSet<C, V>, ClassType<C>::SetTable(vm), true);
+        BindAccessor(name, &var, sizeof(var), &sqStaticSet<C, V>, ClassType<C>::SetTable(vm));
 
         return *this;
     }
@@ -332,6 +331,7 @@ protected:
 
         // set the typetag of the class
         sq_settypetag(vm, -1, ClassType<C>::getClassTypeData(vm));
+
         // add the default constructor
         sq_pushstring(vm,_SC("constructor"), -1);
         sq_newclosure(vm, &A::New, 0);
@@ -379,10 +379,12 @@ protected:
 
         // pop the class
         sq_pop(vm, 1);
+            
+            Ctor(); /* bind the default cnstructor */
     }
 
     // Helper function used to bind getters and setters
-    inline void BindAccessor(const SQChar* name, void* var, size_t varSize, SQFUNCTION func, HSQOBJECT table, bool isStatic = false) {
+    inline void BindAccessor(const SQChar* name, void* var, size_t varSize, SQFUNCTION func, HSQOBJECT table) {
         // Push the get or set table
         sq_pushobject(vm, table);
         sq_pushstring(vm, name, -1);
@@ -395,12 +397,91 @@ protected:
         sq_newclosure(vm, func, 1);
 
         // Add the accessor to the table
-        sq_newslot(vm, -3, isStatic);
+        sq_newslot(vm, -3, false);
 
         // Pop get/set table
         sq_pop(vm, 1);
     }
 
+    
+    // constructor binding
+
+    Class& BindConstructor(SQFUNCTION method, SQInteger nParams, const SQChar *name = 0){
+        SQFUNCTION overload = SqOverloadFunc(method);
+        bool alternative_global = false;
+        if (name == 0)
+            name = _SC("constructor");
+        else alternative_global = true;
+        string overloadName = SqOverloadName::Get(name, nParams);
+
+        if (!alternative_global )
+        {
+            // push the class
+            sq_pushobject(vm, ClassType<C>::ClassObject(vm));
+        }
+        else
+        {  // the containing environment is the root table??
+            sq_pushroottable(vm);            
+        }
+        // Bind overload handler
+        sq_pushstring(vm, name, -1);
+        sq_pushstring(vm, name, -1); // function name is passed as a free variable
+        sq_newclosure(vm, overload, 1);
+        sq_newslot(vm, -3, false);
+        
+        // Bind overloaded allocator function
+        
+        sq_pushstring(vm, overloadName.c_str(), -1);
+        sq_newclosure(vm, method, 0);
+        sq_setparamscheck(vm,nParams + 1,NULL);
+        sq_newslot(vm, -3, false);
+        sq_pop(vm, 1);
+        return *this;
+    }
+    
+public:        
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<0>, 0, name);
+    }
+    
+    template<class A1>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1>,1, name);
+    }
+    template<class A1,class A2>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2>,2, name);
+    }
+    template<class A1,class A2,class A3>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3>,3, name);
+    }
+    template<class A1,class A2,class A3,class A4>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3,A4>,4, name);
+    }
+    template<class A1,class A2,class A3,class A4,class A5>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3,A4,A5>,5, name);
+    }
+    template<class A1,class A2,class A3,class A4,class A5,class A6>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6>,6, name);
+    }
+    template<class A1,class A2,class A3,class A4,class A5,class A6,class A7>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7>,7, name);
+    }
+    template<class A1,class A2,class A3,class A4,class A5,class A6,class A7,class A8>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7,A8>,8, name);
+    }
+    template<class A1,class A2,class A3,class A4,class A5,class A6,class A7,class A8,class A9>
+    Class& Ctor(const SQChar *name = 0) {
+        return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7,A8,A9>,9, name);
+    }
+
+    
 };
 
 

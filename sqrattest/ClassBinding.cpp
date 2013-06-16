@@ -28,6 +28,143 @@
 
 using namespace Sqrat;
 
+
+class C {
+    void default_values()
+    {
+         i = -1;
+         s = "uninitialized";
+         f = -2.0;
+         s2 = "not initialized";
+    }
+public:
+    int i;
+    string s;
+    float f;
+    string s2;
+    
+    C() 
+    {
+        default_values();
+        
+        std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+    }
+    
+    C(int i_)
+    {
+        default_values();
+        i = i_;
+        std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+        
+    }
+    C(int i_, const SQChar *s_) 
+    {
+        default_values();
+        i = i_;
+        s = string(s_);
+        std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+    }
+    
+    C(const SQChar *s2_, float f_)
+    {
+        default_values();
+        s2 = string(s2_);
+        f = f_;
+        std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+        
+    }
+    C(int i_, const SQChar *s_, float f_)
+    {
+        default_values();
+        i = i_;
+        s = string(s_);
+        f = f_;
+        std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+    }
+    
+    C(int i_, const SQChar *s_, float f_, const SQChar *s2_): i(i_), s(s_), f(f_), s2(s2_)
+    {
+        std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+    }
+};
+
+TEST_F(SqratTest, Constructors)
+{
+    DefaultVM::Set(vm);
+    
+    Class<C> c_class(vm);
+    
+    c_class
+    .Var(_SC("i"), &C::i)
+    .Var(_SC("s"), &C::s)
+    .Var(_SC("f"), &C::f)
+    .Var(_SC("s2"), &C::s2)
+    .Ctor<int>()
+    .Ctor<int, const SQChar * >()
+    .Ctor<const SQChar *, float >("make")
+    .Ctor<int, const SQChar *, float >()
+    .Ctor<int, const SQChar *, float, const SQChar * >();  
+
+    RootTable().Bind(_SC("C"), c_class);
+
+    Script script;
+    
+
+    try {
+        script.CompileString(_SC(" \
+            c0 <- C(); \
+            c1 <- C(6); \
+            c2 <- C(12, \"test\");  \
+            c22 <-make(\"abc\", 101.0) ;\
+            c3 <- C(23, \"test2\", 33.5); \
+            c4 <- C(123, \"test3\", 133.5, \"second string\");   \
+			    \
+			gTest.EXPECT_INT_EQ(c0.i, -1); \
+			gTest.EXPECT_FLOAT_EQ(c0.f, -2.0); \
+			gTest.EXPECT_STR_EQ(c0.s, \"uninitialized\"); \
+			gTest.EXPECT_STR_EQ(c0.s2, \"not initialized\"); \
+			    \
+			gTest.EXPECT_INT_EQ(c1.i, 6); \
+			gTest.EXPECT_FLOAT_EQ(c1.f, -2.0); \
+			gTest.EXPECT_STR_EQ(c1.s, \"uninitialized\"); \
+			gTest.EXPECT_STR_EQ(c1.s2, \"not initialized\"); \
+			    \
+			gTest.EXPECT_INT_EQ(c2.i, 12); \
+			gTest.EXPECT_FLOAT_EQ(c2.f, -2.0); \
+			gTest.EXPECT_STR_EQ(c2.s, \"test\"); \
+			gTest.EXPECT_STR_EQ(c2.s2, \"not initialized\"); \
+			    print(c2 + \"\\n\");\
+			    \
+			gTest.EXPECT_INT_EQ(c3.i, 23); \
+			gTest.EXPECT_FLOAT_EQ(c3.f, 33.5); \
+			gTest.EXPECT_STR_EQ(c3.s, \"test2\"); \
+			gTest.EXPECT_STR_EQ(c3.s2, \"not initialized\"); \
+			    \
+			gTest.EXPECT_INT_EQ(c4.i, 123); \
+			gTest.EXPECT_FLOAT_EQ(c4.f, 133.5); \
+			gTest.EXPECT_STR_EQ(c4.s, \"test3\"); \
+			gTest.EXPECT_STR_EQ(c4.s2, \"second string\"); \
+			    \
+			    print(c22 + \"\\n\");\
+			gTest.EXPECT_INT_EQ(c22.i, -1); \
+			gTest.EXPECT_FLOAT_EQ(c22.f, 101.0); \
+			gTest.EXPECT_STR_EQ(c22.s, \"uninitialized\"); \
+			gTest.EXPECT_STR_EQ(c22.s2, \"abc\"); \
+			    \
+			"));
+    } catch(Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+    
+}
+
+
 const Sqrat::string Vec2ToString(const Vec2* v) {
     std::basic_stringstream<SQChar> out;
     out << _SC("Vec2(") << v->x << _SC(", ") << v->y << _SC(")");
@@ -347,3 +484,5 @@ TEST_F(SqratTest, CEnumBinding)
     
 }
  
+
+        

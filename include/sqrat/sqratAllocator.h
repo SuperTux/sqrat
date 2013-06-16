@@ -32,6 +32,7 @@
 #include <string.h>
 
 #include "sqratObject.h"
+#include "sqratTypes.h"
 
 namespace Sqrat {
 
@@ -41,14 +42,122 @@ namespace Sqrat {
 
 template<class C>
 class DefaultAllocator {
-public:
-    static SQInteger New(HSQUIRRELVM vm) {
-        C* instance = new C();
+
+    static SQInteger setInstance(HSQUIRRELVM vm, C* instance)
+    {
         sq_setinstanceup(vm, 1, instance);
         sq_setreleasehook(vm, 1, &Delete);
         return 0;
     }
+    
+public:
+    
+    static SQInteger New(HSQUIRRELVM vm) {
+        C* instance = new C();
+        setInstance(vm, instance);
+        return 0;
+    }
 
+    template <int count>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return New(vm);
+    }
+    
+   // following New functions are used only if constructors are bound via Ctor() in class    
+
+    template <typename A1>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value
+            ));
+    }
+    template <typename A1,typename A2>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3,typename A4>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value,
+            Var<A4>(vm, 5).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3,typename A4,typename A5>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value,
+            Var<A4>(vm, 5).value,
+            Var<A5>(vm, 6).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value,
+            Var<A4>(vm, 5).value,
+            Var<A5>(vm, 6).value,
+            Var<A6>(vm, 7).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value,
+            Var<A4>(vm, 5).value,
+            Var<A5>(vm, 6).value,
+            Var<A6>(vm, 7).value,
+            Var<A7>(vm, 8).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value,
+            Var<A4>(vm, 5).value,
+            Var<A5>(vm, 6).value,
+            Var<A6>(vm, 7).value,
+            Var<A7>(vm, 8).value,
+            Var<A8>(vm, 9).value
+            ));
+    }
+    template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8,typename A9>
+    static SQInteger iNew(HSQUIRRELVM vm) {
+        return setInstance(vm, new C(
+            Var<A1>(vm, 2).value,
+            Var<A2>(vm, 3).value,
+            Var<A3>(vm, 4).value,
+            Var<A4>(vm, 5).value,
+            Var<A5>(vm, 6).value,
+            Var<A6>(vm, 7).value,
+            Var<A7>(vm, 8).value,
+            Var<A8>(vm, 9).value,
+            Var<A9>(vm, 10).value
+            ));
+    }
+
+public:
+    
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         C* instance = new C(*static_cast<const C*>(value));
         sq_setinstanceup(vm, idx, instance);
