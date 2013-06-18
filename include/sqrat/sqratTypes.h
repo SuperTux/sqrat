@@ -240,9 +240,11 @@ SCRAT_INTEGER(signed char)
 SCRAT_INTEGER(unsigned long long)
 SCRAT_INTEGER(signed long long)
 
+#ifdef _MSC_VER
 #if defined(__int64)
 SCRAT_INTEGER(unsigned __int64)
 SCRAT_INTEGER(signed __int64)
+#endif
 #endif
 
 // Float Types
