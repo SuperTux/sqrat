@@ -101,7 +101,7 @@ TEST_F(SqratTest, Constructors)
     .Var(_SC("s2"), &C::s2)
     .Ctor<int>()
     .Ctor<int, const SQChar * >()
-    .Ctor<const SQChar *, float >("make")
+    //Ctor<const SQChar *, float >("make")
     .Ctor<int, const SQChar *, float >()
     .Ctor<int, const SQChar *, float, const SQChar * >();  
 
@@ -115,7 +115,6 @@ TEST_F(SqratTest, Constructors)
             c0 <- C(); \
             c1 <- C(6); \
             c2 <- C(12, \"test\");  \
-            c22 <-make(\"abc\", 101.0) ;\
             c3 <- C(23, \"test2\", 33.5); \
             c4 <- C(123, \"test3\", 133.5, \"second string\");   \
 			    \
@@ -145,7 +144,7 @@ TEST_F(SqratTest, Constructors)
 			gTest.EXPECT_STR_EQ(c4.s, \"test3\"); \
 			gTest.EXPECT_STR_EQ(c4.s2, \"second string\"); \
 			    \
-			    print(c22 + \"\\n\");\
+            //c22 <-make(\"abc\", 101.0) ;\
 			gTest.EXPECT_INT_EQ(c22.i, -1); \
 			gTest.EXPECT_FLOAT_EQ(c22.f, 101.0); \
 			gTest.EXPECT_STR_EQ(c22.s, \"uninitialized\"); \

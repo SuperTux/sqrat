@@ -50,9 +50,10 @@ struct ClassTypeDataBase {
     COPYFUNC    copyFunc;
     string        className;
     ClassTypeDataBase* baseClass;
+    bool        ctorCalled;
     virtual ~ClassTypeDataBase() {}
     virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) = 0;
-    ClassTypeDataBase(){}
+    ClassTypeDataBase() : ctorCalled(false){}
 };
 
 template<class C, class B>

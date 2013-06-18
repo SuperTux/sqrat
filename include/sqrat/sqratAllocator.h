@@ -67,92 +67,161 @@ public:
 
     template <typename A1>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value
+            a1.value
             ));
     }
     template <typename A1,typename A2>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value
+            a1.value,
+            a2.value
             ));
     }
     template <typename A1,typename A2,typename A3>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value
+            a1.value,
+            a2.value,
+            a3.value
             ));
     }
     template <typename A1,typename A2,typename A3,typename A4>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value
             ));
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value
             ));
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value
             ));
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value
             ));
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value
             ));
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8,typename A9>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        Var<A1> a1(vm, 2);
+        Var<A2> a2(vm, 3);
+        Var<A3> a3(vm, 4);
+        Var<A4> a4(vm, 5);
+        Var<A5> a5(vm, 6);
+        Var<A6> a6(vm, 7);
+        Var<A7> a7(vm, 8);
+        Var<A8> a8(vm, 9);
+        Var<A9> a9(vm, 10);
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
         return setInstance(vm, new C(
-            Var<A1>(vm, 2).value,
-            Var<A2>(vm, 3).value,
-            Var<A3>(vm, 4).value,
-            Var<A4>(vm, 5).value,
-            Var<A5>(vm, 6).value,
-            Var<A6>(vm, 7).value,
-            Var<A7>(vm, 8).value,
-            Var<A8>(vm, 9).value,
-            Var<A9>(vm, 10).value
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value
             ));
     }
 

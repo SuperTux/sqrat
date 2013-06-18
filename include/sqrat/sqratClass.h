@@ -379,8 +379,6 @@ protected:
 
         // pop the class
         sq_pop(vm, 1);
-            
-            Ctor(); /* bind the default cnstructor */
     }
 
     // Helper function used to bind getters and setters
@@ -439,6 +437,15 @@ protected:
         return *this;
     }
     
+    void setDefaultCtor() 
+    {
+        ClassTypeDataBase *type_data = ClassType<C>::getClassTypeData(vm);
+        if (type_data->ctorCalled == false)
+        {
+            Ctor(); // set up default constructor with the 'constructor' override
+            type_data->ctorCalled = true;
+        }
+    }
 public:        
     Class& Ctor(const SQChar *name = 0) {
         return BindConstructor(A::template iNew<0>, 0, name);
@@ -446,38 +453,47 @@ public:
     
     template<class A1>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1>,1, name);
     }
     template<class A1,class A2>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2>,2, name);
     }
     template<class A1,class A2,class A3>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3>,3, name);
     }
     template<class A1,class A2,class A3,class A4>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3,A4>,4, name);
     }
     template<class A1,class A2,class A3,class A4,class A5>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3,A4,A5>,5, name);
     }
     template<class A1,class A2,class A3,class A4,class A5,class A6>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6>,6, name);
     }
     template<class A1,class A2,class A3,class A4,class A5,class A6,class A7>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7>,7, name);
     }
     template<class A1,class A2,class A3,class A4,class A5,class A6,class A7,class A8>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7,A8>,8, name);
     }
     template<class A1,class A2,class A3,class A4,class A5,class A6,class A7,class A8,class A9>
     Class& Ctor(const SQChar *name = 0) {
+        setDefaultCtor();
         return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7,A8,A9>,9, name);
     }
 
