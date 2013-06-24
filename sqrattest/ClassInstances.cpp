@@ -60,7 +60,7 @@ public:
     int age;
     string department;
     float wage;
-    SQChar * middleName;
+    const SQChar * middleName;
     const SQChar * gender;
     Employee* supervisor;
     static string sharedData;
