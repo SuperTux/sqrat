@@ -1,8 +1,29 @@
 ﻿Sqrat - Squirrel Binding Utility
-(c) 2009 Brandon Jones
-Version 0.8.2
+(c) 2009- 2013 Brandon Jones
+Version 0.8.90
 
 === Version History ===
+
+0.8.90 (6/25/2013)
+    * other unit test case additions for the recent newly implemented functionalities
+    * support for binding to constructors with up to 9 arguments, preserving 
+      the default constructor, with the constrainted that Sqrat does not 
+      support more than one constructor of a given number of arguments 
+      (a constraint in line with what Sqrat supports for override member or 
+      global functions)
+      Fixing Sourceforge Sqrat Bug 8
+    * StaticVar as mentioned in documentation implemented, fixing Sqrat Sourceforge bug 9
+    * support for functions returning references in C++, exposure of such functions
+      in Squirrel behave as expected (instead of reutrning a new instance)
+      fixing Sqrat Sourceforge bugs 25 and 29
+    * unit test case additons for parameter type checking and number of parameter
+      checking
+    * Function parameter type checking and function paramenter number checking, 
+      major addition implemented by Wizzard in the Squirrel forum.  Thanks!
+      Now exceptions are thrown at run time if parameter types do not match or
+      the number of arguments to a function call do not match existing bound 
+      functions.  See the unit tests for concrete examples. (Documentation to do)
+    * adjustment to allow gcc 4.7 or later to build without  the -fpermssive flag
 
 0.8.3 (05/06/2013)
     * only documentation update from RC1

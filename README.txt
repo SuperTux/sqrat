@@ -25,9 +25,6 @@ make check
 
 to run the unit tests.
 
-(Note: with gcc 4.8, you have to pass the -fpermissive flag
-via CXXFLAGS due to old code in Google test)
-
 Alternatively you can follow the steps in 
 running_tests.txt
 
