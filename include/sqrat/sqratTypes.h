@@ -67,7 +67,7 @@ struct Var {
         if (ptr != NULL)
             value = *ptr;
     }
-    static void push(HSQUIRRELVM vm, T value) {
+    static void push(HSQUIRRELVM vm, const T& value) {
         if (ClassType<T>::hasClassTypeData(vm)) 
             ClassType<T>::PushInstanceCopy(vm, value);
         else /* try integral type */ 
@@ -78,14 +78,14 @@ struct Var {
 private:
     template <class T2, bool b>
     struct pushAsInt {
-        void push(HSQUIRRELVM vm, T2 value) {
+        void push(HSQUIRRELVM vm, const T2 & value) {
             sq_pushnull(vm);            
         }
     }; 
     
     template <class T2> 
     struct pushAsInt<T2, true> {       
-        void push(HSQUIRRELVM vm, T2 value) {
+        void push(HSQUIRRELVM vm, const T2 & value) {
             sq_pushinteger(vm, static_cast<SQInteger>(value)); 
         }
     };
@@ -160,7 +160,7 @@ struct Var<const T*> {
              break; \
          }\
      } \
-     static void push(HSQUIRRELVM vm, type& value) { \
+     static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
      } \
  };\
@@ -276,7 +276,7 @@ SCRAT_INTEGER(signed __int64)
              break; \
          }\
      } \
-     static void push(HSQUIRRELVM vm, type& value) { \
+     static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushfloat(vm, static_cast<SQFloat>(value)); \
      } \
  }; \
@@ -355,7 +355,7 @@ struct Var<bool> {
         sq_tobool(vm, idx, &sqValue);
         value = (sqValue != 0);
     }
-    static void push(HSQUIRRELVM vm, bool& value) {
+    static void push(HSQUIRRELVM vm, const bool& value) {
         sq_pushbool(vm, static_cast<SQBool>(value));
     }
 };
@@ -408,7 +408,7 @@ struct Var<SQChar*> {
             sq_release(v, &obj);
         }        
     }
-    static void push(HSQUIRRELVM vm, SQChar* value) {
+    static void push(HSQUIRRELVM vm, const SQChar* value) {
         sq_pushstring(vm, value, -1);
     }
 };
@@ -447,7 +447,7 @@ struct Var<string> {
         value = string(ret);
         sq_pop(vm,1);
     }
-    static void push(HSQUIRRELVM vm, string value) {
+    static void push(HSQUIRRELVM vm, const string & value) {
         sq_pushstring(vm, value.c_str(), -1);
     }
 };
@@ -462,7 +462,7 @@ struct Var<string&> {
         value = string(ret);
         sq_pop(vm,1);
     }
-    static void push(HSQUIRRELVM vm, string value) {
+    static void push(HSQUIRRELVM vm, const string & value) {
         sq_pushstring(vm, value.c_str(), -1);
     }
 };
@@ -477,7 +477,7 @@ struct Var<const string&> {
         value = string(ret);
         sq_pop(vm,1);
     }
-    static void push(HSQUIRRELVM vm, string value) {
+    static void push(HSQUIRRELVM vm, const string & value) {
         sq_pushstring(vm, value.c_str(), -1);
     }
 };
