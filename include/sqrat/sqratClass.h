@@ -184,6 +184,22 @@ public:
 
         return *this;
     }
+    
+    /// Bind a class property (variable accessed via a setter and getter)
+    template<class V>
+    Class& Prop(const SQChar* name, V (C::*getMethod)() const, void (C::*setMethod)(V)) {
+        if(getMethod != NULL) {
+            // Add the getter
+            BindAccessor(name, &getMethod, sizeof(getMethod), SqMemberOverloadedFunc(getMethod), ClassType<C>::GetTable(vm));
+        }
+
+        if(setMethod != NULL) {
+            // Add the setter
+            BindAccessor(name, &setMethod, sizeof(setMethod), SqMemberOverloadedFunc(setMethod), ClassType<C>::SetTable(vm));
+        }
+
+        return *this;
+    }
 
     /// Bind a class property (variable accessed via a setter and getter)
     template<class V>
