@@ -484,4 +484,83 @@ TEST_F(SqratTest, CEnumBinding)
 }
  
 
+class NoDefaultConstructor
+{
+public:
+    void f() {} 
+    void fa(int b) {}
+    
+    int v;
+    static int sv;
+};
+
+class NoDefaultConstructor2: public NoDefaultConstructor
+{
+public:
+    void f2() {} 
+    
+};
+
+TEST_F(SqratTest, NoDefaultConstructorClasses) {
+    DefaultVM::Set(vm);
+    NoDefaultConstructor n1;
+    Class<NoDefaultConstructor> N(vm, "N");
+    N.Func(_SC("f"), &NoDefaultConstructor::f);        
+    N.Func(_SC("fa"), &NoDefaultConstructor::fa);        
+    N.Var(_SC("v"), &NoDefaultConstructor::v);
+    RootTable().Bind(_SC("N"), N);
+    
+    DerivedClass<NoDefaultConstructor2, NoDefaultConstructor> N2(vm, "N2");
+    N2.Func(_SC("f2"), &NoDefaultConstructor2::f2);
+    RootTable().Bind(_SC("N2"), N2);
+    try 
+    {
+        N.SetStaticValue("sv",  bar);
+    }
+    catch (Sqrat::Exception ex) {
+        std::cerr << _SC("set static var failed, ") << ex.Message();
+    }
+       
+    Script script;
+    try {
+        script.CompileString(_SC(" \
+            class SC {} \
+            n <- N();\
+            n2 <- N2(); \
+            n3 <- n2; \
+            \
+            n.f();\
+            n2.f();\
+            n2.f2(); \
+            i <- 3; \
+            n2.v = i; \
+            \
+            local sc = SC(); \
+            local raised = false;\
+            try { \
+                n.v = n2; \
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
+            \
+            "));
+    }
+    catch (Sqrat::Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    }
+    catch (Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+    
+}
+
+
         
