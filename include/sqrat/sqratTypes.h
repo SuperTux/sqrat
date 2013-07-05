@@ -46,10 +46,12 @@ private:
  
 	static True_ helper(T2 const &);
 	static False_ helper(...);
+	
+	static T1* dummy;
  
 public:
 	static bool const YES = (
-		sizeof(True_) == sizeof(is_convertible::helper(T1()))
+		sizeof(True_) == sizeof(is_convertible::helper(*dummy))
 	);
 }; 
     

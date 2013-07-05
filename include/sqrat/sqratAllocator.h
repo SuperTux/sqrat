@@ -36,6 +36,22 @@
 
 namespace Sqrat {
 
+// utility taken from  http://stackoverflow.com/questions/2733377/is-there-a-way-to-test-whether-a-c-class-has-a-default-constructor-other-than/2770326#2770326
+// may be obsolete in C++ 11 
+template< class T >
+class is_default_constructible {
+    template<int x>
+    class receive_size{};
+
+    template< class U >
+    static int sfinae( receive_size< sizeof U() > * );
+
+    template< class U >
+    static char sfinae( ... );
+
+public:
+    enum { value = sizeof( sfinae<T>(0) ) == sizeof(int) };
+};
 //
 // DefaultAllocator
 //
@@ -50,10 +66,29 @@ class DefaultAllocator {
         return 0;
     }
     
+    template <class T, bool b> 
+    struct NewC
+    {
+        T* p;
+        NewC() 
+        {
+           p = new T();
+        }        
+    };
+
+    template <class T>
+    struct NewC<T, false>
+    {
+        T* p;
+        NewC() 
+        {
+           p = 0;
+        }        
+    };
+
 public:
-    
     static SQInteger New(HSQUIRRELVM vm) {
-        C* instance = new C();
+        C* instance = NewC<C, is_default_constructible<C>::value >().p;
         setInstance(vm, instance);
         return 0;
     }
