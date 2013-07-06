@@ -193,6 +193,31 @@ namespace Sqrat {
             sq_pop(vm,1); // pop array
             return *this;
         }
+        
+        template <typename T>
+        SQInteger GetArray(T* array, int size)
+        {
+            HSQOBJECT value = GetObject();
+            sq_pushobject(vm, value);
+            if (size > sq_getsize(vm, -1))
+            {
+                return sq_throwerror(vm, "Array buffer size too big");
+            }
+            sq_pushnull(vm);
+            SQInteger i;
+            while (SQ_SUCCEEDED(sq_next(vm, -2)))
+            {
+                sq_getinteger(vm, -2, &i);
+                if (i >= size) break;
+                Var<T> element(vm, -1);
+                if (Sqrat::Error::Instance().Occurred(vm)) {
+                    return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
+                }
+                sq_pop(vm, 2);
+                array[i] = element.value;                    
+            }                 
+            return  1;         
+        }
     };
 
     class Array : public ArrayBase {
@@ -212,6 +237,7 @@ namespace Sqrat {
 
         Array(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : ArrayBase(o, v) {
         }
+        
     };
     
     template<>
