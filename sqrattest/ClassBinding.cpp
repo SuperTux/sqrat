@@ -442,25 +442,29 @@ TEST_F(SqratTest, NumConversion)
     }
 }
 
+
+enum  foo { BAR = 123, CAR, DEAR, EAR };
+
 class F 
 {
 public:
     static int bar;
+    
+    int fn(foo foo_value) { return (int) foo_value; }
 };
 
-
-enum  foo { bar = 123 };
 
 TEST_F(SqratTest, CEnumBinding)
 {
     DefaultVM::Set(vm);
     Class<F> f_class(vm);
-    int i = (int) bar;
+    int i = (int) BAR;
     f_class.SetStaticValue("bar", i);
     ASSERT_TRUE(1);    
-    f_class.SetStaticValue("bar", bar);
+    f_class.SetStaticValue("bar", BAR);
     ASSERT_TRUE(1);    
     
+    f_class.Func(_SC("fn"), &F::fn);
 
     RootTable().Bind(_SC("F"), f_class);
 
@@ -470,6 +474,10 @@ TEST_F(SqratTest, CEnumBinding)
     try {
         script.CompileString(_SC(" \
 			gTest.EXPECT_INT_EQ(F.bar, 123); \
+			f <- F(); \
+			gTest.EXPECT_INT_EQ(124, f.fn(124)); \
+			gTest.EXPECT_INT_EQ(125, f.fn(125)); \
+			gTest.EXPECT_INT_EQ(126, f.fn(126)); \
 			"));
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
@@ -521,7 +529,7 @@ TEST_F(SqratTest, NoDefaultConstructorClasses) {
     RootTable().Bind(_SC("N2"), N2);
     try 
     {
-        N.SetStaticValue("sv",  bar);
+        N.SetStaticValue("sv",  BAR);
     }
     catch (Sqrat::Exception ex) {
         std::cerr << _SC("set static var failed, ") << ex.Message();
@@ -563,7 +571,7 @@ TEST_F(SqratTest, NoDefaultConstructorClasses) {
                 raised = true;\
                 print(ex + \"\\n\"); \
             }\
-            gTest.EXPECT_TRUE(raised); \            
+            gTest.EXPECT_TRUE(raised); \
             "));
     }
     catch (Sqrat::Exception ex) {

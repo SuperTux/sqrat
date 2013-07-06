@@ -138,8 +138,15 @@ struct ClassType {
     static C* GetInstance(HSQUIRRELVM vm, SQInteger idx) {
         SQUserPointer ptr = NULL;
         ClassTypeDataBase* classType = getClassTypeData(vm);
-        if (SQ_FAILED(sq_getinstanceup(vm, idx, &ptr, classType))) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, ClassName(vm)));
+        if (classType != 0) /* type checking only done if the value has type data else it may be enum */
+        {
+            if (SQ_FAILED(sq_getinstanceup(vm, idx, &ptr, classType))) {
+                Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, ClassName(vm)));
+                return NULL;
+            }
+        }
+        else /* value is likely of integral type like enums, cannot return a pointer */
+        {
             return NULL;
         }
         ClassTypeDataBase* actualType;

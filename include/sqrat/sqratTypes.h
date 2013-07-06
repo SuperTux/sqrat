@@ -55,6 +55,47 @@ public:
 	);
 }; 
     
+// integer value utility, T must be integral type
+template <typename T, bool b>
+struct popAsInt
+{
+    T value;
+    popAsInt(HSQUIRRELVM vm, SQInteger idx) 
+    {
+        SQObjectType value_type = sq_gettype(vm, idx); 
+        switch(value_type) {
+        case OT_BOOL:
+            SQBool sqValueb; 
+            sq_getbool(vm, idx, &sqValueb); 
+            value = static_cast<T>(sqValueb); 
+            break; 
+        case OT_INTEGER: 
+            SQInteger sqValue; 
+            sq_getinteger(vm, idx, &sqValue); 
+            value = static_cast<T>(sqValue); 
+            break;
+        case OT_FLOAT:
+            SQFloat sqValuef; 
+            sq_getfloat(vm, idx, &sqValuef); 
+            value = static_cast<T>(sqValuef); 
+            break;
+        default:
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); 
+            value = static_cast<T>(0); 
+            break; 
+        }
+    }   
+};
+
+template <typename T>
+struct popAsInt<T, false>
+{
+    T value;  // not defioned 
+    popAsInt(HSQUIRRELVM vm, SQInteger idx) 
+    {
+        Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer")));         
+    }
+};
 //
 // Variable Accessors
 //
@@ -68,6 +109,9 @@ struct Var {
         T* ptr = ClassType<T>::GetInstance(vm, idx);
         if (ptr != NULL)
             value = *ptr;
+        else /* value is likely of integral type like enums*/
+            value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
+        
     }
     static void push(HSQUIRRELVM vm, const T& value) {
         if (ClassType<T>::hasClassTypeData(vm)) 
