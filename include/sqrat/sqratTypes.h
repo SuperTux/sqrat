@@ -183,28 +183,7 @@ struct Var<const T*> {
  struct Var<type> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQObjectType value_type = sq_gettype(vm, idx); \
-         switch(value_type) {\
-         case OT_BOOL:\
-             SQBool sqValueb; \
-             sq_getbool(vm, idx, &sqValueb); \
-             value = static_cast<type>(sqValueb); \
-             break; \
-         case OT_INTEGER: \
-             SQInteger sqValue; \
-             sq_getinteger(vm, idx, &sqValue); \
-             value = static_cast<type>(sqValue); \
-             break;\
-         case OT_FLOAT:\
-             SQFloat sqValuef; \
-             sq_getfloat(vm, idx, &sqValuef); \
-             value = static_cast<type>(sqValuef); \
-             break;\
-         default:\
-             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); \
-             value = 0; \
-             break; \
-         }\
+         value = popAsInt<type, true>(vm, idx).value; \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -215,28 +194,7 @@ struct Var<const T*> {
  struct Var<const type> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQObjectType value_type = sq_gettype(vm, idx); \
-         switch(value_type) {\
-         case OT_BOOL:\
-             SQBool sqValueb; \
-             sq_getbool(vm, idx, &sqValueb); \
-             value = static_cast<type>(sqValueb); \
-             break; \
-         case OT_INTEGER: \
-             SQInteger sqValue; \
-             sq_getinteger(vm, idx, &sqValue); \
-             value = static_cast<type>(sqValue); \
-             break;\
-         case OT_FLOAT:\
-             SQFloat sqValuef; \
-             sq_getfloat(vm, idx, &sqValuef); \
-             value = static_cast<type>(sqValuef); \
-             break;\
-         default:\
-             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); \
-             value = 0; \
-             break; \
-         }\
+         value = popAsInt<type, true>(vm, idx).value; \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -247,28 +205,7 @@ struct Var<const T*> {
  struct Var<const type&> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
-         SQObjectType value_type = sq_gettype(vm, idx); \
-         switch(value_type) {\
-         case OT_BOOL:\
-             SQBool sqValueb; \
-             sq_getbool(vm, idx, &sqValueb); \
-             value = static_cast<type>(sqValueb); \
-             break; \
-         case OT_INTEGER: \
-             SQInteger sqValue; \
-             sq_getinteger(vm, idx, &sqValue); \
-             value = static_cast<type>(sqValue); \
-             break;\
-         case OT_FLOAT:\
-             SQFloat sqValuef; \
-             sq_getfloat(vm, idx, &sqValuef); \
-             value = static_cast<type>(sqValuef); \
-             break;\
-         default:\
-             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer"))); \
-             value = 0; \
-             break; \
-         }\
+         value = popAsInt<type, true>(vm, idx).value; \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
