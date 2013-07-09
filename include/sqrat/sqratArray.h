@@ -195,6 +195,30 @@ namespace Sqrat {
         }
         
         template <typename T>
+        SQInteger GetElement(int index, T& out_element)
+        {
+            HSQOBJECT value = GetObject();
+            sq_pushobject(vm, value);
+            if (index > sq_getsize(vm, -1))
+            {
+                return sq_throwerror(vm, "Index out of bound");
+            }
+            if (index < 0)
+            {
+                return sq_throwerror(vm, "Illegal index");                
+            }
+            sq_pushinteger(vm, index);
+            Var<T> element(vm, -2);
+            if (Sqrat::Error::Instance().Occurred(vm)) {
+                return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
+            }
+            sq_pop(vm, 1);  // check 
+            out_element = element.value;                    
+            return 1;
+        }
+        
+        
+        template <typename T>
         SQInteger GetArray(T* array, int size)
         {
             HSQOBJECT value = GetObject();
