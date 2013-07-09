@@ -194,6 +194,16 @@ namespace Sqrat {
             return *this;
         }
         
+        
+        SQInteger Length() const
+        {
+            HSQOBJECT value = GetObject();
+            sq_pushobject(vm, value);
+            SQInteger r = sq_getsize(vm, -1);
+            sq_pop(vm, 1);
+            return r;            
+        }
+        
         template <typename T>
         SQInteger GetElement(int index, T& out_element)
         {
@@ -208,11 +218,17 @@ namespace Sqrat {
                 return sq_throwerror(vm, "Illegal index");                
             }
             sq_pushinteger(vm, index);
-            Var<T> element(vm, -2);
+            if (SQ_FAILED(sq_get(vm, -2)))
+            {
+                sq_pop(vm, 1);
+                return sq_throwerror(vm, "Illegal index");       
+            }
+                
+            Var<T> element(vm, -1);
             if (Sqrat::Error::Instance().Occurred(vm)) {
                 return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
             }
-            sq_pop(vm, 1);  // check 
+            sq_pop(vm, 2);  
             out_element = element.value;                    
             return 1;
         }
@@ -223,7 +239,7 @@ namespace Sqrat {
         {
             HSQOBJECT value = GetObject();
             sq_pushobject(vm, value);
-            if (size > sq_getsize(vm, -1))
+            if (size != sq_getsize(vm, -1))
             {
                 return sq_throwerror(vm, "Array buffer size too big");
             }
