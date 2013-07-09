@@ -28,18 +28,14 @@
 
 using namespace Sqrat;
 
-
-
-static const char *sq_code = "\
-    local i; \
-    for (i = 0; i < 12; i++) \
-        a.append(i);\
-    \
-       ";
-
-
-
 TEST_F(SqratTest, ArrayGet) {
+
+    static const char *sq_code = "\
+        local i; \
+        for (i = 0; i < 12; i++) \
+            a.append(i);\
+        \
+           ";
     int i;
     DefaultVM::Set(vm);
     

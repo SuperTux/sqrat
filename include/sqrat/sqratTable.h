@@ -101,6 +101,51 @@ public:
         return *this;
     }
 
+    // get functions    
+        
+    template <typename T>
+    SQInteger GetValue(const SQChar* name, T& out_entry)
+    {
+        HSQOBJECT value = GetObject();
+        sq_pushobject(vm, value);        
+        sq_pushstring(vm, name, -1);
+        if (SQ_FAILED(sq_get(vm, -2)))
+        {
+            sq_pop(vm, 1);
+            return sq_throwerror(vm, "Illegal index");       
+        }
+            
+        Var<T> entry(vm, -1);
+        if (Sqrat::Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
+        }
+        sq_pop(vm, 2);  
+        out_entry = entry.value;                    
+        return 1;
+    }
+            
+    template <typename T>
+    SQInteger GetValue(int index, T& out_entry)
+    {
+        HSQOBJECT value = GetObject();
+        sq_pushobject(vm, value);        
+        sq_pushinteger(vm, index);
+        if (SQ_FAILED(sq_get(vm, -2)))
+        {
+            sq_pop(vm, 1);
+            return sq_throwerror(vm, "Illegal index");       
+        }
+            
+        Var<T> entry(vm, -1);
+        if (Sqrat::Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
+        }
+        sq_pop(vm, 2);  
+        out_entry = entry.value;                    
+        return 1;
+    }
+
+
     //
     // Function Calls
     //

@@ -24,6 +24,7 @@
 #include <gtest/gtest.h>
 #include <sqrat.h>
 #include <iostream>
+#include <sstream>
 #include "Fixture.h"
 
 using namespace Sqrat;
@@ -128,3 +129,64 @@ TEST_F(SqratTest, SimpleTableBinding) {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
 }
+
+TEST_F(SqratTest, TableGet) {
+
+    static const char *sq_code = "\
+        local i; \
+        for (i = 0; i < 12; i++) \
+            tb[i.tostring()] <- \"value \" + i;\
+        \
+        for (i = 100; i < 112; i++) \
+            tb[i] <- \"value \" + i;\
+        \
+           ";
+    int i;
+    DefaultVM::Set(vm);
+    
+    Table table(vm);
+    RootTable(vm).Bind(_SC("tb"), table);
+        
+    Script script;
+    try {
+        script.CompileString(_SC(sq_code));
+    } catch(Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+    
+    const int length = 12;
+    
+    for ( i = 0; i < length; i++)
+    {
+        std::stringstream ss1, ss2;
+        string key, value, value2;
+        ss1 << i;
+        ss2 << "value " << i;
+        key = ss1.str();
+        value = ss2.str();
+        int j = table.GetValue(key.c_str(), value2);
+        EXPECT_EQ(j, 1);
+        EXPECT_EQ(value, value2);        
+    }
+    
+    for ( i = 100; i < 100 + length; i++)
+    {
+        std::stringstream ss2;
+        string value, value2;
+
+        ss2 << "value " << i;
+        
+        value = ss2.str();
+        int j = table.GetValue(i, value2);
+        EXPECT_EQ(j, 1);
+        EXPECT_EQ(value, value2);        
+    }
+        
+}
+
