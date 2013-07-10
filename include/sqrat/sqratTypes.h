@@ -28,6 +28,11 @@
 #if !defined(_SCRAT_TYPES_H_)
 #define _SCRAT_TYPES_H_
 
+#ifdef SQUNICODE
+#include <cstdlib>
+#include <cstring>
+#endif
+
 #include <squirrel.h>
 #include <string>
 
@@ -483,14 +488,11 @@ struct Var<const std::string&> {
 
 template<>
 struct Var<char*> {
-private:
-    std::string holder;
-    
-public:
-    const char* value;
+    char* value;
     HSQOBJECT obj;/* hold a reference to the object holding value during the Var struct lifetime*/
     HSQUIRRELVM v;
     Var(HSQUIRRELVM vm, SQInteger idx) {
+        std::string holder;
         const SQChar *sv;
         sq_tostring(vm, idx);
         sq_getstackobj(vm, -1, &obj);
@@ -499,12 +501,13 @@ public:
         sq_pop(vm,1);
         v = vm;
         holder = wstring_to_string(string(sv));
-        value = holder.c_str();
+        value = strdup(holder.c_str());
     }
     ~Var()
     {
         if(v && !sq_isnull(obj)) {
             sq_release(v, &obj);
+            free(value);
         }        
     }
     static void push(HSQUIRRELVM vm, const char* value) {
@@ -514,14 +517,11 @@ public:
 
 template<>
 struct Var<const char*> {
-private:
-    std::string holder;
-
-public:
-    const char* value;
+    char* value;
     HSQOBJECT obj; /* hold a reference to the object holding value during the Var struct lifetime*/
     HSQUIRRELVM v;
     Var(HSQUIRRELVM vm, SQInteger idx) {
+        std::string holder;
         const SQChar *sv;
         sq_tostring(vm, idx);
         sq_getstackobj(vm, -1, &obj);
@@ -530,12 +530,13 @@ public:
         sq_pop(vm,1);
         v = vm;
         holder = wstring_to_string(string(sv));
-        value = holder.c_str();
+        value = strdup(holder.c_str());
     }
     ~Var()
     {
         if(v && !sq_isnull(obj)) {
             sq_release(v, &obj);
+            free(value);
         }        
     }
     static void push(HSQUIRRELVM vm, const char* value) {

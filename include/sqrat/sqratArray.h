@@ -211,17 +211,17 @@ namespace Sqrat {
             sq_pushobject(vm, value);
             if (index > sq_getsize(vm, -1))
             {
-                return sq_throwerror(vm, _SC("Index out of bound"));
+                return sq_throwerror(vm, _SC("index out of bound"));
             }
             if (index < 0)
             {
-                return sq_throwerror(vm, _SC("Illegal index"));                
+                return sq_throwerror(vm, _SC("illegal index"));                
             }
             sq_pushinteger(vm, index);
             if (SQ_FAILED(sq_get(vm, -2)))
             {
                 sq_pop(vm, 1);
-                return sq_throwerror(vm, _SC("Illegal index"));       
+                return sq_throwerror(vm, _SC("illegal index"));       
             }
                 
             Var<T> element(vm, -1);
@@ -241,7 +241,7 @@ namespace Sqrat {
             sq_pushobject(vm, value);
             if (size != sq_getsize(vm, -1))
             {
-                return sq_throwerror(vm, _SC("Array buffer size too big"));
+                return sq_throwerror(vm, _SC("array buffer size too big"));
             }
             sq_pushnull(vm);
             SQInteger i;
