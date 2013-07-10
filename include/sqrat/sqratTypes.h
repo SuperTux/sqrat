@@ -432,6 +432,55 @@ struct Var<const string&> {
     }
 };
 
+#ifdef SQUNICODE
+
+template<>
+struct Var<std::string> {
+    std::string value;
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        const SQChar* ret;
+        sq_tostring(vm, idx);
+        sq_getstring(vm, -1, &ret);
+        value = wstring_to_string(string(ret));
+        sq_pop(vm,1);
+    }
+    static void push(HSQUIRRELVM vm, const std::string & value) {
+        sq_pushstring(vm, string_to_wstring(value).c_str(), -1);
+    }
+};
+
+template<>
+struct Var<std::string&> {
+    std::string value;
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        const SQChar* ret;
+        sq_tostring(vm, idx);
+        sq_getstring(vm, -1, &ret);
+        value = wstring_to_string(string(ret));
+        sq_pop(vm,1);
+    }
+    static void push(HSQUIRRELVM vm, const std::string & value) {
+        sq_pushstring(vm, string_to_wstring(value).c_str(), -1);
+    }
+};
+
+template<>
+struct Var<const std::string&> {
+    std::string value;
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        const SQChar* ret;
+        sq_tostring(vm, idx);
+        sq_getstring(vm, -1, &ret);
+        value = wstring_to_string(string(ret));
+        sq_pop(vm,1);
+    }
+    static void push(HSQUIRRELVM vm, const std::string & value) {
+        sq_pushstring(vm, string_to_wstring(value).c_str(), -1);
+    }
+};
+
+#endif
+
 //
 // Variable Accessors
 //

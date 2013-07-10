@@ -112,7 +112,7 @@ public:
         if (SQ_FAILED(sq_get(vm, -2)))
         {
             sq_pop(vm, 1);
-            return sq_throwerror(vm, "Illegal index");       
+            return sq_throwerror(vm, _SC("Illegal index"));       
         }
             
         Var<T> entry(vm, -1);
@@ -133,7 +133,7 @@ public:
         if (SQ_FAILED(sq_get(vm, -2)))
         {
             sq_pop(vm, 1);
-            return sq_throwerror(vm, "Illegal index");       
+            return sq_throwerror(vm, _SC("Illegal index"));       
         }
             
         Var<T> entry(vm, -1);

@@ -78,7 +78,11 @@ public:
             sq_addref(vm, &classObj); // must addref before the pop!
             sq_pop(vm, 1);
             if (className.empty()) 
+#ifdef SQUNICODE                
+                InitClass(string_to_wstring(typeid(*this).name()));
+#else
                 InitClass(typeid(*this).name());
+#endif
             else InitClass(className);
 
             // install cleanup hook
@@ -555,7 +559,11 @@ public:
             sq_addref(v, &classObj); // must addref before the pop!
             sq_pop(v, 1);
             if (className.empty()) 
+#ifdef SQUNICODE                
+                InitDerivedClass(v, string_to_wstring(typeid(*this).name()));
+#else
                 InitDerivedClass(v, typeid(*this).name());
+#endif
             else InitDerivedClass(v, className);
 
             // install cleanup hook

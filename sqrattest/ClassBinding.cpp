@@ -33,9 +33,9 @@ class C {
     void default_values()
     {
          i = -1;
-         s = "uninitialized";
+         s = _SC("uninitialized");
          f = -2.0;
-         s2 = "not initialized";
+         s2 = _SC("not initialized");
     }
 public:
     int i;
@@ -46,23 +46,27 @@ public:
     C() 
     {
         default_values();
-        
+#ifndef  SQUNICODE       
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+#endif
     }
     
     C(int i_)
     {
         default_values();
         i = i_;
+#ifndef  SQUNICODE       
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
-        
+#endif        
     }
     C(int i_, const SQChar *s_) 
     {
         default_values();
         i = i_;
         s = string(s_);
+#ifndef  SQUNICODE       
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+#endif
     }
     
     C(const SQChar *s2_, float f_)
@@ -70,7 +74,9 @@ public:
         default_values();
         s2 = string(s2_);
         f = f_;
+#ifndef  SQUNICODE       
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+#endif
         
     }
     C(int i_, const SQChar *s_, float f_)
@@ -79,12 +85,16 @@ public:
         i = i_;
         s = string(s_);
         f = f_;
+#ifndef  SQUNICODE       
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+#endif
     }
     
     C(int i_, const SQChar *s_, float f_, const SQChar *s2_): i(i_), s(s_), f(f_), s2(s2_)
     {
+#ifndef  SQUNICODE       
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
+#endif
     }
 };
 
@@ -384,7 +394,7 @@ public:
     
 };
 
-static const char *num_conversions = "\
+static const SQChar *num_conversions = _SC("\
     local numtypes = NumTypes();\
     local i = numtypes.g_int();\
     local d = numtypes.g_float();\
@@ -413,7 +423,7 @@ static const char *num_conversions = "\
 	gTest.EXPECT_INT_EQ(0, f); \
 	gTest.EXPECT_FLOAT_EQ(0.0, f); \
     \
-    ";
+    ");
     
 TEST_F(SqratTest, NumConversion)
 {
@@ -421,16 +431,16 @@ TEST_F(SqratTest, NumConversion)
     
     Sqrat::Class<NumTypes> numtypes(vm);
     
-    numtypes.Func("g_int", &NumTypes::g_int);
-    numtypes.Func("g_float", &NumTypes::g_float);
-    numtypes.Func("g_true", &NumTypes::g_true);
-    numtypes.Func("g_false", &NumTypes::g_false);
+    numtypes.Func(_SC("g_int"), &NumTypes::g_int);
+    numtypes.Func(_SC("g_float"), &NumTypes::g_float);
+    numtypes.Func(_SC("g_true"), &NumTypes::g_true);
+    numtypes.Func(_SC("g_false"), &NumTypes::g_false);
 
-    Sqrat::RootTable(vm).Bind("NumTypes", numtypes);
+    Sqrat::RootTable(vm).Bind(_SC("NumTypes"), numtypes);
             
     Script script;
     try {
-        script.CompileString(_SC(num_conversions));
+        script.CompileString(num_conversions);
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
@@ -459,9 +469,9 @@ TEST_F(SqratTest, CEnumBinding)
     DefaultVM::Set(vm);
     Class<F> f_class(vm);
     int i = (int) BAR;
-    f_class.SetStaticValue("bar", i);
+    f_class.SetStaticValue(_SC("bar"), i);
     ASSERT_TRUE(1);    
-    f_class.SetStaticValue("bar", BAR);
+    f_class.SetStaticValue(_SC("bar"), BAR);
     ASSERT_TRUE(1);    
     
     f_class.Func(_SC("fn"), &F::fn);
@@ -516,23 +526,25 @@ public:
 TEST_F(SqratTest, NoDefaultConstructorClasses) {
     DefaultVM::Set(vm);
     NoDefaultConstructor n1("test");
-    Class<NoDefaultConstructor> N(vm, "N");
+    Class<NoDefaultConstructor> N(vm, _SC("N"));
     N.Ctor<char *>();
     N.Func(_SC("f"), &NoDefaultConstructor::f);        
     N.Func(_SC("fa"), &NoDefaultConstructor::fa);        
     N.Var(_SC("v"), &NoDefaultConstructor::v);
     RootTable().Bind(_SC("N"), N);
     
-    DerivedClass<NoDefaultConstructor2, NoDefaultConstructor> N2(vm, "N2");
+    DerivedClass<NoDefaultConstructor2, NoDefaultConstructor> N2(vm, _SC("N2"));
     N2.Ctor<char *, char *>();
     N2.Func(_SC("f2"), &NoDefaultConstructor2::f2);
     RootTable().Bind(_SC("N2"), N2);
     try 
     {
-        N.SetStaticValue("sv",  BAR);
+        N.SetStaticValue(_SC("sv"),  BAR);
     }
     catch (Sqrat::Exception ex) {
+#ifndef SQUNICODE
         std::cerr << _SC("set static var failed, ") << ex.Message();
+#endif
     }
        
     Script script;

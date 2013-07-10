@@ -215,16 +215,16 @@ TEST_F(SqratTest, InstanceReferencesAndStaticMembers) {
 
     Class<B> _B;
     _B
-    .Func("set", &B::set)
-    .Func("get", &B::get)
-    .Func("getB", &B::getB)
-    .Func("getB2", &B::getB2)
-    .Func("getB4", &B::getB4)
-    .Func("getBPtr", &B::getBPtr)
-    .StaticVar("shared", &B::shared)
-    .StaticVar("sharedInt", &B::sharedInt);
+    .Func(_SC("set"), &B::set)
+    .Func(_SC("get"), &B::get)
+    .Func(_SC("getB"), &B::getB)
+    .Func(_SC("getB2"), &B::getB2)
+    .Func(_SC("getB4"), &B::getB4)
+    .Func(_SC("getBPtr"), &B::getBPtr)
+    .StaticVar(_SC("shared"), &B::shared)
+    .StaticVar(_SC("sharedInt"), &B::sharedInt);
     
-    RootTable().Bind("B", _B);
+    RootTable().Bind(_SC("B"), _B);
     
     Script script;
     try {
@@ -365,32 +365,32 @@ public:
 TEST_F(SqratTest, SimpleTypeChecking) {
     DefaultVM::Set(vm);
 
-    Class<B> _B(vm, "B");
+    Class<B> _B(vm, _SC("B"));
     _B
-    .Func("set", &B::set)
-    .Func("get", &B::get)
-    .Func("getB", &B::getB)
-    .Func("getBPtr", &B::getBPtr);
+    .Func(_SC("set"), &B::set)
+    .Func(_SC("get"), &B::get)
+    .Func(_SC("getB"), &B::getB)
+    .Func(_SC("getBPtr"), &B::getBPtr);
     
     RootTable().Bind(_SC("B"), _B);
 
-    DerivedClass<BB, B> _BB(vm, "BB");
+    DerivedClass<BB, B> _BB(vm, _SC("BB"));
     RootTable().Bind(_SC("BB"), _BB);
     
-    Class<A> _A(vm, "A");
+    Class<A> _A(vm, _SC("A"));
     RootTable().Bind(_SC("A"), _A);
-    DerivedClass<AA, A> _AA(vm, "AA");
+    DerivedClass<AA, A> _AA(vm, _SC("AA"));
     RootTable().Bind(_SC("AA"), _AA);
-    DerivedClass<AAA, A> _AAA(vm, "AAA");
+    DerivedClass<AAA, A> _AAA(vm, _SC("AAA"));
     RootTable().Bind(_SC("AAA"), _AAA);
-    DerivedClass<AB, B> _AB(vm, "AB");
+    DerivedClass<AB, B> _AB(vm, _SC("AB"));
     RootTable().Bind(_SC("AB"), _AB);
-    Class<W> _W(vm, "W");
-    _W.Func("f1", &W::f1);
-    _W.Func("f2", &W::f2);
-    _W.Func("f3", &W::f3);
-    _W.Func("f4", &W::f4);
-    _W.Func("abc", &W::abc);
+    Class<W> _W(vm, _SC("W"));
+    _W.Func(_SC("f1"), &W::f1);
+    _W.Func(_SC("f2"), &W::f2);
+    _W.Func(_SC("f3"), &W::f3);
+    _W.Func(_SC("f4"), &W::f4);
+    _W.Func(_SC("abc"), &W::abc);
     
     RootTable().Bind(_SC("W"), _W);
 

@@ -40,7 +40,7 @@ namespace Sqrat {
 
 template <class C, class R>
 class SqMember {
-    static const char STATICCALLERROR[] ;
+    static const SQChar STATICCALLERROR[] ;
 public:
     // Arg Count 0
     template <bool overloaded /* = false */>
@@ -1282,7 +1282,7 @@ public:
 //
 template <class C, class R>
 class SqMember<C, R&> {
-    static const char STATICCALLERROR[] ;
+    static const SQChar STATICCALLERROR[] ;
 public:
     // Arg Count 0
     template <bool overloaded /* = false */>
@@ -4069,9 +4069,9 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
 }
 
 template <class C, class R>
-const char SqMember<C, R>::STATICCALLERROR[] = _SC("this function isn't static");
+const SQChar SqMember<C, R>::STATICCALLERROR[] = _SC("this function isn't static");
 template <class C, class R>
-const char SqMember<C, R&>::STATICCALLERROR[] = _SC("this function isn't static");
+const SQChar SqMember<C, R&>::STATICCALLERROR[] = _SC("this function isn't static");
 
 }
 

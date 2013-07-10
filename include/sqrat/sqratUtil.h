@@ -36,6 +36,29 @@ namespace Sqrat {
 
 typedef std::basic_string<SQChar> string;
 
+#ifdef SQUNICODE
+
+/* from http://stackoverflow.com/questions/15333259/c-stdwstring-to-stdstring-quick-and-dirty-conversion-for-use-as-key-in, 
+   only works for ASCII chars */
+/**
+* Convert a std::string into a std::wstring
+*/
+static std::wstring string_to_wstring(const std::string& str)
+{
+    return std::wstring(str.begin(), str.end());
+}
+
+/**
+* Convert a std::wstring into a std::string
+*/
+static std::string wstring_to_string(const std::wstring& wstr)
+{
+    return std::string(wstr.begin(), wstr.end());
+}
+
+#endif // SQUNICODE
+
+
 class DefaultVM {
 private:
     static HSQUIRRELVM& staticVm() {

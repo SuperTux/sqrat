@@ -206,6 +206,10 @@ static SQRESULT sqrat_importscript(HSQUIRRELVM v, const SQChar* moduleName) {
 }
 
 static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
+#ifdef SQUNICODE
+#warning sqrat_importbin() Not Implemented
+    return SQ_ERROR;
+#else
     SQMODULELOAD modLoad = 0;
 
 #if defined(_WIN32)
@@ -245,6 +249,7 @@ static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
     SQRESULT res = modLoad(v, sqapi);
 
     return res;
+#endif
 }
 
 SQRESULT sqrat_import(HSQUIRRELVM v) {
