@@ -479,6 +479,70 @@ struct Var<const std::string&> {
     }
 };
 
+
+
+template<>
+struct Var<char*> {
+private:
+    std::string holder;
+    
+public:
+    const char* value;
+    HSQOBJECT obj;/* hold a reference to the object holding value during the Var struct lifetime*/
+    HSQUIRRELVM v;
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        const SQChar *sv;
+        sq_tostring(vm, idx);
+        sq_getstackobj(vm, -1, &obj);
+        sq_getstring(vm, -1, &sv);
+        sq_addref(vm, &obj);
+        sq_pop(vm,1);
+        v = vm;
+        holder = wstring_to_string(string(sv));
+        value = holder.c_str();
+    }
+    ~Var()
+    {
+        if(v && !sq_isnull(obj)) {
+            sq_release(v, &obj);
+        }        
+    }
+    static void push(HSQUIRRELVM vm, const char* value) {
+        sq_pushstring(vm, string_to_wstring(std::string(value)).c_str(), -1);
+    }
+};
+
+template<>
+struct Var<const char*> {
+private:
+    std::string holder;
+
+public:
+    const char* value;
+    HSQOBJECT obj; /* hold a reference to the object holding value during the Var struct lifetime*/
+    HSQUIRRELVM v;
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        const SQChar *sv;
+        sq_tostring(vm, idx);
+        sq_getstackobj(vm, -1, &obj);
+        sq_getstring(vm, -1, &sv);
+        sq_addref(vm, &obj);
+        sq_pop(vm,1);
+        v = vm;
+        holder = wstring_to_string(string(sv));
+        value = holder.c_str();
+    }
+    ~Var()
+    {
+        if(v && !sq_isnull(obj)) {
+            sq_release(v, &obj);
+        }        
+    }
+    static void push(HSQUIRRELVM vm, const char* value) {
+        sq_pushstring(vm, string_to_wstring(std::string(value)).c_str(), -1);
+    }
+};
+
 #endif
 
 //
