@@ -339,9 +339,6 @@ struct Var<const bool&> {
     }
 };
 
-// String Types
-typedef std::basic_string<SQChar> string;
-
 template<>
 struct Var<SQChar*> {
     SQChar* value;
