@@ -4,6 +4,21 @@ Version 0.8.90
 
 === Version History ===
 
+0.8.91 (7/9/2013)
+    * support for 'Unicode build' where Sqrat string is wstring; code cleanup 
+      in the unit tests for compiling in such environment; simple 
+      wstring <=> string conversion functions that only work
+      for ASCII chars (encoding specific conversions are out of scope for Sqrat
+    * "get" and export functions for Sqrat::Array and Sqrat::Table, to access 
+      elements in C++
+    * Sqrat Sourceforge Bug 33, fix handling of C++ classes with no default 
+      constructors, in the allocator as well as type conversion checking, and 
+      related unit test correction
+    * patch from ZackTheHuman in the Squirrel forum, mixed const/non-const 
+      getters and setters
+    * Sourceforge Sqrat Bug 31, optimization to reduce class copying, patch from Wizzard
+
+
 0.8.90 (6/25/2013)
     * other unit test case additions for the recent newly implemented functionalities
     * support for binding to constructors with up to 9 arguments, preserving 
