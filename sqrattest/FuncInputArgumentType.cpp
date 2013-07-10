@@ -64,7 +64,7 @@ public:
     
 };
 
-static const char *sq_code = "\
+static const SQChar *sq_code = _SC("\
     local v = Vector2();\
     local v2 = Vector2();\
     \
@@ -119,7 +119,7 @@ static const char *sq_code = "\
     }\
     gTest.EXPECT_TRUE(raised); \
     print(\"4\\n\");\
-       ";
+       ");
 
 
 
@@ -128,15 +128,15 @@ TEST_F(SqratTest, NumericArgumentTypeConversionAndCheck) {
     
     Sqrat::Class<Vector2> classVector2(vm);
     
-    classVector2.Func("add", &Vector2::add);
+    classVector2.Func(_SC("add"), &Vector2::add);
     
-    classVector2.Func("boolFunc", &Vector2::boolFunc);
-    classVector2.Func("boolFunc2", &Vector2::boolFunc2);
-    Sqrat::RootTable(vm).Bind("Vector2", classVector2);
+    classVector2.Func(_SC("boolFunc"), &Vector2::boolFunc);
+    classVector2.Func(_SC("boolFunc2"), &Vector2::boolFunc2);
+    Sqrat::RootTable(vm).Bind(_SC("Vector2"), classVector2);
             
     Script script;
     try {
-        script.CompileString(_SC(sq_code));
+        script.CompileString(sq_code);
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }

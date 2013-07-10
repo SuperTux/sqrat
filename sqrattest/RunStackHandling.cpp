@@ -67,17 +67,17 @@ TEST_F(SqratTest, RunStackHandling)
     {
         FAIL() << _SC("Run failed: ") << ex.Message();
     }
-    std::string err_msg;
+    string err_msg;
     bool b ;
 
     for (i = 0; i < num_run; i++)
     {
         Script script3;
-        err_msg = "";
+        err_msg = _SC("");
         script3.CompileString(_SC("t = f(t); /*print(t.tostring() + \"\\n\");*/"));
         b = script3.Run(err_msg);    
         ASSERT_TRUE(b);
-        ASSERT_TRUE(err_msg == "");
+        ASSERT_TRUE(err_msg == _SC(""));
         DUMPSTACK
     }
     

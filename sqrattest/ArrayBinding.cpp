@@ -30,12 +30,12 @@ using namespace Sqrat;
 
 TEST_F(SqratTest, ArrayGet) {
 
-    static const char *sq_code = "\
+    static const SQChar *sq_code = _SC("\
         local i; \
         for (i = 0; i < 12; i++) \
             a.append(i);\
         \
-           ";
+           ");
     int i;
     DefaultVM::Set(vm);
     
@@ -44,7 +44,7 @@ TEST_F(SqratTest, ArrayGet) {
         
     Script script;
     try {
-        script.CompileString(_SC(sq_code));
+        script.CompileString(sq_code);
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }

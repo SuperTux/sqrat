@@ -129,21 +129,21 @@ int f14(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
 TEST_F(SqratTest, GlobalFunction) {
     DefaultVM::Set(vm);
 
-    RootTable().Func("f0", &f0);
-    RootTable().Func("f1", &f1);
-    RootTable().Func("f2", &f2);
-    RootTable().Func("f3", &f3);
-    RootTable().Func("f4", &f4);
-    RootTable().Func("f5", &f5);
-    RootTable().Func("f6", &f6);
-    RootTable().Func("f7", &f7);
-    RootTable().Func("f8", &f8);
-    RootTable().Func("f9", &f9);
-    RootTable().Func("f10", &f10);
-    RootTable().Func("f11", &f11);
-    RootTable().Func("f12", &f12);
-    RootTable().Func("f13", &f13);
-    RootTable().Func("f14", &f14);
+    RootTable().Func(_SC("f0"), &f0);
+    RootTable().Func(_SC("f1"), &f1);
+    RootTable().Func(_SC("f2"), &f2);
+    RootTable().Func(_SC("f3"), &f3);
+    RootTable().Func(_SC("f4"), &f4);
+    RootTable().Func(_SC("f5"), &f5);
+    RootTable().Func(_SC("f6"), &f6);
+    RootTable().Func(_SC("f7"), &f7);
+    RootTable().Func(_SC("f8"), &f8);
+    RootTable().Func(_SC("f9"), &f9);
+    RootTable().Func(_SC("f10"), &f10);
+    RootTable().Func(_SC("f11"), &f11);
+    RootTable().Func(_SC("f12"), &f12);
+    RootTable().Func(_SC("f13"), &f13);
+    RootTable().Func(_SC("f14"), &f14);
 
     Script script;
 
@@ -305,21 +305,21 @@ TEST_F(SqratTest, MemberFunction) {
     DefaultVM::Set(vm);
 
     Class<C> CC;
-    CC.Func("f0", &C::f0);
-    CC.Func("f1", &C::f1);
-    CC.Func("f2", &C::f2);
-    CC.Func("f3", &C::f3);
-    CC.Func("f4", &C::f4);
-    CC.Func("f5", &C::f5);
-    CC.Func("f6", &C::f6);
-    CC.Func("f7", &C::f7);
-    CC.Func("f8", &C::f8);
-    CC.Func("f9", &C::f9);
-    CC.Func("f10", &C::f10);
-    CC.Func("f11", &C::f11);
-    CC.Func("f12", &C::f12);
-    CC.Func("f13", &C::f13);
-    CC.Func("f14", &C::f14);
+    CC.Func(_SC("f0"), &C::f0);
+    CC.Func(_SC("f1"), &C::f1);
+    CC.Func(_SC("f2"), &C::f2);
+    CC.Func(_SC("f3"), &C::f3);
+    CC.Func(_SC("f4"), &C::f4);
+    CC.Func(_SC("f5"), &C::f5);
+    CC.Func(_SC("f6"), &C::f6);
+    CC.Func(_SC("f7"), &C::f7);
+    CC.Func(_SC("f8"), &C::f8);
+    CC.Func(_SC("f9"), &C::f9);
+    CC.Func(_SC("f10"), &C::f10);
+    CC.Func(_SC("f11"), &C::f11);
+    CC.Func(_SC("f12"), &C::f12);
+    CC.Func(_SC("f13"), &C::f13);
+    CC.Func(_SC("f14"), &C::f14);
 
     RootTable().Bind(_SC("C"), CC);
 

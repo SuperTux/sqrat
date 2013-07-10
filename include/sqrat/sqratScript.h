@@ -51,7 +51,7 @@ public:
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
         }
-        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() * sizeof(SQChar)), _SC(""), true))) {
+        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
             throw Exception(LastErrorString(vm));
         }
         sq_getstackobj(vm,-1,&obj);
@@ -63,7 +63,7 @@ public:
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
         }
-        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() * sizeof(SQChar)), _SC(""), true))) {
+        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
             errMsg = LastErrorString(vm);
             return false;
         }

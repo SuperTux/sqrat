@@ -222,16 +222,16 @@ TEST_F(SqratTest, FunctionReturningReferencesToClassesWithStaticMembers) {
 
     Class<B> _B;
     _B
-    .Func("set", &B::set)
-    .Func("get", &B::get)
-    .StaticVar("shared", &B::shared)
-    .StaticVar("sharedInt", &B::sharedInt);
+    .Func(_SC("set"), &B::set)
+    .Func(_SC("get"), &B::get)
+    .StaticVar(_SC("shared"), &B::shared)
+    .StaticVar(_SC("sharedInt"), &B::sharedInt);
     
-    RootTable().Bind("B", _B);
-    RootTable().Func("getB", &getB);
-    RootTable().Func("getB2", &getB2);
-    RootTable().Func("getB4", &getB4);
-    RootTable().Func("getBPtr", &getBPtr);
+    RootTable().Bind(_SC("B"), _B);
+    RootTable().Func(_SC("getB"), &getB);
+    RootTable().Func(_SC("getB2"), &getB2);
+    RootTable().Func(_SC("getB4"), &getB4);
+    RootTable().Func(_SC("getBPtr"), &getBPtr);
     
     Script script;
     try {

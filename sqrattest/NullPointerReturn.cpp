@@ -37,12 +37,12 @@ public:
 };
 
 
-static const char *sq_code = "\
+static const SQChar *sq_code = _SC("\
     local entity = Entity(); \
     gTest.EXPECT_FALSE(entity == null); \
     entity = entity.FindEntity(); \
     gTest.EXPECT_TRUE(entity == null); \
-       ";
+       ");
 
 
 
@@ -55,7 +55,7 @@ TEST_F(SqratTest, NullPointerReturn) {
         
     Script script;
     try {
-        script.CompileString(_SC(sq_code));
+        script.CompileString(sq_code);
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }

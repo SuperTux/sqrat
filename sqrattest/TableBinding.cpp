@@ -42,7 +42,7 @@ struct Person {
     int age;
 };
 
-static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, SQChar **str)
+static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, string & out_string)
 {    
     sq_pushobject(vm, obj);
     sq_tostring(vm, -1);
@@ -51,7 +51,7 @@ static bool get_object_string(HSQUIRRELVM vm, HSQOBJECT obj, SQChar **str)
     bool r = SQ_SUCCEEDED(res);
     if (r) 
     {
-        *str = strdup(s);
+        out_string = string(s);
         sq_pop(vm,1);
     }
     return r;
@@ -89,18 +89,17 @@ TEST_F(SqratTest, SimpleTableBinding) {
     RootTable().Bind(_SC("Test"), test);
 
     Table::iterator it;
-    SQChar *str1, *str2;
+    string  str1, str2;
 
     while (test.Next(it)) 
     {
-        EXPECT_TRUE(get_object_string(vm, it.getKey(), &str1));
-        EXPECT_TRUE(get_object_string(vm, it.getValue(), &str2));
-        
+        EXPECT_TRUE(get_object_string(vm, it.getKey(), str1));
+        EXPECT_TRUE(get_object_string(vm, it.getValue(), str2));
+#ifndef SQUNICODE        
         std::cout << "Key: " 
         << str1 << " Value: " 
         << str2 << std::endl;
-        free(str1);
-        free(str2);
+#endif        
     }
         
     Script script;
@@ -132,7 +131,7 @@ TEST_F(SqratTest, SimpleTableBinding) {
 
 TEST_F(SqratTest, TableGet) {
 
-    static const char *sq_code = "\
+    static const SQChar *sq_code = _SC("\
         local i; \
         for (i = 0; i < 12; i++) \
             tb[i.tostring()] <- \"value \" + i;\
@@ -140,7 +139,7 @@ TEST_F(SqratTest, TableGet) {
         for (i = 100; i < 112; i++) \
             tb[i] <- \"value \" + i;\
         \
-           ";
+           ");
     int i;
     DefaultVM::Set(vm);
     
@@ -149,7 +148,7 @@ TEST_F(SqratTest, TableGet) {
         
     Script script;
     try {
-        script.CompileString(_SC(sq_code));
+        script.CompileString(sq_code);
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
@@ -164,7 +163,11 @@ TEST_F(SqratTest, TableGet) {
     
     for ( i = 0; i < length; i++)
     {
+#ifdef SQUNICODE
+        std::wstringstream ss1, ss2;
+#else        
         std::stringstream ss1, ss2;
+#endif        
         string key, value, value2;
         ss1 << i;
         ss2 << "value " << i;
@@ -177,7 +180,11 @@ TEST_F(SqratTest, TableGet) {
     
     for ( i = 100; i < 100 + length; i++)
     {
+#ifdef SQUNICODE
+        std::wstringstream ss2;
+#else        
         std::stringstream ss2;
+#endif
         string value, value2;
 
         ss2 << "value " << i;
