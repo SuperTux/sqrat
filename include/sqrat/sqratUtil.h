@@ -125,10 +125,11 @@ public:
             sq_tostring(vm, -1);
             sq_getstring(vm, -1, &actualType);
             sq_pop(vm, 1);
-            err = err + _SC(", got ") + actualType;
+            err = err + _SC(", got ") + actualType + _SC(")");
+        } else {
+            err = err + _SC(", got unknown)");
         }
         sq_pop(vm, 1);
-        err = err + _SC(")");
         return err;
     }
     void Clear(HSQUIRRELVM vm) {

@@ -110,6 +110,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -120,6 +127,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -127,6 +137,13 @@ public:
     R Evaluate(A1 a1) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
 
@@ -140,6 +157,9 @@ public:
 
         Var<R> ret(vm, -1);
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret.value;
     }
 
@@ -147,6 +167,13 @@ public:
     R Evaluate(A1 a1, A2 a2) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -161,6 +188,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -168,6 +198,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -183,6 +220,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -190,6 +230,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -206,6 +253,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -214,6 +264,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -231,6 +288,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -238,6 +298,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -256,6 +323,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -263,6 +333,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -282,6 +359,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -289,6 +369,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -309,6 +396,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -316,6 +406,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -337,6 +434,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -344,6 +444,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -366,6 +473,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -373,6 +483,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -396,6 +513,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -403,6 +523,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -424,9 +551,12 @@ public:
             sq_pop(vm, 1);
             throw Exception(LastErrorString(vm));
         }
-        
+
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -434,6 +564,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -459,6 +596,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -466,6 +606,13 @@ public:
     R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -492,6 +639,9 @@ public:
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
+        if (Error::Instance().Occurred(vm)) {
+            throw Exception(Error::Instance().Message(vm));
+        }
         return ret;
     }
 
@@ -502,6 +652,13 @@ public:
     void Execute() {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         SQRESULT result = sq_call(vm, 1, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
@@ -516,6 +673,13 @@ public:
     void Execute(A1 a1) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
 
@@ -532,6 +696,13 @@ public:
     void Execute(A1 a1, A2 a2) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -550,6 +721,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         PushVar(vm, a1);
         PushVar(vm, a2);
         PushVar(vm, a3);
@@ -567,6 +745,13 @@ public:
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -588,6 +773,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         PushVar(vm, a1);
         PushVar(vm, a2);
         PushVar(vm, a3);
@@ -607,6 +799,13 @@ public:
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -629,6 +828,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         PushVar(vm, a1);
         PushVar(vm, a2);
         PushVar(vm, a3);
@@ -650,6 +856,13 @@ public:
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -674,6 +887,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         PushVar(vm, a1);
         PushVar(vm, a2);
         PushVar(vm, a3);
@@ -697,6 +917,13 @@ public:
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -723,6 +950,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         PushVar(vm, a1);
         PushVar(vm, a2);
         PushVar(vm, a3);
@@ -748,6 +982,13 @@ public:
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
@@ -776,6 +1017,13 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
+
         PushVar(vm, a1);
         PushVar(vm, a2);
         PushVar(vm, a3);
@@ -803,6 +1051,13 @@ public:
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
+
+        SQUnsignedInteger nparams;
+        SQUnsignedInteger nfreevars;
+        if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
+			sq_pop(vm, 2);
+            throw Exception(_SC("wrong number of parameters"));
+        }
 
         PushVar(vm, a1);
         PushVar(vm, a2);
