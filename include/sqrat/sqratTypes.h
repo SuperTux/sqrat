@@ -95,10 +95,10 @@ struct popAsInt
 template <typename T>
 struct popAsInt<T, false>
 {
-    T value;  // not defioned 
+    T value;  // cannot be initialized because unknown constructor parameters
     popAsInt(HSQUIRRELVM vm, SQInteger idx) 
     {
-        Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer")));         
+        // keep the current error message already set previously, do not touch that here    
     }
 };
 

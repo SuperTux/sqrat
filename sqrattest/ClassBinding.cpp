@@ -488,6 +488,28 @@ TEST_F(SqratTest, CEnumBinding)
 			gTest.EXPECT_INT_EQ(124, f.fn(124)); \
 			gTest.EXPECT_INT_EQ(125, f.fn(125)); \
 			gTest.EXPECT_INT_EQ(126, f.fn(126)); \
+			local raised = false ; \
+			try {\
+			    local a = []; /* an aerray */ \
+			    f.fn(a); \
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
+			raised = false ; \
+			try {\
+			    local a =\"a string\"; \
+			    f.fn(a); \
+			    gTest.EXPECT_INT_EQ(0, 1); \
+            }\
+            catch (ex) {\
+                raised = true;\
+                print(ex + \"\\n\"); \
+            }\
+            gTest.EXPECT_TRUE(raised); \
 			"));
     } catch(Exception ex) {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
