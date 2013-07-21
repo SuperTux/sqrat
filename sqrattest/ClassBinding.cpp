@@ -488,6 +488,7 @@ TEST_F(SqratTest, CEnumBinding)
 			gTest.EXPECT_INT_EQ(124, f.fn(124)); \
 			gTest.EXPECT_INT_EQ(125, f.fn(125)); \
 			gTest.EXPECT_INT_EQ(126, f.fn(126)); \
+			gTest.EXPECT_INT_EQ(300, f.fn(300)); \
 			local raised = false ; \
 			try {\
 			    local a = []; /* an aerray */ \

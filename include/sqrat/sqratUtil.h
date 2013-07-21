@@ -43,7 +43,7 @@ typedef std::basic_string<SQChar> string;
 /**
 * Convert a std::string into a std::wstring
 */
-static std::wstring string_to_wstring(const std::string& str)
+static std::wstring ascii_string_to_wstring(const std::string& str)
 {
     return std::wstring(str.begin(), str.end());
 }
@@ -51,11 +51,13 @@ static std::wstring string_to_wstring(const std::string& str)
 /**
 * Convert a std::wstring into a std::string
 */
-static std::string wstring_to_string(const std::wstring& wstr)
+static std::string ascii_wstring_to_string(const std::wstring& wstr)
 {
     return std::string(wstr.begin(), wstr.end());
 }
 
+static std::wstring (*string_to_wstring)(const std::string& str) = ascii_string_to_wstring;
+static std::string (*wstring_to_string)(const std::wstring& wstr) = ascii_wstring_to_string;
 #endif // SQUNICODE
 
 
