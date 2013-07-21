@@ -142,13 +142,20 @@ template<class T>
 struct Var {
     T value;
     Var(HSQUIRRELVM vm, SQInteger idx) {
-        // check if return is NULL here because copying (not referencing)
-        T* ptr = ClassType<T>::GetInstance(vm, idx);
-        if (ptr != NULL)
-            value = *ptr;
-        else /* value is likely of integral type like enums*/
+        // don't want to override previous errors
+        if (!Sqrat::Error::Instance().Occurred(vm)) {
+            // check if return is NULL here because copying (not referencing)
+            T* ptr = ClassType<T>::GetInstance(vm, idx);
+            if (ptr != NULL)
+                value = *ptr;
+            else if (is_convertible<T, SQInteger>::YES) 
+            { /* value is likely of integral type like enums */
+                Sqrat::Error::Instance().Clear(vm);
+                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
+            }
+        } else
+            // initialize value to avoid warnings
             value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
-        
     }
     static void push(HSQUIRRELVM vm, const T& value) {
         if (ClassType<T>::hasClassTypeData(vm)) 
