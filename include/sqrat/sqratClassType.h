@@ -147,6 +147,7 @@ struct ClassType {
         }
         else /* value is likely of integral type like enums, cannot return a pointer */
         {
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("unknown")));
             return NULL;
         }
         ClassTypeDataBase* actualType;
