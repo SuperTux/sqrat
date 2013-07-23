@@ -4,6 +4,13 @@ Version 0.8.90
 
 === Version History ===
 
+0.8.92 (7/22/2013)
+    * Sqrat Sourceforge Bug 36, patch from Wizzard,  Argument number checking
+      in Sqrat::Function calling.  Thanks Wizzard
+    * implementing Var<char *> (for Unicode builds) and simple 
+      conversion functions between std:::wstring and std::string (for ASCII only)
+    * simple support for user defined custom conversion between string and wstring
+
 0.8.91 (7/9/2013)
     * support for 'Unicode build' where Sqrat string is wstring; code cleanup 
       in the unit tests for compiling in such environment; simple 
