@@ -148,3 +148,50 @@ TEST_F(SqratTest, NumericArgumentTypeConversionAndCheck) {
     }
 
 }
+
+class F
+{
+public:
+    int func(int i, char j)
+    {
+        return 1;
+    }
+    
+    const char * func(char c, const char *s)
+    {
+        return s;
+    }
+    
+};
+
+static const char *sq_code2 = _SC("\
+         f <- F();\
+         gTest.EXPECT_INT_EQ(1, f.f1(2. 'v'));\
+         gTest.EXPECT_STR_EQ(\"test\", f.f2('t', \"test\")); \
+    ");
+
+
+
+TEST_F(SqratTest, FunctionOfSameNumberOfArgumentsButDifferentTypesBinding) {
+    DefaultVM::Set(vm);
+    
+    Sqrat::Class<F> Fclass(vm);
+    Fclass.Func<int (F::*)(int, char)>(_SC("f1"), &F::func);
+    Fclass.Func<const char * (F::*)(char, const char*)>(_SC("f2"), &F::func);
+    
+    Sqrat::RootTable(vm).Bind(_SC("F"), Fclass);
+            
+    Script script;
+    try {
+        script.CompileString(sq_code2);
+    } catch(Exception ex) {
+        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    }
+
+    try {
+        script.Run();
+    } catch(Exception ex) {
+        FAIL() << _SC("Run Failed: ") << ex.Message();
+    }
+
+}
