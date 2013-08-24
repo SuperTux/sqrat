@@ -202,6 +202,16 @@ struct Var<T*> {
 };
 
 template<class T>
+struct Var<T* const> {
+    T* const value;
+    Var(HSQUIRRELVM vm, SQInteger idx) : value(ClassType<T>::GetInstance(vm, idx)) {
+    }
+    static void push(HSQUIRRELVM vm, T* const value) {
+        ClassType<T>::PushInstance(vm, value);
+    }
+};
+
+template<class T>
 struct Var<const T&> {
     const T& value;
     Var(HSQUIRRELVM vm, SQInteger idx) : value(*ClassType<T>::GetInstance(vm, idx)) {
@@ -220,6 +230,17 @@ struct Var<const T*> {
         ClassType<T>::PushInstance(vm, const_cast<T*>(value));
     }
 };
+
+template<class T>
+struct Var<const T* const> {
+    const T* const value;
+    Var(HSQUIRRELVM vm, SQInteger idx) : value(ClassType<T>::GetInstance(vm, idx)) {
+    }
+    static void push(HSQUIRRELVM vm, const T* const value) {
+        ClassType<T>::PushInstance(vm, const_cast<T*>(value));
+    }
+};
+
 
 // Integer Types
 #define SCRAT_INTEGER( type ) \
