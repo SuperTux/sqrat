@@ -37,7 +37,7 @@
 namespace Sqrat {
 
 // utility taken from  http://stackoverflow.com/questions/2733377/is-there-a-way-to-test-whether-a-c-class-has-a-default-constructor-other-than/2770326#2770326
-// may be obsolete in C++ 11 
+// may be obsolete in C++ 11
 template< class T >
 class is_default_constructible {
     template<int x>
@@ -65,25 +65,25 @@ class DefaultAllocator {
         sq_setreleasehook(vm, 1, &Delete);
         return 0;
     }
-    
-    template <class T, bool b> 
+
+    template <class T, bool b>
     struct NewC
     {
         T* p;
-        NewC() 
+        NewC()
         {
            p = new T();
-        }        
+        }
     };
 
     template <class T>
     struct NewC<T, false>
     {
         T* p;
-        NewC() 
+        NewC()
         {
            p = 0;
-        }        
+        }
     };
 
 public:
@@ -97,8 +97,8 @@ public:
     static SQInteger iNew(HSQUIRRELVM vm) {
         return New(vm);
     }
-    
-   // following New functions are used only if constructors are bound via Ctor() in class    
+
+   // following New functions are used only if constructors are bound via Ctor() in class
 
     template <typename A1>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -261,7 +261,7 @@ public:
     }
 
 public:
-    
+
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         C* instance = new C(*static_cast<const C*>(value));
         sq_setinstanceup(vm, idx, instance);
@@ -280,13 +280,14 @@ public:
 // NoConstructorAllocator
 //
 
+template<class C>
 class NoConstructor {
 public:
-    static SQInteger New(HSQUIRRELVM) {
-        return 0;
+    static SQInteger New(HSQUIRRELVM vm) {
+        return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
     }
-    static SQInteger Copy(HSQUIRRELVM, SQInteger, const void*) {
-        return 0;
+    static SQInteger Copy(HSQUIRRELVM vm, SQInteger, const void*) {
+        return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" copying is not allowed"))).c_str());
     }
     static SQInteger Delete(SQUserPointer, SQInteger) {
         return 0;
@@ -300,8 +301,8 @@ public:
 template<class C>
 class CopyOnly {
 public:
-    static SQInteger New(HSQUIRRELVM) {
-        return 0;
+    static SQInteger New(HSQUIRRELVM vm) {
+        return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
     }
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         C* instance = new C(*static_cast<const C*>(value));
@@ -332,7 +333,7 @@ public:
     }
 
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
-        return 0;
+        return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" copying is not allowed"))).c_str());
     }
 
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
