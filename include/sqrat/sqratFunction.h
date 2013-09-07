@@ -43,11 +43,6 @@ private:
     HSQUIRRELVM vm;
     HSQOBJECT env, obj;
 
-    Function(HSQUIRRELVM v, HSQOBJECT e, HSQOBJECT o) : vm(v), env(e), obj(o) {
-        sq_addref(vm, &env);
-        sq_addref(vm, &obj);
-    }
-
 public:
     Function() {
         sq_resetobject(&env);
@@ -63,6 +58,11 @@ public:
         sq_addref(vm, &env);
         Object so = e.GetSlot(slot);
         obj = so.GetObject();
+        sq_addref(vm, &obj);
+    }
+
+    Function(HSQUIRRELVM v, HSQOBJECT e, HSQOBJECT o) : vm(v), env(e), obj(o) {
+        sq_addref(vm, &env);
         sq_addref(vm, &obj);
     }
 
