@@ -108,13 +108,8 @@ class C1
 
 class C2
 {
-public:
-    C2(int x)
-    {
-    }
-    C2(char a, char b)
-    {
-    }
+private:
+    C2() {}
 
 };
 
@@ -141,11 +136,7 @@ TEST_F(SqratTest, Constructors)
     Class<C1> c1_class;
     RootTable().Bind(_SC("C1"), c1_class);
      
-    Class<C2> c2_class;
-    c2_class
-    .Ctor<int>()
-    .Ctor<char, char>();
-    
+    Class<C2> c2_class;   
     RootTable().Bind(_SC("C2"), c2_class);
    
 
@@ -194,8 +185,7 @@ TEST_F(SqratTest, Constructors)
 			gTest.EXPECT_STR_EQ(c22.s2, \"abc\"); \
 			    \
 			c1 <- C1();\
-			c2 <- C2(1);\
-			c2 <- C2('c', 'd');\
+			c2 <- C2(); \
 			\
 			"));
     }
