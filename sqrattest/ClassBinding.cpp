@@ -29,55 +29,56 @@
 using namespace Sqrat;
 
 
-class C {
+class C
+{
     void default_values()
     {
-         i = -1;
-         s = _SC("uninitialized");
-         f = -2.0;
-         s2 = _SC("not initialized");
+        i = -1;
+        s = _SC("uninitialized");
+        f = -2.0;
+        s2 = _SC("not initialized");
     }
 public:
     int i;
     string s;
     float f;
     string s2;
-    
-    C() 
+
+    C()
     {
         default_values();
-#ifndef  SQUNICODE       
+#ifndef  SQUNICODE
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
 #endif
     }
-    
+
     C(int i_)
     {
         default_values();
         i = i_;
-#ifndef  SQUNICODE       
+#ifndef  SQUNICODE
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
-#endif        
+#endif
     }
-    C(int i_, const SQChar *s_) 
+    C(int i_, const SQChar *s_)
     {
         default_values();
         i = i_;
         s = string(s_);
-#ifndef  SQUNICODE       
+#ifndef  SQUNICODE
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
 #endif
     }
-    
+
     C(const SQChar *s2_, float f_)
     {
         default_values();
         s2 = string(s2_);
         f = f_;
-#ifndef  SQUNICODE       
+#ifndef  SQUNICODE
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
 #endif
-        
+
     }
     C(int i_, const SQChar *s_, float f_)
     {
@@ -85,25 +86,45 @@ public:
         i = i_;
         s = string(s_);
         f = f_;
-#ifndef  SQUNICODE       
+#ifndef  SQUNICODE
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
 #endif
     }
-    
+
     C(int i_, const SQChar *s_, float f_, const SQChar *s2_): i(i_), s(s_), f(f_), s2(s2_)
     {
-#ifndef  SQUNICODE       
+#ifndef  SQUNICODE
         std::cout << i << " " << s << " " << f << " " << s2 << std::endl;
 #endif
     }
 };
 
+
+class C1
+{
+// no default constructor in code
+
+};
+
+class C2
+{
+public:
+    C2(int x)
+    {
+    }
+    C2(char a, char b)
+    {
+    }
+
+};
+
+
 TEST_F(SqratTest, Constructors)
 {
     DefaultVM::Set(vm);
-    
+
     Class<C> c_class(vm);
-    
+
     c_class
     .Var(_SC("i"), &C::i)
     .Var(_SC("s"), &C::s)
@@ -113,14 +134,26 @@ TEST_F(SqratTest, Constructors)
     .Ctor<int, const SQChar * >()
     //Ctor<const SQChar *, float >("make")
     .Ctor<int, const SQChar *, float >()
-    .Ctor<int, const SQChar *, float, const SQChar * >();  
+    .Ctor<int, const SQChar *, float, const SQChar * >();
 
     RootTable().Bind(_SC("C"), c_class);
+    
+    Class<C1> c1_class;
+    RootTable().Bind(_SC("C1"), c1_class);
+     
+    Class<C2> c2_class;
+    c2_class
+    .Ctor<int>()
+    .Ctor<char, char>();
+    
+    RootTable().Bind(_SC("C2"), c2_class);
+   
 
     Script script;
-    
 
-    try {
+
+    try
+    {
         script.CompileString(_SC(" \
             c0 <- C(); \
             c1 <- C(6); \
@@ -160,27 +193,38 @@ TEST_F(SqratTest, Constructors)
 			gTest.EXPECT_STR_EQ(c22.s, \"uninitialized\"); \
 			gTest.EXPECT_STR_EQ(c22.s2, \"abc\"); \
 			    \
+			c1 <- C1();\
+			c2 <- C2(1);\
+			c2 <- C2('c', 'd');\
+			\
 			"));
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
-    
+
 }
 
 
-const Sqrat::string Vec2ToString(const Vec2* v) {
+const Sqrat::string Vec2ToString(const Vec2* v)
+{
     std::basic_stringstream<SQChar> out;
     out << _SC("Vec2(") << v->x << _SC(", ") << v->y << _SC(")");
     return out.str();
 }
 
-TEST_F(SqratTest, SimpleClassBinding) {
+TEST_F(SqratTest, SimpleClassBinding)
+{
     DefaultVM::Set(vm);
 
     Class<Vec2> vec2;
@@ -213,7 +257,8 @@ TEST_F(SqratTest, SimpleClassBinding) {
 
     Script script;
 
-    try {
+    try
+    {
         script.CompileString(_SC(" \
 			v <- Vec2(); \
 			v.x = 1.2; \
@@ -230,43 +275,56 @@ TEST_F(SqratTest, SimpleClassBinding) {
 			gTest.EXPECT_STR_EQ(\"\" + v, \"Vec2(2.4, 6.8)\"); \
 			gTest.EXPECT_FLOAT_EQ(v.Length(), 7.211103); \
 			"));
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
 }
 
-class Animal {
+class Animal
+{
 public:
-    virtual string Speak() {
+    virtual string Speak()
+    {
         return _SC("[Silent]");
     }
 };
 
-class Cat : public Animal {
+class Cat : public Animal
+{
 public:
-    virtual string Speak() {
+    virtual string Speak()
+    {
         return _SC("Meow!");
     }
 };
 
-class Dog : public Animal {
+class Dog : public Animal
+{
 public:
-    virtual string Speak() {
+    virtual string Speak()
+    {
         return _SC("Woof!");
     }
 };
 
-string MakeSpeak(Animal* a) {
+string MakeSpeak(Animal* a)
+{
     return a->Speak();
 }
 
-TEST_F(SqratTest, InheritedClassBinding) {
+TEST_F(SqratTest, InheritedClassBinding)
+{
     DefaultVM::Set(vm);
 
     // Defining class definitions inline
@@ -289,7 +347,8 @@ TEST_F(SqratTest, InheritedClassBinding) {
 
     Script script;
 
-    try {
+    try
+    {
         script.CompileString(_SC(" \
 			class Mouse extends Animal { \
 				function Speak() { \
@@ -309,25 +368,33 @@ TEST_F(SqratTest, InheritedClassBinding) {
 			gTest.EXPECT_STR_EQ(MakeSpeak(d), \"Woof!\"); \
 			/*gTest.EXPECT_STR_EQ(MakeSpeak(m), \"Squeak!\");*/ /* This will fail! Classes overridden in squirrel will be exposed as their base native class to C++ */ \
 			"));
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
 }
 
-class NativeObj {
+class NativeObj
+{
 public:
-    int Id() {
+    int Id()
+    {
         return 42;
     }
 };
 
-TEST_F(SqratTest, WeakRef) {
+TEST_F(SqratTest, WeakRef)
+{
     //
     // Ensure that weak referenceing work with Sqrat-bound classes
     // Created in response to a bug reported by emeyex
@@ -343,7 +410,8 @@ TEST_F(SqratTest, WeakRef) {
 
     Script script;
 
-    try {
+    try
+    {
         script.CompileString(_SC(" \
 			class SqObj { \
 				function Id() { \
@@ -359,39 +427,44 @@ TEST_F(SqratTest, WeakRef) {
 			gTest.EXPECT_FLOAT_EQ(3.14, ref1.ref().Id()); \
 			gTest.EXPECT_INT_EQ(42, ref2.ref().Id()); \
 			"));
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Script Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Script Run Failed: ") << ex.Message();
     }
 }
 
-class NumTypes 
+class NumTypes
 {
 public:
-    int g_int() 
+    int g_int()
     {
         return 3;
     }
-    double g_float() 
+    double g_float()
     {
         return 7.8;
     }
-    
-    bool g_true() 
+
+    bool g_true()
     {
         return true;
     }
-    
+
     bool g_false()
     {
         return false;
     }
-    
+
 };
 
 static const SQChar *num_conversions = _SC("\
@@ -424,30 +497,36 @@ static const SQChar *num_conversions = _SC("\
 	gTest.EXPECT_FLOAT_EQ(0.0, f); \
     \
     ");
-    
+
 TEST_F(SqratTest, NumConversion)
 {
     DefaultVM::Set(vm);
-    
+
     Sqrat::Class<NumTypes> numtypes(vm);
-    
+
     numtypes.Func(_SC("g_int"), &NumTypes::g_int);
     numtypes.Func(_SC("g_float"), &NumTypes::g_float);
     numtypes.Func(_SC("g_true"), &NumTypes::g_true);
     numtypes.Func(_SC("g_false"), &NumTypes::g_false);
 
     Sqrat::RootTable(vm).Bind(_SC("NumTypes"), numtypes);
-            
+
     Script script;
-    try {
+    try
+    {
         script.CompileString(num_conversions);
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
 }
@@ -455,12 +534,15 @@ TEST_F(SqratTest, NumConversion)
 
 enum  foo { BAR = 123, CAR, DEAR, EAR };
 
-class F 
+class F
 {
 public:
     static int bar;
-    
-    int fn(foo foo_value) { return (int) foo_value; }
+
+    int fn(foo foo_value)
+    {
+        return (int) foo_value;
+    }
 };
 
 
@@ -470,18 +552,19 @@ TEST_F(SqratTest, CEnumBinding)
     Class<F> f_class(vm);
     int i = (int) BAR;
     f_class.SetStaticValue(_SC("bar"), i);
-    ASSERT_TRUE(1);    
+    ASSERT_TRUE(1);
     f_class.SetStaticValue(_SC("bar"), BAR);
-    ASSERT_TRUE(1);    
-    
+    ASSERT_TRUE(1);
+
     f_class.Func(_SC("fn"), &F::fn);
 
     RootTable().Bind(_SC("F"), f_class);
 
     Script script;
-    
 
-    try {
+
+    try
+    {
         script.CompileString(_SC(" \
 			gTest.EXPECT_INT_EQ(F.bar, 123); \
 			f <- F(); \
@@ -512,27 +595,32 @@ TEST_F(SqratTest, CEnumBinding)
             }\
             gTest.EXPECT_TRUE(raised); \
 			"));
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
-    } catch(Exception ex) {
+    }
+    catch(Exception ex)
+    {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
-    
+
 }
- 
+
 
 class NoDefaultConstructor
 {
 public:
-    
+
     NoDefaultConstructor(const char *s) {}
-    void f() {} 
+    void f() {}
     void fa(int b) {}
-    
+
     int v;
     static int sv;
 };
@@ -540,38 +628,41 @@ public:
 class NoDefaultConstructor2: public NoDefaultConstructor
 {
 public:
-    
+
     NoDefaultConstructor2(const char *s, const char *s1) : NoDefaultConstructor(s) { }
-    void f2() {} 
-    
+    void f2() {}
+
 };
 
-TEST_F(SqratTest, NoDefaultConstructorClasses) {
+TEST_F(SqratTest, NoDefaultConstructorClasses)
+{
     DefaultVM::Set(vm);
     NoDefaultConstructor n1("test");
     Class<NoDefaultConstructor> N(vm, _SC("N"));
     N.Ctor<char *>();
-    N.Func(_SC("f"), &NoDefaultConstructor::f);        
-    N.Func(_SC("fa"), &NoDefaultConstructor::fa);        
+    N.Func(_SC("f"), &NoDefaultConstructor::f);
+    N.Func(_SC("fa"), &NoDefaultConstructor::fa);
     N.Var(_SC("v"), &NoDefaultConstructor::v);
     RootTable().Bind(_SC("N"), N);
-    
+
     DerivedClass<NoDefaultConstructor2, NoDefaultConstructor> N2(vm, _SC("N2"));
     N2.Ctor<char *, char *>();
     N2.Func(_SC("f2"), &NoDefaultConstructor2::f2);
     RootTable().Bind(_SC("N2"), N2);
-    try 
+    try
     {
         N.SetStaticValue(_SC("sv"),  BAR);
     }
-    catch (Sqrat::Exception ex) {
+    catch (Sqrat::Exception ex)
+    {
 #ifndef SQUNICODE
         std::cerr << _SC("set static var failed, ") << ex.Message();
 #endif
     }
-       
+
     Script script;
-    try {
+    try
+    {
         script.CompileString(_SC(" \
             class SC {} \
             /* note n <- N() would crash, no argument checking in this case, to do */ \
@@ -609,18 +700,20 @@ TEST_F(SqratTest, NoDefaultConstructorClasses) {
             gTest.EXPECT_TRUE(raised); \
             "));
     }
-    catch (Sqrat::Exception ex) {
+    catch (Sqrat::Exception ex)
+    {
         FAIL() << _SC("Compile Failed: ") << ex.Message();
     }
 
-    try {
+    try
+    {
         script.Run();
     }
-    catch (Exception ex) {
+    catch (Exception ex)
+    {
         FAIL() << _SC("Run Failed: ") << ex.Message();
     }
-    
+
 }
 
 
-        
