@@ -38,7 +38,7 @@ typedef std::basic_string<SQChar> string;
 
 #ifdef SQUNICODE
 
-/* from http://stackoverflow.com/questions/15333259/c-stdwstring-to-stdstring-quick-and-dirty-conversion-for-use-as-key-in, 
+/* from http://stackoverflow.com/questions/15333259/c-stdwstring-to-stdstring-quick-and-dirty-conversion-for-use-as-key-in,
    only works for ASCII chars */
 /**
 * Convert a std::string into a std::wstring

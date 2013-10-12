@@ -15,12 +15,12 @@ namespace Sqrat {
         T *operator ->()                { return _ptr;    }
         const T *operator ->() const     { return _ptr;    }
         operator T*()                    { return _ptr;    }
-        
+
         //Copies override "our" instance for another
         Ref &operator =(Ref *rhs)        { _ptr = rhs->_ptr; return *this; }
         Ref &operator =(T *rhs)            { _ptr = rhs; return *this; }
     };
-    
+
     template<class T>
     struct Var<Ref<T> > {
         T *value;
@@ -31,7 +31,7 @@ namespace Sqrat {
             ClassType<T>::PushInstance(vm, &(*value));
         }
     };
-    
+
     template<class T>
     struct Var<Ref<T>&> {
         T *value;

@@ -124,7 +124,7 @@ struct ClassType {
             sq_remove(vm, -2);
             sq_setinstanceup(vm, -1, ptr);
         }
-        else 
+        else
             sq_pushnull(vm);
     }
 

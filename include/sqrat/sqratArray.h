@@ -58,7 +58,7 @@ namespace Sqrat {
             sq_set(vm, -3);
             sq_pop(vm,1); // pop array
         }
-        
+
         // Bind a raw Squirrel closure to the Array
         ArrayBase& SquirrelFunc(const SQInteger index, SQFUNCTION func) {
             sq_pushobject(vm, GetObject());
@@ -72,7 +72,7 @@ namespace Sqrat {
         //
         // Variable Binding
         //
-        
+
         template<class V>
         ArrayBase& SetValue(const SQInteger index, const V& val) {
             sq_pushobject(vm, GetObject());
@@ -193,17 +193,17 @@ namespace Sqrat {
             sq_pop(vm,1); // pop array
             return *this;
         }
-        
-        
+
+
         SQInteger Length() const
         {
             HSQOBJECT value = GetObject();
             sq_pushobject(vm, value);
             SQInteger r = sq_getsize(vm, -1);
             sq_pop(vm, 1);
-            return r;            
+            return r;
         }
-        
+
         template <typename T>
         SQInteger GetElement(int index, T& out_element)
         {
@@ -215,25 +215,25 @@ namespace Sqrat {
             }
             if (index < 0)
             {
-                return sq_throwerror(vm, _SC("illegal index"));                
+                return sq_throwerror(vm, _SC("illegal index"));
             }
             sq_pushinteger(vm, index);
             if (SQ_FAILED(sq_get(vm, -2)))
             {
                 sq_pop(vm, 1);
-                return sq_throwerror(vm, _SC("illegal index"));       
+                return sq_throwerror(vm, _SC("illegal index"));
             }
-                
+
             Var<T> element(vm, -1);
             if (Sqrat::Error::Instance().Occurred(vm)) {
-                return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
+                return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
             }
-            sq_pop(vm, 2);  
-            out_element = element.value;                    
+            sq_pop(vm, 2);
+            out_element = element.value;
             return 1;
         }
-        
-        
+
+
         template <typename T>
         SQInteger GetArray(T* array, int size)
         {
@@ -251,12 +251,12 @@ namespace Sqrat {
                 if (i >= size) break;
                 Var<T> element(vm, -1);
                 if (Sqrat::Error::Instance().Occurred(vm)) {
-                    return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());                    
+                    return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
                 }
                 sq_pop(vm, 2);
-                array[i] = element.value;                    
-            }                 
-            return  1;         
+                array[i] = element.value;
+            }
+            return  1;
         }
     };
 
@@ -277,9 +277,9 @@ namespace Sqrat {
 
         Array(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : ArrayBase(o, v) {
         }
-        
+
     };
-    
+
     template<>
     struct Var<Array> {
         Array value;
@@ -299,7 +299,7 @@ namespace Sqrat {
             obj = value.GetObject();
             sq_pushobject(vm,obj);
         }
-    };    
+    };
 }
 
 #endif

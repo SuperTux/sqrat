@@ -40,7 +40,7 @@ class Script : public Object {
 public:
     Script(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, false) {
     }
- 
+
     ~Script()
     {
         if(!sq_isnull(obj)) {
@@ -59,7 +59,7 @@ public:
         sq_addref(vm, &obj);
         sq_pop(vm, 1);
     }
-    
+
     bool CompileString(const string& script, string& errMsg) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);

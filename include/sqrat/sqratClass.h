@@ -77,8 +77,8 @@ public:
             sq_getstackobj(vm, -1, &classObj);
             sq_addref(vm, &classObj); // must addref before the pop!
             sq_pop(vm, 1);
-            if (className.empty()) 
-#ifdef SQUNICODE                
+            if (className.empty())
+#ifdef SQUNICODE
                 InitClass(string_to_wstring(typeid(*this).name()));
 #else
                 InitClass(typeid(*this).name());
@@ -88,7 +88,7 @@ public:
             // install cleanup hook
             HSQUIRRELVM *p = (HSQUIRRELVM *) sq_newuserdata(v, sizeof(v));
             *p = v;
-            
+
             sq_setreleasehook(v, -1, cleanup_hook);
             // finish install cleanup hook
         }
@@ -188,7 +188,7 @@ public:
 
         return *this;
     }
-    
+
     /// Bind a class property (variable accessed via a setter and getter)
     template<class V>
     Class& Prop(const SQChar* name, V (C::*getMethod)() const, void (C::*setMethod)(V)) {
@@ -421,7 +421,7 @@ protected:
         sq_pop(vm, 1);
     }
 
-    
+
     // constructor binding
 
     Class& BindConstructor(SQFUNCTION method, SQInteger nParams, const SQChar *name = 0){
@@ -439,16 +439,16 @@ protected:
         }
         else
         {  // the containing environment is the root table??
-            sq_pushroottable(vm);            
+            sq_pushroottable(vm);
         }
         // Bind overload handler
         sq_pushstring(vm, name, -1);
         sq_pushstring(vm, name, -1); // function name is passed as a free variable
         sq_newclosure(vm, overload, 1);
         sq_newslot(vm, -3, false);
-        
+
         // Bind overloaded allocator function
-        
+
         sq_pushstring(vm, overloadName.c_str(), -1);
         sq_newclosure(vm, method, 0);
         sq_setparamscheck(vm,nParams + 1,NULL);
@@ -456,8 +456,8 @@ protected:
         sq_pop(vm, 1);
         return *this;
     }
-    
-    void setDefaultCtor() 
+
+    void setDefaultCtor()
     {
         ClassTypeDataBase *type_data = ClassType<C>::getClassTypeData(vm);
         if (type_data->ctorCalled == false)
@@ -466,11 +466,11 @@ protected:
             type_data->ctorCalled = true;
         }
     }
-public:        
+public:
     Class& Ctor(const SQChar *name = 0) {
         return BindConstructor(A::template iNew<0>, 0, name);
     }
-    
+
     template<class A1>
     Class& Ctor(const SQChar *name = 0) {
         setDefaultCtor();
@@ -517,7 +517,7 @@ public:
         return BindConstructor(A::template iNew<A1,A2,A3,A4,A5,A6,A7,A8,A9>,9, name);
     }
 
-    
+
 };
 
 
@@ -558,8 +558,8 @@ public:
             sq_getstackobj(v, -1, &classObj);
             sq_addref(v, &classObj); // must addref before the pop!
             sq_pop(v, 1);
-            if (className.empty()) 
-#ifdef SQUNICODE                
+            if (className.empty())
+#ifdef SQUNICODE
                 InitDerivedClass(v, string_to_wstring(typeid(*this).name()));
 #else
                 InitDerivedClass(v, typeid(*this).name());

@@ -56,7 +56,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
-        
+
         R ret = (ptr->*method)();
 
         PushVar(vm, ret);
@@ -905,7 +905,7 @@ public:
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>  
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>
     static SQInteger Func11C(HSQUIRRELVM vm) {
         if (!overloaded && sq_gettop(vm) != 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -1112,7 +1112,7 @@ public:
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ > 
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ >
     static SQInteger Func13C(HSQUIRRELVM vm) {
         if (!overloaded && sq_gettop(vm) != 15) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -1298,7 +1298,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
         if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
-        
+
         R & ret = (ptr->*method)();
 
         PushVarR(vm, ret);
@@ -2147,7 +2147,7 @@ public:
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>  
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, bool overloaded /*= false*/>
     static SQInteger Func11C(HSQUIRRELVM vm) {
         if (!overloaded && sq_gettop(vm) != 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -2354,7 +2354,7 @@ public:
         return 1;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ > 
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, bool overloaded /*= false*/ >
     static SQInteger Func13C(HSQUIRRELVM vm) {
         if (!overloaded && sq_gettop(vm) != 15) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -2517,8 +2517,8 @@ public:
         PushVarR(vm, ret);
         return 1;
     }
-    
-}; 
+
+};
 
 //
 // void return specialization
@@ -3041,7 +3041,7 @@ public:
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ > 
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, bool overloaded /*= false*/ >
     static SQInteger Func8C(HSQUIRRELVM vm) {
         if (!overloaded && sq_gettop(vm) != 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -3587,7 +3587,7 @@ public:
         return 0;
     }
 
-    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >  
+    template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, bool overloaded /*= false*/ >
     static SQInteger Func14C(HSQUIRRELVM vm) {
         if (!overloaded && sq_gettop(vm) != 16) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -4002,7 +4002,7 @@ inline SQInteger sqVarGet(HSQUIRRELVM vm) {
 #else // Squirrel 3.x
         sq_pushnull(vm);
         return sq_throwobject(vm);
-#endif        
+#endif
     }
 
     // push 'this'
@@ -4052,7 +4052,7 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
 #else // Squirrel 3.x
         sq_pushnull(vm);
         return sq_throwobject(vm);
-#endif        
+#endif
     }
 
     // push 'this'
