@@ -108,7 +108,8 @@ class C1
 
 class C2
 {
-private:
+//private:
+public:
     C2() {}
 
 };
