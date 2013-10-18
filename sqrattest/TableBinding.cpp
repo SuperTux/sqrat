@@ -227,7 +227,6 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
            ");
     HSQUIRRELVM v = sq_open(1024);
 
-    DefaultVM::Set(v);
     Table table(v);
     RootTable(v).Bind(_SC("tb"), table);
 
@@ -272,6 +271,8 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
         EXPECT_EQ(j, 1);
         EXPECT_EQ(value, value2);
     }
+    script.Release();
+    table.Release();
     sq_close(v); // see what happens now
 
 

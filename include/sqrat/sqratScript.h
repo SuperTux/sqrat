@@ -38,15 +38,9 @@ namespace Sqrat {
 
 class Script : public Object {
 public:
-    Script(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, false) {
+    Script(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, true) {
     }
 
-    ~Script()
-    {
-        if(!sq_isnull(obj)) {
-            sq_release(vm, &obj);
-        }
-    }
     void CompileString(const string& script) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);

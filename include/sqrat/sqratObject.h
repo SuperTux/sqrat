@@ -71,7 +71,9 @@ public:
     virtual ~Object() {
         if(release) {
             Release();
+            release = false;
         }
+
     }
 
     Object& operator=(const Object& so) {
@@ -115,6 +117,7 @@ public:
 
     void Release() {
         sq_release(vm, &obj);
+        sq_resetobject(&obj);
     }
 
     SQUserPointer GetInstanceUP(SQUserPointer tag = NULL) const {
