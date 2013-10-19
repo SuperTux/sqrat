@@ -107,35 +107,26 @@ TEST_F(SqratTest, SimpleTableBinding)
     }
 
     Script script;
-
-    try
-    {
-        script.CompileString(_SC("  \
-			gTest.EXPECT_STR_EQ(Test.version, \"1.0.0\"); \
-			gTest.EXPECT_STR_EQ(Test.GetGreeting(), \"Hello world!\"); \
-			gTest.EXPECT_INT_EQ(Test.AddTwo(1, 2), 3); \
-			Test.count += 3; \
-			gTest.EXPECT_INT_EQ(Test.count, 15); \
-			\
-			p <- Test.Person(); \
-			p.name = \"Bobby\"; \
-			p.age = 25; \
-			gTest.EXPECT_STR_EQ(p.name, \"Bobby\"); \
-			gTest.EXPECT_STR_EQ(p.age, 25); \
-			"));
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(_SC("  \
+        gTest.EXPECT_STR_EQ(Test.version, \"1.0.0\"); \
+        gTest.EXPECT_STR_EQ(Test.GetGreeting(), \"Hello world!\"); \
+        gTest.EXPECT_INT_EQ(Test.AddTwo(1, 2), 3); \
+        Test.count += 3; \
+        gTest.EXPECT_INT_EQ(Test.count, 15); \
+        \
+        p <- Test.Person(); \
+        p.name = \"Bobby\"; \
+        p.age = 25; \
+        gTest.EXPECT_STR_EQ(p.name, \"Bobby\"); \
+        gTest.EXPECT_STR_EQ(p.age, 25); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
-    {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 
@@ -158,22 +149,14 @@ TEST_F(SqratTest, TableGet)
     RootTable(vm).Bind(_SC("tb"), table);
 
     Script script;
-    try
-    {
-        script.CompileString(sq_code);
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
-    {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
     const int length = 12;
@@ -231,22 +214,14 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
     RootTable(v).Bind(_SC("tb"), table);
 
     Script script(v);
-    try
-    {
-        script.CompileString(sq_code);
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
-    {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
     const int length = 12;
     // do some normal things with the table

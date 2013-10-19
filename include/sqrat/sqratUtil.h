@@ -91,19 +91,6 @@ public:
     }
 };
 
-class Exception {
-public:
-    Exception(const string& msg) : message(msg) {}
-    Exception(const Exception& ex) : message(ex.message) {}
-
-    const string Message() const {
-        return message;
-    }
-
-private:
-    string message;
-};
-
 inline string LastErrorString( HSQUIRRELVM vm ) {
     const SQChar* sqErr;
     sq_getlasterror(vm);

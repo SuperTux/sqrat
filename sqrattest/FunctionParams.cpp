@@ -146,33 +146,30 @@ TEST_F(SqratTest, GlobalFunction) {
     RootTable().Func(_SC("f14"), &f14);
 
     Script script;
-
-    try {
-        script.CompileString(_SC(" \
-			gTest.EXPECT_INT_EQ(1, f0()); print(0);\
-			gTest.EXPECT_INT_EQ(1, f1(1)); print(1); \
-			gTest.EXPECT_INT_EQ(1, f2(1, 2)); print(2);\
-			gTest.EXPECT_INT_EQ(1, f3(1, 2, 3)); print(3);\
-			gTest.EXPECT_INT_EQ(1, f4(1, 2, 3, 4)); print(4);\
-			gTest.EXPECT_INT_EQ(1, f5(1, 2, 3, 4, 5)); print(5);\
-			gTest.EXPECT_INT_EQ(1, f6(1, 2, 3, 4, 5, 6)); print(6);\
-			gTest.EXPECT_INT_EQ(1, f7(1, 2, 3, 4, 5, 6, 7)); print(7);\
-			gTest.EXPECT_INT_EQ(1, f8(1, 2, 3, 4, 5, 6, 7, 8)); print(8);\
-			gTest.EXPECT_INT_EQ(1, f9(1, 2, 3, 4, 5, 6, 7, 8, 9)); print(9);\
-			gTest.EXPECT_INT_EQ(1, f10(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)); print(10);\
-			gTest.EXPECT_INT_EQ(1, f11(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)); print(11);\
-			gTest.EXPECT_INT_EQ(1, f12(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)); print(12);\
-			gTest.EXPECT_INT_EQ(1, f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
-			gTest.EXPECT_INT_EQ(1, f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
-			"));
-    } catch(Exception ex) {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(_SC(" \
+        gTest.EXPECT_INT_EQ(1, f0()); print(0);\
+        gTest.EXPECT_INT_EQ(1, f1(1)); print(1); \
+        gTest.EXPECT_INT_EQ(1, f2(1, 2)); print(2);\
+        gTest.EXPECT_INT_EQ(1, f3(1, 2, 3)); print(3);\
+        gTest.EXPECT_INT_EQ(1, f4(1, 2, 3, 4)); print(4);\
+        gTest.EXPECT_INT_EQ(1, f5(1, 2, 3, 4, 5)); print(5);\
+        gTest.EXPECT_INT_EQ(1, f6(1, 2, 3, 4, 5, 6)); print(6);\
+        gTest.EXPECT_INT_EQ(1, f7(1, 2, 3, 4, 5, 6, 7)); print(7);\
+        gTest.EXPECT_INT_EQ(1, f8(1, 2, 3, 4, 5, 6, 7, 8)); print(8);\
+        gTest.EXPECT_INT_EQ(1, f9(1, 2, 3, 4, 5, 6, 7, 8, 9)); print(9);\
+        gTest.EXPECT_INT_EQ(1, f10(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)); print(10);\
+        gTest.EXPECT_INT_EQ(1, f11(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)); print(11);\
+        gTest.EXPECT_INT_EQ(1, f12(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)); print(12);\
+        gTest.EXPECT_INT_EQ(1, f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
+        gTest.EXPECT_INT_EQ(1, f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
+        "));
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try {
-        script.Run();
-    } catch(Exception ex) {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 
@@ -324,34 +321,31 @@ TEST_F(SqratTest, MemberFunction) {
     RootTable().Bind(_SC("C"), CC);
 
     Script script;
-
-    try {
-        script.CompileString(_SC(" \
-		    c <- C(); \
-			gTest.EXPECT_INT_EQ(1, c.f0()); print(0);\
-			gTest.EXPECT_INT_EQ(1, c.f1(1)); print(1); \
-			gTest.EXPECT_INT_EQ(1, c.f2(1, 2)); print(2);\
-			gTest.EXPECT_INT_EQ(1, c.f3(1, 2, 3)); print(3);\
-			gTest.EXPECT_INT_EQ(1, c.f4(1, 2, 3, 4)); print(4);\
-			gTest.EXPECT_INT_EQ(1, c.f5(1, 2, 3, 4, 5)); print(5);\
-			gTest.EXPECT_INT_EQ(1, c.f6(1, 2, 3, 4, 5, 6)); print(6);\
-			gTest.EXPECT_INT_EQ(1, c.f7(1, 2, 3, 4, 5, 6, 7)); print(7);\
-			gTest.EXPECT_INT_EQ(1, c.f8(1, 2, 3, 4, 5, 6, 7, 8)); print(8);\
-			gTest.EXPECT_INT_EQ(1, c.f9(1, 2, 3, 4, 5, 6, 7, 8, 9)); print(9);\
-			gTest.EXPECT_INT_EQ(1, c.f10(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)); print(10);\
-			gTest.EXPECT_INT_EQ(1, c.f11(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)); print(11);\
-			gTest.EXPECT_INT_EQ(1, c.f12(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)); print(12);\
-			gTest.EXPECT_INT_EQ(1, c.f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
-			gTest.EXPECT_INT_EQ(1, c.f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
-			"));
-    } catch(Exception ex) {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(_SC(" \
+        c <- C(); \
+        gTest.EXPECT_INT_EQ(1, c.f0()); print(0);\
+        gTest.EXPECT_INT_EQ(1, c.f1(1)); print(1); \
+        gTest.EXPECT_INT_EQ(1, c.f2(1, 2)); print(2);\
+        gTest.EXPECT_INT_EQ(1, c.f3(1, 2, 3)); print(3);\
+        gTest.EXPECT_INT_EQ(1, c.f4(1, 2, 3, 4)); print(4);\
+        gTest.EXPECT_INT_EQ(1, c.f5(1, 2, 3, 4, 5)); print(5);\
+        gTest.EXPECT_INT_EQ(1, c.f6(1, 2, 3, 4, 5, 6)); print(6);\
+        gTest.EXPECT_INT_EQ(1, c.f7(1, 2, 3, 4, 5, 6, 7)); print(7);\
+        gTest.EXPECT_INT_EQ(1, c.f8(1, 2, 3, 4, 5, 6, 7, 8)); print(8);\
+        gTest.EXPECT_INT_EQ(1, c.f9(1, 2, 3, 4, 5, 6, 7, 8, 9)); print(9);\
+        gTest.EXPECT_INT_EQ(1, c.f10(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)); print(10);\
+        gTest.EXPECT_INT_EQ(1, c.f11(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)); print(11);\
+        gTest.EXPECT_INT_EQ(1, c.f12(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)); print(12);\
+        gTest.EXPECT_INT_EQ(1, c.f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
+        gTest.EXPECT_INT_EQ(1, c.f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
+        "));
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try {
-        script.Run();
-    } catch(Exception ex) {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 

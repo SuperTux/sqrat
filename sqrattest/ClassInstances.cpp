@@ -104,49 +104,46 @@ TEST_F(SqratTest, ClassInstances) {
     RootTable().SetInstance(_SC("bob"), &bob);
 
     Script script;
-
-    try {
-        script.CompileString(_SC(" \
-			steve <- Employee(); \
-			steve.firstName = \"Steve\"; \
-			steve.lastName = \"Jones\"; \
-			steve.age = 34; \
-			steve.wage = 35.00; \
-			steve.department = \"Management\"; \
-			steve.gender = \"male\"; \
-			steve.middleName = \"B\"; \
-			\
-			gTest.EXPECT_INT_EQ(steve.age, 34); \
-			gTest.EXPECT_FLOAT_EQ(steve.wage, 35.00); \
-			gTest.EXPECT_STR_EQ(steve.lastName, \"Jones\"); \
-			gTest.EXPECT_STR_EQ(steve.middleName, \"B\"); \
-			gTest.EXPECT_STR_EQ(steve.gender, \"male\"); \
-			\
-			\
-			bob.age += 1; \
-			bob.GiveRaise(0.02); \
-			bob.supervisor = steve; \
-			\
-			gTest.EXPECT_INT_EQ(bob.age, 43); \
-			gTest.EXPECT_FLOAT_EQ(bob.wage, 22.389); \
-			gTest.EXPECT_STR_EQ(bob.lastName, \"Smith\"); \
-			gTest.EXPECT_STR_EQ(bob.middleName, \"A\"); \
-			gTest.EXPECT_STR_EQ(bob.gender, \"Male\"); \
-			gTest.EXPECT_STR_EQ(bob.sharedData, \"1234\"); \
-			\
-			// Uncomment the following to see _tostring demonstrated \
-			//::print(steve); \
-			//::print(\"===========\\n\"); \
-			//::print(bob); \
-			"));
-    } catch(Exception ex) {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(_SC(" \
+        steve <- Employee(); \
+        steve.firstName = \"Steve\"; \
+        steve.lastName = \"Jones\"; \
+        steve.age = 34; \
+        steve.wage = 35.00; \
+        steve.department = \"Management\"; \
+        steve.gender = \"male\"; \
+        steve.middleName = \"B\"; \
+        \
+        gTest.EXPECT_INT_EQ(steve.age, 34); \
+        gTest.EXPECT_FLOAT_EQ(steve.wage, 35.00); \
+        gTest.EXPECT_STR_EQ(steve.lastName, \"Jones\"); \
+        gTest.EXPECT_STR_EQ(steve.middleName, \"B\"); \
+        gTest.EXPECT_STR_EQ(steve.gender, \"male\"); \
+        \
+        \
+        bob.age += 1; \
+        bob.GiveRaise(0.02); \
+        bob.supervisor = steve; \
+        \
+        gTest.EXPECT_INT_EQ(bob.age, 43); \
+        gTest.EXPECT_FLOAT_EQ(bob.wage, 22.389); \
+        gTest.EXPECT_STR_EQ(bob.lastName, \"Smith\"); \
+        gTest.EXPECT_STR_EQ(bob.middleName, \"A\"); \
+        gTest.EXPECT_STR_EQ(bob.gender, \"Male\"); \
+        gTest.EXPECT_STR_EQ(bob.sharedData, \"1234\"); \
+        \
+        // Uncomment the following to see _tostring demonstrated \
+        //::print(steve); \
+        //::print(\"===========\\n\"); \
+        //::print(bob); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try {
-        script.Run();
-    } catch(Exception ex) {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
     // Since he was set as an instance, changes to Bob in the script carry through to the native object
@@ -227,64 +224,60 @@ TEST_F(SqratTest, InstanceReferencesAndStaticMembers) {
     RootTable().Bind(_SC("B"), _B);
     
     Script script;
-    try {
-        script.CompileString(_SC(" \
-            b <- B();\
-            bb <- B(); \
-            \
-			gTest.EXPECT_INT_EQ(b.get(), -1); \
-			gTest.EXPECT_INT_EQ(bb.sharedInt, -1); \
-			gTest.EXPECT_INT_EQ(b.sharedInt, -1); \
-            b.set(12);\
-            b.shared = \"a long string\"; \
-            b.sharedInt = 1234; \
-            gTest.EXPECT_STR_EQ(bb.shared, \"a long string\"); \
-            gTest.EXPECT_STR_EQ(b.shared, \"a long string\"); \
-			gTest.EXPECT_INT_EQ(bb.sharedInt, 1234); \
-			gTest.EXPECT_INT_EQ(b.get(), 12); \
-			local b1 = b.getBPtr();\
-            b.set(20);\
-			gTest.EXPECT_INT_EQ(b1.get(), 20); \
-			local b2 = b.getB();\
-            b.set(40);\
-			gTest.EXPECT_INT_EQ(b1.get(), 40); \
-			gTest.EXPECT_INT_EQ(b2.get(), 40); \
-			local b3 = b.getB2(12, \"test\");\
-            b.set(60);\
-			gTest.EXPECT_INT_EQ(b2.get(), 60); \
-			gTest.EXPECT_INT_EQ(b3.get(), 60); \
-			local b4 = b.getB4(b, b, b, 33);\
-            b.set(80);\
-			gTest.EXPECT_INT_EQ(b3.get(), 80); \
-			gTest.EXPECT_INT_EQ(b4.get(), 80); \
-            \
-            bb.shared = \"short str\"; \
-            gTest.EXPECT_STR_EQ(b2.shared, \"short str\"); \
-            gTest.EXPECT_STR_EQ(b3.shared, \"short str\"); \
-            gTest.EXPECT_STR_EQ(b.shared, \"short str\"); \
-            gTest.EXPECT_STR_EQ(b1.shared, \"short str\"); \
-            gTest.EXPECT_STR_EQ(b4.shared, \"short str\"); \
-			gTest.EXPECT_INT_EQ(b.sharedInt, 1234); \
-			gTest.EXPECT_INT_EQ(b1.sharedInt, 1234); \
-			gTest.EXPECT_INT_EQ(b2.sharedInt, 1234); \
-			gTest.EXPECT_INT_EQ(b3.sharedInt, 1234); \
-			gTest.EXPECT_INT_EQ(b4.sharedInt, 1234); \
-            b4.shared = \"abcde\"; \
-            b4.sharedInt = 9999; \
-            gTest.EXPECT_STR_EQ(bb.shared, \"abcde\"); \
-			gTest.EXPECT_INT_EQ(bb.sharedInt, 9999); \
-			gTest.EXPECT_INT_EQ(b1.sharedInt, 9999); \
-            "));
-    }
-    catch (Sqrat::Exception ex) {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(_SC(" \
+        b <- B();\
+        bb <- B(); \
+        \
+        gTest.EXPECT_INT_EQ(b.get(), -1); \
+        gTest.EXPECT_INT_EQ(bb.sharedInt, -1); \
+        gTest.EXPECT_INT_EQ(b.sharedInt, -1); \
+        b.set(12);\
+        b.shared = \"a long string\"; \
+        b.sharedInt = 1234; \
+        gTest.EXPECT_STR_EQ(bb.shared, \"a long string\"); \
+        gTest.EXPECT_STR_EQ(b.shared, \"a long string\"); \
+        gTest.EXPECT_INT_EQ(bb.sharedInt, 1234); \
+        gTest.EXPECT_INT_EQ(b.get(), 12); \
+        local b1 = b.getBPtr();\
+        b.set(20);\
+        gTest.EXPECT_INT_EQ(b1.get(), 20); \
+        local b2 = b.getB();\
+        b.set(40);\
+        gTest.EXPECT_INT_EQ(b1.get(), 40); \
+        gTest.EXPECT_INT_EQ(b2.get(), 40); \
+        local b3 = b.getB2(12, \"test\");\
+        b.set(60);\
+        gTest.EXPECT_INT_EQ(b2.get(), 60); \
+        gTest.EXPECT_INT_EQ(b3.get(), 60); \
+        local b4 = b.getB4(b, b, b, 33);\
+        b.set(80);\
+        gTest.EXPECT_INT_EQ(b3.get(), 80); \
+        gTest.EXPECT_INT_EQ(b4.get(), 80); \
+        \
+        bb.shared = \"short str\"; \
+        gTest.EXPECT_STR_EQ(b2.shared, \"short str\"); \
+        gTest.EXPECT_STR_EQ(b3.shared, \"short str\"); \
+        gTest.EXPECT_STR_EQ(b.shared, \"short str\"); \
+        gTest.EXPECT_STR_EQ(b1.shared, \"short str\"); \
+        gTest.EXPECT_STR_EQ(b4.shared, \"short str\"); \
+        gTest.EXPECT_INT_EQ(b.sharedInt, 1234); \
+        gTest.EXPECT_INT_EQ(b1.sharedInt, 1234); \
+        gTest.EXPECT_INT_EQ(b2.sharedInt, 1234); \
+        gTest.EXPECT_INT_EQ(b3.sharedInt, 1234); \
+        gTest.EXPECT_INT_EQ(b4.sharedInt, 1234); \
+        b4.shared = \"abcde\"; \
+        b4.sharedInt = 9999; \
+        gTest.EXPECT_STR_EQ(bb.shared, \"abcde\"); \
+        gTest.EXPECT_INT_EQ(bb.sharedInt, 9999); \
+        gTest.EXPECT_INT_EQ(b1.sharedInt, 9999); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try {
-        script.Run();
-    }
-    catch (Exception ex) {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
     
 }
@@ -397,92 +390,88 @@ TEST_F(SqratTest, SimpleTypeChecking) {
     RootTable().Func(_SC("abc"), &abc);
     
     Script script;
-    try {
-        script.CompileString(_SC(" \
-            b <- B();\
-            bb <- BB(); \
-            a <- A(); \
-            aa <- AA(); \
-            aaa <- AAA(); \
-            ab <- AB(); \
-            abc(a, aa, ab); \
-            w <- W(); \
-            w.f1(a); \
-            w.f1(aaa); \
-            w.f2(a); \
-            w.f3(aaa); \
-            w.f4(ab); \
-            w.abc(aaa, aa, bb); \
-            w.abc(aa, aa, b); \
-            \
-            local raised = false;\
-            try { \
-                w.f1(b);\
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            \
-            raised = false;\
-            try { \
-                w.abc(aa, a, ab); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            \
-            \
-            raised = false;\
-            try { \
-                w.f3(a); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            \
-            \
-            raised = false;\
-            try { \
-                w.abc(a, aa); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            \
-            raised = false;\
-            try { \
-                w.f4(ab, b); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            \
-            "));
-    }
-    catch (Sqrat::Exception ex) {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(_SC(" \
+        b <- B();\
+        bb <- BB(); \
+        a <- A(); \
+        aa <- AA(); \
+        aaa <- AAA(); \
+        ab <- AB(); \
+        abc(a, aa, ab); \
+        w <- W(); \
+        w.f1(a); \
+        w.f1(aaa); \
+        w.f2(a); \
+        w.f3(aaa); \
+        w.f4(ab); \
+        w.abc(aaa, aa, bb); \
+        w.abc(aa, aa, b); \
+        \
+        local raised = false;\
+        try { \
+            w.f1(b);\
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        \
+        raised = false;\
+        try { \
+            w.abc(aa, a, ab); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        \
+        \
+        raised = false;\
+        try { \
+            w.f3(a); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        \
+        \
+        raised = false;\
+        try { \
+            w.abc(a, aa); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        \
+        raised = false;\
+        try { \
+            w.f4(ab, b); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try {
-        script.Run();
-    }
-    catch (Exception ex) {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
     
 }

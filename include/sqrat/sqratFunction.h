@@ -114,7 +114,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
@@ -122,14 +124,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -142,7 +143,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -152,14 +155,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         Var<R> ret(vm, -1);
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret.value;
     }
 
@@ -172,7 +174,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -183,14 +187,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -203,7 +206,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -215,14 +220,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -235,7 +239,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -248,14 +254,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -269,7 +274,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -283,14 +290,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -303,7 +309,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -318,14 +326,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -338,7 +345,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -354,14 +363,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -374,7 +382,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -391,14 +401,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -411,7 +420,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -429,14 +440,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -449,7 +459,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -468,14 +480,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -488,7 +499,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -508,14 +521,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -528,7 +540,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -549,14 +563,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -569,7 +582,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -591,14 +606,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -611,7 +625,9 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            R value;
+            return value;
         }
 
         PushVar(vm, a1);
@@ -634,14 +650,13 @@ public:
         //handle an error: only pop a single element and throw the exception
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            R value;
+            return value;
         }
 
         R ret = Var<R>(vm, -1).value;
         sq_pop(vm, 2);
-        if (Error::Instance().Occurred(vm)) {
-            throw Exception(Error::Instance().Message(vm));
-        }
         return ret;
     }
 
@@ -657,7 +672,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         SQRESULT result = sq_call(vm, 1, false, ErrorHandling::IsEnabled());
@@ -665,7 +681,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -678,7 +695,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -688,7 +706,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -701,7 +720,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -712,7 +732,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -725,7 +746,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -737,7 +759,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -750,7 +773,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -763,7 +787,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -777,7 +802,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -791,7 +817,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -804,7 +831,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -819,7 +847,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -832,7 +861,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -848,7 +878,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -861,7 +892,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -878,7 +910,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -891,7 +924,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -909,7 +943,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -922,7 +957,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -941,7 +977,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -954,7 +991,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -974,7 +1012,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -987,7 +1026,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -1008,7 +1048,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -1021,7 +1062,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -1043,7 +1085,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 
@@ -1056,7 +1099,8 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
-            throw Exception(_SC("wrong number of parameters"));
+            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            return;
         }
 
         PushVar(vm, a1);
@@ -1079,7 +1123,8 @@ public:
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
     }
 

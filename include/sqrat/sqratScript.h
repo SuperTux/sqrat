@@ -47,7 +47,8 @@ public:
             sq_resetobject(&obj);
         }
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -75,7 +76,8 @@ public:
             sq_resetobject(&obj);
         }
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
-            throw Exception(LastErrorString(vm));
+            Error::Instance().Throw(vm, LastErrorString(vm));
+            return;
         }
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -105,7 +107,8 @@ public:
             result = sq_call(vm, 1, false, true);
             sq_pop(vm, 1);
             if(SQ_FAILED(result)) {
-                throw Exception(LastErrorString(vm));
+                Error::Instance().Throw(vm, LastErrorString(vm));
+                return;
             }
         }
     }

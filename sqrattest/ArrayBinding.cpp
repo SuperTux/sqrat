@@ -43,16 +43,14 @@ TEST_F(SqratTest, ArrayGet) {
     RootTable(vm).Bind(_SC("a"), array);
         
     Script script;
-    try {
-        script.CompileString(sq_code);
-    } catch(Exception ex) {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try {
-        script.Run();
-    } catch(Exception ex) {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
     
     const int length = array.Length();

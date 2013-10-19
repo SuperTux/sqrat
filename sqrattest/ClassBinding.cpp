@@ -143,65 +143,58 @@ TEST_F(SqratTest, Constructors)
 
     Script script;
 
-
-    try
+    script.CompileString(_SC(" \
+        c0 <- C(); \
+        c1 <- C(6); \
+        c2 <- C(12, \"test\");  \
+        c3 <- C(23, \"test2\", 33.5); \
+        c4 <- C(123, \"test3\", 133.5, \"second string\");   \
+            \
+        gTest.EXPECT_INT_EQ(c0.i, -1); \
+        gTest.EXPECT_FLOAT_EQ(c0.f, -2.0); \
+        gTest.EXPECT_STR_EQ(c0.s, \"uninitialized\"); \
+        gTest.EXPECT_STR_EQ(c0.s2, \"not initialized\"); \
+            \
+        gTest.EXPECT_INT_EQ(c1.i, 6); \
+        gTest.EXPECT_FLOAT_EQ(c1.f, -2.0); \
+        gTest.EXPECT_STR_EQ(c1.s, \"uninitialized\"); \
+        gTest.EXPECT_STR_EQ(c1.s2, \"not initialized\"); \
+            \
+        gTest.EXPECT_INT_EQ(c2.i, 12); \
+        gTest.EXPECT_FLOAT_EQ(c2.f, -2.0); \
+        gTest.EXPECT_STR_EQ(c2.s, \"test\"); \
+        gTest.EXPECT_STR_EQ(c2.s2, \"not initialized\"); \
+            print(c2 + \"\\n\");\
+            \
+        gTest.EXPECT_INT_EQ(c3.i, 23); \
+        gTest.EXPECT_FLOAT_EQ(c3.f, 33.5); \
+        gTest.EXPECT_STR_EQ(c3.s, \"test2\"); \
+        gTest.EXPECT_STR_EQ(c3.s2, \"not initialized\"); \
+            \
+        gTest.EXPECT_INT_EQ(c4.i, 123); \
+        gTest.EXPECT_FLOAT_EQ(c4.f, 133.5); \
+        gTest.EXPECT_STR_EQ(c4.s, \"test3\"); \
+        gTest.EXPECT_STR_EQ(c4.s2, \"second string\"); \
+            \
+        //c22 <-make(\"abc\", 101.0) ;\
+        gTest.EXPECT_INT_EQ(c22.i, -1); \
+        gTest.EXPECT_FLOAT_EQ(c22.f, 101.0); \
+        gTest.EXPECT_STR_EQ(c22.s, \"uninitialized\"); \
+        gTest.EXPECT_STR_EQ(c22.s2, \"abc\"); \
+            \
+        c1 <- C1();\
+        c2 <- C2(); \
+        \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(_SC(" \
-            c0 <- C(); \
-            c1 <- C(6); \
-            c2 <- C(12, \"test\");  \
-            c3 <- C(23, \"test2\", 33.5); \
-            c4 <- C(123, \"test3\", 133.5, \"second string\");   \
-			    \
-			gTest.EXPECT_INT_EQ(c0.i, -1); \
-			gTest.EXPECT_FLOAT_EQ(c0.f, -2.0); \
-			gTest.EXPECT_STR_EQ(c0.s, \"uninitialized\"); \
-			gTest.EXPECT_STR_EQ(c0.s2, \"not initialized\"); \
-			    \
-			gTest.EXPECT_INT_EQ(c1.i, 6); \
-			gTest.EXPECT_FLOAT_EQ(c1.f, -2.0); \
-			gTest.EXPECT_STR_EQ(c1.s, \"uninitialized\"); \
-			gTest.EXPECT_STR_EQ(c1.s2, \"not initialized\"); \
-			    \
-			gTest.EXPECT_INT_EQ(c2.i, 12); \
-			gTest.EXPECT_FLOAT_EQ(c2.f, -2.0); \
-			gTest.EXPECT_STR_EQ(c2.s, \"test\"); \
-			gTest.EXPECT_STR_EQ(c2.s2, \"not initialized\"); \
-			    print(c2 + \"\\n\");\
-			    \
-			gTest.EXPECT_INT_EQ(c3.i, 23); \
-			gTest.EXPECT_FLOAT_EQ(c3.f, 33.5); \
-			gTest.EXPECT_STR_EQ(c3.s, \"test2\"); \
-			gTest.EXPECT_STR_EQ(c3.s2, \"not initialized\"); \
-			    \
-			gTest.EXPECT_INT_EQ(c4.i, 123); \
-			gTest.EXPECT_FLOAT_EQ(c4.f, 133.5); \
-			gTest.EXPECT_STR_EQ(c4.s, \"test3\"); \
-			gTest.EXPECT_STR_EQ(c4.s2, \"second string\"); \
-			    \
-            //c22 <-make(\"abc\", 101.0) ;\
-			gTest.EXPECT_INT_EQ(c22.i, -1); \
-			gTest.EXPECT_FLOAT_EQ(c22.f, 101.0); \
-			gTest.EXPECT_STR_EQ(c22.s, \"uninitialized\"); \
-			gTest.EXPECT_STR_EQ(c22.s2, \"abc\"); \
-			    \
-			c1 <- C1();\
-			c2 <- C2(); \
-			\
-			"));
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
 }
@@ -248,37 +241,31 @@ TEST_F(SqratTest, SimpleClassBinding)
 
     Script script;
 
-    try
+    script.CompileString(_SC(" \
+        v <- Vec2(); \
+        v.x = 1.2; \
+        v.y = 3.4; \
+        v *= 2.0; \
+        gTest.EXPECT_FLOAT_EQ(2.4, v.x); \
+        gTest.EXPECT_FLOAT_EQ(v.x, 2.4); \
+        gTest.EXPECT_INT_EQ(2, v.x); \
+        gTest.EXPECT_TRUE(v.x); \
+        gTest.EXPECT_INT_EQ(v.x, 2); \
+        gTest.EXPECT_TRUE(v.y); \
+        gTest.EXPECT_INT_EQ(6, v.y); \
+        gTest.EXPECT_FLOAT_EQ(6.8, v.y); \
+        gTest.EXPECT_STR_EQ(\"\" + v, \"Vec2(2.4, 6.8)\"); \
+        gTest.EXPECT_FLOAT_EQ(v.Length(), 7.211103); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(_SC(" \
-			v <- Vec2(); \
-			v.x = 1.2; \
-			v.y = 3.4; \
-			v *= 2.0; \
-			gTest.EXPECT_FLOAT_EQ(2.4, v.x); \
-			gTest.EXPECT_FLOAT_EQ(v.x, 2.4); \
-	        gTest.EXPECT_INT_EQ(2, v.x); \
-	        gTest.EXPECT_TRUE(v.x); \
-	        gTest.EXPECT_INT_EQ(v.x, 2); \
-	        gTest.EXPECT_TRUE(v.y); \
-	        gTest.EXPECT_INT_EQ(6, v.y); \
-			gTest.EXPECT_FLOAT_EQ(6.8, v.y); \
-			gTest.EXPECT_STR_EQ(\"\" + v, \"Vec2(2.4, 6.8)\"); \
-			gTest.EXPECT_FLOAT_EQ(v.Length(), 7.211103); \
-			"));
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 
@@ -338,40 +325,34 @@ TEST_F(SqratTest, InheritedClassBinding)
 
     Script script;
 
-    try
+    script.CompileString(_SC(" \
+        class Mouse extends Animal { \
+            function Speak() { \
+                return \"Squeak!\"; \
+            } \
+        } \
+        \
+        c <- Cat(); \
+        d <- Dog(); \
+        m <- Mouse(); \
+        \
+        gTest.EXPECT_STR_EQ(c.Speak(), \"Meow!\"); \
+        gTest.EXPECT_STR_EQ(d.Speak(), \"Woof!\"); \
+        gTest.EXPECT_STR_EQ(m.Speak(), \"Squeak!\"); \
+        \
+        gTest.EXPECT_STR_EQ(MakeSpeak(c), \"Meow!\"); \
+        gTest.EXPECT_STR_EQ(MakeSpeak(d), \"Woof!\"); \
+        /*gTest.EXPECT_STR_EQ(MakeSpeak(m), \"Squeak!\");*/ /* This will fail! Classes overridden in squirrel will be exposed as their base native class to C++ */ \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(_SC(" \
-			class Mouse extends Animal { \
-				function Speak() { \
-					return \"Squeak!\"; \
-				} \
-			} \
-			\
-			c <- Cat(); \
-			d <- Dog(); \
-			m <- Mouse(); \
-			\
-			gTest.EXPECT_STR_EQ(c.Speak(), \"Meow!\"); \
-			gTest.EXPECT_STR_EQ(d.Speak(), \"Woof!\"); \
-			gTest.EXPECT_STR_EQ(m.Speak(), \"Squeak!\"); \
-			\
-			gTest.EXPECT_STR_EQ(MakeSpeak(c), \"Meow!\"); \
-			gTest.EXPECT_STR_EQ(MakeSpeak(d), \"Woof!\"); \
-			/*gTest.EXPECT_STR_EQ(MakeSpeak(m), \"Squeak!\");*/ /* This will fail! Classes overridden in squirrel will be exposed as their base native class to C++ */ \
-			"));
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 
@@ -401,36 +382,30 @@ TEST_F(SqratTest, WeakRef)
 
     Script script;
 
-    try
+    script.CompileString(_SC(" \
+        class SqObj { \
+            function Id() { \
+                return 3.14; \
+            } \
+        } \
+        \
+        local obj1 = SqObj(); \
+        local ref1 = obj1.weakref(); \
+        local obj2 = NativeObj(); \
+        local ref2 = obj2.weakref(); \
+        \
+        gTest.EXPECT_FLOAT_EQ(3.14, ref1.ref().Id()); \
+        gTest.EXPECT_INT_EQ(42, ref2.ref().Id()); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(_SC(" \
-			class SqObj { \
-				function Id() { \
-					return 3.14; \
-				} \
-			} \
-			\
-			local obj1 = SqObj(); \
-			local ref1 = obj1.weakref(); \
-			local obj2 = NativeObj(); \
-			local ref2 = obj2.weakref(); \
-			\
-			gTest.EXPECT_FLOAT_EQ(3.14, ref1.ref().Id()); \
-			gTest.EXPECT_INT_EQ(42, ref2.ref().Id()); \
-			"));
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Script Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Script Run Failed: ") << ex.Message();
+        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 
@@ -503,22 +478,16 @@ TEST_F(SqratTest, NumConversion)
     Sqrat::RootTable(vm).Bind(_SC("NumTypes"), numtypes);
 
     Script script;
-    try
+    script.CompileString(num_conversions);
+    if (ESqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(num_conversions);
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 }
 
@@ -552,53 +521,45 @@ TEST_F(SqratTest, CEnumBinding)
     RootTable().Bind(_SC("F"), f_class);
 
     Script script;
-
-
-    try
+    script.CompileString(_SC(" \
+        gTest.EXPECT_INT_EQ(F.bar, 123); \
+        f <- F(); \
+        gTest.EXPECT_INT_EQ(124, f.fn(124)); \
+        gTest.EXPECT_INT_EQ(125, f.fn(125)); \
+        gTest.EXPECT_INT_EQ(126, f.fn(126)); \
+        gTest.EXPECT_INT_EQ(300, f.fn(300)); \
+        local raised = false ; \
+        try {\
+            local a = []; /* an aerray */ \
+            f.fn(a); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        raised = false ; \
+        try {\
+            local a =\"a string\"; \
+            f.fn(a); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(_SC(" \
-			gTest.EXPECT_INT_EQ(F.bar, 123); \
-			f <- F(); \
-			gTest.EXPECT_INT_EQ(124, f.fn(124)); \
-			gTest.EXPECT_INT_EQ(125, f.fn(125)); \
-			gTest.EXPECT_INT_EQ(126, f.fn(126)); \
-			gTest.EXPECT_INT_EQ(300, f.fn(300)); \
-			local raised = false ; \
-			try {\
-			    local a = []; /* an aerray */ \
-			    f.fn(a); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-			raised = false ; \
-			try {\
-			    local a =\"a string\"; \
-			    f.fn(a); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-			"));
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch(Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
 }
@@ -640,69 +601,60 @@ TEST_F(SqratTest, NoDefaultConstructorClasses)
     N2.Ctor<char *, char *>();
     N2.Func(_SC("f2"), &NoDefaultConstructor2::f2);
     RootTable().Bind(_SC("N2"), N2);
-    try
-    {
-        N.SetStaticValue(_SC("sv"),  BAR);
-    }
-    catch (Sqrat::Exception ex)
+    N.SetStaticValue(_SC("sv"),  BAR);
+    if (Sqrat::Error::Instance().Occurred(v))
     {
 #ifndef SQUNICODE
-        std::cerr << _SC("set static var failed, ") << ex.Message();
+        std::cerr << _SC("set static var failed, ") << Sqrat::Error::Instance().Message(v);
 #endif
     }
 
     Script script;
-    try
+    script.CompileString(_SC(" \
+        class SC {} \
+        /* note n <- N() would crash, no argument checking in this case, to do */ \
+        n <- N(\"t\");\
+        n2 <- N2(\"t\", \"t2\"); \
+        n3 <- n2; \
+        \
+        n.f();\
+        n2.f();\
+        n2.f2(); \
+        i <- 3; \
+        n2.v = i; \
+        \
+        local sc = SC(); \
+        local raised = false;\
+        try { \
+            n.v = n2; \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        \
+        raised = false;\
+        try { \
+            n22 <- N2(\"t\", \"t2\", 3); \
+            gTest.EXPECT_INT_EQ(0, 1); \
+        }\
+        catch (ex) {\
+            raised = true;\
+            print(ex + \"\\n\"); \
+        }\
+        gTest.EXPECT_TRUE(raised); \
+        "));
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.CompileString(_SC(" \
-            class SC {} \
-            /* note n <- N() would crash, no argument checking in this case, to do */ \
-            n <- N(\"t\");\
-            n2 <- N2(\"t\", \"t2\"); \
-            n3 <- n2; \
-            \
-            n.f();\
-            n2.f();\
-            n2.f2(); \
-            i <- 3; \
-            n2.v = i; \
-            \
-            local sc = SC(); \
-            local raised = false;\
-            try { \
-                n.v = n2; \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            \
-            raised = false;\
-            try { \
-                n22 <- N2(\"t\", \"t2\", 3); \
-			    gTest.EXPECT_INT_EQ(0, 1); \
-            }\
-            catch (ex) {\
-                raised = true;\
-                print(ex + \"\\n\"); \
-            }\
-            gTest.EXPECT_TRUE(raised); \
-            "));
-    }
-    catch (Sqrat::Exception ex)
-    {
-        FAIL() << _SC("Compile Failed: ") << ex.Message();
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
-    try
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(v))
     {
-        script.Run();
-    }
-    catch (Exception ex)
-    {
-        FAIL() << _SC("Run Failed: ") << ex.Message();
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
     }
 
 }
