@@ -34,11 +34,11 @@
 extern "C" {
 #endif
 
-    /* HSQAPI */
-    /*
-        Allows modules to interface with squirrel's C api without linking to the squirrel library
-        If new functions are added to the Squirrel API, they should be added here too
-    */
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// \internal
+    // Allows modules to interface with squirrel's C api without linking to the squirrel library
+    // If new functions are added to the Squirrel API, they should be added here too
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     typedef struct {
         /*vm*/
         HSQUIRRELVM     (*open)(SQInteger initialstacksize);

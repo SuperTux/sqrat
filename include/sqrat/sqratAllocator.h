@@ -36,8 +36,11 @@
 
 namespace Sqrat {
 
-// utility taken from  http://stackoverflow.com/questions/2733377/is-there-a-way-to-test-whether-a-c-class-has-a-default-constructor-other-than/2770326#2770326
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \internal
+// utility taken from http://stackoverflow.com/questions/2733377/is-there-a-way-to-test-whether-a-c-class-has-a-default-constructor-other-than/2770326#2770326
 // may be obsolete in C++ 11
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template< class T >
 class is_default_constructible {
     template<int x>
@@ -52,10 +55,10 @@ class is_default_constructible {
 public:
     enum { value = sizeof( sfinae<T>(0) ) == sizeof(int) };
 };
+
 //
 // DefaultAllocator
 //
-
 template<class C>
 class DefaultAllocator {
 
