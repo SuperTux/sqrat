@@ -55,13 +55,13 @@ TEST_F(SqratTest, NullPointerReturn) {
         
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
 }

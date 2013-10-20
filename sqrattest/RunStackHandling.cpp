@@ -43,8 +43,8 @@ TEST_F(SqratTest, RunStackHandling)
     Script script;
 
     script.CompileString(_SC("function f(a) { return a + 1; } ; t <- 1;  t = f(t); "));
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile failed: ") << Sqrat::Error::Instance().Message(vm);
     }
     script.Run();
     Script script2;
@@ -56,8 +56,8 @@ TEST_F(SqratTest, RunStackHandling)
         script2.Run();
         DUMPSTACK
     }
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run failed: ") << Sqrat::Error::Instance().Message(vm);
     }
     string err_msg;
     bool b ;

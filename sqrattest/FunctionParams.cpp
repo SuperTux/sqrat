@@ -163,13 +163,13 @@ TEST_F(SqratTest, GlobalFunction) {
         gTest.EXPECT_INT_EQ(1, f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
         gTest.EXPECT_INT_EQ(1, f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
         "));
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 }
 
@@ -339,13 +339,13 @@ TEST_F(SqratTest, MemberFunction) {
         gTest.EXPECT_INT_EQ(1, c.f13(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)); print(13);\
         gTest.EXPECT_INT_EQ(1, c.f14(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)); print(14);\
         "));
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 }
 

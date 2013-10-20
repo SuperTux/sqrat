@@ -120,13 +120,13 @@ TEST_F(SqratTest, SimpleTableBinding)
         gTest.EXPECT_STR_EQ(p.name, \"Bobby\"); \
         gTest.EXPECT_STR_EQ(p.age, 25); \
         "));
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 }
 
@@ -150,13 +150,13 @@ TEST_F(SqratTest, TableGet)
 
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
     }
 
     const int length = 12;
