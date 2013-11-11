@@ -136,7 +136,14 @@ public:
         SQRAT_NO_ERROR, SQRAT_COMPILE_ERROR, SQRAT_RUNTIME_ERROR
     };
 
-    SqratVM(int initialStackSize = 1024): m_vm(sq_open(initialStackSize))
+    const unsigned char LIB_IO   = 0x01;
+    const unsigned char LIB_BLOB = 0x02;
+    const unsigned char LIB_MATH = 0x04;
+    const unsigned char LIB_SYST = 0x08;
+    const unsigned char LIB_STR  = 0x10;
+    const unsigned char LIB_ALL  = LIB_IO | LIB_BLOB | LIB_MATH | LIB_SYST | LIB_STR;
+
+    SqratVM(int initialStackSize = 1024, unsigned char libsToLoad = LIB_ALL): m_vm(sq_open(initialStackSize))
         , m_rootTable(new Sqrat::RootTable(m_vm))
         , m_script(new Sqrat::Script(m_vm))
         , m_lastErrorMsg()
@@ -144,11 +151,16 @@ public:
         s_addVM(m_vm, this);
         //register std libs
         sq_pushroottable(m_vm);
-        sqstd_register_iolib(m_vm);
-        sqstd_register_bloblib(m_vm);
-        sqstd_register_mathlib(m_vm);
-        sqstd_register_systemlib(m_vm);
-        sqstd_register_stringlib(m_vm);
+        if (libsToLoad & LIB_IO)
+            sqstd_register_iolib(m_vm);
+        if (libsToLoad & LIB_BLOB)
+            sqstd_register_bloblib(m_vm);
+        if (libsToLoad & LIB_MATH)
+            sqstd_register_mathlib(m_vm);
+        if (libsToLoad & LIB_SYST)
+            sqstd_register_systemlib(m_vm);
+        if (libsToLoad & LIB_STR)
+            sqstd_register_stringlib(m_vm);
         sq_pop(m_vm, 1);
         setPrintFunc(printFunc, printFunc);
         setErrorHandler(runtimeErrorHandler, compilerErrorHandler);
