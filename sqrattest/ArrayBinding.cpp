@@ -93,8 +93,12 @@ TEST_F(SqratTest, ArrayGet) {
 
 void touch_element(Sqrat::Array & a, int index, int val) 
 {
-    a.SetValue(index, val);    
-    
+    a.SetValue(index, val);        
+}
+
+void touch_element2(Sqrat::Array a, int index, int val) 
+{
+    a.SetValue(index, val);        
 }
 
 TEST_F(SqratTest, PassingArrayIn) {
@@ -102,11 +106,21 @@ TEST_F(SqratTest, PassingArrayIn) {
     static const SQChar *sq_code = _SC("\
         local i; \
         for (i = 0; i < a.len(); i++) \
+            touch_element2(a, i, 5 - i);\
+        \
+        for (i = 0; i < a.len(); i++) \
+            gTest.EXPECT_INT_EQ( a[i], 5 - i);\
+        \
+        for (i = 0; i < a.len(); i++) \
             touch_element(a, i, -i);\
+        \
+        for (i = 0; i < a.len(); i++) \
+            gTest.EXPECT_INT_EQ( a[i], - i);\
         \
            ");
     DefaultVM::Set(vm);
     RootTable().Func(_SC("touch_element"), &touch_element);
+    RootTable().Func(_SC("touch_element2"), &touch_element2);
     
     int i;
     Array array(vm, SIZE);
@@ -149,6 +163,43 @@ TEST_F(SqratTest, PassingArrayIn) {
         EXPECT_EQ(t, -i);
         
     }
+        
+    
+}
+
+
+TEST_F(SqratTest, PassingArrayIn2) {
+    static const int SIZE = 56;
+    static const SQChar *sq_code = _SC("\
+        local i; \
+        local a2 = array(12); \
+        for (i = 0; i < a2.len(); i++) \
+            touch_element2(a2, i, 1 - i);\
+        \
+        for (i = 0; i < a2.len(); i++) \
+            gTest.EXPECT_INT_EQ( a2[i], 1 - i);\
+        \        
+        for (i = 0; i < a2.len(); i++) \
+            touch_element(a2, i, 1 + i);\
+        \
+        for (i = 0; i < a2.len(); i++) \
+            gTest.EXPECT_INT_EQ( a2[i], 1 + i);\
+        \        
+           ");
+    DefaultVM::Set(vm);
+    RootTable().Func(_SC("touch_element2"), &touch_element2);
+    RootTable().Func(_SC("touch_element"), &touch_element);
+    Script script;
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+        
         
     
 }
