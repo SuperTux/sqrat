@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Li-Cheng (Andy) Tai
+// Copyright 2013 Li-Cheng (Andy) Tai
 //
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
@@ -88,4 +88,67 @@ TEST_F(SqratTest, ArrayGet) {
     j = array.GetArray(d3, sizeof(d3) / sizeof(d3[0]));
     EXPECT_NE(j, 1);
         
+}
+
+
+void touch_element(Sqrat::Array & a, int index, int val) 
+{
+    a.SetValue(index, val);    
+    
+}
+
+TEST_F(SqratTest, PassingArrayIn) {
+    static const int SIZE = 56;
+    static const SQChar *sq_code = _SC("\
+        local i; \
+        for (i = 0; i < a.len(); i++) \
+            touch_element(a, i, -i);\
+        \
+           ");
+    DefaultVM::Set(vm);
+    RootTable().Func(_SC("touch_element"), &touch_element);
+    
+    int i;
+    Array array(vm, SIZE);
+    RootTable(vm).Bind(_SC("a"), array);
+    for (i = 0; i < SIZE; i++)
+        touch_element(array, i, i);
+
+    int length = array.Length();
+    EXPECT_EQ(length, SIZE);
+    
+    for (i = 0; i < length; i++)
+    {
+        int t;
+        int j = array.GetElement(i, t);
+        EXPECT_EQ(j, 1);
+        EXPECT_EQ(t, i);
+        
+    }
+
+    Script script;
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+        
+    
+    length = array.Length();
+    EXPECT_EQ(length, SIZE);
+    
+    for (i = 0; i < length; i++)
+    {
+        int t;
+        int j = array.GetElement(i, t);
+        EXPECT_EQ(j, 1);
+        EXPECT_EQ(t, -i);
+        
+    }
+        
+    
 }

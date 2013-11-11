@@ -197,8 +197,7 @@ namespace Sqrat {
 
         SQInteger Length() const
         {
-            HSQOBJECT value = GetObject();
-            sq_pushobject(vm, value);
+            sq_pushobject(vm, obj);
             SQInteger r = sq_getsize(vm, -1);
             sq_pop(vm, 1);
             return r;
@@ -207,8 +206,7 @@ namespace Sqrat {
         template <typename T>
         SQInteger GetElement(int index, T& out_element)
         {
-            HSQOBJECT value = GetObject();
-            sq_pushobject(vm, value);
+            sq_pushobject(vm, obj);
             if (index > sq_getsize(vm, -1))
             {
                 return sq_throwerror(vm, _SC("index out of bound"));
@@ -300,6 +298,29 @@ namespace Sqrat {
             sq_pushobject(vm,obj);
         }
     };
+
+    template<>
+    struct Var<Array&> {
+        Array value;
+        Var(HSQUIRRELVM vm, SQInteger idx) {
+            HSQOBJECT obj;
+            sq_resetobject(&obj);
+            sq_getstackobj(vm,idx,&obj);
+            value = Array(obj, vm);
+            SQObjectType value_type = sq_gettype(vm, idx);
+            if (value_type != OT_ARRAY) {
+                Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
+            }
+        }
+        static void push(HSQUIRRELVM vm, Array value) {
+            HSQOBJECT obj;
+            sq_resetobject(&obj);
+            obj = value.GetObject();
+            sq_pushobject(vm,obj);
+        }
+    };
+
+
 }
 
 #endif

@@ -254,4 +254,70 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
 }
 
 
+void touch_element(Sqrat::Table & t, const char *key, int val) 
+{
+    t.SetValue(key, val);    
+    
+}
+
+TEST_F(SqratTest, PassingTableIn) {
+    char buf[200];
+    static const int SIZE = 56;
+    static const SQChar *sq_code = _SC("\
+        local i; \
+        for (i = 0; i < SIZE; i++) \
+            touch_element(t, i.tostring(), -i);\
+        \
+           ");
+    DefaultVM::Set(vm);
+    RootTable().Func(_SC("touch_element"), &touch_element);
+    ConstTable().Const(_SC("SIZE"), SIZE);
+    
+    int i, j;
+    Table table(vm);
+    RootTable(vm).Bind(_SC("t"), table);
+    
+    
+    
+    for (i = 0; i < SIZE; i++) {
+        snprintf(buf, sizeof(buf), "%d", i);
+        touch_element(table, buf, i);
+    }
+
+    
+    
+    for (i = 0; i < SIZE; i++)
+    {
+
+        snprintf(buf, sizeof(buf), "%d", i);
+        int k = table.GetValue(buf, j);
+        EXPECT_EQ(k, 1);
+        EXPECT_EQ(j, i);
+        
+    }
+
+    Script script;
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+        
+    
+    for (i = 0; i < SIZE; i++)
+    {
+
+        snprintf(buf, sizeof(buf), "%d", i);
+        int k = table.GetValue(buf, j);
+        EXPECT_EQ(k, 1);
+        EXPECT_EQ(j, -i);
+        
+    }
+        
+    
+}
 

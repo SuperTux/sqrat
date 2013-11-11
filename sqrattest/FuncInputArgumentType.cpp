@@ -91,7 +91,7 @@ static const SQChar *sq_code = _SC("\
     print(\"1\\n\");\
     local raised = false;\
     try { \
-        v.add(10); /*was crashing*/  \
+        v.add(10);  \
 		gTest.EXPECT_INT_EQ(0, 1); \
 	} catch (ex) {\
         raised = true;\
@@ -101,7 +101,7 @@ static const SQChar *sq_code = _SC("\
     print(\"2\\n\");\
     raised = false;\
     try { \
-        v.add(); /*was crashing*/  \
+        v.add();  \
 		gTest.EXPECT_INT_EQ(0, 1); \
 	} catch (ex) {\
         raised = true;\
@@ -111,7 +111,7 @@ static const SQChar *sq_code = _SC("\
     print(\"3\\n\");\
     raised = false;\
     try {\
-        v.add(\"text\"); /*was crashing*/  \
+        v.add(\"text\");  \
 		gTest.EXPECT_INT_EQ(0, 1); \
 	} catch (ex) {\
         raised = true;\
