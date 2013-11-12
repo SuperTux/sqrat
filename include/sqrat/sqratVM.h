@@ -136,12 +136,12 @@ public:
         SQRAT_NO_ERROR, SQRAT_COMPILE_ERROR, SQRAT_RUNTIME_ERROR
     };
 
-    const unsigned char LIB_IO   = 0x01;
-    const unsigned char LIB_BLOB = 0x02;
-    const unsigned char LIB_MATH = 0x04;
-    const unsigned char LIB_SYST = 0x08;
-    const unsigned char LIB_STR  = 0x10;
-    const unsigned char LIB_ALL  = LIB_IO | LIB_BLOB | LIB_MATH | LIB_SYST | LIB_STR;
+    static const unsigned char LIB_IO   = 0x01;
+    static const unsigned char LIB_BLOB = 0x02;
+    static const unsigned char LIB_MATH = 0x04;
+    static const unsigned char LIB_SYST = 0x08;
+    static const unsigned char LIB_STR  = 0x10;
+    static const unsigned char LIB_ALL  = LIB_IO | LIB_BLOB | LIB_MATH | LIB_SYST | LIB_STR;
 
     SqratVM(int initialStackSize = 1024, unsigned char libsToLoad = LIB_ALL): m_vm(sq_open(initialStackSize))
         , m_rootTable(new Sqrat::RootTable(m_vm))
