@@ -264,6 +264,17 @@ void touch_element2(Sqrat::Table t, const char *key, int val)
     t.SetValue(key, val);        
 }
 
+
+void touch_element3(Sqrat::Table t, int index, Sqrat::Table &t2) 
+{
+    t.SetValue(index, t2);        
+}
+
+void touch_element4(Sqrat::Table t, const char *key, Sqrat::Table &t2) 
+{
+    t.SetValue(key, t2);        
+}
+
 TEST_F(SqratTest, PassingTableIn) {
     char buf[200];
     static const int SIZE = 56;
@@ -363,6 +374,43 @@ TEST_F(SqratTest, PassingTableIn2) {
     RootTable().Func(_SC("touch_element2"), &touch_element2);
     ConstTable().Const(_SC("SIZE"), SIZE);
 
+    Script script;
+    script.CompileString(sq_code);
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+
+    script.Run();
+    if (Sqrat::Error::Instance().Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    }
+        
+    
+}
+
+
+TEST_F(SqratTest, PassingTableIn3) {
+    char buf[200];
+    static const int SIZE = 56;
+    static const SQChar *sq_code = _SC("\
+        gTest.EXPECT_INT_EQ( t[1].field, 10);\
+        gTest.EXPECT_INT_EQ( t.element.x, 55);\
+           ");
+    DefaultVM::Set(vm);
+    RootTable().Func(_SC("touch_element4"), &touch_element4);
+    RootTable().Func(_SC("touch_element3"), &touch_element3);
+    RootTable().Func(_SC("touch_element2"), &touch_element2);
+    RootTable().Func(_SC("touch_element"), &touch_element);
+    ConstTable().Const(_SC("SIZE"), SIZE);
+    Table table(vm);
+    RootTable(vm).Bind(_SC("t"), table);
+    Table table2(vm);
+    RootTable(vm).Bind(_SC("t2"), table2);
+    touch_element3(table, 1, table2);
+    touch_element2(table2, "field", 10);
+    touch_element4(table, "element", table2);
+    touch_element(table2, "x", 55);
+    
     Script script;
     script.CompileString(sq_code);
     if (Sqrat::Error::Instance().Occurred(vm)) {
