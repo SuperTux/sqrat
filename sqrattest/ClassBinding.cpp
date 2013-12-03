@@ -103,6 +103,9 @@ public:
 class C1
 {
 // no default constructor in code
+    C1(int x, int y, char z)
+    {
+    }
 
 };
 
@@ -112,6 +115,19 @@ class C2
 public:
     C2() {}
 
+};
+
+
+class C3
+{
+// no default constructor in code
+public:
+    C3(int _x, int _y, char _z) : x(_x), y(_y), z(_z)
+    {
+    }
+
+    int x, y;
+    char z;
 };
 
 
@@ -139,7 +155,18 @@ TEST_F(SqratTest, Constructors)
      
     Class<C2> c2_class;   
     RootTable().Bind(_SC("C2"), c2_class);
-   
+    
+    Class<C3> c3_class;
+    c3_class.Ctor<int, int, char>();
+    RootTable().Bind(_SC("C3"), c3_class);
+    
+    Class<C3, Sqrat::NoCopy<C3> > c3_class2;
+    c3_class2.Ctor<int, int, char>();
+    c3_class2.Var(_SC("x"), &C3::x)
+    .Var(_SC("y"), &C3::y)
+    .Var(_SC("z"), &C3::z);
+    RootTable().Bind(_SC("C32"), c3_class2);
+
 
     Script script;
 
@@ -184,7 +211,11 @@ TEST_F(SqratTest, Constructors)
             \
         c1 <- C1();\
         c2 <- C2(); \
-        \
+        c32 <- C32(100, 202. 'c');\
+        gTest.EXPECT_INT_EQ(c32.x, 100); \
+        gTest.EXPECT_INT_EQ(c32.y, 202); \
+        gTest.EXPECT_INT_EQ(c32.z, 'c'; \
+                \
         "));
     if (Sqrat::Error::Instance().Occurred(vm))
     {
