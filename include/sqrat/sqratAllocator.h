@@ -58,7 +58,7 @@ public:
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// DefaultAllocator is the allocator to use for classes that can both be constructed and copied
+/// DefaultAllocator is the allocator to use for Class that can both be constructed and copied
 ///
 /// NOTE: There is mechanisms defined in this class that allow the Class::Ctor method to work properly
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,12 @@ class DefaultAllocator {
 public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the stack
+    /// Called by Sqrat to set up an instance on the stack for the template class
+    ///
+    /// \param vm VM that has an instance object of the correct type at position 1 in its stack
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger New(HSQUIRRELVM vm) {
         C* instance = NewC<C, is_default_constructible<C>::value >().p;
@@ -276,7 +281,14 @@ public:
 public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the top of the stack as a copy of another value of the same type
+    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type
+    ///
+    /// \param vm    VM that has an instance object of the correct type at idx
+    /// \param idx   Index of the stack that the instance object is at
+    /// \param value A pointer to data of the same type as the instance object
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         C* instance = new C(*static_cast<const C*>(value));
@@ -287,6 +299,12 @@ public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Called by Sqrat to delete an instance's data
+    ///
+    /// \param ptr  Pointer to the data contained by the instance
+    /// \param size Size of the data contained by the instance
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         C* instance = reinterpret_cast<C*>(ptr);
@@ -296,28 +314,46 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// NoConstructor is the allocator to use for classes that can NOT be constructed or copied
+/// NoConstructor is the allocator to use for Class that can NOT be constructed or copied
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class C>
 class NoConstructor {
 public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the stack (not allowed in this allocator)
+    /// Called by Sqrat to set up an instance on the stack for the template class (not allowed in this allocator)
+    ///
+    /// \param vm VM that has an instance object of the correct type at position 1 in its stack
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger New(HSQUIRRELVM vm) {
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
     }
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the top of the stack as a copy of another value of the same type (not allowed in this allocator)
+    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type (not allowed in this allocator)
+    ///
+    /// \param vm    VM that has an instance object of the correct type at idx
+    /// \param idx   Index of the stack that the instance object is at
+    /// \param value A pointer to data of the same type as the instance object
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger, const void*) {
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" copying is not allowed"))).c_str());
     }
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to delete an instance's data (not allowed in this allocator)
+    /// Called by Sqrat to delete an instance's data (not used in this allocator)
+    ///
+    /// \param ptr  Pointer to the data contained by the instance
+    /// \param size Size of the data contained by the instance
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer, SQInteger) {
         return 0;
@@ -325,21 +361,33 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// CopyOnly is the allocator to use for classes that can be copied but not constructed
+/// CopyOnly is the allocator to use for Class that can be copied but not constructed
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class C>
 class CopyOnly {
 public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the stack (not allowed in this allocator)
+    /// Called by Sqrat to set up an instance on the stack for the template class (not allowed in this allocator)
+    ///
+    /// \param vm VM that has an instance object of the correct type at position 1 in its stack
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger New(HSQUIRRELVM vm) {
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
     }
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the top of the stack as a copy of another value of the same type
+    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type
+    ///
+    /// \param vm    VM that has an instance object of the correct type at idx
+    /// \param idx   Index of the stack that the instance object is at
+    /// \param value A pointer to data of the same type as the instance object
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         C* instance = new C(*static_cast<const C*>(value));
@@ -347,9 +395,15 @@ public:
         sq_setreleasehook(vm, idx, &Delete);
         return 0;
     }
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Called by Sqrat to delete an instance's data
+    ///
+    /// \param ptr  Pointer to the data contained by the instance
+    /// \param size Size of the data contained by the instance
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         C* instance = reinterpret_cast<C*>(ptr);
@@ -360,7 +414,7 @@ public:
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// NoCopy is the allocator to use for classes that can be constructed but not copied
+/// NoCopy is the allocator to use for Class that can be constructed but not copied
 ///
 /// NOTE: There is mechanisms defined in this class that allow the Class::Ctor method to work properly
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,7 +451,12 @@ class NoCopy {
 public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the stack
+    /// Called by Sqrat to set up an instance on the stack for the template class
+    ///
+    /// \param vm VM that has an instance object of the correct type at position 1 in its stack
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger New(HSQUIRRELVM vm) {
         C* instance = NewC<C, is_default_constructible<C>::value >().p;
@@ -576,7 +635,14 @@ public:
     /// @endcond
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance on the top of the stack as a copy of another value of the same type (not allowed in this allocator)
+    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type (not allowed in this allocator)
+    ///
+    /// \param vm    VM that has an instance object of the correct type at idx
+    /// \param idx   Index of the stack that the instance object is at
+    /// \param value A pointer to data of the same type as the instance object
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" copying is not allowed"))).c_str());
@@ -584,6 +650,12 @@ public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Called by Sqrat to delete an instance's data
+    ///
+    /// \param ptr  Pointer to the data contained by the instance
+    /// \param size Size of the data contained by the instance
+    ///
+    /// \return Squirrel error code
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         C* instance = reinterpret_cast<C*>(ptr);

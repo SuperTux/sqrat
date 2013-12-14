@@ -43,7 +43,7 @@
  * \section bug_sec Bug Reporting
  *
  * Bug reports or feature enhancement requests and patches can be submitted at the SourceForge Sqrat site
- * https://sourceforge.net/tracker/?group_id=261661&atid=2349886
+ * https://sourceforge.net/p/scrat/sqrat/
  */
 
 #if !defined(_SCRAT_MAIN_H_)
