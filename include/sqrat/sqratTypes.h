@@ -253,6 +253,20 @@ struct Var<const T* const> {
     }
 };
 
+template<class T>
+struct Var<SharedPtr<T> > {
+    SharedPtr<T> value;
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        T& instance = Var<T&>(vm, idx).value;
+        if (!Error::Instance().Occurred(vm)) {
+            value = new T(instance);
+        }
+    }
+    static void push(HSQUIRRELVM vm, SharedPtr<T> value) {
+        PushVarR(vm, value.Get());
+    }
+};
+
 
 // Integer Types
 #define SCRAT_INTEGER( type ) \

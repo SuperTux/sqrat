@@ -106,7 +106,7 @@ public:
     }
 
     template <class R>
-    R Evaluate() {
+    SharedPtr<R> Evaluate() {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -115,8 +115,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
@@ -125,17 +124,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1>
-    R Evaluate(A1 a1) {
+    SharedPtr<R> Evaluate(A1 a1) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -144,8 +142,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -156,17 +153,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        Var<R> ret(vm, -1);
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
-        return ret.value;
+        return ret;
     }
 
     template <class R, class A1, class A2>
-    R Evaluate(A1 a1, A2 a2) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -175,8 +171,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -188,17 +183,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3>
-    R Evaluate(A1 a1, A2 a2, A3 a3) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -207,8 +201,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -221,17 +214,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -240,8 +232,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -255,18 +246,17 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
 
     template <class R, class A1, class A2, class A3, class A4, class A5>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -275,8 +265,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -291,17 +280,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -310,8 +298,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -327,17 +314,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -346,8 +332,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -364,17 +349,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -383,8 +367,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -402,17 +385,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -421,8 +403,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -441,17 +422,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -460,8 +440,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -481,17 +460,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -500,8 +478,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -522,17 +499,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -541,8 +517,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -564,17 +539,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -583,8 +557,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -607,17 +580,16 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
 
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
-    R Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
+    SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -626,8 +598,7 @@ public:
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
         PushVar(vm, a1);
@@ -651,11 +622,10 @@ public:
         if(SQ_FAILED(result)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, LastErrorString(vm));
-            R value;
-            return value;
+            return SharedPtr<R>();
         }
 
-        R ret = Var<R>(vm, -1).value;
+        SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
