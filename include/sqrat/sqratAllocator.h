@@ -342,7 +342,7 @@ public:
     /// \return Squirrel error code
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static SQInteger Copy(HSQUIRRELVM vm, SQInteger, const void*) {
+    static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
         return 0;
     }
 
@@ -355,7 +355,7 @@ public:
     /// \return Squirrel error code
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static SQInteger Delete(SQUserPointer, SQInteger) {
+    static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         return 0;
     }
 };
