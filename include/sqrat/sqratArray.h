@@ -1,4 +1,3 @@
-
 //
 // SqratArray: Array Binding
 //
@@ -26,7 +25,6 @@
 //  distribution.
 //
 
-
 #if !defined(_SCRAT_ARRAY_H_)
 #define _SCRAT_ARRAY_H_
 
@@ -39,18 +37,49 @@
 
 namespace Sqrat {
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// The base class for Array that implements almost all of its functionality
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class ArrayBase : public Object {
     public:
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Default constructor (null)
+        ///
+        /// \param v VM that the array will exist in
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, true) {
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Construct the ArrayBase from an Object that already exists
+        ///
+        /// \param obj An Object that should already represent a Squirrel array
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase(const Object& obj) : Object(obj) {
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Construct the ArrayBase from a HSQOBJECT and HSQUIRRELVM that already exist
+        ///
+        /// \param o Squirrel object that should already represent a Squirrel array
+        /// \param v Squirrel VM that contains the Squirrel object given
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : Object(o, v) {
         }
-        // Bind a Table or Class to the Array (Can be used to facilitate Namespaces)
-        // Note: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Binds a Table or Class to the Array (can be used to facilitate namespaces)
+        ///
+        /// NOTE: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs
+        ///
+        /// \param index The index in the array being assigned a Table or Class
+        /// \param obj   Table or Class that is being placed in the Array
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         void Bind(const SQInteger index, Object& obj) {
             sq_pushobject(vm, GetObject());
             sq_pushinteger(vm, index);
@@ -59,7 +88,15 @@ namespace Sqrat {
             sq_pop(vm,1); // pop array
         }
 
-        // Bind a raw Squirrel closure to the Array
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Binds a raw Squirrel closure to the Array
+        ///
+        /// \param index The index in the array being assigned a function
+        /// \param func  Squirrel function that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase& SquirrelFunc(const SQInteger index, SQFUNCTION func) {
             sq_pushobject(vm, GetObject());
             sq_pushinteger(vm, index);
@@ -69,10 +106,15 @@ namespace Sqrat {
             return *this;
         }
 
-        //
-        // Variable Binding
-        //
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Sets an index in the Array to a specific value
+        ///
+        /// \param index The index in the array being assigned a value
+        /// \param val   Value that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class V>
         ArrayBase& SetValue(const SQInteger index, const V& val) {
             sq_pushobject(vm, GetObject());
@@ -83,12 +125,30 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Sets an index in the Array to a specific instance (like a reference)
+        ///
+        /// \param index The index in the array being assigned a value
+        /// \param val   Pointer to the instance that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class V>
         ArrayBase& SetInstance(const SQInteger index, V* val) {
             BindInstance<V>(index, val, false);
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Sets an index in the Array to a specific function
+        ///
+        /// \param index  The index in the array being assigned a value
+        /// \param method Function that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class F>
         ArrayBase& Func(const SQInteger index, F method) {
             BindFunc(index, &method, sizeof(method), SqGlobalFunc(method));
@@ -101,16 +161,24 @@ namespace Sqrat {
         //    return *this;
         //}
 
-        //
-        // Function Calls
-        //
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Gets a Function from an index in the Array
+        ///
+        /// \param index The index in the array that contains the Function
+        ///
+        /// \return Function found in the Array (null if failed)
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Function GetFunction(const SQInteger index) {
             HSQOBJECT funcObj;
             sq_pushobject(vm, GetObject());
             sq_pushinteger(vm, index);
             if(SQ_FAILED(sq_get(vm, -2))) {
-                sq_pushnull(vm);
+                return Function();
+            }
+            SQObjectType value_type = sq_gettype(vm, -1);
+            if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+                return Function();
             }
             sq_getstackobj(vm, -1, &funcObj);
             Function ret(vm, GetObject(), funcObj);
@@ -119,10 +187,14 @@ namespace Sqrat {
             return ret;
         }
 
-        //
-        // Array manipulation
-        //
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Appends a value to the end of the Array
+        ///
+        /// \param val Value that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class V>
         ArrayBase& Append(const V& val) {
             sq_pushobject(vm, GetObject());
@@ -132,6 +204,14 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Appends an instance to the end of the Array (like a reference)
+        ///
+        /// \param val Pointer to the instance that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class V>
         ArrayBase& Append(V* val) {
             sq_pushobject(vm, GetObject());
@@ -141,6 +221,15 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Inserts a value in a position in the Array
+        ///
+        /// \param destpos Index to put the new value in
+        /// \param val     Value that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class V>
         ArrayBase& Insert(const SQInteger destpos, const V& val) {
             sq_pushobject(vm, GetObject());
@@ -150,6 +239,15 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Inserts an instance in a position in the Array (like a reference)
+        ///
+        /// \param destpos Index to put the new value in
+        /// \param val     Pointer to the instance that is being placed in the Array
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class V>
         ArrayBase& Insert(const SQInteger destpos, V* val) {
             sq_pushobject(vm, GetObject());
@@ -159,6 +257,12 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Removes the last element from the Array
+        ///
+        /// \return Object for the element that was removed (null if failed)
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Object Pop() {
             HSQOBJECT slotObj;
             sq_pushobject(vm, GetObject());
@@ -173,6 +277,14 @@ namespace Sqrat {
             }
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Removes an element at a specific index from the Array
+        ///
+        /// \param itemidx Index of the element being removed
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase& Remove(const SQInteger itemidx) {
             sq_pushobject(vm, GetObject());
             sq_arrayremove(vm, -1, itemidx);
@@ -180,6 +292,14 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Resizes the Array
+        ///
+        /// \param newsize Desired size of the Array in number of elements
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase& Resize(const SQInteger newsize) {
             sq_pushobject(vm, GetObject());
             sq_arrayresize(vm, -1, newsize);
@@ -187,6 +307,12 @@ namespace Sqrat {
             return *this;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Reverses the elements of the array in place
+        ///
+        /// \return The Array itself so the call can be chained
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ArrayBase& Reverse() {
             sq_pushobject(vm, GetObject());
             sq_arrayreverse(vm, -1);
@@ -194,7 +320,12 @@ namespace Sqrat {
             return *this;
         }
 
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Returns the length of the Array
+        ///
+        /// \return Length in number of elements
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         SQInteger Length() const
         {
             sq_pushobject(vm, obj);
@@ -203,66 +334,96 @@ namespace Sqrat {
             return r;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Returns the element at a given index
+        ///
+        /// This function MUST have its Error handled if it occurred
+        ///
+        /// \param index Index of the element
+        ///
+        /// \return The element (or null if failed)
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template <typename T>
-        SQInteger GetElement(int index, T& out_element)
+        SharedPtr<T> GetElement(int index)
         {
             sq_pushobject(vm, obj);
-            if (index > sq_getsize(vm, -1))
-            {
-                return sq_throwerror(vm, _SC("index out of bound"));
+            if (index >= sq_getsize(vm, -1)) {
+                Error::Instance().Throw(vm, _SC("index out of bound"));
+                return SharedPtr<T>();
             }
-            if (index < 0)
-            {
-                return sq_throwerror(vm, _SC("illegal index"));
+            if (index < 0) {
+                Error::Instance().Throw(vm, _SC("illegal index"));
+                return SharedPtr<T>();
             }
             sq_pushinteger(vm, index);
-            if (SQ_FAILED(sq_get(vm, -2)))
-            {
+            if (SQ_FAILED(sq_get(vm, -2))) {
                 sq_pop(vm, 1);
-                return sq_throwerror(vm, _SC("illegal index"));
+                Error::Instance().Throw(vm, _SC("illegal index"));
+                return SharedPtr<T>();
             }
-
-            Var<T> element(vm, -1);
-            if (Sqrat::Error::Instance().Occurred(vm)) {
-                return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+            Var<SharedPtr<T> > element(vm, -1);
+            if (Error::Instance().Occurred(vm)) {
+                return SharedPtr<T>();
             }
             sq_pop(vm, 2);
-            out_element = element.value;
-            return 1;
+            return element.value;
         }
 
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Fills a C array with the elements of the Array
+        ///
+        /// This function MUST have its Error handled if it occurred
+        ///
+        /// \param array C array to be filled
+        /// \param size  The amount of elements to fill the C array with
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template <typename T>
-        SQInteger GetArray(T* array, int size)
+        void GetArray(T* array, int size)
         {
             HSQOBJECT value = GetObject();
             sq_pushobject(vm, value);
-            if (size != sq_getsize(vm, -1))
-            {
-                return sq_throwerror(vm, _SC("array buffer size too big"));
+            if (size > sq_getsize(vm, -1)) {
+                sq_pop(vm, 1);
+                Error::Instance().Throw(vm, _SC("array buffer size too big"));
+                return;
             }
             sq_pushnull(vm);
             SQInteger i;
-            while (SQ_SUCCEEDED(sq_next(vm, -2)))
-            {
+            while (SQ_SUCCEEDED(sq_next(vm, -2))) {
                 sq_getinteger(vm, -2, &i);
                 if (i >= size) break;
-                Var<T> element(vm, -1);
-                if (Sqrat::Error::Instance().Occurred(vm)) {
-                    return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+                Var<const T&> element(vm, -1);
+                if (Error::Instance().Occurred(vm)) {
+                    return;
                 }
                 sq_pop(vm, 2);
                 array[i] = element.value;
             }
-            return  1;
         }
     };
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Represents an array in Squirrel
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class Array : public ArrayBase {
     public:
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Default constructor (null)
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Array() {
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Constructs an Array
+        ///
+        /// \param v    VM to create the Array in
+        /// \param size An optional size hint
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Array(HSQUIRRELVM v, const SQInteger size = 0) : ArrayBase(v) {
             sq_newarray(vm, size);
             sq_getstackobj(vm,-1,&obj);
@@ -270,17 +431,43 @@ namespace Sqrat {
             sq_pop(vm,1);
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Construct the Array from an Object that already exists
+        ///
+        /// \param obj An Object that should already represent a Squirrel array
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Array(const Object& obj) : ArrayBase(obj) {
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Construct the Array from a HSQOBJECT and HSQUIRRELVM that already exist
+        ///
+        /// \param o Squirrel object that should already represent a Squirrel array
+        /// \param v Squirrel VM that contains the Squirrel object given
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Array(HSQOBJECT o, HSQUIRRELVM v = DefaultVM::Get()) : ArrayBase(o, v) {
         }
 
     };
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Used to get and push Array instances to and from the stack as references (arrays are always references in Squirrel)
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<>
     struct Var<Array> {
-        Array value;
+        Array value; ///< The actual value of get operations
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Attempts to get the value off the stack at idx as an Array
+        ///
+        /// This function MUST have its Error handled if it occurred
+        ///
+        /// \param vm  Target VM
+        /// \param idx Index trying to be read
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Var(HSQUIRRELVM vm, SQInteger idx) {
             HSQOBJECT obj;
             sq_resetobject(&obj);
@@ -291,7 +478,15 @@ namespace Sqrat {
                 Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
             }
         }
-        static void push(HSQUIRRELVM vm, Array value) {
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Called by PushVar to put an Array reference on the stack
+        ///
+        /// \param vm    Target VM
+        /// \param value Value to push on to the VM's stack
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static void push(HSQUIRRELVM vm, const Array& value) {
             HSQOBJECT obj;
             sq_resetobject(&obj);
             obj = value.GetObject();
@@ -299,9 +494,22 @@ namespace Sqrat {
         }
     };
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Used to get and push Array instances to and from the stack as references
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<>
     struct Var<Array&> {
-        Array value;
+        Array value; ///< The actual value of get operations
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Attempts to get the value off the stack at idx as an Array
+        ///
+        /// This function MUST have its Error handled if it occurred
+        ///
+        /// \param vm  Target VM
+        /// \param idx Index trying to be read
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Var(HSQUIRRELVM vm, SQInteger idx) {
             HSQOBJECT obj;
             sq_resetobject(&obj);
@@ -312,7 +520,15 @@ namespace Sqrat {
                 Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
             }
         }
-        static void push(HSQUIRRELVM vm, Array value) {
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Called by PushVarR to put an Array reference on the stack
+        ///
+        /// \param vm    Target VM
+        /// \param value Value to push on to the VM's stack
+        ///
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static void push(HSQUIRRELVM vm, const Array& value) {
             HSQOBJECT obj;
             sq_resetobject(&obj);
             obj = value.GetObject();
