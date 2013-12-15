@@ -162,6 +162,42 @@ public:
     //}
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Returns the element at a given index
+    ///
+    /// This function MUST have its Error handled if it occurred
+    ///
+    /// \param index Index of the element
+    ///
+    /// \return The element (or null if failed)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    SharedPtr<T> GetValue(int index)
+    {
+        sq_pushobject(vm, obj);
+        if (index >= sq_getsize(vm, -1)) {
+            Error::Instance().Throw(vm, _SC("index out of bound"));
+            return SharedPtr<T>();
+        }
+        if (index < 0) {
+            Error::Instance().Throw(vm, _SC("illegal index"));
+            return SharedPtr<T>();
+        }
+        sq_pushinteger(vm, index);
+        if (SQ_FAILED(sq_get(vm, -2))) {
+            sq_pop(vm, 1);
+            Error::Instance().Throw(vm, _SC("illegal index"));
+            return SharedPtr<T>();
+        }
+        Var<SharedPtr<T> > element(vm, -1);
+        if (Error::Instance().Occurred(vm)) {
+            return SharedPtr<T>();
+        }
+        sq_pop(vm, 2);
+        return element.value;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Gets a Function from an index in the Array
     ///
     /// \param index The index in the array that contains the Function
@@ -185,6 +221,39 @@ public:
         sq_pop(vm, 2);
 
         return ret;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Fills a C array with the elements of the Array
+    ///
+    /// This function MUST have its Error handled if it occurred
+    ///
+    /// \param array C array to be filled
+    /// \param size  The amount of elements to fill the C array with
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    void GetArray(T* array, int size)
+    {
+        HSQOBJECT value = GetObject();
+        sq_pushobject(vm, value);
+        if (size > sq_getsize(vm, -1)) {
+            sq_pop(vm, 1);
+            Error::Instance().Throw(vm, _SC("array buffer size too big"));
+            return;
+        }
+        sq_pushnull(vm);
+        SQInteger i;
+        while (SQ_SUCCEEDED(sq_next(vm, -2))) {
+            sq_getinteger(vm, -2, &i);
+            if (i >= size) break;
+            Var<const T&> element(vm, -1);
+            if (Error::Instance().Occurred(vm)) {
+                return;
+            }
+            sq_pop(vm, 2);
+            array[i] = element.value;
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -332,75 +401,6 @@ public:
         SQInteger r = sq_getsize(vm, -1);
         sq_pop(vm, 1);
         return r;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Returns the element at a given index
-    ///
-    /// This function MUST have its Error handled if it occurred
-    ///
-    /// \param index Index of the element
-    ///
-    /// \return The element (or null if failed)
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    SharedPtr<T> GetElement(int index)
-    {
-        sq_pushobject(vm, obj);
-        if (index >= sq_getsize(vm, -1)) {
-            Error::Instance().Throw(vm, _SC("index out of bound"));
-            return SharedPtr<T>();
-        }
-        if (index < 0) {
-            Error::Instance().Throw(vm, _SC("illegal index"));
-            return SharedPtr<T>();
-        }
-        sq_pushinteger(vm, index);
-        if (SQ_FAILED(sq_get(vm, -2))) {
-            sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("illegal index"));
-            return SharedPtr<T>();
-        }
-        Var<SharedPtr<T> > element(vm, -1);
-        if (Error::Instance().Occurred(vm)) {
-            return SharedPtr<T>();
-        }
-        sq_pop(vm, 2);
-        return element.value;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Fills a C array with the elements of the Array
-    ///
-    /// This function MUST have its Error handled if it occurred
-    ///
-    /// \param array C array to be filled
-    /// \param size  The amount of elements to fill the C array with
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    void GetArray(T* array, int size)
-    {
-        HSQOBJECT value = GetObject();
-        sq_pushobject(vm, value);
-        if (size > sq_getsize(vm, -1)) {
-            sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("array buffer size too big"));
-            return;
-        }
-        sq_pushnull(vm);
-        SQInteger i;
-        while (SQ_SUCCEEDED(sq_next(vm, -2))) {
-            sq_getinteger(vm, -2, &i);
-            if (i >= size) break;
-            Var<const T&> element(vm, -1);
-            if (Error::Instance().Occurred(vm)) {
-                return;
-            }
-            sq_pop(vm, 2);
-            array[i] = element.value;
-        }
     }
 };
 
