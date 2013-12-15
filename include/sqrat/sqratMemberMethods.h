@@ -34,6 +34,9 @@
 
 namespace Sqrat {
 
+/// @cond DEV
+
+
 //
 // Squirrel Global Functions
 //
@@ -1277,9 +1280,11 @@ public:
     }
 };
 
+
 //
 // reference return specialization
 //
+
 template <class C, class R>
 class SqMember<C, R&> {
     static const SQChar STATICCALLERROR[] ;
@@ -2519,6 +2524,7 @@ public:
     }
 
 };
+
 
 //
 // void return specialization
@@ -4015,6 +4021,7 @@ inline SQInteger sqVarGet(HSQUIRRELVM vm) {
     return 1;
 }
 
+
 //
 // Variable Set
 //
@@ -4072,6 +4079,8 @@ template <class C, class R>
 const SQChar SqMember<C, R>::STATICCALLERROR[] = _SC("this function isn't static");
 template <class C, class R>
 const SQChar SqMember<C, R&>::STATICCALLERROR[] = _SC("this function isn't static");
+
+/// @endcond
 
 }
 
