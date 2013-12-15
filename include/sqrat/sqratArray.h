@@ -168,19 +168,20 @@ public:
     ///
     /// \param index Index of the element
     ///
-    /// \return The element (or null if failed)
+    /// \return SharedPtr containing the element (or null if failed)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
     SharedPtr<T> GetValue(int index)
     {
-        sq_pushobject(vm, obj);
-        if (index >= sq_getsize(vm, -1)) {
-            Error::Instance().Throw(vm, _SC("index out of bound"));
-            return SharedPtr<T>();
-        }
         if (index < 0) {
             Error::Instance().Throw(vm, _SC("illegal index"));
+            return SharedPtr<T>();
+        }
+        sq_pushobject(vm, obj);
+        if (index >= sq_getsize(vm, -1)) {
+            sq_pop(vm, 1);
+            Error::Instance().Throw(vm, _SC("index out of bound"));
             return SharedPtr<T>();
         }
         sq_pushinteger(vm, index);
@@ -210,16 +211,17 @@ public:
         sq_pushobject(vm, GetObject());
         sq_pushinteger(vm, index);
         if(SQ_FAILED(sq_get(vm, -2))) {
+            sq_pop(vm, 1);
             return Function();
         }
         SQObjectType value_type = sq_gettype(vm, -1);
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+            sq_pop(vm, 2);
             return Function();
         }
         sq_getstackobj(vm, -1, &funcObj);
-        Function ret(vm, GetObject(), funcObj);
+        Function ret(vm, GetObject(), funcObj); // must addref before the pop!
         sq_pop(vm, 2);
-
         return ret;
     }
 
@@ -248,12 +250,14 @@ public:
             sq_getinteger(vm, -2, &i);
             if (i >= size) break;
             Var<const T&> element(vm, -1);
+            sq_pop(vm, 2);
             if (Error::Instance().Occurred(vm)) {
+                sq_pop(vm, 2);
                 return;
             }
-            sq_pop(vm, 2);
             array[i] = element.value;
         }
+        sq_pop(vm, 2); // pops the null iterator and the array object
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
