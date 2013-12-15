@@ -333,7 +333,7 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type (not allowed in this allocator)
+    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type (not used in this allocator)
     ///
     /// \param vm    VM that has an instance object of the correct type at idx
     /// \param idx   Index of the stack that the instance object is at
@@ -343,7 +343,7 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger, const void*) {
-        return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" copying is not allowed"))).c_str());
+        return 0;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -635,7 +635,7 @@ public:
     /// @endcond
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type (not allowed in this allocator)
+    /// Called by Sqrat to set up the instance at idx on the stack as a copy of a value of the same type (not used in this allocator)
     ///
     /// \param vm    VM that has an instance object of the correct type at idx
     /// \param idx   Index of the stack that the instance object is at
@@ -645,7 +645,7 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
-        return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" copying is not allowed"))).c_str());
+        return 0;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
