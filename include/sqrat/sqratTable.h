@@ -74,10 +74,11 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Binds a Table or Class to the Table (can be used to facilitate namespaces)
     ///
-    /// NOTE: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs
-    ///
     /// \param name The key in the table being assigned a Table or Class
     /// \param obj  Table or Class that is being placed in the table
+    ///
+    /// \remarks
+    /// Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Bind(const SQChar* name, Object& obj) {
@@ -194,14 +195,15 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Sets a key in the Table to a specific function and allows the key to be overloaded with functions of a different amount of arguments
     ///
-    /// NOTE: Overloading in Sqrat does not work for functions with the same amount of arguments (just like in Squirrel)
-    ///
     /// \param name   The key in the table being assigned a value
     /// \param method Function that is being placed in the Table
     ///
     /// \tparam F Type of function (only define this if you need to choose a certain template specialization or overload)
     ///
     /// \return The Table itself so the call can be chained
+    ///
+    /// \remarks
+    /// Overloading in Sqrat does not work for functions with the same amount of arguments (just like in Squirrel)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<class F>
@@ -213,13 +215,14 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns the value at a given key
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param name Key of the element
     ///
     /// \tparam T Type of value (fails if value is not of this type)
     ///
     /// \return SharedPtr containing the value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -244,13 +247,14 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns the value at a given index
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param index Index of the element
     ///
     /// \tparam T Type of value (fails if value is not of this type)
     ///
     /// \return SharedPtr containing the value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -419,10 +423,11 @@ struct Var<Table> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Attempts to get the value off the stack at idx as a Table
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param vm  Target VM
     /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
@@ -462,10 +467,11 @@ struct Var<Table&> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Attempts to get the value off the stack at idx as a Table
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param vm  Target VM
     /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {

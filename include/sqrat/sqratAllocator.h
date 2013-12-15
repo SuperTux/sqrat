@@ -60,9 +60,10 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// DefaultAllocator is the allocator to use for Class that can both be constructed and copied
 ///
-/// NOTE: There is mechanisms defined in this class that allow the Class::Ctor method to work properly
-///
 /// \tparam C Type of class
+///
+/// \remarks
+/// There is mechanisms defined in this class that allow the Class::Ctor method to work properly
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class C>
@@ -425,9 +426,10 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// NoCopy is the allocator to use for Class that can be constructed but not copied
 ///
-/// NOTE: There is mechanisms defined in this class that allow the Class::Ctor method to work properly
-///
 /// \tparam C Type of class
+///
+/// \remarks
+/// There is mechanisms defined in this class that allow the Class::Ctor method to work properly
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class C>

@@ -170,13 +170,14 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns the element at a given index
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param index Index of the element
     ///
     /// \tparam T Type of element (fails if element is not of this type)
     ///
     /// \return SharedPtr containing the element (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -236,12 +237,13 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Fills a C array with the elements of the Array
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param array C array to be filled
     /// \param size  The amount of elements to fill the C array with
     ///
     /// \tparam T Type of elements (fails if any elements in Array are not of this type)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -477,10 +479,11 @@ struct Var<Array> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Attempts to get the value off the stack at idx as an Array
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param vm  Target VM
     /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
@@ -520,10 +523,11 @@ struct Var<Array&> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Attempts to get the value off the stack at idx as an Array
     ///
-    /// This function MUST have its Error handled if it occurred
-    ///
     /// \param vm  Target VM
     /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
