@@ -112,6 +112,8 @@ public:
     /// \param name The key in the table being assigned a value
     /// \param val  Value that is being placed in the Table
     ///
+    /// \tparam V Type of value (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Table itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,6 +128,8 @@ public:
     ///
     /// \param index The index in the table being assigned a value
     /// \param val   Value that is being placed in the Table
+    ///
+    /// \tparam V Type of value (usually doesnt need to be defined explicitly)
     ///
     /// \return The Table itself so the call can be chained
     ///
@@ -142,6 +146,8 @@ public:
     /// \param name The key in the table being assigned a value
     /// \param val  Pointer to the instance that is being placed in the Table
     ///
+    /// \tparam V Type of instance (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Table itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +163,8 @@ public:
     /// \param index The index in the table being assigned a value
     /// \param val   Pointer to the instance that is being placed in the Table
     ///
+    /// \tparam V Type of instance (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Table itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,6 +179,8 @@ public:
     ///
     /// \param name   The key in the table being assigned a value
     /// \param method Function that is being placed in the Table
+    ///
+    /// \tparam F Type of function (only define this if you need to choose a certain template specialization or overload)
     ///
     /// \return The Table itself so the call can be chained
     ///
@@ -189,6 +199,8 @@ public:
     /// \param name   The key in the table being assigned a value
     /// \param method Function that is being placed in the Table
     ///
+    /// \tparam F Type of function (only define this if you need to choose a certain template specialization or overload)
+    ///
     /// \return The Table itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -204,6 +216,8 @@ public:
     /// This function MUST have its Error handled if it occurred
     ///
     /// \param name Key of the element
+    ///
+    /// \tparam T Type of value (fails if value is not of this type)
     ///
     /// \return SharedPtr containing the value (or null if failed)
     ///
@@ -233,6 +247,8 @@ public:
     /// This function MUST have its Error handled if it occurred
     ///
     /// \param index Index of the element
+    ///
+    /// \tparam T Type of value (fails if value is not of this type)
     ///
     /// \return SharedPtr containing the value (or null if failed)
     ///

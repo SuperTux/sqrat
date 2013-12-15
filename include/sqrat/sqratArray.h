@@ -112,6 +112,8 @@ public:
     /// \param index The index in the array being assigned a value
     /// \param val   Value that is being placed in the Array
     ///
+    /// \tparam V Type of value (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Array itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +133,8 @@ public:
     /// \param index The index in the array being assigned a value
     /// \param val   Pointer to the instance that is being placed in the Array
     ///
+    /// \tparam V Type of instance (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Array itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +149,8 @@ public:
     ///
     /// \param index  The index in the array being assigned a value
     /// \param method Function that is being placed in the Array
+    ///
+    /// \tparam F Type of function (only define this if you need to choose a certain template specialization or overload)
     ///
     /// \return The Array itself so the call can be chained
     ///
@@ -167,6 +173,8 @@ public:
     /// This function MUST have its Error handled if it occurred
     ///
     /// \param index Index of the element
+    ///
+    /// \tparam T Type of element (fails if element is not of this type)
     ///
     /// \return SharedPtr containing the element (or null if failed)
     ///
@@ -233,6 +241,8 @@ public:
     /// \param array C array to be filled
     /// \param size  The amount of elements to fill the C array with
     ///
+    /// \tparam T Type of elements (fails if any elements in Array are not of this type)
+    ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
     void GetArray(T* array, int size)
@@ -265,6 +275,8 @@ public:
     ///
     /// \param val Value that is being placed in the Array
     ///
+    /// \tparam V Type of value (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Array itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,6 +293,8 @@ public:
     /// Appends an instance to the end of the Array (like a reference)
     ///
     /// \param val Pointer to the instance that is being placed in the Array
+    ///
+    /// \tparam V Type of instance (usually doesnt need to be defined explicitly)
     ///
     /// \return The Array itself so the call can be chained
     ///
@@ -300,6 +314,8 @@ public:
     /// \param destpos Index to put the new value in
     /// \param val     Value that is being placed in the Array
     ///
+    /// \tparam V Type of value (usually doesnt need to be defined explicitly)
+    ///
     /// \return The Array itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,6 +333,8 @@ public:
     ///
     /// \param destpos Index to put the new value in
     /// \param val     Pointer to the instance that is being placed in the Array
+    ///
+    /// \tparam V Type of instance (usually doesnt need to be defined explicitly)
     ///
     /// \return The Array itself so the call can be chained
     ///
