@@ -28,6 +28,12 @@
 #if !defined(_SCRAT_SCRIPT_H_)
 #define _SCRAT_SCRIPT_H_
 
+#if defined(_RELEASE)
+	#if !defined(SCRAT_RELEASE)
+		#define SCRAT_RELEASE
+	#endif
+#endif
+
 #include <squirrel.h>
 #include <sqstdio.h>
 #include <string.h>
@@ -46,10 +52,15 @@ public:
             sq_release(vm, &obj);
             sq_resetobject(&obj);
         }
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
             Error::Instance().Throw(vm, LastErrorString(vm));
             return;
         }
+#else
+		sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
+#endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
         sq_pop(vm, 1);
@@ -60,10 +71,15 @@ public:
             sq_release(vm, &obj);
             sq_resetobject(&obj);
         }
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
             errMsg = LastErrorString(vm);
             return false;
         }
+#else
+		sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
+#endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
         sq_pop(vm, 1);
@@ -75,10 +91,15 @@ public:
             sq_release(vm, &obj);
             sq_resetobject(&obj);
         }
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
             Error::Instance().Throw(vm, LastErrorString(vm));
             return;
         }
+#else
+		sqstd_loadfile(vm, path.c_str(), true);
+#endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
         sq_pop(vm, 1);
@@ -89,10 +110,15 @@ public:
             sq_release(vm, &obj);
             sq_resetobject(&obj);
         }
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
             errMsg = LastErrorString(vm);
             return false;
         }
+#else
+		sqstd_loadfile(vm, path.c_str(), true);
+#endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
         sq_pop(vm, 1);
@@ -100,6 +126,8 @@ public:
     }
 
     void Run() {
+
+#if !defined (SCRAT_RELEASE)
         if(!sq_isnull(obj)) {
             SQRESULT result;
             sq_pushobject(vm, obj);
@@ -111,9 +139,17 @@ public:
                 return;
             }
         }
-    }
+#else
+		sq_pushobject(vm, obj);
+		sq_pushroottable(vm);
+		sq_call(vm, 1, false, true);
+		sq_pop(vm, 1);
+#endif
+	}
 
     bool Run(string& errMsg) {
+
+#if !defined (SCRAT_RELEASE)
         if(!sq_isnull(obj)) {
             SQRESULT result;
             sq_pushobject(vm, obj);
@@ -125,16 +161,28 @@ public:
                 return false;
             }
         }
+#else
+		sq_pushobject(vm, obj);
+		sq_pushroottable(vm);
+		sq_call(vm, 1, false, true);
+		sq_pop(vm, 1);
+#endif
         return true;
     }
 
 
     void WriteCompiledFile(const string& path) {
+
+#if !defined (SCRAT_RELEASE)
         if(!sq_isnull(obj)) {
             sq_pushobject(vm, obj);
             sqstd_writeclosuretofile(vm, path.c_str());
             //sq_pop(vm, 1);  // needed?
         }
+#else
+		 sq_pushobject(vm, obj);
+         sqstd_writeclosuretofile(vm, path.c_str());
+#endif
     }
 };
 }

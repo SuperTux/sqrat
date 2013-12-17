@@ -28,6 +28,12 @@
 #if !defined(_SCRAT_OBJECT_H_)
 #define _SCRAT_OBJECT_H_
 
+#if defined(_RELEASE)
+	#if !defined(SCRAT_RELEASE)
+		#define SCRAT_RELEASE
+	#endif
+#endif
+
 #include <squirrel.h>
 #include <string.h>
 
@@ -132,6 +138,8 @@ public:
         HSQOBJECT slotObj;
         sq_pushobject(vm, GetObject());
         sq_pushstring(vm, slot, -1);
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             return Object(vm); // Return a NULL object
@@ -141,6 +149,14 @@ public:
             sq_pop(vm, 2);
             return ret;
         }
+#else
+		sq_get(vm, -2);
+		sq_getstackobj(vm, -1, &slotObj);
+		Object ret(slotObj, vm); // must addref before the pop!
+		sq_pop(vm, 2);
+		return ret;
+#endif
+
     }
 
     template <class T>
@@ -155,6 +171,8 @@ public:
         HSQOBJECT slotObj;
         sq_pushobject(vm, GetObject());
         sq_pushinteger(vm, index);
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             return Object(vm); // Return a NULL object
@@ -164,6 +182,13 @@ public:
             sq_pop(vm, 2);
             return ret;
         }
+#else
+		sq_get(vm, -2);
+		sq_getstackobj(vm, -1, &slotObj);
+		Object ret(slotObj, vm); // must addref before the pop!
+		sq_pop(vm, 2);
+		return ret;
+#endif
     }
 
     template <class T>

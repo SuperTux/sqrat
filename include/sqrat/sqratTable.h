@@ -28,6 +28,12 @@
 #if !defined(_SCRAT_TABLE_H_)
 #define _SCRAT_TABLE_H_
 
+#if defined(_RELEASE)
+	#if !defined(SCRAT_RELEASE)
+		#define SCRAT_RELEASE
+	#endif
+#endif
+
 #include <squirrel.h>
 #include <string.h>
 
@@ -114,16 +120,25 @@ public:
     {   
         sq_pushobject(vm, obj);
         sq_pushstring(vm, name, -1);
+
+#if !defined (SCRAT_RELEASE)
         if (SQ_FAILED(sq_get(vm, -2)))
         {
             sq_pop(vm, 1);
             return sq_throwerror(vm, _SC("illegal index"));
         }
+#else
+		sq_get(vm, -2);
+#endif
 
         Var<T> entry(vm, -1);
+
+#if !defined (SCRAT_RELEASE)
         if (Sqrat::Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
         }
+#endif
+
         sq_pop(vm, 2);
         out_entry = entry.value;
         return 1;
@@ -134,16 +149,25 @@ public:
     {   
         sq_pushobject(vm, obj);
         sq_pushinteger(vm, index);
+
+#if !defined (SCRAT_RELEASE)
         if (SQ_FAILED(sq_get(vm, -2)))
         {
             sq_pop(vm, 1);
             return sq_throwerror(vm, _SC("illegal index"));
         }
+#else
+		sq_get(vm, -2);
+#endif
 
         Var<T> entry(vm, -1);
+
+#if !defined (SCRAT_RELEASE)
         if (Sqrat::Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
         }
+#endif
+
         sq_pop(vm, 2);
         out_entry = entry.value;
         return 1;
@@ -158,9 +182,15 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, GetObject());
         sq_pushstring(vm, name, -1);
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pushnull(vm);
         }
+#else
+		sq_get(vm, -2);
+#endif
+
         sq_getstackobj(vm, -1, &funcObj);
         Function ret(vm, GetObject(), funcObj); // must addref before the pop!
 
@@ -172,9 +202,14 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, GetObject());
         sq_pushinteger(vm, index);
+
+#if !defined (SCRAT_RELEASE)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pushnull(vm);
         }
+#else
+		sq_get(vm, -2);
+#endif
         sq_getstackobj(vm, -1, &funcObj);
         Function ret(vm, GetObject(), funcObj);
         sq_pop(vm, 2);
@@ -231,9 +266,13 @@ struct Var<Table> {
         sq_getstackobj(vm,idx,&obj);
         value = Table(obj, vm);
         SQObjectType value_type = sq_gettype(vm, idx);
+
+#if !defined (SCRAT_RELEASE)
         if (value_type != OT_TABLE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }
+#endif
+
     }
     static void push(HSQUIRRELVM vm, Table value) {
         HSQOBJECT obj;
@@ -252,9 +291,13 @@ struct Var<Table&> {
         sq_getstackobj(vm,idx,&obj);
         value = Table(obj, vm);
         SQObjectType value_type = sq_gettype(vm, idx);
+
+#if !defined (SCRAT_RELEASE)
         if (value_type != OT_TABLE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }
+#endif
+
     }
     static void push(HSQUIRRELVM vm, Table value) {
         HSQOBJECT obj;

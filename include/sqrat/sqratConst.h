@@ -28,6 +28,12 @@
 #if !defined(_SCRAT_CONST_H_)
 #define _SCRAT_CONST_H_
 
+#if defined(_RELEASE)
+	#if !defined(SCRAT_RELEASE)
+		#define SCRAT_RELEASE
+	#endif
+#endif
+
 #include <squirrel.h>
 #include <string.h>
 
