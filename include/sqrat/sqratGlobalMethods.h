@@ -46,9 +46,13 @@ public:
     // Arg Count 0
     template <bool overloaded  /* = false */ >
     static SQInteger Func0(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)();
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -62,20 +66,27 @@ public:
     // Arg Count 1
     template <class A1, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func1(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 1) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
         R ret = (*method)(
                     a1.value
                 );
@@ -87,21 +98,29 @@ public:
     // Arg Count 2
     template <class A1, class A2, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func2(HSQUIRRELVM vm) {
-        if (!overloaded && sq_gettop(vm) != startIdx + 2) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+		if (!overloaded && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value
@@ -114,9 +133,13 @@ public:
     // Arg Count 3
     template <class A1, class A2, class A3, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func3(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 3) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -124,12 +147,16 @@ public:
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -143,9 +170,13 @@ public:
     // Arg Count 4
     template <class A1, class A2, class A3, class A4, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func4(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 4) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -154,12 +185,16 @@ public:
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -174,9 +209,12 @@ public:
     // Arg Count 5
     template <class A1, class A2, class A3, class A4, class A5, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func5(HSQUIRRELVM vm) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -186,12 +224,16 @@ public:
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -207,9 +249,12 @@ public:
     // Arg Count 6
     template <class A1, class A2, class A3, class A4, class A5, class A6, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func6(HSQUIRRELVM vm) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -220,12 +265,16 @@ public:
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -242,9 +291,12 @@ public:
     // Arg Count 7
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func7(HSQUIRRELVM vm) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+		
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -256,12 +308,16 @@ public:
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -279,9 +335,13 @@ public:
     // Arg Count 8
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func8(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 8) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -294,12 +354,16 @@ public:
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -318,9 +382,13 @@ public:
     // Arg Count 9
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func9(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 9) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -334,12 +402,16 @@ public:
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -359,9 +431,13 @@ public:
     // Arg Count 10
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func10(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -376,12 +452,16 @@ public:
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -402,9 +482,13 @@ public:
     // Arg Count 11
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func11(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 11) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -420,12 +504,16 @@ public:
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -447,9 +535,13 @@ public:
     // Arg Count 12
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func12(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 12) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -466,12 +558,16 @@ public:
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -494,9 +590,13 @@ public:
     // Arg Count 13
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func13(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -514,12 +614,16 @@ public:
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -543,9 +647,13 @@ public:
     // Arg Count 14
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func14(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 14) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -564,12 +672,16 @@ public:
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
         Var<A14> a14(vm, startIdx + 13);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R ret = (*method)(
                     a1.value,
                     a2.value,
@@ -602,9 +714,13 @@ public:
     // Arg Count 0
     template <bool overloaded  /* = false */ >
     static SQInteger Func0(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)();
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -618,20 +734,28 @@ public:
     // Arg Count 1
     template <class A1, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func1(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 1) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value
                 );
@@ -643,21 +767,28 @@ public:
     // Arg Count 2
     template <class A1, class A2, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func2(HSQUIRRELVM vm) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value
@@ -670,9 +801,13 @@ public:
     // Arg Count 3
     template <class A1, class A2, class A3, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func3(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 3) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -680,12 +815,16 @@ public:
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -699,9 +838,13 @@ public:
     // Arg Count 4
     template <class A1, class A2, class A3, class A4, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func4(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 4) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -710,12 +853,16 @@ public:
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -730,9 +877,13 @@ public:
     // Arg Count 5
     template <class A1, class A2, class A3, class A4, class A5, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func5(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -742,12 +893,16 @@ public:
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -763,9 +918,13 @@ public:
     // Arg Count 6
     template <class A1, class A2, class A3, class A4, class A5, class A6, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func6(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -776,12 +935,16 @@ public:
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -798,9 +961,13 @@ public:
     // Arg Count 7
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func7(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -812,12 +979,16 @@ public:
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -835,9 +1006,13 @@ public:
     // Arg Count 8
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func8(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 8) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -850,12 +1025,16 @@ public:
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -874,9 +1053,13 @@ public:
     // Arg Count 9
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func9(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 9) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -890,12 +1073,16 @@ public:
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+		
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -915,9 +1102,13 @@ public:
     // Arg Count 10
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func10(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -932,12 +1123,16 @@ public:
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -958,9 +1153,13 @@ public:
     // Arg Count 11
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func11(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 11) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -976,12 +1175,16 @@ public:
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -1003,9 +1206,13 @@ public:
     // Arg Count 12
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func12(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 12) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1022,12 +1229,16 @@ public:
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -1050,9 +1261,13 @@ public:
     // Arg Count 13
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func13(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1070,12 +1285,16 @@ public:
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+		
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -1099,9 +1318,13 @@ public:
     // Arg Count 14
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func14(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 14) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef R & (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1120,12 +1343,16 @@ public:
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
         Var<A14> a14(vm, startIdx + 13);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -1158,9 +1385,13 @@ public:
     // Arg Count 0
     template <bool overloaded  /* = false */>
     static SQInteger Func0(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)();
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1171,20 +1402,28 @@ public:
     // Arg Count 1
     template <class A1, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func1(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 1) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value
         );
@@ -1194,21 +1433,29 @@ public:
     // Arg Count 2
     template <class A1, class A2, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func2(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value
@@ -1219,9 +1466,13 @@ public:
     // Arg Count 3
     template <class A1, class A2, class A3, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func3(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 3) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1229,12 +1480,16 @@ public:
         Var<A1> a1(vm, startIdx);
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1246,9 +1501,13 @@ public:
     // Arg Count 4
     template <class A1, class A2, class A3, class A4, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func4(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 4) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1257,12 +1516,16 @@ public:
         Var<A2> a2(vm, startIdx + 1);
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1275,9 +1538,13 @@ public:
     // Arg Count 5
     template <class A1, class A2, class A3, class A4, class A5, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func5(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1287,12 +1554,16 @@ public:
         Var<A3> a3(vm, startIdx + 2);
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1306,9 +1577,13 @@ public:
     // Arg Count 6
     template <class A1, class A2, class A3, class A4, class A5, class A6, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func6(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1319,12 +1594,16 @@ public:
         Var<A4> a4(vm, startIdx + 3);
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1339,9 +1618,13 @@ public:
     // Arg Count 7
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func7(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1353,12 +1636,16 @@ public:
         Var<A5> a5(vm, startIdx + 4);
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1374,9 +1661,13 @@ public:
     // Arg Count 8
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func8(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 8) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1389,12 +1680,16 @@ public:
         Var<A6> a6(vm, startIdx + 5);
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1411,9 +1706,13 @@ public:
     // Arg Count 9
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func9(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 9) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1427,12 +1726,16 @@ public:
         Var<A7> a7(vm, startIdx + 6);
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1450,9 +1753,13 @@ public:
     // Arg Count 10
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func10(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1467,12 +1774,16 @@ public:
         Var<A8> a8(vm, startIdx + 7);
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1491,9 +1802,13 @@ public:
     // Arg Count 11
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func11(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 11) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1509,12 +1824,16 @@ public:
         Var<A9> a9(vm, startIdx + 8);
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1534,9 +1853,13 @@ public:
     // Arg Count 12
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func12(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 12) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1553,12 +1876,16 @@ public:
         Var<A10> a10(vm, startIdx + 9);
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1579,9 +1906,13 @@ public:
     // Arg Count 13
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func13(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1599,12 +1930,16 @@ public:
         Var<A11> a11(vm, startIdx + 10);
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,
@@ -1626,9 +1961,13 @@ public:
     // Arg Count 14
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func14(HSQUIRRELVM vm) {
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 14) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#endif
+
         typedef void (*M)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -1647,12 +1986,16 @@ public:
         Var<A12> a12(vm, startIdx + 11);
         Var<A13> a13(vm, startIdx + 12);
         Var<A14> a14(vm, startIdx + 13);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         (*method)(
             a1.value,
             a2.value,

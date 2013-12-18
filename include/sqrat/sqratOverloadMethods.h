@@ -75,9 +75,14 @@ public:
         string overloadName = SqOverloadName::Get(funcName, argCount);
 
         sq_pushstring(vm, overloadName.c_str(), -1);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#else
+		sq_get(vm, 1);
+#endif
 
         // Push the args again
         for(int i = 1; i <= argCount + 1; ++i) {
@@ -85,9 +90,12 @@ public:
         }
 
         sq_call(vm, argCount + 1, true, ErrorHandling::IsEnabled());
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
 
         return 1;
     }
@@ -112,9 +120,14 @@ public:
         string overloadName = SqOverloadName::Get(funcName, argCount);
 
         sq_pushstring(vm, overloadName.c_str(), -1);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
+#else
+		sq_get(vm, 1);
+#endif
 
         // Push the args again
         for(int i = 1; i <= argCount + 1; ++i) {
@@ -122,9 +135,12 @@ public:
         }
 
         sq_call(vm, argCount + 1, false, ErrorHandling::IsEnabled());
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
 
         return 0;
     }

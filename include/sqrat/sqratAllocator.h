@@ -124,9 +124,13 @@ public:
     template <typename A1>
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value
             ));
@@ -135,9 +139,13 @@ public:
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value
@@ -160,9 +168,13 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -177,9 +189,13 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -196,9 +212,13 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -217,9 +237,13 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -240,9 +264,13 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+		
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -265,9 +293,13 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -490,9 +522,13 @@ public:
     template <typename A1>
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value
             ));
@@ -501,9 +537,13 @@ public:
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value
@@ -514,6 +554,13 @@ public:
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -526,9 +573,13 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
+		
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -543,9 +594,13 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -562,9 +617,13 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -583,9 +642,13 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -606,9 +669,13 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -631,9 +698,13 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
+#endif
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,

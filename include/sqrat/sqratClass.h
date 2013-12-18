@@ -320,9 +320,15 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, ClassType<C>::ClassObject(vm));
         sq_pushstring(vm, name, -1);
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pushnull(vm);
         }
+#else
+		sq_get(vm, -2);
+#endif
+
         sq_getstackobj(vm, -1, &funcObj);
         sq_pop(vm, 2);
 

@@ -230,16 +230,22 @@ public:
     {
         sq_pushobject(vm, obj);
         sq_pushstring(vm, name, -1);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
+#else
+        sq_get(vm, -2);
+#endif
         Var<SharedPtr<T> > entry(vm, -1);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
+#endif
         sq_pop(vm, 2);
         return entry.value;
     }
@@ -262,16 +268,22 @@ public:
     {
         sq_pushobject(vm, obj);
         sq_pushinteger(vm, index);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
+#else
+        sq_get(vm, -2);
+#endif
         Var<SharedPtr<T> > entry(vm, -1);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
+#endif
         sq_pop(vm, 2);
         return entry.value;
     }
@@ -288,6 +300,7 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, GetObject());
         sq_pushstring(vm, name, -1);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             return Function();
@@ -297,6 +310,9 @@ public:
             sq_pop(vm, 2);
             return Function();
         }
+#else
+        sq_get(vm, -2);
+#endif
         sq_getstackobj(vm, -1, &funcObj);
         Function ret(vm, GetObject(), funcObj); // must addref before the pop!
         sq_pop(vm, 2);
@@ -315,6 +331,7 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, GetObject());
         sq_pushinteger(vm, index);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             return Function();
@@ -324,6 +341,9 @@ public:
             sq_pop(vm, 2);
             return Function();
         }
+#else
+        sq_get(vm, -2);
+#endif
         sq_getstackobj(vm, -1, &funcObj);
         Function ret(vm, GetObject(), funcObj); // must addref before the pop!
         sq_pop(vm, 2);
@@ -435,10 +455,12 @@ struct Var<Table> {
         sq_resetobject(&obj);
         sq_getstackobj(vm,idx,&obj);
         value = Table(obj, vm);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_TABLE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }
+#endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -479,10 +501,12 @@ struct Var<Table&> {
         sq_resetobject(&obj);
         sq_getstackobj(vm,idx,&obj);
         value = Table(obj, vm);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_TABLE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }
+#endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
