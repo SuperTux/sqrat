@@ -28,12 +28,6 @@
 #if !defined(_SCRAT_TABLE_H_)
 #define _SCRAT_TABLE_H_
 
-#if defined(_RELEASE)
-	#if !defined(SCRAT_RELEASE)
-		#define SCRAT_RELEASE
-	#endif
-#endif
-
 #include <squirrel.h>
 #include <string.h>
 
@@ -121,7 +115,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushstring(vm, name, -1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2)))
         {
             sq_pop(vm, 1);
@@ -133,7 +127,7 @@ public:
 
         Var<T> entry(vm, -1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Sqrat::Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
         }
@@ -150,7 +144,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushinteger(vm, index);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2)))
         {
             sq_pop(vm, 1);
@@ -162,7 +156,7 @@ public:
 
         Var<T> entry(vm, -1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Sqrat::Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
         }
@@ -183,7 +177,7 @@ public:
         sq_pushobject(vm, GetObject());
         sq_pushstring(vm, name, -1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pushnull(vm);
         }
@@ -203,7 +197,7 @@ public:
         sq_pushobject(vm, GetObject());
         sq_pushinteger(vm, index);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pushnull(vm);
         }
@@ -267,7 +261,7 @@ struct Var<Table> {
         value = Table(obj, vm);
         SQObjectType value_type = sq_gettype(vm, idx);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (value_type != OT_TABLE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }
@@ -292,7 +286,7 @@ struct Var<Table&> {
         value = Table(obj, vm);
         SQObjectType value_type = sq_gettype(vm, idx);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (value_type != OT_TABLE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }

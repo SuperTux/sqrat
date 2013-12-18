@@ -29,12 +29,6 @@
 #if !defined(_SCRAT_SQFUNC_H_)
 #define _SCRAT_SQFUNC_H_
 
-#if defined(_RELEASE)
-	#if !defined(SCRAT_RELEASE)
-		#define SCRAT_RELEASE
-	#endif
-#endif
-
 #include <squirrel.h>
 #include "sqratObject.h"
 
@@ -116,7 +110,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
 
@@ -151,7 +145,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
 
@@ -165,7 +159,7 @@ public:
 
         PushVar(vm, a1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 2, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -190,7 +184,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
 		
@@ -205,7 +199,7 @@ public:
         PushVar(vm, a1);
         PushVar(vm, a2);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 3, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -230,7 +224,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
@@ -245,7 +239,7 @@ public:
         PushVar(vm, a2);
         PushVar(vm, a3);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 4, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -269,7 +263,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
@@ -285,7 +279,7 @@ public:
         PushVar(vm, a3);
         PushVar(vm, a4);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 5, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -310,7 +304,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
@@ -327,7 +321,7 @@ public:
         PushVar(vm, a4);
         PushVar(vm, a5);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 6, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -351,7 +345,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
 
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
@@ -370,7 +364,7 @@ public:
         PushVar(vm, a5);
         PushVar(vm, a6);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 7, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -394,7 +388,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
@@ -413,7 +407,7 @@ public:
         PushVar(vm, a6);
         PushVar(vm, a7);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 8, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -437,7 +431,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
@@ -457,7 +451,7 @@ public:
         PushVar(vm, a7);
         PushVar(vm, a8);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 9, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -481,7 +475,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
@@ -502,7 +496,7 @@ public:
         PushVar(vm, a8);
         PushVar(vm, a9);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 10, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -526,7 +520,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
@@ -548,7 +542,7 @@ public:
         PushVar(vm, a9);
         PushVar(vm, a10);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 11, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -572,7 +566,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
@@ -595,7 +589,7 @@ public:
         PushVar(vm, a10);
         PushVar(vm, a11);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 12, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -619,7 +613,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
@@ -643,7 +637,7 @@ public:
         PushVar(vm, a11);
         PushVar(vm, a12);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 13, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -667,7 +661,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
@@ -692,7 +686,7 @@ public:
         PushVar(vm, a12);
         PushVar(vm, a13);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 14, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -716,7 +710,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
@@ -742,7 +736,7 @@ public:
         PushVar(vm, a13);
         PushVar(vm, a14);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 15, true, ErrorHandling::IsEnabled());
 
         //handle an error: only pop a single element and throw the exception
@@ -769,7 +763,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
@@ -798,7 +792,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
@@ -810,7 +804,7 @@ public:
 
         PushVar(vm, a1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 2, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -831,7 +825,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
@@ -844,7 +838,7 @@ public:
         PushVar(vm, a1);
         PushVar(vm, a2);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 3, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -864,7 +858,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
@@ -878,7 +872,7 @@ public:
         PushVar(vm, a2);
         PushVar(vm, a3);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 4, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -899,7 +893,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
@@ -914,7 +908,7 @@ public:
         PushVar(vm, a3);
         PushVar(vm, a4);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 5, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -935,7 +929,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
@@ -951,7 +945,7 @@ public:
         PushVar(vm, a4);
         PushVar(vm, a5);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 6, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -971,7 +965,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
@@ -988,7 +982,7 @@ public:
         PushVar(vm, a5);
         PushVar(vm, a6);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 7, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1008,7 +1002,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
@@ -1026,7 +1020,7 @@ public:
         PushVar(vm, a6);
         PushVar(vm, a7);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 8, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1046,7 +1040,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
@@ -1065,7 +1059,7 @@ public:
         PushVar(vm, a7);
         PushVar(vm, a8);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 9, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1085,7 +1079,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
@@ -1105,7 +1099,7 @@ public:
         PushVar(vm, a8);
         PushVar(vm, a9);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 10, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1126,7 +1120,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
@@ -1147,7 +1141,7 @@ public:
         PushVar(vm, a9);
         PushVar(vm, a10);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 11, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1167,7 +1161,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
@@ -1189,7 +1183,7 @@ public:
         PushVar(vm, a10);
         PushVar(vm, a11);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 12, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1210,7 +1204,7 @@ public:
         sq_pushobject(vm, env);
 
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
@@ -1233,7 +1227,7 @@ public:
         PushVar(vm, a11);
         PushVar(vm, a12);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 13, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1254,7 +1248,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
@@ -1278,7 +1272,7 @@ public:
         PushVar(vm, a12);
         PushVar(vm, a13);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 14, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1298,7 +1292,7 @@ public:
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
@@ -1323,7 +1317,7 @@ public:
         PushVar(vm, a13);
         PushVar(vm, a14);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 15, false, ErrorHandling::IsEnabled());
         sq_pop(vm, 1);
 
@@ -1433,7 +1427,7 @@ struct Var<Function> {
         value = Function(vm, sqEnv, sqValue);
         SQObjectType value_type = sq_gettype(vm, idx);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
         }

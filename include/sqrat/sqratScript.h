@@ -28,12 +28,6 @@
 #if !defined(_SCRAT_SCRIPT_H_)
 #define _SCRAT_SCRIPT_H_
 
-#if defined(_RELEASE)
-	#if !defined(SCRAT_RELEASE)
-		#define SCRAT_RELEASE
-	#endif
-#endif
-
 #include <squirrel.h>
 #include <sqstdio.h>
 #include <string.h>
@@ -53,7 +47,7 @@ public:
             sq_resetobject(&obj);
         }
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
             Error::Instance().Throw(vm, LastErrorString(vm));
             return;
@@ -72,7 +66,7 @@ public:
             sq_resetobject(&obj);
         }
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
             errMsg = LastErrorString(vm);
             return false;
@@ -92,7 +86,7 @@ public:
             sq_resetobject(&obj);
         }
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
             Error::Instance().Throw(vm, LastErrorString(vm));
             return;
@@ -111,7 +105,7 @@ public:
             sq_resetobject(&obj);
         }
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
             errMsg = LastErrorString(vm);
             return false;
@@ -127,7 +121,7 @@ public:
 
     void Run() {
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             SQRESULT result;
             sq_pushobject(vm, obj);
@@ -149,7 +143,7 @@ public:
 
     bool Run(string& errMsg) {
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             SQRESULT result;
             sq_pushobject(vm, obj);
@@ -173,7 +167,7 @@ public:
 
     void WriteCompiledFile(const string& path) {
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             sq_pushobject(vm, obj);
             sqstd_writeclosuretofile(vm, path.c_str());

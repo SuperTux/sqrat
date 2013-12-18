@@ -29,12 +29,6 @@
 #if !defined(_SCRAT_CLASS_H_)
 #define _SCRAT_CLASS_H_
 
-#if defined(_RELEASE)
-	#if !defined(SCRAT_RELEASE)
-		#define SCRAT_RELEASE
-	#endif
-#endif
-
 #include <typeinfo>
 #include <squirrel.h>
 #include <string.h>
@@ -327,7 +321,7 @@ public:
         sq_pushobject(vm, ClassType<C>::ClassObject(vm));
         sq_pushstring(vm, name, -1);
 
-#if !defined (SCRAT_RELEASE)
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pushnull(vm);
         }
