@@ -183,26 +183,24 @@ public:
     template <typename T>
     SharedPtr<T> GetValue(int index)
     {
-        if (index < 0) {
-            Error::Instance().Throw(vm, _SC("illegal index"));
-            return SharedPtr<T>();
-        }
         sq_pushobject(vm, obj);
-        if (index >= sq_getsize(vm, -1)) {
-            sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("index out of bound"));
-            return SharedPtr<T>();
-        }
         sq_pushinteger(vm, index);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
+#else
+        sq_get(vm, -2);
+#endif
         Var<SharedPtr<T> > element(vm, -1);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
+            sq_pop(vm, 2);
             return SharedPtr<T>();
         }
+#endif
         sq_pop(vm, 2);
         return element.value;
     }
@@ -219,6 +217,7 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, GetObject());
         sq_pushinteger(vm, index);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
             return Function();
@@ -228,6 +227,9 @@ public:
             sq_pop(vm, 2);
             return Function();
         }
+#else
+        sq_get(vm, -2);
+#endif
         sq_getstackobj(vm, -1, &funcObj);
         Function ret(vm, GetObject(), funcObj); // must addref before the pop!
         sq_pop(vm, 2);
@@ -251,11 +253,13 @@ public:
     {
         HSQOBJECT value = GetObject();
         sq_pushobject(vm, value);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (size > sq_getsize(vm, -1)) {
             sq_pop(vm, 1);
             Error::Instance().Throw(vm, _SC("array buffer size too big"));
             return;
         }
+#endif
         sq_pushnull(vm);
         SQInteger i;
         while (SQ_SUCCEEDED(sq_next(vm, -2))) {
@@ -263,10 +267,12 @@ public:
             if (i >= size) break;
             Var<const T&> element(vm, -1);
             sq_pop(vm, 2);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
             if (Error::Instance().Occurred(vm)) {
                 sq_pop(vm, 2);
                 return;
             }
+#endif
             array[i] = element.value;
         }
         sq_pop(vm, 2); // pops the null iterator and the array object
@@ -435,13 +441,20 @@ class Array : public ArrayBase {
 public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Default constructor (null)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Array() {
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Constructs an Array
     ///
     /// \param v    VM to create the Array in
     /// \param size An optional size hint
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Array(HSQUIRRELVM v = DefaultVM::Get(), const SQInteger size = 0) : ArrayBase(v) {
+    Array(HSQUIRRELVM v, const SQInteger size = 0) : ArrayBase(v) {
         sq_newarray(vm, size);
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -491,10 +504,12 @@ struct Var<Array> {
         sq_resetobject(&obj);
         sq_getstackobj(vm,idx,&obj);
         value = Array(obj, vm);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_ARRAY) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
         }
+#endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -535,10 +550,12 @@ struct Var<Array&> {
         sq_resetobject(&obj);
         sq_getstackobj(vm,idx,&obj);
         value = Array(obj, vm);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_ARRAY) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
         }
+#endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
