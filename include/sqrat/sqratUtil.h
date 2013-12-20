@@ -76,6 +76,7 @@ public:
     }
 };
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
 class Error {
 public:
     static Error& Instance() {
@@ -122,6 +123,7 @@ private:
 
     std::map< HSQUIRRELVM, string > errMap;
 };
+#endif
 
 class ErrorHandling {
 private:

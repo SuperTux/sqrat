@@ -270,7 +270,7 @@ public:
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
 #endif
-		
+
         return setInstance(vm, new C(
             a1.value,
             a2.value,
@@ -368,7 +368,9 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger New(HSQUIRRELVM vm) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
+#endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -418,7 +420,9 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger New(HSQUIRRELVM vm) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
+#endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -573,7 +577,7 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-		
+
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (Error::Instance().Occurred(vm)) {
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());

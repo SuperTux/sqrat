@@ -53,7 +53,7 @@ public:
             return;
         }
 #else
-		sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
+        sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
 #endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -72,7 +72,7 @@ public:
             return false;
         }
 #else
-		sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
+        sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
 #endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -92,7 +92,7 @@ public:
             return;
         }
 #else
-		sqstd_loadfile(vm, path.c_str(), true);
+        sqstd_loadfile(vm, path.c_str(), true);
 #endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -111,7 +111,7 @@ public:
             return false;
         }
 #else
-		sqstd_loadfile(vm, path.c_str(), true);
+        sqstd_loadfile(vm, path.c_str(), true);
 #endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -120,7 +120,6 @@ public:
     }
 
     void Run() {
-
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             SQRESULT result;
@@ -134,16 +133,15 @@ public:
             }
         }
 #else
-		sq_pushobject(vm, obj);
-		sq_pushroottable(vm);
-		sq_call(vm, 1, false, true);
-		sq_pop(vm, 1);
+        sq_pushobject(vm, obj);
+        sq_pushroottable(vm);
+        sq_call(vm, 1, false, true);
+        sq_pop(vm, 1);
 #endif
-	}
-
-    bool Run(string& errMsg) {
+    }
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
+    bool Run(string& errMsg) {
         if(!sq_isnull(obj)) {
             SQRESULT result;
             sq_pushobject(vm, obj);
@@ -155,18 +153,10 @@ public:
                 return false;
             }
         }
-#else
-		sq_pushobject(vm, obj);
-		sq_pushroottable(vm);
-		sq_call(vm, 1, false, true);
-		sq_pop(vm, 1);
-#endif
-        return true;
     }
-
+#endif
 
     void WriteCompiledFile(const string& path) {
-
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             sq_pushobject(vm, obj);
@@ -174,11 +164,12 @@ public:
             //sq_pop(vm, 1);  // needed?
         }
 #else
-		 sq_pushobject(vm, obj);
-         sqstd_writeclosuretofile(vm, path.c_str());
+        sq_pushobject(vm, obj);
+        sqstd_writeclosuretofile(vm, path.c_str());
 #endif
     }
 };
+
 }
 
 #endif

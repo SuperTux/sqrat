@@ -144,13 +144,12 @@ public:
             return ret;
         }
 #else
-		sq_get(vm, -2);
-		sq_getstackobj(vm, -1, &slotObj);
-		Object ret(slotObj, vm); // must addref before the pop!
-		sq_pop(vm, 2);
-		return ret;
+        sq_get(vm, -2);
+        sq_getstackobj(vm, -1, &slotObj);
+        Object ret(slotObj, vm); // must addref before the pop!
+        sq_pop(vm, 2);
+        return ret;
 #endif
-
     }
 
     template <class T>
@@ -177,11 +176,11 @@ public:
             return ret;
         }
 #else
-		sq_get(vm, -2);
-		sq_getstackobj(vm, -1, &slotObj);
-		Object ret(slotObj, vm); // must addref before the pop!
-		sq_pop(vm, 2);
-		return ret;
+        sq_get(vm, -2);
+        sq_getstackobj(vm, -1, &slotObj);
+        Object ret(slotObj, vm); // must addref before the pop!
+        sq_pop(vm, 2);
+        return ret;
 #endif
     }
 

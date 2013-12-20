@@ -320,19 +320,23 @@ public:
         HSQOBJECT funcObj;
         sq_pushobject(vm, ClassType<C>::ClassObject(vm));
         sq_pushstring(vm, name, -1);
-
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_get(vm, -2))) {
-            sq_pushnull(vm);
+            sq_pop(vm, 1);
+            return Function();
+        }
+        SQObjectType value_type = sq_gettype(vm, -1);
+        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+            sq_pop(vm, 2);
+            return Function();
         }
 #else
-		sq_get(vm, -2);
+        sq_get(vm, -2);
 #endif
-
         sq_getstackobj(vm, -1, &funcObj);
+        Function ret(vm, ClassType<C>::ClassObject(vm), funcObj); // must addref before the pop!
         sq_pop(vm, 2);
-
-        return Function(vm, ClassType<C>::ClassObject(vm), funcObj);
+        return ret;
     }
 
 protected:

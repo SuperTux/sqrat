@@ -87,6 +87,7 @@ public:
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
 #endif
+
         R ret = (*method)(
                     a1.value
                 );
@@ -100,7 +101,7 @@ public:
     static SQInteger Func2(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-		if (!overloaded && sq_gettop(vm) != startIdx + 2) {
+        if (!overloaded && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -209,6 +210,7 @@ public:
     // Arg Count 5
     template <class A1, class A2, class A3, class A4, class A5, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func5(HSQUIRRELVM vm) {
+
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -249,6 +251,7 @@ public:
     // Arg Count 6
     template <class A1, class A2, class A3, class A4, class A5, class A6, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func6(HSQUIRRELVM vm) {
+
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -291,12 +294,13 @@ public:
     // Arg Count 7
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func7(HSQUIRRELVM vm) {
+
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
-		
+
         typedef R (*M)(A1, A2, A3, A4, A5, A6, A7);
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
@@ -708,6 +712,7 @@ public:
 //
 // reference return specialization
 //
+
 template <class R>
 class SqGlobal<R& > {
 public:
@@ -767,6 +772,7 @@ public:
     // Arg Count 2
     template <class A1, class A2, SQInteger startIdx, bool overloaded /*= false*/>
     static SQInteger Func2(HSQUIRRELVM vm) {
+
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!overloaded && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
@@ -1082,7 +1088,7 @@ public:
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
 #endif
-		
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -1294,7 +1300,7 @@ public:
             return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
         }
 #endif
-		
+
         R & ret = (*method)(
                     a1.value,
                     a2.value,
@@ -1379,6 +1385,7 @@ public:
 //
 // void return specialization
 //
+
 template <>
 class SqGlobal<void> {
 public:

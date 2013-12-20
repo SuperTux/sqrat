@@ -1,4 +1,3 @@
-
 //
 // SqratClassType: Type Translators
 //
@@ -59,16 +58,9 @@ struct ClassTypeDataBase {
 template<class C, class B>
 struct ClassTypeData : public ClassTypeDataBase {
     virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) {
-
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-
         if (classType != this) {
             ptr = baseClass->Cast(static_cast<B*>(static_cast<C*>(ptr)), classType);
         }
-#else
-		ptr = baseClass->Cast(static_cast<B*>(static_cast<C*>(ptr)), classType);
-#endif
-
         return ptr;
     }
 };
@@ -124,9 +116,8 @@ struct ClassType {
     }
 
     static void PushInstance(HSQUIRRELVM vm, C* ptr) {
-       
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-		if (ptr != NULL) {
+        if (ptr != NULL) {
             sq_pushobject(vm, ClassObject(vm));
             sq_createinstance(vm, -1);
             sq_remove(vm, -2);
@@ -135,12 +126,11 @@ struct ClassType {
         else
             sq_pushnull(vm);
 #else
-		sq_pushobject(vm, ClassObject(vm));
-		sq_createinstance(vm, -1);
-		sq_remove(vm, -2);
-		sq_setinstanceup(vm, -1, ptr);
+        sq_pushobject(vm, ClassObject(vm));
+        sq_createinstance(vm, -1);
+        sq_remove(vm, -2);
+        sq_setinstanceup(vm, -1, ptr);
 #endif
-
     }
 
     static void PushInstanceCopy(HSQUIRRELVM vm, const C& value) {
@@ -153,28 +143,26 @@ struct ClassType {
     static C* GetInstance(HSQUIRRELVM vm, SQInteger idx) {
         SQUserPointer ptr = NULL;
         ClassTypeDataBase* classType = getClassTypeData(vm);
-
-#if !defined (SCRAT_NO_ERROR_CHECKING)
         if (classType != 0) /* type checking only done if the value has type data else it may be enum */
         {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
             if (SQ_FAILED(sq_getinstanceup(vm, idx, &ptr, classType))) {
                 Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, ClassName(vm)));
                 return NULL;
             }
+#else
+            sq_getinstanceup(vm, idx, &ptr, 0);
+#endif
         }
         else /* value is likely of integral type like enums, cannot return a pointer */
         {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("unknown")));
+#endif
             return NULL;
         }
-#else
-		sq_getinstanceup(vm, idx, &ptr, classType);
-#endif
-
         ClassTypeDataBase* actualType;
         sq_gettypetag(vm, idx, (SQUserPointer*)&actualType);
-
-#if !defined(SCRAT_NO_ERROR_CHECKING)
         if (actualType == NULL) {
             SQInteger top = sq_gettop(vm);
             sq_getclass(vm, idx);
@@ -184,16 +172,6 @@ struct ClassType {
             }
             sq_settop(vm, top);
         }
-#else
-		SQInteger top = sq_gettop(vm);
-		sq_getclass(vm, idx);
-		while (actualType == NULL) {
-			sq_getbase(vm, -1);
-			sq_gettypetag(vm, -1, (SQUserPointer*)&actualType);
-		}
-		sq_settop(vm, top);
-#endif
-
         if (classType != actualType) {
             return static_cast<C*>(actualType->Cast(ptr, classType));
         }

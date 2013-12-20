@@ -527,52 +527,6 @@ struct Var<Array> {
     }
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Used to get and push Array instances to and from the stack as references
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<>
-struct Var<Array&> {
-
-    Array value; ///< The actual value of get operations
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Attempts to get the value off the stack at idx as an Array
-    ///
-    /// \param vm  Target VM
-    /// \param idx Index trying to be read
-    ///
-    /// \remarks
-    /// This function MUST have its Error handled if it occurred
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
-        HSQOBJECT obj;
-        sq_resetobject(&obj);
-        sq_getstackobj(vm,idx,&obj);
-        value = Array(obj, vm);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        SQObjectType value_type = sq_gettype(vm, idx);
-        if (value_type != OT_ARRAY) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
-        }
-#endif
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by PushVarR to put an Array reference on the stack
-    ///
-    /// \param vm    Target VM
-    /// \param value Value to push on to the VM's stack
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const Array& value) {
-        HSQOBJECT obj;
-        sq_resetobject(&obj);
-        obj = value.GetObject();
-        sq_pushobject(vm,obj);
-    }
-};
-
 }
 
 #endif

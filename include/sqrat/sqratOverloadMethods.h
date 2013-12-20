@@ -81,7 +81,7 @@ public:
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #else
-		sq_get(vm, 1);
+        sq_get(vm, 1);
 #endif
 
         // Push the args again
@@ -126,7 +126,7 @@ public:
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #else
-		sq_get(vm, 1);
+        sq_get(vm, 1);
 #endif
 
         // Push the args again

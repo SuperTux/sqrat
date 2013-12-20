@@ -119,18 +119,17 @@ public:
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
-		
-		SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 1, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -159,15 +158,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 2, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
-
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 2, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 2, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -183,7 +181,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQUnsignedInteger nparams;
         SQUnsignedInteger nfreevars;
-		
+
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
             Error::Instance().Throw(vm, _SC("wrong number of parameters"));
@@ -197,15 +195,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 3, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
-
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 3, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 3, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -235,14 +232,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 4, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 4, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 4, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -273,14 +270,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 5, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 5, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 5, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -313,14 +310,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 6, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 6, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 6, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -354,14 +351,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 7, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 7, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 7, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -395,14 +392,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 8, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 8, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 8, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -437,14 +434,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 9, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 9, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 9, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -480,14 +477,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 10, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 10, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 10, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -524,14 +521,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 11, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 11, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 11, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -569,14 +566,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 12, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 12, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 12, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -615,14 +612,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 13, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 13, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 13, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -662,14 +659,14 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 14, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 14, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 14, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
@@ -710,20 +707,21 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 15, true, ErrorHandling::IsEnabled());
 
-        //handle an error: only pop a single element and throw the exception
+        //handle an error: pop the stack and throw the exception
         if(SQ_FAILED(result)) {
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             Error::Instance().Throw(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
-		sq_call(vm, 15, true, ErrorHandling::IsEnabled());
+        sq_call(vm, 15, true, ErrorHandling::IsEnabled());
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
         sq_pop(vm, 2);
         return ret;
     }
+
 
     //
     // void returns
@@ -743,7 +741,7 @@ public:
         }
 
         SQRESULT result = sq_call(vm, 1, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -751,10 +749,9 @@ public:
             return;
         }
 #else
-		sq_call(vm, 1, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 1, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
-
     }
 
     template <class A1>
@@ -776,7 +773,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 2, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -784,10 +781,9 @@ public:
             return;
         }
 #else
-		sq_call(vm, 2, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 2, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
-
     }
 
     template <class A1, class A2>
@@ -810,7 +806,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 3, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -818,8 +814,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 3, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 3, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -844,7 +840,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 4, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -852,10 +848,9 @@ public:
             return;
         }
 #else
-		sq_call(vm, 4, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 4, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
-
     }
 
     template <class A1, class A2, class A3, class A4>
@@ -880,7 +875,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 5, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -888,8 +883,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 5, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 5, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -917,7 +912,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 6, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -925,8 +920,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 6, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 6, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -954,7 +949,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 7, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -962,8 +957,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 7, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 7, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -992,7 +987,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 8, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1000,8 +995,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 8, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 8, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -1031,7 +1026,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 9, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1039,8 +1034,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 9, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 9, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -1071,7 +1066,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 10, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1079,10 +1074,9 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 10, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 10, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
-
     }
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
@@ -1113,7 +1107,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 11, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1121,8 +1115,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 11, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 11, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -1155,7 +1149,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 12, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1163,8 +1157,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 12, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 12, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -1199,7 +1193,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 13, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1207,10 +1201,9 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 13, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 13, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
-
     }
 
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
@@ -1244,7 +1237,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 14, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1252,8 +1245,8 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 14, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 14, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
 
@@ -1289,7 +1282,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 15, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_pop(vm, 2);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1297,10 +1290,11 @@ public:
             return;
         }
 #else
-		SQRESULT result = sq_call(vm, 15, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_call(vm, 15, false, ErrorHandling::IsEnabled());
+        sq_pop(vm, 2);
 #endif
     }
+
 
     //
     // Operator overloads for ease of use (calls Execute)
@@ -1382,6 +1376,7 @@ public:
     }
 };
 
+
 //
 // Overridden Getter/Setter
 //
@@ -1395,14 +1390,12 @@ struct Var<Function> {
         sq_getstackobj(vm, 1, &sqEnv);
         sq_getstackobj(vm, idx, &sqValue);
         value = Function(vm, sqEnv, sqValue);
-        SQObjectType value_type = sq_gettype(vm, idx);
-
 #if !defined (SCRAT_NO_ERROR_CHECKING)
+        SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
             Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
         }
 #endif
-
     }
     static void push(HSQUIRRELVM vm, Function& value) {
         sq_pushobject(vm, value.GetFunc());
