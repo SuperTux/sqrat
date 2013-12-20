@@ -168,14 +168,14 @@ TEST_F(SqratTest, TableGet)
 #else
         std::stringstream ss1, ss2;
 #endif
-        string key, value, value2;
+        string key, value;
         ss1 << i;
         ss2 << "value " << i;
         key = ss1.str();
         value = ss2.str();
-        int j = table.GetValue(key.c_str(), value2);
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ(value, value2);
+        SharedPtr<string> value2 = table.GetValue(key.c_str());
+        EXPECT_EQ(value2 != NULL, 1);
+        EXPECT_EQ(value, *value2);
     }
 
     for ( i = 100; i < 100 + length; i++)
@@ -185,14 +185,14 @@ TEST_F(SqratTest, TableGet)
 #else
         std::stringstream ss2;
 #endif
-        string value, value2;
+        string value;
 
         ss2 << "value " << i;
 
         value = ss2.str();
-        int j = table.GetValue(i, value2);
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ(value, value2);
+        SharedPtr<string> value2 = table.GetValue(i);
+        EXPECT_EQ(value2 != NULL, 1);
+        EXPECT_EQ(value, *value2);
     }
 
 }
@@ -232,19 +232,19 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
 #else
         std::stringstream ss1, ss2;
 #endif
-        string key, value, value2;
+        string key, value;
         ss1 << i;
         ss2 << "value " << i;
         key = ss1.str();
         value = ss2.str();
-        int j = table.GetValue(key.c_str(), value2);
+        SharedPtr<string> value2 = table.GetValue(key.c_str());
 #ifndef SQUNICODE
         std::cout << "Key: "
                   << key << " Value: "
-                  << value << " value2: " << value2 << std::endl;
+                  << value << " value2: " << *value2 << std::endl;
 #endif
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ(value, value2);
+        EXPECT_EQ(value2 != NULL, 1);
+        EXPECT_EQ(value, *value2);
     }
     script.Release();
     table.Release();
@@ -302,7 +302,7 @@ TEST_F(SqratTest, PassingTableIn) {
     RootTable().Func(_SC("touch_element2"), &touch_element2);
     ConstTable().Const(_SC("SIZE"), SIZE);
     
-    int i, j;
+    int i;
     Table table(vm);
     RootTable(vm).Bind(_SC("t"), table);
     
@@ -319,9 +319,9 @@ TEST_F(SqratTest, PassingTableIn) {
     {
 
         snprintf(buf, sizeof(buf), "%d", i);
-        int k = table.GetValue(buf, j);
-        EXPECT_EQ(k, 1);
-        EXPECT_EQ(j, i);
+        SharedPtr<int> j = table.GetValue(buf);
+        EXPECT_EQ(j != NULL, 1);
+        EXPECT_EQ(*j, i);
         
     }
 
@@ -341,9 +341,9 @@ TEST_F(SqratTest, PassingTableIn) {
     {
 
         snprintf(buf, sizeof(buf), "%d", i);
-        int k = table.GetValue(buf, j);
-        EXPECT_EQ(k, 1);
-        EXPECT_EQ(j, -i);
+        SharedPtr<int> j = table.GetValue(buf);
+        EXPECT_EQ(j != NULL, 1);
+        EXPECT_EQ(*j, -i);
         
     }
         
