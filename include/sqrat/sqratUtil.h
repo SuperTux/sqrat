@@ -177,7 +177,7 @@ public:
         {
             m_Ptr = copy.Get();
 
-            m_RefCount = copy.m_RefCount();
+            m_RefCount = copy.m_RefCount;
             *m_RefCount += 1;
         }
         else
@@ -193,7 +193,7 @@ public:
         {
             m_Ptr = static_cast<T*>(copy.Get());
 
-            m_RefCount = copy.m_RefCount();
+            m_RefCount = copy.m_RefCount;
             *m_RefCount += 1;
         }
         else
@@ -216,7 +216,7 @@ public:
             {
                 m_Ptr = copy.Get();
 
-                m_RefCount = copy.m_RefCount();
+                m_RefCount = copy.m_RefCount;
                 *m_RefCount += 1;
             }
             else
@@ -237,7 +237,7 @@ public:
         {
             m_Ptr = static_cast<T*>(copy.Get());
 
-            m_RefCount = copy.m_RefCount();
+            m_RefCount = copy.m_RefCount;
             *m_RefCount += 1;
         }
         else
