@@ -370,6 +370,8 @@ public:
     static SQInteger New(HSQUIRRELVM vm) {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
+#else
+        return 0;
 #endif
     }
 
@@ -422,6 +424,8 @@ public:
     static SQInteger New(HSQUIRRELVM vm) {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
+#else
+        return 0;
 #endif
     }
 
