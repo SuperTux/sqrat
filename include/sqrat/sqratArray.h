@@ -74,10 +74,11 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Binds a Table or Class to the Array (can be used to facilitate namespaces)
     ///
-    /// NOTE: Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs
-    ///
     /// \param index The index in the array being assigned a Table or Class
     /// \param obj   Table or Class that is being placed in the Array
+    ///
+    /// \remarks
+    /// Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Bind(const SQInteger index, Object& obj) {
@@ -177,7 +178,7 @@ public:
     /// \return SharedPtr containing the element (or null if failed)
     ///
     /// \remarks
-    /// This function MUST have its Error handled if it occurred
+    /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -245,7 +246,7 @@ public:
     /// \tparam T Type of elements (fails if any elements in Array are not of this type)
     ///
     /// \remarks
-    /// This function MUST have its Error handled if it occurred
+    /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -496,7 +497,7 @@ struct Var<Array> {
     /// \param idx Index trying to be read
     ///
     /// \remarks
-    /// This function MUST have its Error handled if it occurred
+    /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {

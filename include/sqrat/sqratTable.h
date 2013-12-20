@@ -78,7 +78,7 @@ public:
     /// \param obj  Table or Class that is being placed in the table
     ///
     /// \remarks
-    /// Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs
+    /// Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Bind(const SQChar* name, Object& obj) {
@@ -203,7 +203,7 @@ public:
     /// \return The Table itself so the call can be chained
     ///
     /// \remarks
-    /// Overloading in Sqrat does not work for functions with the same amount of arguments (just like in Squirrel)
+    /// Overloading in Sqrat does not work for functions with the same amount of arguments (just like in Squirrel).
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<class F>
@@ -222,7 +222,7 @@ public:
     /// \return SharedPtr containing the value (or null if failed)
     ///
     /// \remarks
-    /// This function MUST have its Error handled if it occurred
+    /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -260,7 +260,7 @@ public:
     /// \return SharedPtr containing the value (or null if failed)
     ///
     /// \remarks
-    /// This function MUST have its Error handled if it occurred
+    /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -399,7 +399,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Table that is a reference to the Squirrel root table for a given VM
-/// The Squirrel root table is usually where all globals are stored by the Squirrel language
+/// The Squirrel root table is usually where all globals are stored by the Squirrel language.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class RootTable : public TableBase {
 public:
@@ -420,7 +420,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Table that is a reference to the Squirrel registry table for a given VM
-/// The Squirrel registry table is where non-Squirrel code can store Squirrel objects without worrying about Squirrel code messing with them
+/// The Squirrel registry table is where non-Squirrel code can store Squirrel objects without worrying about Squirrel code messing with them.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class RegistryTable : public TableBase {
 public:
@@ -454,7 +454,7 @@ struct Var<Table> {
     /// \param idx Index trying to be read
     ///
     /// \remarks
-    /// This function MUST have its Error handled if it occurred
+    /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {

@@ -63,7 +63,7 @@ public:
 /// \tparam C Type of class
 ///
 /// \remarks
-/// There is mechanisms defined in this class that allow the Class::Ctor method to work properly
+/// There is mechanisms defined in this class that allow the Class::Ctor method to work properly.
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class C>
@@ -469,7 +469,7 @@ public:
 /// \tparam C Type of class
 ///
 /// \remarks
-/// There is mechanisms defined in this class that allow the Class::Ctor method to work properly
+/// There is mechanisms defined in this class that allow the Class::Ctor method to work properly.
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class C>
