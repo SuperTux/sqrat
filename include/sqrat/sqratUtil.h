@@ -351,6 +351,10 @@ public:
         assert(m_Ptr != NULL);
         return m_Ptr;
     }
+    explicit operator bool() const
+    {
+        return m_Ptr != NULL;
+    }
     T* Get() const
     {
         return m_Ptr;
