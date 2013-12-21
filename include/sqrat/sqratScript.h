@@ -152,8 +152,9 @@ public:
                 errMsg = LastErrorString(vm);
                 return false;
             }
+            return true;
         }
-        return true;
+        return false;
     }
 #endif
 
