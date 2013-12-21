@@ -35,9 +35,9 @@ extern "C" {
 #endif
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// \internal
-    // Allows modules to interface with squirrel's C api without linking to the squirrel library
-    // If new functions are added to the Squirrel API, they should be added here too
+    /// @cond DEV
+    /// Allows modules to interface with Squirrel's C api without linking to the squirrel library
+    /// If new functions are added to the Squirrel API, they should be added here too
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     typedef struct {
         /*vm*/
@@ -191,6 +191,7 @@ extern "C" {
         void            (*setdebughook)(HSQUIRRELVM v);
     } sq_api;
     typedef sq_api* HSQAPI;
+    /// @endcond
 
 #ifdef __cplusplus
 } /*extern "C"*/
