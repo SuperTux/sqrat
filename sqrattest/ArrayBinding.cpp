@@ -58,35 +58,37 @@ TEST_F(SqratTest, ArrayGet) {
     
     for ( i = 0; i < length; i++)
     {
-        int t;
-        int j = array.GetElement(i, t);
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ(t, i);
-        float f;
-        j = array.GetElement(i, f);
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ((float) i, f);
+        SharedPtr<int> t = array.GetValue<int>(i);
+        EXPECT_EQ(t != NULL, 1);
+        EXPECT_EQ(*t, i);
+        SharedPtr<float> f;
+        f = array.GetValue<float>(i);
+        EXPECT_EQ(f != NULL, 1);        
+        EXPECT_EQ((float) i, *f);
     }
     int t[length];
-    int j = array.GetArray(t, sizeof(t) / sizeof(t[0]));
-    EXPECT_EQ(j, 1);
+    array.GetArray(t, sizeof(t) / sizeof(t[0]));
+    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
     for (i = 0; i < length; i++)
     {
         EXPECT_EQ(t[i], i);
     }
     double d[length];
-    j = array.GetArray(d, sizeof(d) / sizeof(d[0]));
-    EXPECT_EQ(j, 1);
+    array.GetArray(d, sizeof(d) / sizeof(d[0]));
+    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
+
     for (i = 0; i < length; i++)
     {
         EXPECT_EQ(d[i], (double) i);
     }    
     double d2[15];
-    j = array.GetArray(d2, sizeof(d2) / sizeof(d2[0]));
-    EXPECT_NE(j, 1);
+    array.GetArray(d2, sizeof(d2) / sizeof(d2[0]));
+    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
+
     double d3[5];
-    j = array.GetArray(d3, sizeof(d3) / sizeof(d3[0]));
-    EXPECT_NE(j, 1);
+    array.GetArray(d3, sizeof(d3) / sizeof(d3[0]));
+    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
+
         
 }
 
@@ -133,10 +135,9 @@ TEST_F(SqratTest, PassingArrayIn) {
     
     for (i = 0; i < length; i++)
     {
-        int t;
-        int j = array.GetElement(i, t);
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ(t, i);
+        SharedPtr<int> t = array.GetValue<int>(i);
+        EXPECT_EQ(t != NULL, 1);
+        EXPECT_EQ(*t, i);
         
     }
 
@@ -157,10 +158,9 @@ TEST_F(SqratTest, PassingArrayIn) {
     
     for (i = 0; i < length; i++)
     {
-        int t;
-        int j = array.GetElement(i, t);
-        EXPECT_EQ(j, 1);
-        EXPECT_EQ(t, -i);
+        SharedPtr<int> t = array.GetValue<int>(i);
+        EXPECT_EQ(t != NULL, 1);
+        EXPECT_EQ(*t, -i);
         
     }
         

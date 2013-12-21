@@ -26,9 +26,7 @@ nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
     $(ORIGPATH)/include/sqrat/sqratTable.h\
     $(ORIGPATH)/include/sqrat/sqratTypes.h\
     $(ORIGPATH)/include/sqrat/sqratUtil.h\
-    $(ORIGPATH)/include/sqrat/sqratVM.h \
-    $(ORIGPATH)/include/sqrat/sqratext_Ref.h
-    
+    $(ORIGPATH)/include/sqrat/sqratVM.h 
 
 TESTS = import_test \
     class_binding class_instances class_properties const_bindings function_overload\
