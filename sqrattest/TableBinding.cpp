@@ -173,7 +173,7 @@ TEST_F(SqratTest, TableGet)
         ss2 << "value " << i;
         key = ss1.str();
         value = ss2.str();
-        SharedPtr<string> value2 = table.GetValue(key.c_str());
+        SharedPtr<string> value2 = table.GetValue<string>(key.c_str());
         EXPECT_EQ(value2 != NULL, 1);
         EXPECT_EQ(value, *value2);
     }
@@ -190,7 +190,7 @@ TEST_F(SqratTest, TableGet)
         ss2 << "value " << i;
 
         value = ss2.str();
-        SharedPtr<string> value2 = table.GetValue(i);
+        SharedPtr<string> value2 = table.GetValue<string>(i);
         EXPECT_EQ(value2 != NULL, 1);
         EXPECT_EQ(value, *value2);
     }
@@ -237,7 +237,7 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
         ss2 << "value " << i;
         key = ss1.str();
         value = ss2.str();
-        SharedPtr<string> value2 = table.GetValue(key.c_str());
+        SharedPtr<string> value2 = table.GetValue<string>(key.c_str());
 #ifndef SQUNICODE
         std::cout << "Key: "
                   << key << " Value: "
@@ -319,7 +319,7 @@ TEST_F(SqratTest, PassingTableIn) {
     {
 
         snprintf(buf, sizeof(buf), "%d", i);
-        SharedPtr<int> j = table.GetValue(buf);
+        SharedPtr<int> j = table.GetValue<int>(buf);
         EXPECT_EQ(j != NULL, 1);
         EXPECT_EQ(*j, i);
         
@@ -341,7 +341,7 @@ TEST_F(SqratTest, PassingTableIn) {
     {
 
         snprintf(buf, sizeof(buf), "%d", i);
-        SharedPtr<int> j = table.GetValue(buf);
+        SharedPtr<int> j = table.GetValue<int>(buf);
         EXPECT_EQ(j != NULL, 1);
         EXPECT_EQ(*j, -i);
         
