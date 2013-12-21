@@ -351,7 +351,7 @@ public:
         assert(m_Ptr != NULL);
         return m_Ptr;
     }
-    explicit operator bool() const
+    operator bool() const
     {
         return m_Ptr != NULL;
     }
