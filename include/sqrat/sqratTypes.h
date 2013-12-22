@@ -253,11 +253,11 @@ template<class T>
 struct Var<SharedPtr<T> > {
     SharedPtr<T> value;
     Var(HSQUIRRELVM vm, SQInteger idx) {
-        const T& instance = Var<T&>(vm, idx).value;
+        const T& instance = Var<const T&>(vm, idx).value;
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!Error::Instance().Occurred(vm)) {
 #endif
-            value = new T(instance);
+            value.Init(new T(instance));
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         }
 #endif

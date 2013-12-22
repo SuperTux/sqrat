@@ -28,6 +28,7 @@
 #if !defined(_SCRAT_UTIL_H_)
 #define _SCRAT_UTIL_H_
 
+#include <cassert>
 #include <squirrel.h>
 #include <string.h>
 
@@ -158,9 +159,11 @@ private:
     T*            m_Ptr;
     unsigned int* m_RefCount;
 public:
-    SharedPtr()
+    SharedPtr() :
+    m_Ptr     (NULL),
+    m_RefCount(NULL)
     {
-        Init(NULL);
+
     }
     SharedPtr(T* ptr)
     {
@@ -169,7 +172,7 @@ public:
     template <class U>
     SharedPtr(U* ptr)
     {
-        Init(m_Ptr);
+        Init(ptr);
     }
     SharedPtr(const SharedPtr<T>& copy)
     {
@@ -283,6 +286,10 @@ public:
                 *m_RefCount -= 1;
         }
     }
+    operator bool() const
+    {
+        return m_Ptr != NULL;
+    }
     bool operator!() const
     {
         return m_Ptr == NULL;
@@ -350,10 +357,6 @@ public:
     {
         assert(m_Ptr != NULL);
         return m_Ptr;
-    }
-    operator bool() const
-    {
-        return m_Ptr != NULL;
     }
     T* Get() const
     {
