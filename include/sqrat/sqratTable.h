@@ -471,7 +471,54 @@ struct Var<Table> {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by PushVar to put an Array reference on the stack
+    /// Called by PushVar to put an Table reference on the stack
+    ///
+    /// \param vm    Target VM
+    /// \param value Value to push on to the VM's stack
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    static void push(HSQUIRRELVM vm, const Table & value) {
+        HSQOBJECT obj;
+        sq_resetobject(&obj);
+        obj = value.GetObject();
+        sq_pushobject(vm,obj);
+    }
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Used to get and push Table instances to and from the stack as references (tables are always references in Squirrel)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<>
+struct Var<Table&> {
+    Table value; ///< The actual value of get operations
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Attempts to get the value off the stack at idx as a Table
+    ///
+    /// \param vm  Target VM
+    /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        HSQOBJECT obj;
+        sq_resetobject(&obj);
+        sq_getstackobj(vm,idx,&obj);
+        value = Table(obj, vm);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        SQObjectType value_type = sq_gettype(vm, idx);
+        if (value_type != OT_TABLE) {
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
+        }
+#endif
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Called by PushVar to put an Table on the stack
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack

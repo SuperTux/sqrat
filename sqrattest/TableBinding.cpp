@@ -66,6 +66,7 @@ TEST_F(SqratTest, SimpleTableBinding)
     DefaultVM::Set(vm);
 
     string version = _SC("1.0.0");
+    string n12 = _SC("N12");
 
     // Bind table values and functions
     Table test;
@@ -77,7 +78,8 @@ TEST_F(SqratTest, SimpleTableBinding)
     // Variables
     .SetValue(_SC("version"), version) // Changes to this variable in the script will not propagate back to the native variable
     .SetValue(_SC("author"), _SC("Brandon Jones"))
-    .SetValue(_SC("count"), 12);
+    .SetValue(_SC("count"), 12)
+    .SetValue(12, n12);
     ;
 
     // Bind a class to the table. In this case the table acts somewhat as a namespace
@@ -105,7 +107,14 @@ TEST_F(SqratTest, SimpleTableBinding)
                   << str2 << std::endl;
 #endif
     }
-
+    SharedPtr<string> value = test.GetValue<string>(12);
+    EXPECT_EQ(value != NULL, 1);
+    EXPECT_STREQ(value->c_str(), n12.c_str());
+    value = test.GetValue<string>(_SC("version"));
+    EXPECT_EQ(value != NULL, 1);
+    EXPECT_STREQ(value->c_str(), version.c_str());
+    
+    
     Script script;
     script.CompileString(_SC("  \
         gTest.EXPECT_STR_EQ(Test.version, \"1.0.0\"); \

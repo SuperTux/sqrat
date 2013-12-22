@@ -83,8 +83,8 @@ TEST_F(SqratTest, ArrayGet) {
     }    
     double d2[15];
     array.GetArray(d2, sizeof(d2) / sizeof(d2[0]));
-    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
-
+    EXPECT_TRUE(Sqrat::Error::Instance().Occurred(vm));    
+    Sqrat::Error::Instance().Clear(vm);
     double d3[5];
     array.GetArray(d3, sizeof(d3) / sizeof(d3[0]));
     EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
@@ -120,6 +120,7 @@ TEST_F(SqratTest, PassingArrayIn) {
             gTest.EXPECT_INT_EQ( a[i], - i);\
         \
            ");
+           
     DefaultVM::Set(vm);
     RootTable().Func(_SC("touch_element"), &touch_element);
     RootTable().Func(_SC("touch_element2"), &touch_element2);
