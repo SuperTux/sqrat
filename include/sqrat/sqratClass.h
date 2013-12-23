@@ -111,7 +111,7 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Get the Squirrel object for this Class (copy)
+    /// Gets the Squirrel object for this Class (copy)
     ///
     /// \return Squirrel object representing the Squirrel class
     ///
@@ -121,7 +121,7 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Get the Squirrel object for this Class (reference)
+    /// Gets the Squirrel object for this Class (reference)
     ///
     /// \return Squirrel object representing the Squirrel class
     ///
@@ -140,6 +140,9 @@ public:
     /// \tparam V Type of value (usually doesnt need to be defined explicitly)
     ///
     /// \return The Class itself so the call can be chained
+    ///
+    /// \remarks
+    /// Static values are read-only in Squirrel.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<class V>

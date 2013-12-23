@@ -1,5 +1,5 @@
 //
-// SqObject: Referenced Squirrel Object Wrapper
+// sqratFunction: Squirrel Function Wrapper
 //
 
 //
@@ -34,6 +34,9 @@
 
 namespace Sqrat {
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Represents a function in Squirrel
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Function  {
     friend class TableBase;
     friend class Table;
@@ -44,32 +47,53 @@ private:
     HSQOBJECT env, obj;
 
 public:
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Default constructor (null)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Function() {
         sq_resetobject(&env);
         sq_resetobject(&obj);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param sf Function to copy
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Function(const Function& sf) : vm(sf.vm), env(sf.env), obj(sf.obj) {
         sq_addref(vm, &env);
         sq_addref(vm, &obj);
     }
 
-    Function(const Object& e, const SQChar* slot) : vm(e.GetVM()), env(e.GetObject()) {
-        sq_addref(vm, &env);
-        Object so = e.GetSlot(slot);
-        obj = so.GetObject();
-        sq_addref(vm, &obj);
-    }
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Constructs a Function from two Squirrel objects (one is the environment object and the other is the function object)
+    ///
+    /// \param v VM that the function will exist in
+    /// \param e Squirrel object that should represent the environment of the function
+    /// \param o Squirrel object that should already represent a Squirrel function
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Function(HSQUIRRELVM v, HSQOBJECT e, HSQOBJECT o) : vm(v), env(e), obj(o) {
         sq_addref(vm, &env);
         sq_addref(vm, &obj);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ~Function() {
         Release();
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assignment operator
+    ///
+    /// \param sf Function to copy
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Function& operator=(const Function& sf) {
         Release();
         vm = sf.vm;
@@ -80,22 +104,50 @@ public:
         return *this;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Checks whether the Function is null
+    ///
+    /// \return True if the Function is currently has a null value, otherwise false
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool IsNull() {
         return sq_isnull(obj);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Gets the Squirrel environment object for this Function (reference)
+    ///
+    /// \return Squirrel object representing the Function environment
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     HSQOBJECT& GetEnv() {
         return env;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Gets the Squirrel function object for this Function (reference)
+    ///
+    /// \return Squirrel object representing the Function
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     HSQOBJECT& GetFunc() {
         return obj;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Gets the Squirrel VM for this Function (reference)
+    ///
+    /// \return Squirrel VM associated with the Function
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     HSQUIRRELVM& GetVM() {
         return vm;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Sets the Function to null (removing its references to underlying objects)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Release() {
         if(!IsNull()) {
             sq_release(vm, &env);
@@ -105,6 +157,17 @@ public:
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R>
     SharedPtr<R> Evaluate() {
         sq_pushobject(vm, obj);
@@ -137,6 +200,20 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1>
     SharedPtr<R> Evaluate(A1 a1) {
         sq_pushobject(vm, obj);
@@ -173,6 +250,22 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2>
     SharedPtr<R> Evaluate(A1 a1, A2 a2) {
         sq_pushobject(vm, obj);
@@ -210,6 +303,24 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3) {
         sq_pushobject(vm, obj);
@@ -247,6 +358,26 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4) {
         sq_pushobject(vm, obj);
@@ -285,7 +416,28 @@ public:
         return ret;
     }
 
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         sq_pushobject(vm, obj);
@@ -325,6 +477,30 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         sq_pushobject(vm, obj);
@@ -366,6 +542,32 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         sq_pushobject(vm, obj);
@@ -407,6 +609,34 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    /// \param a8 Argument 8 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8 Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         sq_pushobject(vm, obj);
@@ -449,6 +679,36 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    /// \param a8 Argument 8 of the Function
+    /// \param a9 Argument 9 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8 Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9 Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         sq_pushobject(vm, obj);
@@ -492,6 +752,38 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
         sq_pushobject(vm, obj);
@@ -536,6 +828,40 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
         sq_pushobject(vm, obj);
@@ -581,6 +907,42 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
         sq_pushobject(vm, obj);
@@ -627,6 +989,44 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    /// \param a13 Argument 13 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A13 Type of argument 13 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
         sq_pushobject(vm, obj);
@@ -674,6 +1074,46 @@ public:
         return ret;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function and returns its value as a SharedPtr
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    /// \param a13 Argument 13 of the Function
+    /// \param a14 Argument 14 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A13 Type of argument 13 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A14 Type of argument 14 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam R Type of return value (fails if return value is not of this type)
+    ///
+    /// \return SharedPtr containing the return value (or null if failed)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
         sq_pushobject(vm, obj);
@@ -722,11 +1162,13 @@ public:
         return ret;
     }
 
-
-    //
-    // void returns
-    //
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Execute() {
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
@@ -754,6 +1196,17 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1>
     void Execute(A1 a1) {
         sq_pushobject(vm, obj);
@@ -786,6 +1239,19 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2>
     void Execute(A1 a1, A2 a2) {
         sq_pushobject(vm, obj);
@@ -819,6 +1285,21 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3>
     void Execute(A1 a1, A2 a2, A3 a3) {
         sq_pushobject(vm, obj);
@@ -853,6 +1334,23 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4) {
         sq_pushobject(vm, obj);
@@ -888,7 +1386,25 @@ public:
 #endif
     }
 
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         sq_pushobject(vm, obj);
@@ -925,6 +1441,27 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         sq_pushobject(vm, obj);
@@ -962,6 +1499,29 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         sq_pushobject(vm, obj);
@@ -1000,6 +1560,31 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    /// \param a8 Argument 8 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8 Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         sq_pushobject(vm, obj);
@@ -1039,6 +1624,33 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    /// \param a8 Argument 8 of the Function
+    /// \param a9 Argument 9 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8 Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9 Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         sq_pushobject(vm, obj);
@@ -1079,6 +1691,35 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
         sq_pushobject(vm, obj);
@@ -1120,6 +1761,37 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
         sq_pushobject(vm, obj);
@@ -1162,6 +1834,39 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
         sq_pushobject(vm, obj);
@@ -1206,6 +1911,41 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    /// \param a13 Argument 13 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A13 Type of argument 13 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
         sq_pushobject(vm, obj);
@@ -1250,6 +1990,43 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    /// \param a13 Argument 13 of the Function
+    /// \param a14 Argument 14 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A13 Type of argument 13 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A14 Type of argument 14 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
         sq_pushobject(vm, obj);
@@ -1295,95 +2072,445 @@ public:
 #endif
     }
 
-
-    //
-    // Operator overloads for ease of use (calls Execute)
-    //
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void operator()() {
         Execute();
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1>
     void operator()(A1 a1) {
         Execute(a1);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2>
     void operator()(A1 a1, A2 a2) {
         Execute(a1, a2);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3>
     void operator()(A1 a1, A2 a2, A3 a3) {
         Execute(a1, a2, a3);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4) {
         Execute(a1, a2, a3, a4);
     }
 
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         Execute(a1, a2, a3, a4, a5);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         Execute(a1, a2, a3, a4, a5, a6);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         Execute(a1, a2, a3, a4, a5, a6, a7);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    /// \param a8 Argument 8 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8 Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1 Argument 1 of the Function
+    /// \param a2 Argument 2 of the Function
+    /// \param a3 Argument 3 of the Function
+    /// \param a4 Argument 4 of the Function
+    /// \param a5 Argument 5 of the Function
+    /// \param a6 Argument 6 of the Function
+    /// \param a7 Argument 7 of the Function
+    /// \param a8 Argument 8 of the Function
+    /// \param a9 Argument 9 of the Function
+    ///
+    /// \tparam A1 Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2 Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3 Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4 Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5 Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6 Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7 Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8 Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9 Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    /// \param a13 Argument 13 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A13 Type of argument 13 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the Function
+    ///
+    /// \param a1  Argument 1 of the Function
+    /// \param a2  Argument 2 of the Function
+    /// \param a3  Argument 3 of the Function
+    /// \param a4  Argument 4 of the Function
+    /// \param a5  Argument 5 of the Function
+    /// \param a6  Argument 6 of the Function
+    /// \param a7  Argument 7 of the Function
+    /// \param a8  Argument 8 of the Function
+    /// \param a9  Argument 9 of the Function
+    /// \param a10 Argument 10 of the Function
+    /// \param a11 Argument 11 of the Function
+    /// \param a12 Argument 12 of the Function
+    /// \param a13 Argument 13 of the Function
+    /// \param a14 Argument 14 of the Function
+    ///
+    /// \tparam A1  Type of argument 1 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A2  Type of argument 2 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A3  Type of argument 3 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A4  Type of argument 4 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A5  Type of argument 5 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A6  Type of argument 6 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A7  Type of argument 7 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A8  Type of argument 8 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A9  Type of argument 9 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A10 Type of argument 10 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A11 Type of argument 11 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A12 Type of argument 12 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A13 Type of argument 13 of the Function (usually doesnt need to be defined explicitly)
+    /// \tparam A14 Type of argument 14 of the Function (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
     void operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
         Execute(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
     }
 };
 
-
-//
-// Overridden Getter/Setter
-//
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Used to get and push Function instances to and from the stack as references (functions are always references in Squirrel)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
 struct Var<Function> {
-    Function value;
+
+    Function value; ///< The actual value of get operations
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Attempts to get the value off the stack at idx as a Function
+    ///
+    /// \param vm  Target VM
+    /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// Assumes the Function environment is at index 1.
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
         HSQOBJECT sqEnv;
         HSQOBJECT sqValue;
@@ -1397,10 +2524,66 @@ struct Var<Function> {
         }
 #endif
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Called by Sqrat::PushVar to put a Function on the stack
+    ///
+    /// \param vm    Target VM
+    /// \param value Value to push on to the VM's stack
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, Function& value) {
         sq_pushobject(vm, value.GetFunc());
     }
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Used to get and push Function instances to and from the stack as references (functions are always references in Squirrel)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<>
+struct Var<Function&> {
+
+    Function value; ///< The actual value of get operations
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Attempts to get the value off the stack at idx as a Function
+    ///
+    /// \param vm  Target VM
+    /// \param idx Index trying to be read
+    ///
+    /// \remarks
+    /// Assumes the Function environment is at index 1.
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Var(HSQUIRRELVM vm, SQInteger idx) {
+        HSQOBJECT sqEnv;
+        HSQOBJECT sqValue;
+        sq_getstackobj(vm, 1, &sqEnv);
+        sq_getstackobj(vm, idx, &sqValue);
+        value = Function(vm, sqEnv, sqValue);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        SQObjectType value_type = sq_gettype(vm, idx);
+        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
+        }
+#endif
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Called by Sqrat::PushVar to put a Function on the stack
+    ///
+    /// \param vm    Target VM
+    /// \param value Value to push on to the VM's stack
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    static void push(HSQUIRRELVM vm, Function& value) {
+        sq_pushobject(vm, value.GetFunc());
+    }
+};
+
 }
 
 #endif

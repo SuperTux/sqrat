@@ -32,16 +32,16 @@
 #include <map>
 
 #include "sqratUtil.h"
+
 namespace Sqrat
 {
 
-//
-// ClassType
-//
+/// @cond DEV
 
-// Get the Copy Function for this Class
+// The copy function for a class
 typedef SQInteger (*COPYFUNC)(HSQUIRRELVM, SQInteger, const void*);
 
+// Every Squirrel class object made by Sqrat has its type tag set to a unique ClassTypeDataBase object
 struct ClassTypeDataBase {
     HSQOBJECT    classObj;
     HSQOBJECT    getTable;
@@ -55,6 +55,7 @@ struct ClassTypeDataBase {
     ClassTypeDataBase() : ctorCalled(false){}
 };
 
+// Keeps track of the nearest base class and the class associated with a ClassTypeDataBase in order to cast pointers to the right base class
 template<class C, class B>
 struct ClassTypeData : public ClassTypeDataBase {
     virtual SQUserPointer Cast(SQUserPointer ptr, SQUserPointer classType) {
@@ -65,6 +66,7 @@ struct ClassTypeData : public ClassTypeDataBase {
     }
 };
 
+// Internal helper class for managing classes
 template<class C>
 struct ClassType {
 
@@ -181,6 +183,8 @@ struct ClassType {
 
 template<class C>
 std::map< HSQUIRRELVM, ClassTypeDataBase* > ClassType<C>::s_classTypeDataMap;
+
+/// @endcond
 
 }
 
