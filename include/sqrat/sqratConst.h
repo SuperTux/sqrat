@@ -36,7 +36,7 @@
 namespace Sqrat {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Facilitates exposing a C++ enumeration to Squirrel as values in a table in the const table
+/// Facilitates exposing a C++ enumeration to Squirrel
 ///
 /// \remarks
 /// The Enumeration class only facilitates binding C++ enumerations that contain only integers,

@@ -38,9 +38,24 @@ namespace Sqrat {
 
 class Script : public Object {
 public:
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Default constructor
+    ///
+    /// \param v VM that the Script will be associated with
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Script(HSQUIRRELVM v = DefaultVM::Get()) : Object(v, true) {
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Sets up the Script using a string containing a Squirrel script
+    ///
+    /// \param script String containing a Squirrel script
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void CompileString(const string& script) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
@@ -60,6 +75,13 @@ public:
         sq_pop(vm, 1);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Sets up the Script using a string containing a Squirrel script
+    ///
+    /// \param script String containing a Squirrel script
+    /// \param errMsg String that is filled with any errors that may occur
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool CompileString(const string& script, string& errMsg) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
@@ -80,6 +102,15 @@ public:
         return true;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Sets up the Script using a file containing a Squirrel script
+    ///
+    /// \param path File path containing a Squirrel script
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void CompileFile(const string& path) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
@@ -99,6 +130,13 @@ public:
         sq_pop(vm, 1);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Sets up the Script using a file containing a Squirrel script
+    ///
+    /// \param path   File path containing a Squirrel script
+    /// \param errMsg String that is filled with any errors that may occur
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool CompileFile(const string& path, string& errMsg) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
@@ -119,6 +157,13 @@ public:
         return true;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the script
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Run() {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
@@ -141,6 +186,12 @@ public:
     }
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the script
+    ///
+    /// \param errMsg String that is filled with any errors that may occur
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool Run(string& errMsg) {
         if(!sq_isnull(obj)) {
             SQRESULT result;
@@ -158,17 +209,23 @@ public:
     }
 #endif
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Writes the byte code of the Script to a file
+    ///
+    /// \param path File path to write to
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void WriteCompiledFile(const string& path) {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             sq_pushobject(vm, obj);
             sqstd_writeclosuretofile(vm, path.c_str());
-            //sq_pop(vm, 1);  // needed?
         }
 #else
         sq_pushobject(vm, obj);
         sqstd_writeclosuretofile(vm, path.c_str());
 #endif
+        sq_pop(vm, 1); // needed?
     }
 };
 
