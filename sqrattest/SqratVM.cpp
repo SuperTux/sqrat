@@ -51,7 +51,7 @@ TEST_F(SqratTest, SqratVM)
     SqratVM vm1;
     SqratVM vm2;
     
-    bind(vm1.getVM());
-    bind(vm2.getVM());
+    bind(vm1.GetVM());
+    bind(vm2.GetVM());
     
 }
