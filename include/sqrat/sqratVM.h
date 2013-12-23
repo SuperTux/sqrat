@@ -257,7 +257,7 @@ public:
     /// \param errFunc   A pointer to the error func or NULL to disable the output
     ///
     /// \remarks
-    /// This function is used by the built-in function '::print()' to output text.
+    /// The print function is used by the built-in Squirrel print function to output text.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void SetPrintFunc(SQPRINTFUNCTION printFunc, SQPRINTFUNCTION errFunc)
@@ -311,9 +311,9 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Runs a string containing a Squirrel script
+    /// Runs a file containing a Squirrel script
     ///
-    /// \param str String containing a Squirrel script
+    /// \param file File path containing a Squirrel script
     ///
     /// \return An ERROR_STATE representing what happened
     ///
