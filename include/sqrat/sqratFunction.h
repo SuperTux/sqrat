@@ -68,6 +68,29 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Constructs a Function from a slot in an Object
+    ///
+    /// \param e    Object that potentially contains a Squirrel function in a slot
+    /// \param slot Name of the slot to look for the Squirrel function in
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Function(const Object& e, const SQChar* slot) : vm(e.GetVM()), env(e.GetObject()) {
+        sq_addref(vm, &env);
+        Object so = e.GetSlot(slot);
+        obj = so.GetObject();
+        sq_addref(vm, &obj);
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        SQObjectType value_type = so.GetType();
+        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+            Error::Instance().Throw(vm, _SC("function not found in slot"));
+        }
+#endif
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Constructs a Function from two Squirrel objects (one is the environment object and the other is the function object)
     ///
     /// \param v VM that the function will exist in
