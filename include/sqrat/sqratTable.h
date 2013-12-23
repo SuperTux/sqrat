@@ -518,7 +518,7 @@ struct Var<Table&> {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat::PushVar to put an Table on the stack
+    /// Called by Sqrat::PushVarR to put an Table on the stack
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack

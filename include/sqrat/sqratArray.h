@@ -560,7 +560,7 @@ struct Var<Array&> {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat::PushVar to put an Array on the stack
+    /// Called by Sqrat::PushVarR to put an Array on the stack
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack
