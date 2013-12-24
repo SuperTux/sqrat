@@ -179,8 +179,8 @@ public:
         if (libsToLoad & LIB_STR)
             sqstd_register_stringlib(m_vm);
         sq_pop(m_vm, 1);
-        setPrintFunc(printFunc, printFunc);
-        setErrorHandler(runtimeErrorHandler, compilerErrorHandler);
+        SetPrintFunc(printFunc, printFunc);
+        SetErrorHandler(runtimeErrorHandler, compilerErrorHandler);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
