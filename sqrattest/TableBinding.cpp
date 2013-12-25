@@ -69,7 +69,7 @@ TEST_F(SqratTest, SimpleTableBinding)
     string n12 = _SC("N12");
 
     // Bind table values and functions
-    Table test;
+    Table test(vm);
     test
     // Global functions
     .Func(_SC("GetGreeting"), &GetGreeting)
