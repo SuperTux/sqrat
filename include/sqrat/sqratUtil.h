@@ -97,13 +97,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// The class that must be used to deal with errors that Sqrat has (not associated with Squirrel errors)
+/// The class that must be used to deal with errors that Sqrat has
 ///
 /// \remarks
 /// When documentation in Sqrat says, "This function MUST have its error handled if it occurred," that
 /// means that after the function has been run, you must call Error::Occurred to see if the function
 /// ran successfully. If the function did not run successfully, then you must either call Error::Clear
 /// or Error::Message to clear the error buffer so new ones may occur and Sqrat does not get confused.
+///
+/// \remarks
+/// Any error thrown inside of a bound C++ function will be also thrown in the given Squirrel VM.
 ///
 /// \remarks
 /// If compiling with SCRAT_NO_ERROR_CHECKING defined, Sqrat will run significantly faster,

@@ -59,6 +59,12 @@ public:
 
         R ret = (*method)();
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
+
         PushVar(vm, ret);
         return 1;
     }
@@ -91,6 +97,12 @@ public:
         R ret = (*method)(
                     a1.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -126,6 +138,12 @@ public:
                     a1.value,
                     a2.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -163,6 +181,12 @@ public:
                     a2.value,
                     a3.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -202,6 +226,12 @@ public:
                     a3.value,
                     a4.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -243,6 +273,12 @@ public:
                     a4.value,
                     a5.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -286,6 +322,12 @@ public:
                     a5.value,
                     a6.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -331,6 +373,12 @@ public:
                     a6.value,
                     a7.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -378,6 +426,12 @@ public:
                     a7.value,
                     a8.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -427,6 +481,12 @@ public:
                     a8.value,
                     a9.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -478,6 +538,12 @@ public:
                     a9.value,
                     a10.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -531,6 +597,12 @@ public:
                     a10.value,
                     a11.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -586,6 +658,12 @@ public:
                     a11.value,
                     a12.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -643,6 +721,12 @@ public:
                     a12.value,
                     a13.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVar(vm, ret);
         return 1;
@@ -703,6 +787,12 @@ public:
                     a14.value
                 );
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
+
         PushVar(vm, ret);
         return 1;
     }
@@ -731,6 +821,12 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
 
         R & ret = (*method)();
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -764,6 +860,12 @@ public:
         R & ret = (*method)(
                     a1.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -799,6 +901,12 @@ public:
                     a1.value,
                     a2.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -836,6 +944,12 @@ public:
                     a2.value,
                     a3.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -875,6 +989,12 @@ public:
                     a3.value,
                     a4.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -916,6 +1036,12 @@ public:
                     a4.value,
                     a5.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -959,6 +1085,12 @@ public:
                     a5.value,
                     a6.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1004,6 +1136,12 @@ public:
                     a6.value,
                     a7.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1051,6 +1189,12 @@ public:
                     a7.value,
                     a8.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1100,6 +1244,12 @@ public:
                     a8.value,
                     a9.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1151,6 +1301,12 @@ public:
                     a9.value,
                     a10.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1204,6 +1360,12 @@ public:
                     a10.value,
                     a11.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1259,6 +1421,12 @@ public:
                     a11.value,
                     a12.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1316,6 +1484,12 @@ public:
                     a12.value,
                     a13.value
                 );
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
 
         PushVarR(vm, ret);
         return 1;
@@ -1376,6 +1550,12 @@ public:
                     a14.value
                 );
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
+
         PushVarR(vm, ret);
         return 1;
     }
@@ -1403,6 +1583,11 @@ public:
         M* method;
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
         (*method)();
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1434,6 +1619,11 @@ public:
         (*method)(
             a1.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1467,6 +1657,11 @@ public:
             a1.value,
             a2.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1502,6 +1697,11 @@ public:
             a2.value,
             a3.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1539,6 +1739,11 @@ public:
             a3.value,
             a4.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1578,6 +1783,11 @@ public:
             a4.value,
             a5.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1619,6 +1829,11 @@ public:
             a5.value,
             a6.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1662,6 +1877,11 @@ public:
             a6.value,
             a7.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1707,6 +1927,11 @@ public:
             a7.value,
             a8.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1754,6 +1979,11 @@ public:
             a8.value,
             a9.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1803,6 +2033,11 @@ public:
             a9.value,
             a10.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1854,6 +2089,11 @@ public:
             a10.value,
             a11.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1907,6 +2147,11 @@ public:
             a11.value,
             a12.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -1962,6 +2207,11 @@ public:
             a12.value,
             a13.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 
@@ -2019,6 +2269,11 @@ public:
             a13.value,
             a14.value
         );
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (!overloaded && Error::Instance().Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        }
+#endif
         return 0;
     }
 };
