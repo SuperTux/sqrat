@@ -597,9 +597,11 @@ protected:
             sq_pushobject(vm, ClassType<C>::ClassObject(vm));
         }
         else
-        {  // the containing environment is the root table??
+        {
+            // the containing environment is the root table??
             sq_pushroottable(vm);
         }
+
         // Bind overload handler
         sq_pushstring(vm, name, -1);
         sq_pushstring(vm, name, -1); // function name is passed as a free variable
@@ -607,7 +609,6 @@ protected:
         sq_newslot(vm, -3, false);
 
         // Bind overloaded allocator function
-
         sq_pushstring(vm, overloadName.c_str(), -1);
         sq_newclosure(vm, method, 0);
         sq_setparamscheck(vm,nParams + 1,NULL);

@@ -69,11 +69,10 @@ public:
 template<class C>
 class DefaultAllocator {
 
-    static SQInteger setInstance(HSQUIRRELVM vm, C* instance)
+    static void setInstance(HSQUIRRELVM vm, C* instance)
     {
         sq_setinstanceup(vm, 1, instance);
         sq_setreleasehook(vm, 1, &Delete);
-        return 0;
     }
 
     template <class T, bool b>
@@ -125,42 +124,40 @@ public:
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2>
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3>
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value
+
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -169,18 +166,15 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -190,19 +184,16 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -213,20 +204,17 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -238,21 +226,18 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value,
-            a7.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value,
+                a7.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -265,22 +250,19 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value,
-            a7.value,
-            a8.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value,
+                a7.value,
+                a8.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8,typename A9>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -294,23 +276,20 @@ public:
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value,
-            a7.value,
-            a8.value,
-            a9.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value,
+                a7.value,
+                a8.value,
+                a9.value
             ));
+        }
+        return 0;
     }
     /// @endcond
 
@@ -475,11 +454,10 @@ public:
 template<class C>
 class NoCopy {
 
-    static SQInteger setInstance(HSQUIRRELVM vm, C* instance)
+    static void setInstance(HSQUIRRELVM vm, C* instance)
     {
         sq_setinstanceup(vm, 1, instance);
         sq_setreleasehook(vm, 1, &Delete);
-        return 0;
     }
 
     template <class T, bool b>
@@ -531,31 +509,25 @@ public:
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2>
     static SQInteger iNew(HSQUIRRELVM vm) {
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -563,17 +535,14 @@ public:
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -582,18 +551,15 @@ public:
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -603,19 +569,16 @@ public:
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -626,20 +589,17 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -651,21 +611,18 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value,
-            a7.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value,
+                a7.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -678,22 +635,19 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value,
-            a7.value,
-            a8.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value,
+                a7.value,
+                a8.value
             ));
+        }
+        return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8,typename A9>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -707,23 +661,20 @@ public:
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-        }
-#endif
-
-        return setInstance(vm, new C(
-            a1.value,
-            a2.value,
-            a3.value,
-            a4.value,
-            a5.value,
-            a6.value,
-            a7.value,
-            a8.value,
-            a9.value
+        if (!Error::Instance().Occurred(vm)) {
+            setInstance(vm, new C(
+                a1.value,
+                a2.value,
+                a3.value,
+                a4.value,
+                a5.value,
+                a6.value,
+                a7.value,
+                a8.value,
+                a9.value
             ));
+        }
+        return 0;
     }
     /// @endcond
 
