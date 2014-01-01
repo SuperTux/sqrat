@@ -113,7 +113,7 @@ public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// @cond DEV
-    /// following New functions are used only if constructors are bound via Ctor() in class
+    /// following iNew functions are used only if constructors are bound via Ctor() in class
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <int count>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -322,6 +322,7 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
+        UNUSED(size);
         C* instance = reinterpret_cast<C*>(ptr);
         delete instance;
         return 0;
@@ -350,6 +351,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
 #else
+        UNUSED(vm);
         return 0;
 #endif
     }
@@ -365,6 +367,9 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
+        UNUSED(vm);
+        UNUSED(idx);
+        UNUSED(value);
         return 0;
     }
 
@@ -378,6 +383,8 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
+        UNUSED(ptr);
+        UNUSED(size);
         return 0;
     }
 };
@@ -404,6 +411,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         return sq_throwerror(vm, (ClassType<C>::ClassName(vm) + string(_SC(" constructing is not allowed"))).c_str());
 #else
+        UNUSED(vm);
         return 0;
 #endif
     }
@@ -435,6 +443,7 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
+        UNUSED(size);
         C* instance = reinterpret_cast<C*>(ptr);
         delete instance;
         return 0;
@@ -498,7 +507,7 @@ public:
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// @cond DEV
-    /// following New functions are used only if constructors are bound via Ctor() in class
+    /// following iNew functions are used only if constructors are bound via Ctor() in class
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <int count>
     static SQInteger iNew(HSQUIRRELVM vm) {
@@ -689,6 +698,9 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Copy(HSQUIRRELVM vm, SQInteger idx, const void* value) {
+        UNUSED(vm);
+        UNUSED(idx);
+        UNUSED(value);
         return 0;
     }
 
@@ -702,6 +714,7 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
+        UNUSED(size);
         C* instance = reinterpret_cast<C*>(ptr);
         delete instance;
         return 0;

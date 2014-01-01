@@ -99,7 +99,7 @@ template <typename T>
 struct popAsInt<T, false>
 {
     T value;  // cannot be initialized because unknown constructor parameters
-    popAsInt(HSQUIRRELVM vm, SQInteger idx)
+    popAsInt(HSQUIRRELVM /*vm*/, SQInteger /*idx*/)
     {
         // keep the current error message already set previously, do not touch that here
     }
@@ -200,14 +200,14 @@ struct Var {
 private:
     template <class T2, bool b>
     struct pushAsInt {
-        void push(HSQUIRRELVM vm, const T2 & value) {
+        void push(HSQUIRRELVM vm, const T2& /*value*/) {
             sq_pushnull(vm);
         }
     };
 
     template <class T2>
     struct pushAsInt<T2, true> {
-        void push(HSQUIRRELVM vm, const T2 & value) {
+        void push(HSQUIRRELVM vm, const T2& value) {
             sq_pushinteger(vm, static_cast<SQInteger>(value));
         }
     };

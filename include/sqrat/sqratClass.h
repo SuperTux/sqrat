@@ -55,7 +55,7 @@ namespace Sqrat
 template<class C, class A = DefaultAllocator<C> >
 class Class : public Object
 {
-    static SQInteger cleanup_hook(SQUserPointer p, SQInteger size)
+    static SQInteger cleanup_hook(SQUserPointer p, SQInteger /*size*/)
     {
         HSQUIRRELVM v = *(HSQUIRRELVM *) p;
         ClassTypeData<C, void>* ptr = static_cast<ClassTypeData<C, void>*>(ClassType<C>::getClassTypeData(v));
@@ -842,7 +842,7 @@ public:
 template<class C, class B, class A = DefaultAllocator<C> >
 class DerivedClass : public Class<C, A>
 {
-    static SQInteger cleanup_hook(SQUserPointer p, SQInteger size)
+    static SQInteger cleanup_hook(SQUserPointer p, SQInteger /*size*/)
     {
         HSQUIRRELVM v = *(HSQUIRRELVM *) p;
         ClassTypeData<C, B>* ptr = static_cast<ClassTypeData<C, B>*>(ClassType<C>::getClassTypeData(v));
