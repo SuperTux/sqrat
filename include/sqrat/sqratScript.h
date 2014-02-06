@@ -59,19 +59,19 @@ public:
     /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void CompileString(const string& script) {
+    void CompileString(const string& script, const string& name = _SC("")) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
             sq_resetobject(&obj);
         }
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
+        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), name.c_str(), true))) {
             Error::Instance().Throw(vm, LastErrorString(vm));
             return;
         }
 #else
-        sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
+        sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), name.c_str(), true);
 #endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
@@ -85,19 +85,19 @@ public:
     /// \param errMsg String that is filled with any errors that may occur
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool CompileString(const string& script, string& errMsg) {
+    bool CompileString(const string& script, string& errMsg, const string& name = _SC("")) {
         if(!sq_isnull(obj)) {
             sq_release(vm, &obj);
             sq_resetobject(&obj);
         }
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true))) {
+        if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), name.c_str(), true))) {
             errMsg = LastErrorString(vm);
             return false;
         }
 #else
-        sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), _SC(""), true);
+        sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), name.c_str(), true);
 #endif
         sq_getstackobj(vm,-1,&obj);
         sq_addref(vm, &obj);
