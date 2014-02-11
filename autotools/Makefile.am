@@ -111,4 +111,21 @@ array_binding_SOURCES = $(sqrat_srcdir)/sqrattest/ArrayBinding.cpp
 array_binding_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 array_binding_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
 
+if HAVE_DOXYGEN
+directory = $(sqrat_builddir)/docs/man/man3/
+
+dist_man_MANS = $(directory)/man_page_1.3 $(directory)/man_page_2.3
+$(directory)/man_page_1.3: doxyfile.stamp
+$(directory)/man_page_2.3: doxyfile.stamp
+
+doxyfile.stamp:
+	$(DOXYGEN) $(sqrat_builddir)/docs/Doxyfile
+	echo Timestamp > doxyfile.stamp
+
+CLEANFILES += doxyfile.stamp
+
+all-local: doxyfile.stamp
+clean-local:
+	rm -rf $(sqrat_builddir)/docs
+endif 
 

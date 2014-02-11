@@ -83,7 +83,8 @@ host_triplet = @host@
 target_triplet = @target@
 DIST_COMMON = $(top_srcdir)/makerules INSTALL NEWS README AUTHORS \
 	ChangeLog $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(top_srcdir)/configure $(am__configure_deps) depcomp \
+	$(top_srcdir)/configure $(am__configure_deps) \
+	$(top_srcdir)/docs/Doxyfile.in depcomp $(dist_man_MANS) \
 	$(nobase_include_HEADERS) test-driver COPYING compile \
 	config.guess config.sub install-sh missing
 TESTS = import_test$(EXEEXT) class_binding$(EXEEXT) \
@@ -95,6 +96,7 @@ TESTS = import_test$(EXEEXT) class_binding$(EXEEXT) \
 	sqrat_vm$(EXEEXT) null_pointer_return$(EXEEXT) \
 	func_input_argument_type$(EXEEXT) array_binding$(EXEEXT)
 noinst_PROGRAMS = sq_interp$(EXEEXT) $(am__EXEEXT_1)
+@HAVE_DOXYGEN_TRUE@am__append_1 = doxyfile.stamp
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -103,7 +105,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = docs/Doxyfile
 CONFIG_CLEAN_VPATH_FILES =
 LIBRARIES = $(noinst_LIBRARIES)
 AR = ar
@@ -328,7 +330,10 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(includedir)"
+man3dir = $(mandir)/man3
+am__installdirs = "$(DESTDIR)$(man3dir)" "$(DESTDIR)$(includedir)"
+NROFF = nroff
+MANS = $(dist_man_MANS)
 HEADERS = $(nobase_include_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
@@ -562,6 +567,7 @@ CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DOXYGEN = @DOXYGEN@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
@@ -657,7 +663,7 @@ noinst_libdir = $(sqrat_builddir)
 noinst_bindir = $(sqrat_builddir)
 ORIGPATH = $(sqrat_srcdir)
 BUILT_SOURCES = scripts
-CLEANFILES = scripts
+CLEANFILES = scripts $(am__append_1)
 nobase_include_HEADERS = $(ORIGPATH)/include/sqmodule.h\
     $(ORIGPATH)/include/sqrat.h $(ORIGPATH)/include/sqratimport.h\
     $(ORIGPATH)/include/sqrat/sqratAllocator.h\
@@ -732,6 +738,8 @@ func_input_argument_type_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(L
 array_binding_SOURCES = $(sqrat_srcdir)/sqrattest/ArrayBinding.cpp 
 array_binding_CXXFLAGS = -I$(ORIGPATH)/sqrattest -I$(ORIGPATH)/gtest-1.3.0/include/ $(AM_CXXFLAGS)
 array_binding_LDADD = -L$(sqrat_builddir) -lsqrattestmain -lgtest $(LDADD) 
+@HAVE_DOXYGEN_TRUE@directory = $(sqrat_builddir)/docs/man/man3/
+@HAVE_DOXYGEN_TRUE@dist_man_MANS = $(directory)/man_page_1.3 $(directory)/man_page_2.3
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -772,6 +780,8 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
+@HAVE_DOXYGEN_TRUE@docs/Doxyfile: $(top_builddir)/config.status $(top_srcdir)/docs/Doxyfile.in
+@HAVE_DOXYGEN_TRUE@	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
@@ -1270,6 +1280,49 @@ table_binding-TableBinding.obj: $(sqrat_srcdir)/sqrattest/TableBinding.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+install-man3: $(dist_man_MANS)
+	@$(NORMAL_INSTALL)
+	@list1=''; \
+	list2='$(dist_man_MANS)'; \
+	test -n "$(man3dir)" \
+	  && test -n "`echo $$list1$$list2`" \
+	  || exit 0; \
+	echo " $(MKDIR_P) '$(DESTDIR)$(man3dir)'"; \
+	$(MKDIR_P) "$(DESTDIR)$(man3dir)" || exit 1; \
+	{ for i in $$list1; do echo "$$i"; done;  \
+	if test -n "$$list2"; then \
+	  for i in $$list2; do echo "$$i"; done \
+	    | sed -n '/\.3[a-z]*$$/p'; \
+	fi; \
+	} | while read p; do \
+	  if test -f $$p; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; echo "$$p"; \
+	done | \
+	sed -e 'n;s,.*/,,;p;h;s,.*\.,,;s,^[^3][0-9a-z]*$$,3,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,' | \
+	sed 'N;N;s,\n, ,g' | { \
+	list=; while read file base inst; do \
+	  if test "$$base" = "$$inst"; then list="$$list $$file"; else \
+	    echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man3dir)/$$inst'"; \
+	    $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man3dir)/$$inst" || exit $$?; \
+	  fi; \
+	done; \
+	for i in $$list; do echo "$$i"; done | $(am__base_list) | \
+	while read files; do \
+	  test -z "$$files" || { \
+	    echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(man3dir)'"; \
+	    $(INSTALL_DATA) $$files "$(DESTDIR)$(man3dir)" || exit $$?; }; \
+	done; }
+
+uninstall-man3:
+	@$(NORMAL_UNINSTALL)
+	@list=''; test -n "$(man3dir)" || exit 0; \
+	files=`{ for i in $$list; do echo "$$i"; done; \
+	l2='$(dist_man_MANS)'; for i in $$l2; do echo "$$i"; done | \
+	  sed -n '/\.3[a-z]*$$/p'; \
+	} | sed -e 's,.*/,,;h;s,.*\.,,;s,^[^3][0-9a-z]*$$,3,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,'`; \
+	dir='$(DESTDIR)$(man3dir)'; $(am__uninstall_files_from_dir)
 install-nobase_includeHEADERS: $(nobase_include_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(nobase_include_HEADERS)'; test -n "$(includedir)" || list=; \
@@ -1782,9 +1835,10 @@ check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
-all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(HEADERS)
+@HAVE_DOXYGEN_FALSE@all-local:
+all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(MANS) $(HEADERS) all-local
 installdirs:
-	for dir in "$(DESTDIR)$(includedir)"; do \
+	for dir in "$(DESTDIR)$(man3dir)" "$(DESTDIR)$(includedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -1823,10 +1877,11 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+@HAVE_DOXYGEN_FALSE@clean-local:
 clean: clean-am
 
-clean-am: clean-generic clean-noinstLIBRARIES clean-noinstPROGRAMS \
-	mostlyclean-am
+clean-am: clean-generic clean-local clean-noinstLIBRARIES \
+	clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -1847,7 +1902,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_includeHEADERS
+install-data-am: install-man install-nobase_includeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -1863,7 +1918,7 @@ install-info: install-info-am
 
 install-info-am:
 
-install-man:
+install-man: install-man3
 
 install-pdf: install-pdf-am
 
@@ -1894,13 +1949,15 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-nobase_includeHEADERS
+uninstall-am: uninstall-man uninstall-nobase_includeHEADERS
+
+uninstall-man: uninstall-man3
 
 .MAKE: all check check-am install install-am install-strip
 
-.PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
-	check-am clean clean-cscope clean-generic \
-	clean-noinstLIBRARIES clean-noinstPROGRAMS cscope \
+.PHONY: CTAGS GTAGS TAGS all all-am all-local am--refresh check \
+	check-TESTS check-am clean clean-cscope clean-generic \
+	clean-local clean-noinstLIBRARIES clean-noinstPROGRAMS cscope \
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	distcheck distclean distclean-compile distclean-generic \
@@ -1908,16 +1965,27 @@ uninstall-am: uninstall-nobase_includeHEADERS
 	dvi-am html html-am info info-am install install-am \
 	install-data install-data-am install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man \
+	install-info install-info-am install-man install-man3 \
 	install-nobase_includeHEADERS install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic pdf pdf-am ps ps-am recheck tags tags-am \
-	uninstall uninstall-am uninstall-nobase_includeHEADERS
+	uninstall uninstall-am uninstall-man uninstall-man3 \
+	uninstall-nobase_includeHEADERS
 
 scripts: Makefile
 	-ln -s $(ORIGPATH)/sqrattest/scripts $(sqrat_builddir)
+@HAVE_DOXYGEN_TRUE@$(directory)/man_page_1.3: doxyfile.stamp
+@HAVE_DOXYGEN_TRUE@$(directory)/man_page_2.3: doxyfile.stamp
+
+@HAVE_DOXYGEN_TRUE@doxyfile.stamp:
+@HAVE_DOXYGEN_TRUE@	$(DOXYGEN) $(sqrat_builddir)/docs/Doxyfile
+@HAVE_DOXYGEN_TRUE@	echo Timestamp > doxyfile.stamp
+
+@HAVE_DOXYGEN_TRUE@all-local: doxyfile.stamp
+@HAVE_DOXYGEN_TRUE@clean-local:
+@HAVE_DOXYGEN_TRUE@	rm -rf $(sqrat_builddir)/docs
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
