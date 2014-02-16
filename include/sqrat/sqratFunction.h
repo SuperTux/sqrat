@@ -1208,7 +1208,7 @@ public:
         }
 
         SQRESULT result = sq_call(vm, 1, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1217,7 +1217,7 @@ public:
         }
 #else
         sq_call(vm, 1, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1251,7 +1251,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 2, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1260,7 +1260,7 @@ public:
         }
 #else
         sq_call(vm, 2, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1297,7 +1297,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 3, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1306,7 +1306,7 @@ public:
         }
 #else
         sq_call(vm, 3, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1346,7 +1346,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 4, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1355,7 +1355,7 @@ public:
         }
 #else
         sq_call(vm, 4, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1398,7 +1398,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 5, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1407,7 +1407,7 @@ public:
         }
 #else
         sq_call(vm, 5, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1453,7 +1453,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 6, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1462,7 +1462,7 @@ public:
         }
 #else
         sq_call(vm, 6, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1511,7 +1511,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 7, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1520,7 +1520,7 @@ public:
         }
 #else
         sq_call(vm, 7, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1572,7 +1572,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 8, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1581,7 +1581,7 @@ public:
         }
 #else
         sq_call(vm, 8, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1636,7 +1636,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 9, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1645,7 +1645,7 @@ public:
         }
 #else
         sq_call(vm, 9, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1703,7 +1703,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 10, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1712,7 +1712,7 @@ public:
         }
 #else
         sq_call(vm, 10, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1773,7 +1773,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 11, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1782,7 +1782,7 @@ public:
         }
 #else
         sq_call(vm, 11, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1846,7 +1846,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 12, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1855,7 +1855,7 @@ public:
         }
 #else
         sq_call(vm, 12, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -1923,7 +1923,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 13, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -1932,7 +1932,7 @@ public:
         }
 #else
         sq_call(vm, 13, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -2002,7 +2002,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 14, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -2011,7 +2011,7 @@ public:
         }
 #else
         sq_call(vm, 14, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
@@ -2084,7 +2084,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 15, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 
         //handle an error: throw the exception
         if(SQ_FAILED(result)) {
@@ -2093,7 +2093,7 @@ public:
         }
 #else
         sq_call(vm, 15, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 2);
+        sq_pop(vm, 1);
 #endif
     }
 
