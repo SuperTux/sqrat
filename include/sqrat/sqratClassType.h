@@ -69,24 +69,27 @@ struct ClassTypeData : public ClassTypeDataBase {
 // Internal helper class for managing classes
 template<class C>
 struct ClassType {
-
-    static std::map< HSQUIRRELVM, ClassTypeDataBase* > s_classTypeDataMap;
+    
+    static inline std::map<HSQUIRRELVM, ClassTypeDataBase*>& s_classTypeDataMap() {
+        static std::map< HSQUIRRELVM, ClassTypeDataBase* > s_classTypeDataMap;
+        return s_classTypeDataMap;
+    }
 
     static inline ClassTypeDataBase*& getClassTypeData(HSQUIRRELVM vm) {
         //TODO: use mutex to lock s_classTypeDataMap in multithreaded environment
-        return s_classTypeDataMap[vm];
+        return s_classTypeDataMap()[vm];
     }
 
     static inline bool hasClassTypeData(HSQUIRRELVM vm) {
         //TODO: use mutex to lock s_classTypeDataMap in multithreaded environment
-        return (s_classTypeDataMap.find(vm) != s_classTypeDataMap.end());
+        return (s_classTypeDataMap().find(vm) != s_classTypeDataMap().end());
     }
 
     static inline void deleteClassTypeData(HSQUIRRELVM vm) {
         //TODO: use mutex to lock s_classTypeDataMap in multithreaded environment
-        std::map< HSQUIRRELVM, ClassTypeDataBase* >::iterator it = s_classTypeDataMap.find(vm);
-        if(it != s_classTypeDataMap.end()) {
-            s_classTypeDataMap.erase(it);
+        std::map< HSQUIRRELVM, ClassTypeDataBase* >::iterator it = s_classTypeDataMap().find(vm);
+        if(it != s_classTypeDataMap().end()) {
+            s_classTypeDataMap().erase(it);
         }
     }
 
@@ -180,9 +183,6 @@ struct ClassType {
         return static_cast<C*>(ptr);
     }
 };
-
-template<class C>
-std::map< HSQUIRRELVM, ClassTypeDataBase* > ClassType<C>::s_classTypeDataMap;
 
 /// @endcond
 
