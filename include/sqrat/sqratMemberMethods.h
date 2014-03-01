@@ -5213,7 +5213,7 @@ inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
     sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
     M member = *memberPtr;
 
-    PushVar(vm, ptr->*member);
+    PushVarR(vm, ptr->*member);
 
     return 1;
 }
@@ -5226,7 +5226,7 @@ inline SQInteger sqStaticGet(HSQUIRRELVM vm) {
     sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
     M member = *memberPtr;
 
-    PushVar(vm, *member);
+    PushVarR(vm, *member);
 
     return 1;
 }

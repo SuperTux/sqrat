@@ -1026,6 +1026,42 @@ public:
 };
 #endif
 
+
+// Non-referencable type definitions
+template<class T> struct is_referencable {static const bool value = true;};
+
+#define SCRAT_MAKE_NONREFERENCABLE( type ) \
+ template<> struct is_referencable<type> {static const bool value = false;};
+
+SCRAT_MAKE_NONREFERENCABLE(unsigned int)
+SCRAT_MAKE_NONREFERENCABLE(signed int)
+SCRAT_MAKE_NONREFERENCABLE(unsigned long)
+SCRAT_MAKE_NONREFERENCABLE(signed long)
+SCRAT_MAKE_NONREFERENCABLE(unsigned short)
+SCRAT_MAKE_NONREFERENCABLE(signed short)
+SCRAT_MAKE_NONREFERENCABLE(unsigned char)
+SCRAT_MAKE_NONREFERENCABLE(signed char)
+SCRAT_MAKE_NONREFERENCABLE(unsigned long long)
+SCRAT_MAKE_NONREFERENCABLE(signed long long)
+SCRAT_MAKE_NONREFERENCABLE(float)
+SCRAT_MAKE_NONREFERENCABLE(double)
+SCRAT_MAKE_NONREFERENCABLE(bool)
+SCRAT_MAKE_NONREFERENCABLE(SQChar*)
+SCRAT_MAKE_NONREFERENCABLE(string)
+
+#ifdef _MSC_VER
+#if defined(__int64)
+SCRAT_MAKE_NONREFERENCABLE(unsigned __int64)
+SCRAT_MAKE_NONREFERENCABLE(signed __int64)
+#endif
+#endif
+
+#ifdef SQUNICODE
+SCRAT_MAKE_NONREFERENCABLE(char*)
+SCRAT_MAKE_NONREFERENCABLE(std::string)
+#endif
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Pushes a value on to a given VM's stack
 ///
@@ -1036,7 +1072,8 @@ public:
 ///
 /// \remarks
 /// What this function does is defined by Sqrat::Var template specializations,
-/// and thus you can create custom functionality for it by making new ones.
+/// and thus you can create custom functionality for it by making new template specializations.
+/// When making a custom type that is not referencable, you must use SCRAT_MAKE_NONREFERENCABLE( type )
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
@@ -1064,12 +1101,17 @@ inline void PushVar<int>(HSQUIRRELVM vm, int value) {
 ///
 /// \remarks
 /// What this function does is defined by Sqrat::Var template specializations,
-/// and thus you can create custom functionality for it by making new ones.
+/// and thus you can create custom functionality for it by making new template specializations.
+/// When making a custom type that is not referencable, you must use SCRAT_MAKE_NONREFERENCABLE( type )
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
-inline void PushVarR(HSQUIRRELVM vm, T & value) {
-    Var<T&>::push(vm, value);
+inline void PushVarR(HSQUIRRELVM vm, T& value) {
+    if (is_referencable<typename remove_const<typename remove_reference<T>::type>::type>::value) {
+        Var<T&>::push(vm, value);
+    } else {
+        PushVar(vm, value);
+    }
 }
 
 }
