@@ -1114,12 +1114,6 @@ inline void PushVarR(HSQUIRRELVM vm, T& value) {
     }
 }
 
-/*
-template <>
-inline void PushVarR<const SQChar *>(HSQUIRRELVM vm, const SQChar * & value) {
-    PushVar(vm, value);
-}*/
-
 }
 
 #endif
