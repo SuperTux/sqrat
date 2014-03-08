@@ -34,7 +34,16 @@ public:
     const SQChar * lastName;
 };
 
-TEST_F(SqratTest, SimpleMembers) {
+TEST_F(SqratTest, CharPtrBindingtoString) {
+    // test use
+    if (is_referencable<typename remove_const<typename remove_reference<const char*>::type>::type>::value) {
+        std::cout << _SC("referenceable")  << std::endl;
+    } else {
+        std::cout << _SC("not referenceable") << std::endl;
+    }
+    // test use
+    
+    
     DefaultVM::Set(vm);
     Class<EmployeeName> name;
     name.Var(_SC("firstName"), &EmployeeName::firstName)

@@ -49,6 +49,7 @@ void UNUSED(const T&) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T> struct remove_const          {typedef T type;};
 template<class T> struct remove_const<const T> {typedef T type;};
+template<class T> struct remove_const<const T*> {typedef T* type;};
 template<class T> struct remove_reference      {typedef T type;};
 template<class T> struct remove_reference<T&>  {typedef T type;};
 /// @endcond
