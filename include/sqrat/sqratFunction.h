@@ -84,7 +84,8 @@ public:
         sq_addref(vm, &obj);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = so.GetType();
-        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
+        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE && value_type != OT_TABLE && value_type != OT_USERDATA && value_type != OT_CLASS) {
+            // Note that table, userdata, and class can act similar to C++ functors, and are thus considered functions
             Error::Instance().Throw(vm, _SC("function not found in slot"));
         }
 #endif
@@ -2591,8 +2592,9 @@ struct Var<Function&> {
         value = Function(vm, sqEnv, sqValue);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
-        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
+        if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE && value_type != OT_TABLE && value_type != OT_USERDATA && value_type != OT_CLASS) {
+            // Note that table, userdata, and class can act similar to C++ functors, and are thus considered functions
+            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("function")));
         }
 #endif
     }
