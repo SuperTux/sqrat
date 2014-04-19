@@ -430,7 +430,7 @@ struct Var<const T* const> {
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Used to get and push class instances to and from the stack as SharedPtr
+/// Used to get (as copies) and push (as references) class instances to and from the stack as a SharedPtr
 ///
 /// \tparam T Type of instance (usually doesnt need to be defined explicitly)
 ///
@@ -451,7 +451,7 @@ struct Var<SharedPtr<T> > {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
-        const T& instance = Var<const T&>(vm, idx).value;
+        const T& instance = Var<T&>(vm, idx).value;
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!Error::Instance().Occurred(vm)) {
 #endif
@@ -468,8 +468,8 @@ struct Var<SharedPtr<T> > {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, SharedPtr<T> value) {
-        PushVarR(vm, value.Get());
+    static void push(HSQUIRRELVM vm, SharedPtr<T>& value) {
+        PushVarR(vm, *value);
     }
 };
 
