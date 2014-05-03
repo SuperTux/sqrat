@@ -5276,7 +5276,7 @@ inline SQInteger sqDefaultSet(HSQUIRRELVM vm) {
     sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
     M member = *memberPtr;
 
-    ptr->*member = Var<V>(vm, 2).value;
+    ptr->*member = Var<const V&>(vm, 2).value;
     return 0;
 }
 
@@ -5287,7 +5287,7 @@ inline SQInteger sqStaticSet(HSQUIRRELVM vm) {
     sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
     M member = *memberPtr;
 
-    *member = Var<V>(vm, 2).value;
+    *member = Var<const V&>(vm, 2).value;
     return 0;
 }
 
