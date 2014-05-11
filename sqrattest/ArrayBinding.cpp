@@ -175,18 +175,18 @@ TEST_F(SqratTest, PassingArrayIn2) {
         local i; \
         local a2 = array(12); \
         for (i = 0; i < a2.len(); i++) \
-            touch_element2(a2, i, 1 - i);\
+            touch_element2(a2, i, 1 - i); \
         \
         for (i = 0; i < a2.len(); i++) \
-            gTest.EXPECT_INT_EQ( a2[i], 1 - i);\
-        \        
-        for (i = 0; i < a2.len(); i++) \
-            touch_element(a2, i, 1 + i);\
+            gTest.EXPECT_INT_EQ( a2[i], 1 - i); \
         \
         for (i = 0; i < a2.len(); i++) \
-            gTest.EXPECT_INT_EQ( a2[i], 1 + i);\
-        \        
-           ");
+            touch_element(a2, i, 1 + i); \
+        \
+        for (i = 0; i < a2.len(); i++) \
+            gTest.EXPECT_INT_EQ( a2[i], 1 + i); \
+        \
+        ");
     DefaultVM::Set(vm);
     RootTable().Func(_SC("touch_element2"), &touch_element2);
     RootTable().Func(_SC("touch_element"), &touch_element);

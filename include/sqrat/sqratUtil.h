@@ -44,17 +44,6 @@ void UNUSED(const T&) {
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @cond DEV
-/// used internally to get the underlying type of variables
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<class T> struct remove_const          {typedef T type;};
-template<class T> struct remove_const<const T> {typedef T type;};
-template<class T> struct remove_const<const T*> {typedef T* type;};
-template<class T> struct remove_reference      {typedef T type;};
-template<class T> struct remove_reference<T&>  {typedef T type;};
-/// @endcond
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Defines a string that is definitely compatible with the version of Squirrel being used (normally this is std::string)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef std::basic_string<SQChar> string;
@@ -518,15 +507,6 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Checks if there is an associated managed object
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    operator bool() const
-    {
-        return m_Ptr != NULL;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Checks if there is NOT an associated managed object
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -680,6 +660,26 @@ public:
         return m_Ptr;
     }
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @cond DEV
+/// used internally to get and manipulate the underlying type of variables
+/// retrieved from cppreference.com
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<class T> struct remove_const                                                {typedef T type;};
+template<class T> struct remove_const<const T>                                       {typedef T type;};
+template<class T> struct remove_volatile                                             {typedef T type;};
+template<class T> struct remove_volatile<volatile T>                                 {typedef T type;};
+template<class T> struct remove_cv                                                   {typedef typename remove_volatile<typename remove_const<T>::type>::type type;};
+template<class T> struct remove_reference                                            {typedef T type;};
+template<class T> struct remove_reference<T&>                                        {typedef T type;};
+template<class T> struct is_pointer_helper                                           {static const bool value = false;};
+template<class T> struct is_pointer_helper<T*>                                       {static const bool value = true;};
+template<class T> struct is_pointer_helper<SharedPtr<T> >                            {static const bool value = true;};
+template<class T> struct is_pointer : is_pointer_helper<typename remove_cv<T>::type> {};
+template<class T> struct is_reference                                                {static const bool value = false;};
+template<class T> struct is_reference<T&>                                            {static const bool value = true;};
+/// @endcond
 
 }
 

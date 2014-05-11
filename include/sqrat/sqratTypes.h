@@ -451,7 +451,7 @@ struct Var<SharedPtr<T> > {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
-        const T& instance = Var<T&>(vm, idx).value;
+        const T& instance = Var<const T&>(vm, idx).value;
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!Error::Instance().Occurred(vm)) {
 #endif
@@ -1107,7 +1107,7 @@ inline void PushVar<int>(HSQUIRRELVM vm, int value) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
 inline void PushVarR(HSQUIRRELVM vm, T& value) {
-    if (is_referencable<typename remove_const<typename remove_reference<T>::type>::type>::value) {
+    if (is_referencable<typename remove_cv<typename remove_reference<T>::type>::type>::value) {
         Var<T&>::push(vm, value);
     } else {
         PushVar(vm, value);
