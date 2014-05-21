@@ -213,6 +213,26 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Checks if the given key exists in the table
+    ///
+    /// \param name Key to check
+    ///
+    /// \return True on success, otherwise false
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool HasKey(const SQChar* name)
+    {
+        sq_pushobject(vm, obj);
+        sq_pushstring(vm, name, -1);
+        if (SQ_FAILED(sq_get(vm, -2))) {
+            sq_pop(vm, 1);
+            return false;
+        }
+        sq_pop(vm, 2);
+        return true;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns the value at a given key
     ///
     /// \param name Key of the element
