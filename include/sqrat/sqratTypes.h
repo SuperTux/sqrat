@@ -1105,7 +1105,7 @@ inline void PushVar<int>(HSQUIRRELVM vm, int value) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
 inline void PushVarR(HSQUIRRELVM vm, T& value) {
-    if (!is_pointer<T>::value && !is_reference<T>::value && is_referencable<typename remove_cv<T>::type>::value) {
+    if (!is_pointer<T>::value && is_referencable<typename remove_cv<T>::type>::value) {
         Var<T&>::push(vm, value);
     } else {
         PushVar(vm, value);
