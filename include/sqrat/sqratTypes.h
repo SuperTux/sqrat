@@ -1046,7 +1046,6 @@ SCRAT_MAKE_NONREFERENCABLE(signed long long)
 SCRAT_MAKE_NONREFERENCABLE(float)
 SCRAT_MAKE_NONREFERENCABLE(double)
 SCRAT_MAKE_NONREFERENCABLE(bool)
-SCRAT_MAKE_NONREFERENCABLE(SQChar*)
 SCRAT_MAKE_NONREFERENCABLE(string)
 
 #ifdef _MSC_VER
@@ -1057,7 +1056,6 @@ SCRAT_MAKE_NONREFERENCABLE(signed __int64)
 #endif
 
 #ifdef SQUNICODE
-SCRAT_MAKE_NONREFERENCABLE(char*)
 SCRAT_MAKE_NONREFERENCABLE(std::string)
 #endif
 
@@ -1107,7 +1105,7 @@ inline void PushVar<int>(HSQUIRRELVM vm, int value) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
 inline void PushVarR(HSQUIRRELVM vm, T& value) {
-    if (is_referencable<typename remove_cv<typename remove_reference<T>::type>::type>::value) {
+    if (!is_pointer<T>::value && !is_reference<T>::value && is_referencable<typename remove_cv<T>::type>::value) {
         Var<T&>::push(vm, value);
     } else {
         PushVar(vm, value);

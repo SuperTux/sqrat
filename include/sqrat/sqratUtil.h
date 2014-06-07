@@ -671,8 +671,6 @@ template<class T> struct remove_const<const T>                                  
 template<class T> struct remove_volatile                                             {typedef T type;};
 template<class T> struct remove_volatile<volatile T>                                 {typedef T type;};
 template<class T> struct remove_cv                                                   {typedef typename remove_volatile<typename remove_const<T>::type>::type type;};
-template<class T> struct remove_reference                                            {typedef T type;};
-template<class T> struct remove_reference<T&>                                        {typedef T type;};
 template<class T> struct is_pointer_helper                                           {static const bool value = false;};
 template<class T> struct is_pointer_helper<T*>                                       {static const bool value = true;};
 template<class T> struct is_pointer_helper<SharedPtr<T> >                            {static const bool value = true;};
