@@ -73,6 +73,7 @@ class DefaultAllocator {
     {
         sq_setinstanceup(vm, 1, instance);
         sq_setreleasehook(vm, 1, &Delete);
+        sq_getstackobj(vm, -1, &ClassType<C>::s_objectTable()[instance]);
     }
 
     template <class T, bool b>
@@ -309,6 +310,7 @@ public:
         C* instance = new C(*static_cast<const C*>(value));
         sq_setinstanceup(vm, idx, instance);
         sq_setreleasehook(vm, idx, &Delete);
+        sq_getstackobj(vm, -1, &ClassType<C>::s_objectTable()[instance]);
         return 0;
     }
 
@@ -323,6 +325,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         UNUSED(size);
+        ClassType<C>::RemoveFromObjectTable(ptr, size);
         C* instance = reinterpret_cast<C*>(ptr);
         delete instance;
         return 0;
@@ -430,6 +433,7 @@ public:
         C* instance = new C(*static_cast<const C*>(value));
         sq_setinstanceup(vm, idx, instance);
         sq_setreleasehook(vm, idx, &Delete);
+        sq_getstackobj(vm, -1, &ClassType<C>::s_objectTable()[instance]);
         return 0;
     }
 
@@ -444,6 +448,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         UNUSED(size);
+        ClassType<C>::RemoveFromObjectTable(ptr, size);
         C* instance = reinterpret_cast<C*>(ptr);
         delete instance;
         return 0;
@@ -467,6 +472,7 @@ class NoCopy {
     {
         sq_setinstanceup(vm, 1, instance);
         sq_setreleasehook(vm, 1, &Delete);
+        sq_getstackobj(vm, -1, &ClassType<C>::s_objectTable()[instance]);
     }
 
     template <class T, bool b>
@@ -715,6 +721,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         UNUSED(size);
+        ClassType<C>::RemoveFromObjectTable(ptr, size);
         C* instance = reinterpret_cast<C*>(ptr);
         delete instance;
         return 0;
