@@ -206,7 +206,7 @@ public:
     
     int set(int v)
     {
-        value = v;
+        return value = v;
     }
     int get()
     {
@@ -337,7 +337,7 @@ class AA: public A
 public:
     int setv(int v_) 
     {
-        v = v_;
+        return v = v_;
     }
     
     

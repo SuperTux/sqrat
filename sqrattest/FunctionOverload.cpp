@@ -173,7 +173,7 @@ public:
     
     int set(int v)
     {
-        value = v;
+        return value = v;
     }
     int get()
     {
