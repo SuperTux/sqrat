@@ -27,7 +27,8 @@ TEST_CPPS="ClassBinding.cpp\
     SuspendVM.cpp \
     NullPointerReturn.cpp\
     FuncInputArgumentType.cpp \
-    ArrayBinding.cpp "
+    ArrayBinding.cpp \
+    UniqueObject.cpp "
 
 for f in $TEST_CPPS; do
     gcc $CFLAGS \
