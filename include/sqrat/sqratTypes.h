@@ -455,7 +455,9 @@ struct Var<SharedPtr<T> > {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (!Error::Instance().Occurred(vm)) {
 #endif
-            value.Init(new T(*instance));
+            if (instance != NULL) {
+                value.Init(new T(*instance));
+            }
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         }
 #endif
