@@ -68,7 +68,7 @@ struct ClassTypeData : public ClassTypeDataBase {
 // Internal helper class for managing classes
 template<class C>
 struct ClassType {
-    
+
     static inline std::map<HSQUIRRELVM, ClassTypeDataBase*>& s_classTypeDataMap() {
         static std::map< HSQUIRRELVM, ClassTypeDataBase* > s_classTypeDataMap;
         return s_classTypeDataMap;
@@ -158,11 +158,14 @@ struct ClassType {
         CopyFunc(vm)(vm, -1, &value);
     }
 
-    static C* GetInstance(HSQUIRRELVM vm, SQInteger idx) {
+    static C* GetInstance(HSQUIRRELVM vm, SQInteger idx, bool nullAllowed = false) {
         SQUserPointer ptr = NULL;
         ClassTypeDataBase* classType = getClassTypeData(vm);
         if (classType != 0) /* type checking only done if the value has type data else it may be enum */
         {
+            if (nullAllowed && sq_gettype(vm, idx) == OT_NULL) {
+                return NULL;
+            }
 #if !defined (SCRAT_NO_ERROR_CHECKING)
             if (SQ_FAILED(sq_getinstanceup(vm, idx, &ptr, classType))) {
                 Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, ClassName(vm)));

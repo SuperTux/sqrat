@@ -5208,6 +5208,12 @@ template <class C, class V>
 inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
     C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+    if (Error::Instance().Occurred(vm)) {
+        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+    }
+#endif
+
     typedef V C::*M;
     M* memberPtr = NULL;
     sq_getuserdata(vm, -1, (SQUserPointer*)&memberPtr, NULL); // Get Member...
@@ -5281,6 +5287,13 @@ inline SQInteger sqDefaultSet(HSQUIRRELVM vm) {
     } else {
         ptr->*member = Var<const V&>(vm, 2).value;
     }
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+    if (Error::Instance().Occurred(vm)) {
+        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+    }
+#endif
+
     return 0;
 }
 
@@ -5296,6 +5309,13 @@ inline SQInteger sqStaticSet(HSQUIRRELVM vm) {
     } else {
         *member = Var<const V&>(vm, 2).value;
     }
+
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+    if (Error::Instance().Occurred(vm)) {
+        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+    }
+#endif
+
     return 0;
 }
 
