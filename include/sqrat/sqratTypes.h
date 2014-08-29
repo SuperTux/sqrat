@@ -451,16 +451,16 @@ struct Var<SharedPtr<T> > {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
-        T* instance = Var<T*>(vm, idx).value;
+        if (sq_gettype(vm, idx) != OT_NULL) {
+            Var<T> instance(vm, idx);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!Error::Instance().Occurred(vm)) {
+            if (!Error::Instance().Occurred(vm)) {
 #endif
-            if (instance != NULL) {
-                value.Init(new T(*instance));
+                value.Init(new T(instance.value));
+#if !defined (SCRAT_NO_ERROR_CHECKING)
             }
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        }
 #endif
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
