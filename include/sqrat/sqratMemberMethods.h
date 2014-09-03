@@ -5210,7 +5210,7 @@ inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
     if (Error::Instance().Occurred(vm)) {
-        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        return 0;
     }
 #endif
 
@@ -5288,12 +5288,6 @@ inline SQInteger sqDefaultSet(HSQUIRRELVM vm) {
         ptr->*member = Var<const V&>(vm, 2).value;
     }
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-    if (Error::Instance().Occurred(vm)) {
-        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-    }
-#endif
-
     return 0;
 }
 
@@ -5309,12 +5303,6 @@ inline SQInteger sqStaticSet(HSQUIRRELVM vm) {
     } else {
         *member = Var<const V&>(vm, 2).value;
     }
-
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-    if (Error::Instance().Occurred(vm)) {
-        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
-    }
-#endif
 
     return 0;
 }
