@@ -1,18 +1,21 @@
 Sqrat - Squirrel Binding Utility
 
 © 2009 Brandon Jones
-© 2011-2013 Li-Cheng (Andy) Tai
+© 2011-2014 Li-Cheng (Andy) Tai
+© 2013-2014 Brandon Haffen AKA Wizzard
 
 
 Sqrat is a C++ binding utility for the Squirrel language.
-See the docs directory for usage info.
+Up-to-date documentation can be created using Doxygen.
+Slightly outdated documentation can be found at
+http://scrat.sourceforge.net/0.9/
 
 Sqrat only contains C++ headers so for installation you just 
 need to copy the files in the include directory to 
 some common header path, such as /usr/local/include.
 
 However, an autotool based build system can be checked out from
-the SVN repository (not in the relase tar file to reduce file size)
+the code repository (not in the relase tar file to reduce file size)
 which  allows you to install, on POSIX systems, with 
 the familiar commands of 
 
