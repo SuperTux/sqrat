@@ -39,7 +39,7 @@ namespace Sqrat {
 /// removes unused variable warnings in a way that Doxygen can understand
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-void UNUSED(const T&) {
+void SQUNUSED(const T&) {
 }
 /// @endcond
 
