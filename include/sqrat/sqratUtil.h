@@ -148,16 +148,19 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static string FormatTypeError(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
         string err = _SC("wrong type (") + expectedType + _SC(" expected");
+#if (SQUIRREL_VERSION_NUMBER >= 200) && (SQUIRREL_VERSION_NUMBER < 300) // Squirrel 2.x
+        err = err + _SC(")");
+#else // Squirrel 3.x
         if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
             const SQChar* actualType;
             sq_tostring(vm, -1);
             sq_getstring(vm, -1, &actualType);
-            sq_pop(vm, 1);
+            sq_pop(vm, 2);
             err = err + _SC(", got ") + actualType + _SC(")");
         } else {
             err = err + _SC(", got unknown)");
         }
-        sq_pop(vm, 1);
+#endif
         return err;
     }
 
