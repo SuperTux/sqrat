@@ -34,6 +34,7 @@
 
 #include <iostream>
 #include <stdarg.h>
+#include <stdio.h>
 
 #include <sqstdio.h>
 #include <sqstdblob.h>
@@ -56,8 +57,6 @@ namespace Sqrat
 class SqratVM
 {
 private:
-    //static std::map<HSQUIRRELVM, SqratVM*> ms_sqratVMs;
-
     HSQUIRRELVM m_vm;
     Sqrat::RootTable* m_rootTable;
     Sqrat::Script* m_script;
@@ -66,33 +65,31 @@ private:
     static void s_addVM(HSQUIRRELVM vm, SqratVM* sqratvm)
     {
         //TODO: use mutex to lock ms_sqratVMs
-        (*ms_sqratVMs()).insert(std::make_pair(vm, sqratvm));
+        ms_sqratVMs().insert(std::make_pair(vm, sqratvm));
     }
 
     static void s_deleteVM(HSQUIRRELVM vm)
     {
         //TODO: use mutex to lock ms_sqratVMs
-        (*ms_sqratVMs()).erase(vm);
+        ms_sqratVMs().erase(vm);
     }
 
     static SqratVM* s_getVM(HSQUIRRELVM vm)
     {
         //TODO: use mutex to lock ms_sqratVMs
-        return  (*ms_sqratVMs())[vm];
+        return  ms_sqratVMs()[vm];
     }
 
 
 private:
 
-    static std::map<HSQUIRRELVM, SqratVM*> *ms_sqratVMs()
+    static std::map<HSQUIRRELVM, SqratVM*> ms_sqratVMs()
     {
-        static std::map<HSQUIRRELVM, SqratVM*> *ms = 0;
-        if (ms == 0)
-            ms = new std::map<HSQUIRRELVM, SqratVM*> ;
+        static std::map<HSQUIRRELVM, SqratVM*> ms;
         return ms;
     }
 
-    static void printFunc(HSQUIRRELVM v, const SQChar *s, ...)
+    static void printFunc(HSQUIRRELVM /*v*/, const SQChar *s, ...)
     {
         va_list vl;
         va_start(vl, s);
@@ -342,8 +339,6 @@ public:
     }
 
 };
-
-//std::map<HSQUIRRELVM, SqratVM*> SqratVM::ms_sqratVMs;
 
 }
 
