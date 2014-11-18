@@ -26,7 +26,7 @@ using namespace Sqrat;
 TEST_F(SqratTest, UniqueObject) {
   DefaultVM::Set(vm);
 
-  Class<CxxObject> cls(vm);
+  Class<CxxObject> cls(vm, _SC("CxxObject"));
   cls.Func<CxxObject& (CxxObject::*)()>(_SC("cxx_ptr"), &CxxObject::cxx_ptr);
   RootTable(vm).Bind(_SC("CxxObject"), cls);
 

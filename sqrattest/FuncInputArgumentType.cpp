@@ -126,7 +126,7 @@ static const SQChar *sq_code = _SC("\
 TEST_F(SqratTest, NumericArgumentTypeConversionAndCheck) {
     DefaultVM::Set(vm);
     
-    Sqrat::Class<Vector2> classVector2(vm);
+    Sqrat::Class<Vector2> classVector2(vm, _SC("Vector2"));
     
     classVector2.Func(_SC("add"), &Vector2::add);
     
@@ -136,13 +136,13 @@ TEST_F(SqratTest, NumericArgumentTypeConversionAndCheck) {
             
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
 }
@@ -173,7 +173,7 @@ static const char *sq_code2 = _SC("\
 TEST_F(SqratTest, FunctionOfSameNumberOfArgumentsButDifferentTypesBinding) {
     DefaultVM::Set(vm);
     
-    Sqrat::Class<F> Fclass(vm);
+    Sqrat::Class<F> Fclass(vm, _SC("F"));
     Fclass.Func<int (F::*)(int, char)>(_SC("f1"), &F::func);
     Fclass.Func<const char * (F::*)(char, const char*)>(_SC("f2"), &F::func);
     
@@ -181,13 +181,13 @@ TEST_F(SqratTest, FunctionOfSameNumberOfArgumentsButDifferentTypesBinding) {
             
     Script script;
     script.CompileString(sq_code2);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
 }

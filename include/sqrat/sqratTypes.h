@@ -87,7 +87,7 @@ struct popAsInt
             break;
         default:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer")));
+            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer")));
 #endif
             value = static_cast<T>(0);
             break;
@@ -130,7 +130,7 @@ struct popAsFloat
             break;
         default:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float")));
+            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float")));
 #endif
             value = 0;
             break;
@@ -164,7 +164,7 @@ struct Var {
     Var(HSQUIRRELVM vm, SQInteger idx) {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         // don't want to override previous errors
-        if (!Sqrat::Error::Instance().Occurred(vm)) {
+        if (!Sqrat::Error::Occurred(vm)) {
 #endif
             // check if return is NULL here because copying (not referencing)
             T* ptr = ClassType<T>::GetInstance(vm, idx, true);
@@ -172,7 +172,7 @@ struct Var {
                 value = *ptr;
 #if !defined (SCRAT_NO_ERROR_CHECKING)
             } else if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
-                Sqrat::Error::Instance().Clear(vm);
+                Sqrat::Error::Clear(vm);
                 value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
             } else
                 // initialize value to avoid warnings
@@ -191,7 +191,7 @@ struct Var {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, const T& value) {
-        if (ClassType<T>::hasClassTypeData(vm))
+        if (ClassType<T>::hasClassData(vm))
             ClassType<T>::PushInstanceCopy(vm, value);
         else /* try integral type */
             pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, (value));
@@ -454,7 +454,7 @@ struct Var<SharedPtr<T> > {
         if (sq_gettype(vm, idx) != OT_NULL) {
             Var<T> instance(vm, idx);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-            if (!Error::Instance().Occurred(vm)) {
+            if (!Error::Occurred(vm)) {
 #endif
                 value.Init(new T(instance.value));
 #if !defined (SCRAT_NO_ERROR_CHECKING)

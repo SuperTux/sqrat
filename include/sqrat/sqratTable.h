@@ -253,7 +253,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("illegal index"));
+            Error::Throw(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
@@ -261,7 +261,7 @@ public:
 #endif
         Var<SharedPtr<T> > entry(vm, -1);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
@@ -291,7 +291,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("illegal index"));
+            Error::Throw(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
@@ -299,7 +299,7 @@ public:
 #endif
         Var<SharedPtr<T> > entry(vm, -1);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
@@ -381,7 +381,7 @@ public:
     /// Default constructor (null)
     ///
     /// \remarks
-    /// The Table is invalid until it is given a VM to exist in
+    /// The Table is invalid until it is given a VM to exist in.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Table() {
@@ -488,7 +488,7 @@ struct Var<Table> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_TABLE) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
+            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
         }
 #endif
     }

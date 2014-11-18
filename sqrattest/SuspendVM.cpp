@@ -44,7 +44,7 @@ TEST_F(SqratTest, SuspendVM)
 {
     DefaultVM::Set(vm);
     int i; 
-    Class<C> cclass;
+    Class<C> cclass(vm, _SC("C"));
     cclass.Func(_SC("suspend"), &C::suspend);
     
     RootTable().Bind(_SC("C"), cclass);
@@ -55,13 +55,13 @@ TEST_F(SqratTest, SuspendVM)
         ::suspend(); \
         gTest.EXPECT_INT_EQ(1, 0); /* should not reach here */ \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);        
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);        
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
     
 }

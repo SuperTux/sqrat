@@ -60,8 +60,8 @@ public:
         R ret = (*method)();
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -86,11 +86,11 @@ public:
         Var<A1> a1(vm, startIdx);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -99,8 +99,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -126,11 +126,11 @@ public:
         Var<A2> a2(vm, startIdx + 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -140,8 +140,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -168,11 +168,11 @@ public:
         Var<A3> a3(vm, startIdx + 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -183,8 +183,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -212,11 +212,11 @@ public:
         Var<A4> a4(vm, startIdx + 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -228,8 +228,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -258,11 +258,11 @@ public:
         Var<A5> a5(vm, startIdx + 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -275,8 +275,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -306,11 +306,11 @@ public:
         Var<A6> a6(vm, startIdx + 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -324,8 +324,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -356,11 +356,11 @@ public:
         Var<A7> a7(vm, startIdx + 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -375,8 +375,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -408,11 +408,11 @@ public:
         Var<A8> a8(vm, startIdx + 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -428,8 +428,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -462,11 +462,11 @@ public:
         Var<A9> a9(vm, startIdx + 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -483,8 +483,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -518,11 +518,11 @@ public:
         Var<A10> a10(vm, startIdx + 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -540,8 +540,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -576,11 +576,11 @@ public:
         Var<A11> a11(vm, startIdx + 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -599,8 +599,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -636,11 +636,11 @@ public:
         Var<A12> a12(vm, startIdx + 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -660,8 +660,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -698,11 +698,11 @@ public:
         Var<A13> a13(vm, startIdx + 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -723,8 +723,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -762,11 +762,11 @@ public:
         Var<A14> a14(vm, startIdx + 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -788,8 +788,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -823,8 +823,8 @@ public:
         R & ret = (*method)();
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -849,11 +849,11 @@ public:
         Var<A1> a1(vm, startIdx);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -862,8 +862,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -889,11 +889,11 @@ public:
         Var<A2> a2(vm, startIdx + 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -903,8 +903,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -931,11 +931,11 @@ public:
         Var<A3> a3(vm, startIdx + 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -946,8 +946,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -975,11 +975,11 @@ public:
         Var<A4> a4(vm, startIdx + 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -991,8 +991,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1021,11 +1021,11 @@ public:
         Var<A5> a5(vm, startIdx + 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1038,8 +1038,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1069,11 +1069,11 @@ public:
         Var<A6> a6(vm, startIdx + 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1087,8 +1087,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1119,11 +1119,11 @@ public:
         Var<A7> a7(vm, startIdx + 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1138,8 +1138,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1171,11 +1171,11 @@ public:
         Var<A8> a8(vm, startIdx + 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1191,8 +1191,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1225,11 +1225,11 @@ public:
         Var<A9> a9(vm, startIdx + 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1246,8 +1246,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1281,11 +1281,11 @@ public:
         Var<A10> a10(vm, startIdx + 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1303,8 +1303,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1339,11 +1339,11 @@ public:
         Var<A11> a11(vm, startIdx + 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1362,8 +1362,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1399,11 +1399,11 @@ public:
         Var<A12> a12(vm, startIdx + 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1423,8 +1423,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1461,11 +1461,11 @@ public:
         Var<A13> a13(vm, startIdx + 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1486,8 +1486,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1525,11 +1525,11 @@ public:
         Var<A14> a14(vm, startIdx + 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1551,8 +1551,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1584,8 +1584,8 @@ public:
         sq_getuserdata(vm, -1, (SQUserPointer*)&method, NULL);
         (*method)();
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1608,11 +1608,11 @@ public:
         Var<A1> a1(vm, startIdx);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1620,8 +1620,8 @@ public:
             a1.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1645,11 +1645,11 @@ public:
         Var<A2> a2(vm, startIdx + 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1658,8 +1658,8 @@ public:
             a2.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1684,11 +1684,11 @@ public:
         Var<A3> a3(vm, startIdx + 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1698,8 +1698,8 @@ public:
             a3.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1725,11 +1725,11 @@ public:
         Var<A4> a4(vm, startIdx + 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1740,8 +1740,8 @@ public:
             a4.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1768,11 +1768,11 @@ public:
         Var<A5> a5(vm, startIdx + 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1784,8 +1784,8 @@ public:
             a5.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1813,11 +1813,11 @@ public:
         Var<A6> a6(vm, startIdx + 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1830,8 +1830,8 @@ public:
             a6.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1860,11 +1860,11 @@ public:
         Var<A7> a7(vm, startIdx + 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1878,8 +1878,8 @@ public:
             a7.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1909,11 +1909,11 @@ public:
         Var<A8> a8(vm, startIdx + 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1928,8 +1928,8 @@ public:
             a8.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -1960,11 +1960,11 @@ public:
         Var<A9> a9(vm, startIdx + 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1980,8 +1980,8 @@ public:
             a9.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -2013,11 +2013,11 @@ public:
         Var<A10> a10(vm, startIdx + 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2034,8 +2034,8 @@ public:
             a10.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -2068,11 +2068,11 @@ public:
         Var<A11> a11(vm, startIdx + 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2090,8 +2090,8 @@ public:
             a11.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -2125,11 +2125,11 @@ public:
         Var<A12> a12(vm, startIdx + 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2148,8 +2148,8 @@ public:
             a12.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -2184,11 +2184,11 @@ public:
         Var<A13> a13(vm, startIdx + 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2208,8 +2208,8 @@ public:
             a13.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -2245,11 +2245,11 @@ public:
         Var<A14> a14(vm, startIdx + 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2270,8 +2270,8 @@ public:
             a14.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;

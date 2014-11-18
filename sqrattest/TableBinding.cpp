@@ -83,7 +83,7 @@ TEST_F(SqratTest, SimpleTableBinding)
     ;
 
     // Bind a class to the table. In this case the table acts somewhat as a namespace
-    Class<Person> person;
+    Class<Person> person(vm, _SC("Person"));
     person
     .Var(_SC("name"), &Person::name)
     .Var(_SC("age"), &Person::age)
@@ -129,13 +129,13 @@ TEST_F(SqratTest, SimpleTableBinding)
         gTest.EXPECT_STR_EQ(p.name, \"Bobby\"); \
         gTest.EXPECT_STR_EQ(p.age, 25); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -159,13 +159,13 @@ TEST_F(SqratTest, TableGet)
 
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
     const int length = 12;
@@ -224,13 +224,13 @@ TEST_F(SqratTest, TableCleanup)    // test case for Sourceforge Sqrat Bug 43
 
     Script script(v);
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Occurred(v)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(v);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(v)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(v);
+    if (Sqrat::Error::Occurred(v)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(v);
     }
     const int length = 12;
     // do some normal things with the table
@@ -336,13 +336,13 @@ TEST_F(SqratTest, PassingTableIn) {
 
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
         
     
@@ -385,13 +385,13 @@ TEST_F(SqratTest, PassingTableIn2) {
 
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
         
     
@@ -422,13 +422,13 @@ TEST_F(SqratTest, PassingTableIn3) {
     
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
         
     

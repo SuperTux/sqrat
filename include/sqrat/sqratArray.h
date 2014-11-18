@@ -189,7 +189,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("illegal index"));
+            Error::Throw(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
@@ -197,7 +197,7 @@ public:
 #endif
         Var<SharedPtr<T> > element(vm, -1);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
@@ -257,7 +257,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (size > sq_getsize(vm, -1)) {
             sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("array buffer size too big"));
+            Error::Throw(vm, _SC("array buffer size too big"));
             return;
         }
 #endif
@@ -269,7 +269,7 @@ public:
             Var<const T&> element(vm, -1);
             sq_pop(vm, 2);
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-            if (Error::Instance().Occurred(vm)) {
+            if (Error::Occurred(vm)) {
                 sq_pop(vm, 2);
                 return;
             }
@@ -445,7 +445,7 @@ public:
     /// Default constructor (null)
     ///
     /// \remarks
-    /// The Array is invalid until it is given a VM to exist in
+    /// The Array is invalid until it is given a VM to exist in.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Array() {
@@ -511,7 +511,7 @@ struct Var<Array> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_ARRAY) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
+            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
         }
 #endif
     }

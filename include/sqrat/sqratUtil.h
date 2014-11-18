@@ -71,6 +71,13 @@ static std::string ascii_wstring_to_string(const std::wstring& wstr)
 static std::wstring (*string_to_wstring)(const std::string& str) = ascii_string_to_wstring;
 static std::string (*wstring_to_string)(const std::wstring& wstr) = ascii_wstring_to_string;
 #endif // SQUNICODE
+
+template <class T>
+class SharedPtr;
+
+template <class T>
+class WeakPtr;
+
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,16 +132,6 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Error {
 public:
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Gets the Error instance (this class uses a singleton pattern)
-    ///
-    /// \return Error instance
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static Error& Instance() {
-        static Error instance;
-        return instance;
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns a string that has been formatted to give a nice type error message (for usage with Class::SquirrelFunc)
@@ -170,9 +167,11 @@ public:
     /// \param vm Target VM
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void Clear(HSQUIRRELVM vm) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        errMap.erase(vm);
+    static void Clear(HSQUIRRELVM vm) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        sq_rawdeleteslot(vm, -2, false);
+        sq_pop(vm, 1);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,11 +182,23 @@ public:
     /// \return String containing a nice error message
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    string Message(HSQUIRRELVM vm) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        string err = errMap[vm];
-        errMap.erase(vm);
-        return err;
+    static string Message(HSQUIRRELVM vm) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        if (SQ_SUCCEEDED(sq_rawget(vm, -2))) {
+            string** ud;
+            sq_getuserdata(vm, -1, (SQUserPointer*)&ud, NULL);
+            sq_pop(vm, 1);
+            string err = **ud;
+            sq_pushstring(vm, "__error", -1);
+            sq_rawdeleteslot(vm, -2, false);
+            sq_pop(vm, 1);
+            return err;
+        }
+        sq_pushstring(vm, "__error", -1);
+        sq_rawdeleteslot(vm, -2, false);
+        sq_pop(vm, 1);
+        return string(_SC("no error has occurred"));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,9 +209,15 @@ public:
     /// \return True if an error has occurred, otherwise false
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool Occurred(HSQUIRRELVM vm) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        return errMap.find(vm) != errMap.end();
+    static bool Occurred(HSQUIRRELVM vm) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        if (SQ_SUCCEEDED(sq_rawget(vm, -2))) {
+            sq_pop(vm, 2);
+            return true;
+        }
+        sq_pop(vm, 1);
+        return false;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,17 +227,31 @@ public:
     /// \param err A nice error message
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void Throw(HSQUIRRELVM vm, const string& err) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        if (errMap.find(vm) == errMap.end()) {
-            errMap[vm] = err;
+    static void Throw(HSQUIRRELVM vm, const string& err) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        if (SQ_FAILED(sq_rawget(vm, -2))) {
+            sq_pushstring(vm, "__error", -1);
+            string** ud = reinterpret_cast<string**>(sq_newuserdata(vm, sizeof(string*)));
+            *ud = new string(err);
+            sq_setreleasehook(vm, -1, &cleanup_hook);
+            sq_rawset(vm, -3);
+            sq_pop(vm, 1);
+            return;
         }
+        sq_pop(vm, 2);
     }
 
 private:
+
     Error() {}
 
-    std::map< HSQUIRRELVM, string > errMap;
+    static SQInteger cleanup_hook(SQUserPointer ptr, SQInteger size) {
+        SQUNUSED(size);
+        string** ud = reinterpret_cast<string**>(ptr);
+        delete *ud;
+        return 0;
+    }
 };
 #endif
 
@@ -233,11 +264,14 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ErrorHandling {
 private:
+
     static bool& errorHandling() {
         static bool eh = true;
         return eh;
     }
+
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns whether Squirrel error handling is enabled
     ///
@@ -295,17 +329,25 @@ inline string LastErrorString(HSQUIRRELVM vm) {
 template <class T>
 class SharedPtr
 {
+    template <class U>
+    friend class WeakPtr;
+
 private:
+
     T*            m_Ptr;
     unsigned int* m_RefCount;
+    unsigned int* m_RefCountRefCount;
+
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Constructs a new SharedPtr
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SharedPtr() :
-    m_Ptr     (NULL),
-    m_RefCount(NULL)
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
 
     }
@@ -317,8 +359,9 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SharedPtr(T* ptr) :
-    m_Ptr     (NULL),
-    m_RefCount(NULL)
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
         Init(ptr);
     }
@@ -333,8 +376,9 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class U>
     SharedPtr(U* ptr) :
-    m_Ptr     (NULL),
-    m_RefCount(NULL)
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
         Init(ptr);
     }
@@ -349,15 +393,18 @@ public:
     {
         if (copy.Get() != NULL)
         {
-            m_Ptr = copy.Get();
+            m_Ptr              = copy.Get();
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
 
-            m_RefCount = copy.m_RefCount;
-            *m_RefCount += 1;
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
         }
         else
         {
-            m_Ptr      = NULL;
-            m_RefCount = NULL;
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
         }
     }
 
@@ -374,15 +421,46 @@ public:
     {
         if (copy.Get() != NULL)
         {
-            m_Ptr = static_cast<T*>(copy.Get());
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
 
-            m_RefCount = copy.m_RefCount;
-            *m_RefCount += 1;
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
         }
         else
         {
-            m_Ptr      = NULL;
-            m_RefCount = NULL;
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    SharedPtr(const WeakPtr<U>& copy)
+    {
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.m_Ptr);
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
         }
     }
 
@@ -411,15 +489,12 @@ public:
 
             if (copy.Get() != NULL)
             {
-                m_Ptr = copy.Get();
+                m_Ptr              = copy.Get();
+                m_RefCount         = copy.m_RefCount;
+                m_RefCountRefCount = copy.m_RefCountRefCount;
 
-                m_RefCount = copy.m_RefCount;
-                *m_RefCount += 1;
-            }
-            else
-            {
-                m_Ptr      = NULL;
-                m_RefCount = NULL;
+                *m_RefCount         += 1;
+                *m_RefCountRefCount += 1;
             }
         }
 
@@ -443,15 +518,12 @@ public:
 
         if (copy.Get() != NULL)
         {
-            m_Ptr = static_cast<T*>(copy.Get());
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
 
-            m_RefCount = copy.m_RefCount;
-            *m_RefCount += 1;
-        }
-        else
-        {
-            m_Ptr      = NULL;
-            m_RefCount = NULL;
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
         }
 
         return *this;
@@ -471,6 +543,9 @@ public:
 
         m_RefCount = new unsigned int;
         *m_RefCount = 1;
+
+        m_RefCountRefCount = new unsigned int;
+        *m_RefCountRefCount = 1;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -490,6 +565,9 @@ public:
 
         m_RefCount = new unsigned int;
         *m_RefCount = 1;
+
+        m_RefCountRefCount = new unsigned int;
+        *m_RefCountRefCount = 1;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -500,16 +578,26 @@ public:
     {
         if (m_Ptr != NULL)
         {
-            if (*m_RefCount == 1)
+            *m_RefCount -= 1;
+
+            if (*m_RefCount == 0)
             {
                 delete m_Ptr;
-                delete m_RefCount;
 
-                m_Ptr      = NULL;
-                m_RefCount = NULL;
+                if (*m_RefCountRefCount == 1)
+                {
+                    delete m_RefCount;
+                    delete m_RefCountRefCount;
+                }
+                else
+                {
+                    *m_RefCountRefCount -= 1;
+                }
             }
-            else
-                *m_RefCount -= 1;
+
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
         }
     }
 
@@ -642,7 +730,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     T& operator*() const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != NULL); // fails when dereferencing a null SharedPtr
         return *m_Ptr;
     }
 
@@ -652,7 +740,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     T* operator->() const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != NULL); // fails when dereferencing a null SharedPtr
         return m_Ptr;
     }
 
@@ -669,6 +757,269 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// A smart pointer that retains a non-owning ("weak") reference to an object that is managed by SharedPtr (see std::weak_ptr)
+///
+/// \tparam T Type of pointer
+///
+/// \remarks
+/// WeakPtr exists for when an object that may be deleted at any time needs to be accessed if it exists.
+///
+/// \remarks
+/// std::weak_ptr was not used because it is a C++11 feature.
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template <class T>
+class WeakPtr
+{
+    template <class U>
+    friend class SharedPtr;
+
+private:
+
+    T*            m_Ptr;
+    unsigned int* m_RefCount;
+    unsigned int* m_RefCountRefCount;
+
+public:
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Constructs a new WeakPtr
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    WeakPtr() :
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
+    {
+
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    WeakPtr(const WeakPtr<T>& copy)
+    {
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = copy.m_Ptr;
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr(const WeakPtr<U>& copy)
+    {
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.m_Ptr);
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy SharedPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr(const SharedPtr<U>& copy)
+    {
+        if (copy.Get() != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Destructs the WeakPtr but has no influence on the object that was managed
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ~WeakPtr()
+    {
+        Reset();
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assigns the WeakPtr
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \return The WeakPtr itself
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    WeakPtr<T>& operator=(const WeakPtr<T>& copy)
+    {
+        if (this != &copy)
+        {
+            Reset();
+
+            if (copy.m_Ptr != NULL)
+            {
+                m_Ptr              = copy.m_Ptr;
+                m_RefCount         = copy.m_RefCount;
+                m_RefCountRefCount = copy.m_RefCountRefCount;
+
+                *m_RefCountRefCount += 1;
+            }
+        }
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assigns the WeakPtr
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /// \return The WeakPtr itself
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr<T>& operator=(const WeakPtr<U>& copy)
+    {
+        Reset();
+
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.m_Ptr);
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assigns the WeakPtr
+    ///
+    /// \param copy SharedPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /// \return The WeakPtr itself
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr<T>& operator=(const SharedPtr<U>& copy)
+    {
+        Reset();
+
+        if (copy.Get() != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Checks whether the managed object exists
+    ///
+    /// \return True if the managed object does not exist, false otherwise
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool Expired() const
+    {
+        return (m_Ptr == NULL || *m_RefCount == 0);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Creates a new SharedPtr that shares ownership of the managed object
+    ///
+    /// \return A SharedPtr which shares ownership of the managed object
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    SharedPtr<T> Lock() const
+    {
+        SharedPtr<T> other;
+        if (m_Ptr != NULL)
+        {
+            other.m_Ptr              = m_Ptr;
+            other.m_RefCount         = m_RefCount;
+            other.m_RefCountRefCount = m_RefCountRefCount;
+
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
+        }
+        return other;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Clears the associated object for this WeakPtr
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void Reset()
+    {
+        if (m_Ptr != NULL)
+        {
+            if (*m_RefCountRefCount == 1)
+            {
+                delete m_RefCount;
+                delete m_RefCountRefCount;
+            }
+            else
+            {
+                *m_RefCountRefCount -= 1;
+            }
+
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @cond DEV
 /// used internally to get and manipulate the underlying type of variables
 /// retrieved from cppreference.com
@@ -681,6 +1032,7 @@ template<class T> struct remove_cv                                              
 template<class T> struct is_pointer_helper                                           {static const bool value = false;};
 template<class T> struct is_pointer_helper<T*>                                       {static const bool value = true;};
 template<class T> struct is_pointer_helper<SharedPtr<T> >                            {static const bool value = true;};
+template<class T> struct is_pointer_helper<WeakPtr<T> >                              {static const bool value = true;};
 template<class T> struct is_pointer : is_pointer_helper<typename remove_cv<T>::type> {};
 template<class T> struct is_reference                                                {static const bool value = false;};
 template<class T> struct is_reference<T&>                                            {static const bool value = true;};

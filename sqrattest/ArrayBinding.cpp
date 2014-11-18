@@ -44,13 +44,13 @@ TEST_F(SqratTest, ArrayGet) {
         
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
     
     const int length = array.Length();
@@ -68,14 +68,14 @@ TEST_F(SqratTest, ArrayGet) {
     }
     int t[length];
     array.GetArray(t, sizeof(t) / sizeof(t[0]));
-    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
+    EXPECT_FALSE(Sqrat::Error::Occurred(vm));    
     for (i = 0; i < length; i++)
     {
         EXPECT_EQ(t[i], i);
     }
     double d[length];
     array.GetArray(d, sizeof(d) / sizeof(d[0]));
-    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
+    EXPECT_FALSE(Sqrat::Error::Occurred(vm));    
 
     for (i = 0; i < length; i++)
     {
@@ -83,11 +83,11 @@ TEST_F(SqratTest, ArrayGet) {
     }    
     double d2[15];
     array.GetArray(d2, sizeof(d2) / sizeof(d2[0]));
-    EXPECT_TRUE(Sqrat::Error::Instance().Occurred(vm));    
-    Sqrat::Error::Instance().Clear(vm);
+    EXPECT_TRUE(Sqrat::Error::Occurred(vm));    
+    Sqrat::Error::Clear(vm);
     double d3[5];
     array.GetArray(d3, sizeof(d3) / sizeof(d3[0]));
-    EXPECT_FALSE(Sqrat::Error::Instance().Occurred(vm));    
+    EXPECT_FALSE(Sqrat::Error::Occurred(vm));    
 
         
 }
@@ -144,13 +144,13 @@ TEST_F(SqratTest, PassingArrayIn) {
 
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
         
     
@@ -192,13 +192,13 @@ TEST_F(SqratTest, PassingArrayIn2) {
     RootTable().Func(_SC("touch_element"), &touch_element);
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
         
         

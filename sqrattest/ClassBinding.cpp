@@ -135,7 +135,7 @@ TEST_F(SqratTest, Constructors)
 {
     DefaultVM::Set(vm);
 
-    Class<C> c_class(vm);
+    Class<C> c_class(vm, _SC("C"));
 
     c_class
     .Var(_SC("i"), &C::i)
@@ -151,18 +151,18 @@ TEST_F(SqratTest, Constructors)
 
     RootTable().Bind(_SC("C"), c_class);
 
-    Class<C1> c1_class;
+    Class<C1> c1_class(vm, _SC("C1"));
     RootTable().Bind(_SC("C1"), c1_class);
 
-    Class<C2> c2_class;
+    Class<C2> c2_class(vm, _SC("C2"));
     c2_class.Ctor();
     RootTable().Bind(_SC("C2"), c2_class);
 
-    Class<C3> c3_class;
+    Class<C3> c3_class(vm, _SC("C3"));
     c3_class.Ctor<int, int, char>();
     RootTable().Bind(_SC("C3"), c3_class);
 
-    Class<C3, Sqrat::NoCopy<C3> > c3_class2;
+    Class<C3, Sqrat::NoCopy<C3> > c3_class2(vm, _SC("C32"));
     c3_class2.Ctor<int, int, char>();
     c3_class2.Var(_SC("x"), &C3::x)
     .Var(_SC("y"), &C3::y)
@@ -219,15 +219,15 @@ TEST_F(SqratTest, Constructors)
         gTest.EXPECT_INT_EQ(c32.z, 'c'; \
                 \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
 }
@@ -244,7 +244,7 @@ TEST_F(SqratTest, SimpleClassBinding)
 {
     DefaultVM::Set(vm);
 
-    Class<Vec2> vec2;
+    Class<Vec2> vec2(vm, _SC("Vec2"));
 
     vec2
     // Variables
@@ -290,21 +290,23 @@ TEST_F(SqratTest, SimpleClassBinding)
         gTest.EXPECT_STR_EQ(\"\" + v, \"Vec2(2.4, 6.8)\"); \
         gTest.EXPECT_FLOAT_EQ(v.Length(), 7.211103); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
 class Animal
 {
 public:
+    virtual ~Animal() {}
+
     virtual string Speak()
     {
         return _SC("[Silent]");
@@ -314,6 +316,8 @@ public:
 class Cat : public Animal
 {
 public:
+    virtual ~Cat() {}
+
     virtual string Speak()
     {
         return _SC("Meow!");
@@ -323,6 +327,8 @@ public:
 class Dog : public Animal
 {
 public:
+    virtual ~Dog() {}
+
     virtual string Speak()
     {
         return _SC("Woof!");
@@ -340,17 +346,17 @@ TEST_F(SqratTest, InheritedClassBinding)
 
     // Defining class definitions inline
     RootTable().Bind(_SC("Animal"),
-                     Class<Animal>()
+                     Class<Animal>(vm, _SC("Animal"))
                      .Func(_SC("Speak"), &Animal::Speak)
                     );
 
     RootTable().Bind(_SC("Cat"),
-                     DerivedClass<Cat, Animal>()
+                     DerivedClass<Cat, Animal>(vm, _SC("Cat"))
                      .Func(_SC("Speak"), &Cat::Speak)
                     );
 
     RootTable().Bind(_SC("Dog"),
-                     DerivedClass<Dog, Animal>()
+                     DerivedClass<Dog, Animal>(vm, _SC("Dog"))
                      .Func(_SC("Speak"), &Dog::Speak)
                     );
 
@@ -377,15 +383,15 @@ TEST_F(SqratTest, InheritedClassBinding)
         gTest.EXPECT_STR_EQ(MakeSpeak(d), \"Woof!\"); \
         /*gTest.EXPECT_STR_EQ(MakeSpeak(m), \"Squeak!\");*/ /* This will fail! Classes overridden in squirrel will be exposed as their base native class to C++ */ \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -409,7 +415,7 @@ TEST_F(SqratTest, WeakRef)
 
     // Defining class definitions inline
     RootTable().Bind(_SC("NativeObj"),
-                     Class<NativeObj>()
+                     Class<NativeObj>(vm, _SC("NativeObj"))
                      .Func(_SC("Id"), &NativeObj::Id)
                     );
 
@@ -430,15 +436,15 @@ TEST_F(SqratTest, WeakRef)
         gTest.EXPECT_FLOAT_EQ(3.14, ref1.ref().Id()); \
         gTest.EXPECT_INT_EQ(42, ref2.ref().Id()); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -501,7 +507,7 @@ TEST_F(SqratTest, NumConversion)
 {
     DefaultVM::Set(vm);
 
-    Sqrat::Class<NumTypes> numtypes(vm);
+    Sqrat::Class<NumTypes> numtypes(vm, _SC("NumTypes"));
 
     numtypes.Func(_SC("g_int"), &NumTypes::g_int);
     numtypes.Func(_SC("g_float"), &NumTypes::g_float);
@@ -512,15 +518,15 @@ TEST_F(SqratTest, NumConversion)
 
     Script script;
     script.CompileString(num_conversions);
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -542,7 +548,7 @@ public:
 TEST_F(SqratTest, CEnumBinding)
 {
     DefaultVM::Set(vm);
-    Class<F> f_class(vm);
+    Class<F> f_class(vm, _SC("F"));
     int i = (int) BAR;
     f_class.SetStaticValue(_SC("bar"), i);
     ASSERT_TRUE(1);
@@ -584,15 +590,15 @@ TEST_F(SqratTest, CEnumBinding)
         }\
         gTest.EXPECT_TRUE(raised); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
 }
@@ -635,10 +641,10 @@ TEST_F(SqratTest, NoDefaultConstructorClasses)
     N2.Func(_SC("f2"), &NoDefaultConstructor2::f2);
     RootTable().Bind(_SC("N2"), N2);
     N.SetStaticValue(_SC("sv"),  BAR);
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
 #ifndef SQUNICODE
-        std::cerr << _SC("set static var failed, ") << Sqrat::Error::Instance().Message(vm);
+        std::cerr << _SC("set static var failed, ") << Sqrat::Error::Message(vm);
 #endif
     }
 
@@ -679,15 +685,15 @@ TEST_F(SqratTest, NoDefaultConstructorClasses)
         }\
         gTest.EXPECT_TRUE(raised); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm))
+    if (Sqrat::Error::Occurred(vm))
     {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
 }

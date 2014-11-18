@@ -47,12 +47,12 @@ TEST_F(SqratTest, ConstBindings) {
         gTest.EXPECT_INT_EQ(Color.Blue, 3); \
         gTest.EXPECT_STR_EQ(Version, \"1.0.0\"); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }

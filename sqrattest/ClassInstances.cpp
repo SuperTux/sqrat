@@ -37,7 +37,7 @@ public:
 TEST_F(SqratTest, CharPtrBindingtoString) {
     
     DefaultVM::Set(vm);
-    Class<EmployeeName> name;
+    Class<EmployeeName> name(vm, _SC("EmployeeName"));
     name.Var(_SC("firstName"), &EmployeeName::firstName)
     .Var(_SC("lastName"), &EmployeeName::lastName);
 
@@ -50,13 +50,13 @@ TEST_F(SqratTest, CharPtrBindingtoString) {
         \
         gTest.EXPECT_STR_EQ(steve.lastName, \"Jones\"); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
     
 }
@@ -105,7 +105,7 @@ string Employee::sharedData;
 TEST_F(SqratTest, ClassInstances) {
     DefaultVM::Set(vm);
 
-    Class<Employee> employee;
+    Class<Employee> employee(vm, _SC("Employee"));
     employee
     .Var(_SC("firstName"), &Employee::firstName)
     .Var(_SC("lastName"), &Employee::lastName)
@@ -172,13 +172,13 @@ TEST_F(SqratTest, ClassInstances) {
         //::print(bob); \
         "));
         
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
     // Since he was set as an instance, changes to Bob in the script carry through to the native object
@@ -245,7 +245,7 @@ int B::sharedInt = -1;
 TEST_F(SqratTest, InstanceReferencesAndStaticMembers) {
     DefaultVM::Set(vm);
 
-    Class<B> _B;
+    Class<B> _B(vm, _SC("B"));
     _B
     .Func(_SC("set"), &B::set)
     .Func(_SC("get"), &B::get)
@@ -306,13 +306,13 @@ TEST_F(SqratTest, InstanceReferencesAndStaticMembers) {
         gTest.EXPECT_INT_EQ(bb.sharedInt, 9999); \
         gTest.EXPECT_INT_EQ(b1.sharedInt, 9999); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
     
 }
@@ -500,13 +500,13 @@ TEST_F(SqratTest, SimpleTypeChecking) {
         gTest.EXPECT_TRUE(raised); \
         \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
     
 }

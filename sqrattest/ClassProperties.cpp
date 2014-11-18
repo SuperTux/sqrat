@@ -78,12 +78,12 @@ TEST_F(SqratTest, ClassProperties) {
     DefaultVM::Set(vm);
 
     RootTable().Bind(_SC("Item"),
-                     Class<Item>()
+                     Class<Item>(vm, _SC("Item"))
                      .Var(_SC("name"), &Item::name)
                     );
 
     RootTable().Bind(_SC("Player"),
-                     Class<Player>()
+                     Class<Player>(vm, _SC("Player"))
                      // Properties
                      .Prop(_SC("health"), &Player::Health, &Player::SetHealth)
                      .Prop(_SC("dead"), &Player::Dead) // Read Only Property
@@ -112,12 +112,12 @@ TEST_F(SqratTest, ClassProperties) {
         gTest.EXPECT_STR_EQ(p.rightHand.name, \"Sword\"); \
         gTest.EXPECT_STR_EQ(p.leftHand.name, \"Shield\"); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }

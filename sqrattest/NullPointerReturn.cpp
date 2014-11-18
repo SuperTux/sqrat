@@ -49,19 +49,19 @@ static const SQChar *sq_code = _SC("\
 TEST_F(SqratTest, NullPointerReturn) {
     DefaultVM::Set(vm);
     
-    Class<Entity> entity;
+    Class<Entity> entity(vm, _SC("Entity"));
     entity.Func(_SC("FindEntity"), &Entity::FindEntity);
     RootTable().Bind(_SC("Entity"), entity);
         
     Script script;
     script.CompileString(sq_code);
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
 }

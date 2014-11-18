@@ -64,13 +64,13 @@ TEST_F(SqratTest, OverloadedMemberFunction) {
 
     // Member function overloads
     RootTable().Bind(_SC("Speaker"),
-                     Class<Speaker>()
+                     Class<Speaker>(vm, _SC("Speaker"))
                      .Overload<int (Speaker::*)()>(_SC("Echo"), &Speaker::Echo)
                      .Overload<int (Speaker::*)(int)>(_SC("Echo"), &Speaker::Echo)
                     );
     // static Member function overloads
     RootTable().Bind(_SC("StaticTestClass"),
-                     Class<StaticTestClass>()
+                     Class<StaticTestClass>(vm, _SC("StaticTestClass"))
                      .StaticOverload<void (*)(int)>(_SC("set"), &StaticTestClass::set)
                      .StaticOverload<void (*)(int, int)>(_SC("set"), &StaticTestClass::set)
                      .StaticFunc(_SC("get_i1"), &StaticTestClass::get_i1)
@@ -90,13 +90,13 @@ TEST_F(SqratTest, OverloadedMemberFunction) {
         gTest.EXPECT_INT_EQ(0, GlobalEcho()); \
         gTest.EXPECT_INT_EQ(1, GlobalEcho(1)); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.CompileString(_SC(" \
@@ -111,13 +111,13 @@ TEST_F(SqratTest, OverloadedMemberFunction) {
         gTest.EXPECT_INT_EQ(4, s.get_i1()); \
         gTest.EXPECT_INT_EQ(6, s.get_i2()); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -140,7 +140,7 @@ TEST_F(SqratTest, ConstOverloadTest) {
 
     // Member function overloads
     RootTable().Bind(_SC("Entity"),
-                     Class<Entity>()
+                     Class<Entity>(vm, _SC("Entity"))
                      .Overload<unsigned int (Entity::*)(unsigned int, unsigned int) const>(_SC("QueryEnumValue"), &Entity::QueryEnumValue)
                      .Overload<unsigned int (Entity::*)(unsigned int) const>(_SC("QueryEnumValue"), &Entity::QueryEnumValue)
                     );
@@ -152,13 +152,13 @@ TEST_F(SqratTest, ConstOverloadTest) {
         gTest.EXPECT_INT_EQ(1, e.QueryEnumValue(1, 0)); \
         gTest.EXPECT_INT_EQ(2, e.QueryEnumValue(2)); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -212,7 +212,7 @@ int B::sharedInt = -1;
 TEST_F(SqratTest, FunctionReturningReferencesToClassesWithStaticMembers) {
     DefaultVM::Set(vm);
 
-    Class<B> _B;
+    Class<B> _B(vm, _SC("B"));
     _B
     .Func(_SC("set"), &B::set)
     .Func(_SC("get"), &B::get)
@@ -273,13 +273,13 @@ TEST_F(SqratTest, FunctionReturningReferencesToClassesWithStaticMembers) {
         gTest.EXPECT_INT_EQ(bb.sharedInt, 9999); \
         gTest.EXPECT_INT_EQ(b1.sharedInt, 9999); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Run Failed: ") << Sqrat::Error::Message(vm);
     }
     
 }

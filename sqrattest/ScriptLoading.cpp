@@ -39,13 +39,13 @@ TEST_F(SqratTest, LoadScriptFromString) {
         x <- 1 + 2; \
         gTest.EXPECT_STR_EQ(x, 3); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }
 
@@ -58,12 +58,12 @@ TEST_F(SqratTest, LoadScriptFromFile) {
 
     Script script;
     script.CompileFile(_SC("scripts/hello.nut"));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }

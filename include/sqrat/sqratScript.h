@@ -68,7 +68,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), name.c_str(), true))) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+            Error::Throw(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -124,7 +124,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+            Error::Throw(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -173,20 +173,22 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(!sq_isnull(obj)) {
             SQRESULT result;
+            SQInteger top = sq_gettop(vm);
             sq_pushobject(vm, obj);
             sq_pushroottable(vm);
             result = sq_call(vm, 1, false, true);
-            sq_pop(vm, 1);
+            sq_settop(vm, top);
             if(SQ_FAILED(result)) {
-                Error::Instance().Throw(vm, LastErrorString(vm));
+                Error::Throw(vm, LastErrorString(vm));
                 return;
             }
         }
 #else
+        SQInteger top = sq_gettop(vm);
         sq_pushobject(vm, obj);
         sq_pushroottable(vm);
         sq_call(vm, 1, false, true);
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -200,10 +202,11 @@ public:
     bool Run(string& errMsg) {
         if(!sq_isnull(obj)) {
             SQRESULT result;
+            SQInteger top = sq_gettop(vm);
             sq_pushobject(vm, obj);
             sq_pushroottable(vm);
             result = sq_call(vm, 1, false, true);
-            sq_pop(vm, 1);
+            sq_settop(vm, top);
             if(SQ_FAILED(result)) {
                 errMsg = LastErrorString(vm);
                 return false;

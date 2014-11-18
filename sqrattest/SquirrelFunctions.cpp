@@ -45,13 +45,13 @@ TEST_F(SqratTest, CallSquirrelFunction) {
             return false; \
         }\
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run(); // Must run the script before the function will be available
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Message(vm);
     }
 
     // Method one for function retrieval: via the constructor
@@ -95,12 +95,12 @@ TEST_F(SqratTest, FunctionAsArgument) {
         } \
         gTest.EXPECT_INT_EQ(::NativeOp(5, 1, SubTwo), 4); \
         "));
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Compile Failed: ") << Sqrat::Error::Message(vm);
     }
 
     script.Run();
-    if (Sqrat::Error::Instance().Occurred(vm)) {
-        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Instance().Message(vm);
+    if (Sqrat::Error::Occurred(vm)) {
+        FAIL() << _SC("Script Run Failed: ") << Sqrat::Error::Message(vm);
     }
 }

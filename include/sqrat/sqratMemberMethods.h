@@ -65,14 +65,21 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         R ret = (ptr->*method)();
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -96,14 +103,21 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         R ret = (ptr->*method)();
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -128,17 +142,24 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -147,8 +168,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -172,17 +193,24 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -191,8 +219,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -217,18 +245,25 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -238,8 +273,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -263,18 +298,25 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -284,8 +326,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -310,7 +352,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -318,11 +367,11 @@ public:
         Var<A3> a3(vm, 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -333,8 +382,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -358,7 +407,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -366,11 +422,11 @@ public:
         Var<A3> a3(vm, 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -381,8 +437,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -407,7 +463,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -416,11 +479,11 @@ public:
         Var<A4> a4(vm, 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -432,8 +495,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -457,7 +520,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -466,11 +536,11 @@ public:
         Var<A4> a4(vm, 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -482,8 +552,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -508,7 +578,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -518,11 +595,11 @@ public:
         Var<A5> a5(vm, 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -535,8 +612,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -560,7 +637,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -570,11 +654,11 @@ public:
         Var<A5> a5(vm, 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -587,8 +671,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -613,7 +697,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -624,11 +715,11 @@ public:
         Var<A6> a6(vm, 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -642,8 +733,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -667,7 +758,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -678,11 +776,11 @@ public:
         Var<A6> a6(vm, 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -696,8 +794,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -722,7 +820,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -734,11 +839,11 @@ public:
         Var<A7> a7(vm, 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -753,8 +858,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -778,7 +883,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -790,11 +902,11 @@ public:
         Var<A7> a7(vm, 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -809,8 +921,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -835,7 +947,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -848,11 +967,11 @@ public:
         Var<A8> a8(vm, 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -868,8 +987,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -893,7 +1012,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -906,11 +1032,11 @@ public:
         Var<A8> a8(vm, 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -926,8 +1052,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -952,7 +1078,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -966,11 +1099,11 @@ public:
         Var<A9> a9(vm, 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -987,8 +1120,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1012,7 +1145,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1026,11 +1166,11 @@ public:
         Var<A9> a9(vm, 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1047,8 +1187,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1074,7 +1214,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1089,11 +1236,11 @@ public:
         Var<A10> a10(vm, 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1111,8 +1258,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1136,7 +1283,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1151,11 +1305,11 @@ public:
         Var<A10> a10(vm, 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1173,8 +1327,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1200,7 +1354,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1216,11 +1377,11 @@ public:
         Var<A11> a11(vm, 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1239,8 +1400,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1264,7 +1425,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1280,11 +1448,11 @@ public:
         Var<A11> a11(vm, 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1303,8 +1471,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1330,7 +1498,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1347,11 +1522,11 @@ public:
         Var<A12> a12(vm, 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1371,8 +1546,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1396,7 +1571,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1413,11 +1595,11 @@ public:
         Var<A12> a12(vm, 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1437,8 +1619,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1463,7 +1645,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1481,11 +1670,11 @@ public:
         Var<A13> a13(vm, 14);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1506,8 +1695,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1531,7 +1720,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1549,11 +1745,11 @@ public:
         Var<A13> a13(vm, 14);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1574,8 +1770,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1600,7 +1796,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1619,11 +1822,11 @@ public:
         Var<A14> a14(vm, 15);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1645,8 +1848,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1670,7 +1873,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -1689,11 +1899,11 @@ public:
         Var<A14> a14(vm, 15);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1715,8 +1925,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1753,14 +1963,21 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         R & ret = (ptr->*method)();
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1784,14 +2001,21 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         R & ret = (ptr->*method)();
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1816,17 +2040,24 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1835,8 +2066,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1860,17 +2091,24 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1879,8 +2117,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1905,18 +2143,25 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1926,8 +2171,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -1951,18 +2196,25 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -1992,7 +2244,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2000,11 +2259,11 @@ public:
         Var<A3> a3(vm, 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2015,8 +2274,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2040,7 +2299,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2048,11 +2314,11 @@ public:
         Var<A3> a3(vm, 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2063,8 +2329,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2089,7 +2355,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2098,11 +2371,11 @@ public:
         Var<A4> a4(vm, 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2114,8 +2387,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2139,7 +2412,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2148,11 +2428,11 @@ public:
         Var<A4> a4(vm, 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2164,8 +2444,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2190,7 +2470,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2200,11 +2487,11 @@ public:
         Var<A5> a5(vm, 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2217,8 +2504,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2242,7 +2529,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2252,11 +2546,11 @@ public:
         Var<A5> a5(vm, 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2269,8 +2563,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2295,7 +2589,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2306,11 +2607,11 @@ public:
         Var<A6> a6(vm, 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2324,8 +2625,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2349,7 +2650,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2360,11 +2668,11 @@ public:
         Var<A6> a6(vm, 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2378,8 +2686,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2404,7 +2712,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2416,11 +2731,11 @@ public:
         Var<A7> a7(vm, 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2435,8 +2750,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2460,7 +2775,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2472,11 +2794,11 @@ public:
         Var<A7> a7(vm, 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2491,8 +2813,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2517,7 +2839,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2530,11 +2859,11 @@ public:
         Var<A8> a8(vm, 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2550,8 +2879,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2575,7 +2904,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2588,11 +2924,11 @@ public:
         Var<A8> a8(vm, 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2608,8 +2944,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2634,7 +2970,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2648,11 +2991,11 @@ public:
         Var<A9> a9(vm, 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2669,8 +3012,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2694,7 +3037,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2708,11 +3058,11 @@ public:
         Var<A9> a9(vm, 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2729,8 +3079,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2756,7 +3106,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2771,11 +3128,11 @@ public:
         Var<A10> a10(vm, 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2793,8 +3150,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2818,7 +3175,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2833,11 +3197,11 @@ public:
         Var<A10> a10(vm, 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2855,8 +3219,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2882,7 +3246,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2898,11 +3269,11 @@ public:
         Var<A11> a11(vm, 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2921,8 +3292,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -2946,7 +3317,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -2962,11 +3340,11 @@ public:
         Var<A11> a11(vm, 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -2985,8 +3363,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3012,7 +3390,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -3029,11 +3414,11 @@ public:
         Var<A12> a12(vm, 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3053,8 +3438,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3078,7 +3463,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -3095,11 +3487,11 @@ public:
         Var<A12> a12(vm, 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3119,8 +3511,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3145,7 +3537,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -3163,11 +3562,11 @@ public:
         Var<A13> a13(vm, 14);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3188,8 +3587,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3213,7 +3612,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -3231,11 +3637,11 @@ public:
         Var<A13> a13(vm, 14);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3256,8 +3662,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3282,7 +3688,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -3301,11 +3714,11 @@ public:
         Var<A14> a14(vm, 15);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3327,8 +3740,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3352,7 +3765,14 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (ptr == NULL) return sq_throwerror(vm, STATICCALLERROR);
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
 #endif
 
         Var<A1> a1(vm, 2);
@@ -3371,11 +3791,11 @@ public:
         Var<A14> a14(vm, 15);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3397,8 +3817,8 @@ public:
                 );
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
 
@@ -3415,6 +3835,9 @@ public:
 
 template <class C>
 class SqMember<C, void> {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+    static const SQChar STATICCALLERROR[] ;
+#endif
 public:
     // Arg Count 0
     template <bool overloaded  /* = false */ >
@@ -3432,10 +3855,21 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         (ptr->*method)();
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3456,10 +3890,21 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         (ptr->*method)();
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3481,14 +3926,25 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3496,8 +3952,8 @@ public:
             a1.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3518,14 +3974,25 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3533,8 +4000,8 @@ public:
             a1.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3556,15 +4023,26 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3573,8 +4051,8 @@ public:
             a2.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3595,15 +4073,26 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3612,8 +4101,8 @@ public:
             a2.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3635,16 +4124,27 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3654,8 +4154,8 @@ public:
             a3.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3676,16 +4176,27 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3695,8 +4206,8 @@ public:
             a3.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3718,17 +4229,28 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3739,8 +4261,8 @@ public:
             a4.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3761,17 +4283,28 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3782,8 +4315,8 @@ public:
             a4.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3805,6 +4338,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -3812,11 +4356,11 @@ public:
         Var<A5> a5(vm, 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3828,8 +4372,8 @@ public:
             a5.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3850,6 +4394,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -3857,11 +4412,11 @@ public:
         Var<A5> a5(vm, 6);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3873,8 +4428,8 @@ public:
             a5.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3896,6 +4451,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -3904,11 +4470,11 @@ public:
         Var<A6> a6(vm, 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3921,8 +4487,8 @@ public:
             a6.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3943,6 +4509,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -3951,11 +4528,11 @@ public:
         Var<A6> a6(vm, 7);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -3968,8 +4545,8 @@ public:
             a6.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -3991,6 +4568,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4000,11 +4588,11 @@ public:
         Var<A7> a7(vm, 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4018,8 +4606,8 @@ public:
             a7.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4040,6 +4628,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4049,11 +4648,11 @@ public:
         Var<A7> a7(vm, 8);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4067,8 +4666,8 @@ public:
             a7.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4090,6 +4689,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4100,11 +4710,11 @@ public:
         Var<A8> a8(vm, 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4119,8 +4729,8 @@ public:
             a8.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4141,6 +4751,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4151,11 +4772,11 @@ public:
         Var<A8> a8(vm, 9);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4170,8 +4791,8 @@ public:
             a8.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4193,6 +4814,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4204,11 +4836,11 @@ public:
         Var<A9> a9(vm, 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4224,8 +4856,8 @@ public:
             a9.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4246,6 +4878,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4257,11 +4900,11 @@ public:
         Var<A9> a9(vm, 10);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4277,8 +4920,8 @@ public:
             a9.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4300,6 +4943,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4312,11 +4966,11 @@ public:
         Var<A10> a10(vm, 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4333,8 +4987,8 @@ public:
             a10.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4355,6 +5009,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4367,11 +5032,11 @@ public:
         Var<A10> a10(vm, 11);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4388,8 +5053,8 @@ public:
             a10.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4411,6 +5076,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4424,11 +5100,11 @@ public:
         Var<A11> a11(vm, 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4446,8 +5122,8 @@ public:
             a11.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4468,6 +5144,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4481,11 +5168,11 @@ public:
         Var<A11> a11(vm, 12);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4503,8 +5190,8 @@ public:
             a11.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4526,6 +5213,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4540,11 +5238,11 @@ public:
         Var<A12> a12(vm, 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4563,8 +5261,8 @@ public:
             a12.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4585,6 +5283,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4599,11 +5308,11 @@ public:
         Var<A12> a12(vm, 13);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4622,8 +5331,8 @@ public:
             a12.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4645,6 +5354,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4660,11 +5380,11 @@ public:
         Var<A13> a13(vm, 14);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4684,8 +5404,8 @@ public:
             a13.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4706,6 +5426,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4721,11 +5452,11 @@ public:
         Var<A13> a13(vm, 14);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4745,8 +5476,8 @@ public:
             a13.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4768,6 +5499,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4784,11 +5526,11 @@ public:
         Var<A14> a14(vm, 15);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4809,8 +5551,8 @@ public:
             a14.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -4831,6 +5573,17 @@ public:
 
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if (Error::Occurred(vm)) {
+            if (overloaded) {
+                Error::Clear(vm);
+                Error::Throw(vm, STATICCALLERROR);
+                return 0;
+            } else
+            return sq_throwerror(vm, STATICCALLERROR);
+        }
+#endif
+
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -4847,11 +5600,11 @@ public:
         Var<A14> a14(vm, 15);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        if (Error::Occurred(vm)) {
             if (overloaded)
                 return 0;
             else
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -4872,8 +5625,8 @@ public:
             a14.value
         );
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Sqrat::Error::Instance().Message(vm).c_str());
+        if (!overloaded && Error::Occurred(vm)) {
+            return sq_throwerror(vm, Sqrat::Error::Message(vm).c_str());
         }
 #endif
         return 0;
@@ -5209,7 +5962,7 @@ inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
     C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-    if (Error::Instance().Occurred(vm)) {
+    if (Error::Occurred(vm)) {
         return 0;
     }
 #endif
@@ -5260,8 +6013,8 @@ inline SQInteger sqVarGet(HSQUIRRELVM vm) {
     // Call the getter
     sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-    if (Error::Instance().Occurred(vm)) {
-        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+    if (Error::Occurred(vm)) {
+        return sq_throwerror(vm, Error::Message(vm).c_str());
     }
 #endif
 
@@ -5330,8 +6083,8 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
     // Call the setter
     sq_call(vm, 2, false, ErrorHandling::IsEnabled());
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-    if (Error::Instance().Occurred(vm)) {
-        return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+    if (Error::Occurred(vm)) {
+        return sq_throwerror(vm, Error::Message(vm).c_str());
     }
 #endif
 
@@ -5340,9 +6093,11 @@ inline SQInteger sqVarSet(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
 template <class C, class R>
-const SQChar SqMember<C, R>::STATICCALLERROR[] = _SC("this function isn't static");
+const SQChar SqMember<C, R>::STATICCALLERROR[]    = _SC("this function isn't static");
 template <class C, class R>
-const SQChar SqMember<C, R&>::STATICCALLERROR[] = _SC("this function isn't static");
+const SQChar SqMember<C, R&>::STATICCALLERROR[]   = _SC("this function isn't static");
+template <class C>
+const SQChar SqMember<C, void>::STATICCALLERROR[] = _SC("this function isn't static");
 #endif
 
 /// @endcond

@@ -39,7 +39,7 @@ public:
 
 void bind(HSQUIRRELVM vm)
 {
-    Sqrat::Class<simpleclass> sqClass(vm);
+    Sqrat::Class<simpleclass> sqClass(vm, _SC("simpleclass"));
     sqClass               
     .Func(_SC("memfun"), &simpleclass::memfun);
     Sqrat::RootTable(vm).Bind(_SC("simpleclass"), sqClass);    

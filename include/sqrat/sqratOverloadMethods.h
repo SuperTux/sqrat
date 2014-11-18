@@ -50,7 +50,7 @@ public:
 
     static string Get(const SQChar* name, int args) {
         std::basic_stringstream<SQChar> overloadName;
-        overloadName << _SC("__sqrat_ol_ ") << name << _SC("_") << args;
+        overloadName << _SC("__overload_") << name << args;
 
         return overloadName.str();
     }
@@ -92,8 +92,8 @@ public:
         sq_call(vm, argCount + 1, true, ErrorHandling::IsEnabled());
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        if (Error::Occurred(vm)) {
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
@@ -137,8 +137,8 @@ public:
         sq_call(vm, argCount + 1, false, ErrorHandling::IsEnabled());
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
-            return sq_throwerror(vm, Error::Instance().Message(vm).c_str());
+        if (Error::Occurred(vm)) {
+            return sq_throwerror(vm, Error::Message(vm).c_str());
         }
 #endif
 
