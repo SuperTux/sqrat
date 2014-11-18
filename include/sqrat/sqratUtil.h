@@ -234,7 +234,7 @@ public:
             sq_pushstring(vm, "__error", -1);
             string** ud = reinterpret_cast<string**>(sq_newuserdata(vm, sizeof(string*)));
             *ud = new string(err);
-            sq_setreleasehook(vm, -1, &cleanup_hook);
+            sq_setreleasehook(vm, -1, &error_cleanup_hook);
             sq_rawset(vm, -3);
             sq_pop(vm, 1);
             return;
@@ -246,7 +246,7 @@ private:
 
     Error() {}
 
-    static SQInteger cleanup_hook(SQUserPointer ptr, SQInteger size) {
+    static SQInteger error_cleanup_hook(SQUserPointer ptr, SQInteger size) {
         SQUNUSED(size);
         string** ud = reinterpret_cast<string**>(ptr);
         delete *ud;

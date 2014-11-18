@@ -169,7 +169,7 @@ public:
     }
 
     static void PushInstanceCopy(HSQUIRRELVM vm, const C& value) {
-        sq_pushobject(vm, ClassType<C>::getClassData(vm)->classObj);
+        sq_pushobject(vm, getClassData(vm)->classObj);
         sq_createinstance(vm, -1);
         sq_remove(vm, -2);
         CopyFunc()(vm, -1, &value);

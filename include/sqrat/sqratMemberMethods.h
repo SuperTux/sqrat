@@ -65,7 +65,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -103,7 +103,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -142,7 +142,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -193,7 +193,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -245,7 +245,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -298,7 +298,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -352,7 +352,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -407,7 +407,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -463,7 +463,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -520,7 +520,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -578,7 +578,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -637,7 +637,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -697,7 +697,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -758,7 +758,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -820,7 +820,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -883,7 +883,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -947,7 +947,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1012,7 +1012,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1078,7 +1078,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1145,7 +1145,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1214,7 +1214,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1283,7 +1283,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1354,7 +1354,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1425,7 +1425,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1498,7 +1498,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1571,7 +1571,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1645,7 +1645,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1720,7 +1720,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1796,7 +1796,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1873,7 +1873,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -1963,7 +1963,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2001,7 +2001,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2040,7 +2040,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2091,7 +2091,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2143,7 +2143,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2196,7 +2196,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2244,7 +2244,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2299,7 +2299,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2355,7 +2355,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2412,7 +2412,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2470,7 +2470,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2529,7 +2529,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2589,7 +2589,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2650,7 +2650,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2712,7 +2712,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2775,7 +2775,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2839,7 +2839,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2904,7 +2904,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -2970,7 +2970,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3037,7 +3037,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3106,7 +3106,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3175,7 +3175,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3246,7 +3246,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3317,7 +3317,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3390,7 +3390,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3463,7 +3463,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3537,7 +3537,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3612,7 +3612,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3688,7 +3688,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3765,7 +3765,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3856,7 +3856,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3891,7 +3891,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3927,7 +3927,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -3975,7 +3975,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4024,7 +4024,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4074,7 +4074,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4125,7 +4125,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4177,7 +4177,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4230,7 +4230,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4284,7 +4284,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4339,7 +4339,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4395,7 +4395,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4452,7 +4452,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4510,7 +4510,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4569,7 +4569,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4629,7 +4629,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4690,7 +4690,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4752,7 +4752,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4815,7 +4815,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4879,7 +4879,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -4944,7 +4944,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5010,7 +5010,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5077,7 +5077,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5145,7 +5145,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5214,7 +5214,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5284,7 +5284,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5355,7 +5355,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5427,7 +5427,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5500,7 +5500,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
@@ -5574,7 +5574,7 @@ public:
         C* ptr = ClassType<C>::GetInstance(vm, 1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        if (ptr == NULL) {
             if (overloaded) {
                 Error::Clear(vm);
                 Error::Throw(vm, STATICCALLERROR);
