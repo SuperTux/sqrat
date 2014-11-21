@@ -578,21 +578,18 @@ public:
     {
         if (m_Ptr != NULL)
         {
-            *m_RefCount -= 1;
+            *m_RefCount         -= 1;
+            *m_RefCountRefCount -= 1;
 
             if (*m_RefCount == 0)
             {
                 delete m_Ptr;
+            }
 
-                if (*m_RefCountRefCount == 1)
-                {
-                    delete m_RefCount;
-                    delete m_RefCountRefCount;
-                }
-                else
-                {
-                    *m_RefCountRefCount -= 1;
-                }
+            if (*m_RefCountRefCount == 0)
+            {
+                delete m_RefCount;
+                delete m_RefCountRefCount;
             }
 
             m_Ptr              = NULL;
@@ -1002,14 +999,12 @@ public:
     {
         if (m_Ptr != NULL)
         {
-            if (*m_RefCountRefCount == 1)
+            *m_RefCountRefCount -= 1;
+
+            if (*m_RefCountRefCount == 0)
             {
                 delete m_RefCount;
                 delete m_RefCountRefCount;
-            }
-            else
-            {
-                *m_RefCountRefCount -= 1;
             }
 
             m_Ptr              = NULL;
