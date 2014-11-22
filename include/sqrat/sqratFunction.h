@@ -86,7 +86,7 @@ public:
         SQObjectType value_type = so.GetType();
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE && value_type != OT_CLASS) {
             // Note that classes can also be considered functions in Squirrel
-            Error::Throw(vm, _SC("function not found in slot"));
+            SQTHROW(vm, _SC("function not found in slot"));
         }
 #endif
     }
@@ -207,16 +207,16 @@ public:
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 
         SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -255,7 +255,7 @@ public:
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -266,9 +266,9 @@ public:
         SQRESULT result = sq_call(vm, 2, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -309,7 +309,7 @@ public:
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -321,9 +321,9 @@ public:
         SQRESULT result = sq_call(vm, 3, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -365,7 +365,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -378,9 +378,9 @@ public:
         SQRESULT result = sq_call(vm, 4, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -424,7 +424,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -438,9 +438,9 @@ public:
         SQRESULT result = sq_call(vm, 5, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -486,7 +486,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -501,9 +501,9 @@ public:
         SQRESULT result = sq_call(vm, 6, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -552,7 +552,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -568,9 +568,9 @@ public:
         SQRESULT result = sq_call(vm, 7, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -620,7 +620,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -637,9 +637,9 @@ public:
         SQRESULT result = sq_call(vm, 8, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -691,7 +691,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -709,9 +709,9 @@ public:
         SQRESULT result = sq_call(vm, 9, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -765,7 +765,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -784,9 +784,9 @@ public:
         SQRESULT result = sq_call(vm, 10, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -842,7 +842,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -862,9 +862,9 @@ public:
         SQRESULT result = sq_call(vm, 11, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -922,7 +922,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -943,9 +943,9 @@ public:
         SQRESULT result = sq_call(vm, 12, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1005,7 +1005,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -1027,9 +1027,9 @@ public:
         SQRESULT result = sq_call(vm, 13, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1091,7 +1091,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -1114,9 +1114,9 @@ public:
         SQRESULT result = sq_call(vm, 14, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1180,7 +1180,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -1204,9 +1204,9 @@ public:
         SQRESULT result = sq_call(vm, 15, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
+        if (SQ_FAILED(result)) {
             sq_settop(vm, top);
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1236,7 +1236,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 
@@ -1244,8 +1244,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1277,7 +1277,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1289,8 +1289,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1324,7 +1324,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1337,8 +1337,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1374,7 +1374,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1388,8 +1388,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1427,7 +1427,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1442,8 +1442,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1483,7 +1483,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1499,8 +1499,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1542,7 +1542,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1559,8 +1559,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1604,7 +1604,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1622,8 +1622,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1669,7 +1669,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1688,8 +1688,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1737,7 +1737,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1757,8 +1757,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1808,7 +1808,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1829,8 +1829,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1882,7 +1882,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1904,8 +1904,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -1960,7 +1960,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1983,8 +1983,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -2040,7 +2040,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -2064,8 +2064,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -2123,7 +2123,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
-            Error::Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -2148,8 +2148,8 @@ public:
         sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -2606,7 +2606,7 @@ struct Var<Function> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
-            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("closure")));
         }
 #endif
     }

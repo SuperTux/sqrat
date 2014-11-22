@@ -188,7 +188,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
             if (SQ_FAILED(sq_getinstanceup(vm, idx, (SQUserPointer*)&instance, classType))) {
-                Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, ClassName()));
+                SQTHROW(vm, FormatTypeError(vm, idx, ClassName()));
                 return NULL;
             }
 #else
@@ -197,9 +197,7 @@ public:
         }
         else /* value is likely of integral type like enums, cannot return a pointer */
         {
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("unknown")));
-#endif
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("unknown")));
             return NULL;
         }
         AbstractStaticClassData* actualType;

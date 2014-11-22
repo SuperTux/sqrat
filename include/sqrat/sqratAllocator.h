@@ -133,102 +133,127 @@ public:
 
     template <typename A1>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -236,22 +261,26 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value,
-                a7.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -260,23 +289,27 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value,
-                a7.value,
-                a8.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8,typename A9>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -286,19 +319,22 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value,
-                a7.value,
-                a8.value,
-                a9.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
@@ -580,102 +616,127 @@ public:
 
     template <typename A1>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
         Var<A4> a4(vm, 5);
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -683,22 +744,26 @@ public:
         Var<A5> a5(vm, 6);
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value,
-                a7.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -707,23 +772,27 @@ public:
         Var<A6> a6(vm, 7);
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value,
-                a7.value,
-                a8.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }
     template <typename A1,typename A2,typename A3,typename A4,typename A5,typename A6,typename A7,typename A8,typename A9>
     static SQInteger iNew(HSQUIRRELVM vm) {
+        SQTRY()
         Var<A1> a1(vm, 2);
         Var<A2> a2(vm, 3);
         Var<A3> a3(vm, 4);
@@ -733,19 +802,22 @@ public:
         Var<A7> a7(vm, 8);
         Var<A8> a8(vm, 9);
         Var<A9> a9(vm, 10);
-
-        if (!Error::Occurred(vm)) {
-            SetInstance(vm, 1, new C(
-                a1.value,
-                a2.value,
-                a3.value,
-                a4.value,
-                a5.value,
-                a6.value,
-                a7.value,
-                a8.value,
-                a9.value
-            ));
+        SQCATCH_NOEXCEPT(vm) {
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
+        }
+        SetInstance(vm, 1, new C(
+            a1.value,
+            a2.value,
+            a3.value,
+            a4.value,
+            a5.value,
+            a6.value,
+            a7.value,
+            a8.value,
+            a9.value
+        ));
+        SQCATCH(vm) {
+            return sq_throwerror(vm, SQWHAT(vm));
         }
         return 0;
     }

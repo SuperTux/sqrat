@@ -68,7 +68,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sq_compilebuffer(vm, script.c_str(), static_cast<SQInteger>(script.size() /** sizeof(SQChar)*/), name.c_str(), true))) {
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -124,7 +124,7 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if(SQ_FAILED(sqstd_loadfile(vm, path.c_str(), true))) {
-            Error::Throw(vm, LastErrorString(vm));
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
@@ -179,7 +179,7 @@ public:
             result = sq_call(vm, 1, false, true);
             sq_settop(vm, top);
             if(SQ_FAILED(result)) {
-                Error::Throw(vm, LastErrorString(vm));
+                SQTHROW(vm, LastErrorString(vm));
                 return;
             }
         }

@@ -36,6 +36,40 @@ namespace Sqrat {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @cond DEV
+/// define macros for internal error handling
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined (SCRAT_NO_ERROR_CHECKING)
+#define SQCATCH(vm)          if (false)
+#define SQCATCH_NOEXCEPT(vm) if (false)
+#define SQCLEAR(vm)
+#define SQRETHROW(vm, err)
+#define SQTHROW(vm, err)
+#define SQTRY()
+#define SQWHAT(vm)           _SC("")
+#define SQWHAT_NOEXCEPT(vm)  _SC("")
+#elif defined (SCRAT_USE_EXCEPTIONS)
+#define SQCATCH(vm)          } catch (const Sqrat::Exception& e)
+#define SQCATCH_NOEXCEPT(vm) if (false)
+#define SQCLEAR(vm)
+#define SQRETHROW(vm, err)   throw
+#define SQTHROW(vm, err)     throw Sqrat::Exception(err)
+#define SQTRY()              try {
+#define SQWHAT(vm)           e.Message().c_str()
+#define SQWHAT_NOEXCEPT(vm)  _SC("")
+#else
+#define SQCATCH(vm)          if (false)
+#define SQCATCH_NOEXCEPT(vm) if (Error::Occurred(vm))
+#define SQCLEAR(vm)          Error::Clear(vm)
+#define SQRETHROW(vm, err)
+#define SQTHROW(vm, err)     Error::Throw(vm, err)
+#define SQTRY()
+#define SQWHAT(vm)           _SC("")
+#define SQWHAT_NOEXCEPT(vm)  Error::Message(vm).c_str()
+#endif
+/// @endcond
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @cond DEV
 /// removes unused variable warnings in a way that Doxygen can understand
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
@@ -111,18 +145,24 @@ public:
     }
 };
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
+#if !defined (SCRAT_NO_ERROR_CHECKING) && !defined (SCRAT_USE_EXCEPTIONS)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// The class that must be used to deal with errors that Sqrat has
 ///
 /// \remarks
 /// When documentation in Sqrat says, "This function MUST have its error handled if it occurred," that
 /// means that after the function has been run, you must call Error::Occurred to see if the function
-/// ran successfully. If the function did not run successfully, then you must either call Error::Clear
+/// ran successfully. If the function did not run successfully, then you MUST either call Error::Clear
 /// or Error::Message to clear the error buffer so new ones may occur and Sqrat does not get confused.
 ///
 /// \remarks
-/// Any error thrown inside of a bound C++ function will be also thrown in the given Squirrel VM.
+/// Any error thrown inside of a bound C++ function will be thrown in the given Squirrel VM and
+/// automatically handled.
+///
+/// \remarks
+/// If compiling with SCRAT_USE_EXCEPTIONS defined, Sqrat will throw exceptions instead of using this
+/// class to handle errors. This means that functions must be enclosed in try blocks that catch
+/// Sqrat::Exception instead of checking for errors with Error::Occurred.
 ///
 /// \remarks
 /// If compiling with SCRAT_NO_ERROR_CHECKING defined, Sqrat will run significantly faster,
@@ -132,34 +172,6 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Error {
 public:
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Returns a string that has been formatted to give a nice type error message (for usage with Class::SquirrelFunc)
-    ///
-    /// \param vm           VM the error occurred with
-    /// \param idx          Index on the stack of the argument that had a type error
-    /// \param expectedType The name of the type that the argument should have been
-    ///
-    /// \return String containing a nice type error message
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static string FormatTypeError(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
-        string err = _SC("wrong type (") + expectedType + _SC(" expected");
-#if (SQUIRREL_VERSION_NUMBER >= 200) && (SQUIRREL_VERSION_NUMBER < 300) // Squirrel 2.x
-        err = err + _SC(")");
-#else // Squirrel 3.x
-        if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
-            const SQChar* actualType;
-            sq_tostring(vm, -1);
-            sq_getstring(vm, -1, &actualType);
-            sq_pop(vm, 2);
-            err = err + _SC(", got ") + actualType + _SC(")");
-        } else {
-            err = err + _SC(", got unknown)");
-        }
-#endif
-        return err;
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Clears the error associated with a given VM
@@ -292,6 +304,75 @@ public:
         errorHandling() = enable;
     }
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Sqrat exception class
+///
+/// \remarks
+/// Used only when SCRAT_USE_EXCEPTIONS is defined (see Sqrat::Error)
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class Exception {
+public:
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Constructs an exception
+    ///
+    /// \param msg A nice error message
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Exception(const string& msg) : message(msg) {}
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param ex Exception to copy
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Exception(const Exception& ex) : message(ex.message) {}
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Returns a string identifying the exception
+    ///
+    /// \return A nice error message
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const string& Message() const {
+        return message;
+    }
+
+private:
+
+    string message;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Returns a string that has been formatted to give a nice type error message (for usage with Class::SquirrelFunc)
+///
+/// \param vm           VM the error occurred with
+/// \param idx          Index on the stack of the argument that had a type error
+/// \param expectedType The name of the type that the argument should have been
+///
+/// \return String containing a nice type error message
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline string FormatTypeError(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
+    string err = _SC("wrong type (") + expectedType + _SC(" expected");
+#if (SQUIRREL_VERSION_NUMBER>= 200) && (SQUIRREL_VERSION_NUMBER < 300) // Squirrel 2.x
+    err = err + _SC(")");
+#else // Squirrel 3.x
+    if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
+        const SQChar* actualType;
+        sq_tostring(vm, -1);
+        sq_getstring(vm, -1, &actualType);
+        sq_pop(vm, 2);
+        err = err + _SC(", got ") + actualType + _SC(")");
+    } else {
+        err = err + _SC(", got unknown)");
+    }
+#endif
+    return err;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Returns the last error that occurred with a Squirrel VM (not associated with Sqrat errors)

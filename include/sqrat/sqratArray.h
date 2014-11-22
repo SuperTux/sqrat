@@ -189,21 +189,24 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Throw(vm, _SC("illegal index"));
+            SQTHROW(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
         sq_get(vm, -2);
 #endif
+        SQTRY()
         Var<SharedPtr<T> > element(vm, -1);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        SQCATCH_NOEXCEPT(vm) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
-#endif
         sq_pop(vm, 2);
         return element.value;
+        SQCATCH(vm) {
+            sq_pop(vm, 2);
+            SQRETHROW(vm, SQWHAT(vm));
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,7 +260,7 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (size > sq_getsize(vm, -1)) {
             sq_pop(vm, 1);
-            Error::Throw(vm, _SC("array buffer size too big"));
+            SQTHROW(vm, _SC("array buffer size too big"));
             return;
         }
 #endif
@@ -266,15 +269,18 @@ public:
         while (SQ_SUCCEEDED(sq_next(vm, -2))) {
             sq_getinteger(vm, -2, &i);
             if (i >= size) break;
+            SQTRY()
             Var<const T&> element(vm, -1);
-            sq_pop(vm, 2);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            if (Error::Occurred(vm)) {
-                sq_pop(vm, 2);
+            SQCATCH_NOEXCEPT(vm) {
+                sq_pop(vm, 4);
                 return;
             }
-#endif
+            sq_pop(vm, 2);
             array[i] = element.value;
+            SQCATCH(vm) {
+                sq_pop(vm, 4);
+                SQRETHROW(vm, SQWHAT(vm));
+            }
         }
         sq_pop(vm, 2); // pops the null iterator and the array object
     }
@@ -511,7 +517,7 @@ struct Var<Array> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_ARRAY) {
-            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("array")));
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("array")));
         }
 #endif
     }

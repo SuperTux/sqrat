@@ -253,21 +253,24 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Throw(vm, _SC("illegal index"));
+            SQTHROW(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
         sq_get(vm, -2);
 #endif
+        SQTRY()
         Var<SharedPtr<T> > entry(vm, -1);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        SQCATCH_NOEXCEPT(vm) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
-#endif
         sq_pop(vm, 2);
         return entry.value;
+        SQCATCH(vm) {
+            sq_pop(vm, 2);
+            SQRETHROW(vm, SQWHAT(vm));
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,21 +294,24 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Throw(vm, _SC("illegal index"));
+            SQTHROW(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
         sq_get(vm, -2);
 #endif
+        SQTRY()
         Var<SharedPtr<T> > entry(vm, -1);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
+        SQCATCH_NOEXCEPT(vm) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
-#endif
         sq_pop(vm, 2);
         return entry.value;
+        SQCATCH(vm) {
+            sq_pop(vm, 2);
+            SQRETHROW(vm, SQWHAT(vm));
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -488,7 +494,7 @@ struct Var<Table> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_TABLE) {
-            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("table")));
         }
 #endif
     }

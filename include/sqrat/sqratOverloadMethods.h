@@ -77,7 +77,7 @@ public:
         sq_pushstring(vm, overloadName.c_str(), -1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
+        if (SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #else
@@ -85,16 +85,17 @@ public:
 #endif
 
         // Push the args again
-        for(int i = 1; i <= argCount + 1; ++i) {
+        for (int i = 1; i <= argCount + 1; ++i) {
             sq_push(vm, i);
         }
 
-        sq_call(vm, argCount + 1, true, ErrorHandling::IsEnabled());
-
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
-            return sq_throwerror(vm, Error::Message(vm).c_str());
+        SQRESULT result = sq_call(vm, argCount + 1, true, ErrorHandling::IsEnabled());
+        if (SQ_FAILED(result)) {
+            return sq_throwerror(vm, LastErrorString(vm).c_str());
         }
+#else
+        sq_call(vm, argCount + 1, true, ErrorHandling::IsEnabled());
 #endif
 
         return 1;
@@ -122,7 +123,7 @@ public:
         sq_pushstring(vm, overloadName.c_str(), -1);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if(SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
+        if (SQ_FAILED(sq_get(vm, 1))) { // Lookup the proper overload
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #else
@@ -130,16 +131,17 @@ public:
 #endif
 
         // Push the args again
-        for(int i = 1; i <= argCount + 1; ++i) {
+        for (int i = 1; i <= argCount + 1; ++i) {
             sq_push(vm, i);
         }
 
-        sq_call(vm, argCount + 1, false, ErrorHandling::IsEnabled());
-
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Occurred(vm)) {
-            return sq_throwerror(vm, Error::Message(vm).c_str());
+        SQRESULT result = sq_call(vm, argCount + 1, false, ErrorHandling::IsEnabled());
+        if (SQ_FAILED(result)) {
+            return sq_throwerror(vm, LastErrorString(vm).c_str());
         }
+#else
+        sq_call(vm, argCount + 1, false, ErrorHandling::IsEnabled());
 #endif
 
         return 0;
@@ -158,7 +160,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)()) {
 }
 
 template <class R>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)()) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)()) {
     return &SqGlobal<R&>::template Func0<true>;
 }
 
@@ -169,7 +171,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1)) {
 }
 
 template <class R, class A1>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1)) {
     return &SqGlobal<R&>::template Func1<A1, 2, true>;
 }
 
@@ -180,7 +182,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2)) {
 }
 
 template <class R, class A1, class A2>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2)) {
     return &SqGlobal<R&>::template Func2<A1, A2, 2, true>;
 }
 
@@ -191,7 +193,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3)) {
 }
 
 template <class R, class A1, class A2, class A3>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3)) {
     return &SqGlobal<R&>::template Func3<A1, A2, A3, 2, true>;
 }
 
@@ -202,8 +204,8 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4)) {
 }
 
 template <class R, class A1, class A2, class A3, class A4>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4)) {
-    return &SqGlobal<R& >::template Func4<A1, A2, A3, A4, 2, true>;
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4)) {
+    return &SqGlobal<R&>::template Func4<A1, A2, A3, A4, 2, true>;
 }
 
 // Arg Count 5
@@ -213,7 +215,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5)) {
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5)) {
     return &SqGlobal<R&>::template Func5<A1, A2, A3, A4, A5, 2, true>;
 }
 
@@ -224,7 +226,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6)) {
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6)) {
     return &SqGlobal<R&>::template Func6<A1, A2, A3, A4, A5, A6, 2, true>;
 }
 
@@ -235,7 +237,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) 
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) {
     return &SqGlobal<R&>::template Func7<A1, A2, A3, A4, A5, A6, A7, 2, true>;
 }
 
@@ -246,7 +248,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8)) {
     return &SqGlobal<R&>::template Func8<A1, A2, A3, A4, A5, A6, A7, A8, 2, true>;
 }
 
@@ -257,7 +259,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
     return &SqGlobal<R&>::template Func9<A1, A2, A3, A4, A5, A6, A7, A8, A9, 2, true>;
 }
 
@@ -268,7 +270,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
     return &SqGlobal<R&>::template Func10<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, 2, true>;
 }
 
@@ -279,7 +281,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
     return &SqGlobal<R&>::template Func11<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, 2, true>;
 }
 
@@ -290,7 +292,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
     return &SqGlobal<R&>::template Func12<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, 2, true>;
 }
 
@@ -301,7 +303,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
     return &SqGlobal<R&>::template Func13<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, 2, true>;
 }
 
@@ -311,7 +313,7 @@ SQFUNCTION SqGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A
     return &SqGlobal<R>::template Func14<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, 2, true>;
 }
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
-SQFUNCTION SqGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
+SQFUNCTION SqGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
     return &SqGlobal<R&>::template Func14<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, 2, true>;
 }
 
@@ -327,7 +329,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1)) {
 }
 
 template <class R, class A1>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1)) {
     return &SqGlobal<R&>::template Func1<A1, 1, true>;
 }
 
@@ -338,7 +340,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2)) {
 }
 
 template <class R, class A1, class A2>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2)) {
     return &SqGlobal<R&>::template Func2<A1, A2, 1, true>;
 }
 
@@ -349,7 +351,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3)) {
 }
 
 template <class R, class A1, class A2, class A3>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3)) {
     return &SqGlobal<R&>::template Func3<A1, A2, A3, 1, true>;
 }
 
@@ -360,7 +362,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4)) {
 }
 
 template <class R, class A1, class A2, class A3, class A4>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4)) {
     return &SqGlobal<R&>::template Func4<A1, A2, A3, A4, 1, true>;
 }
 
@@ -371,7 +373,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5)) {
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5)) {
     return &SqGlobal<R&>::template Func5<A1, A2, A3, A4, A5, 1, true>;
 }
 
@@ -382,7 +384,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6)
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6)) {
     return &SqGlobal<R&>::template Func6<A1, A2, A3, A4, A5, A6, 1, true>;
 }
 
@@ -393,7 +395,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) {
     return &SqGlobal<R&>::template Func7<A1, A2, A3, A4, A5, A6, A7, 1, true>;
 }
 
@@ -404,7 +406,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8)) {
     return &SqGlobal<R&>::template Func8<A1, A2, A3, A4, A5, A6, A7, A8, 1, true>;
 }
 
@@ -415,7 +417,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
     return &SqGlobal<R&>::template Func9<A1, A2, A3, A4, A5, A6, A7, A8, A9, 1, true>;
 }
 
@@ -426,7 +428,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
     return &SqGlobal<R&>::template Func10<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, 1, true>;
 }
 
@@ -437,7 +439,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
     return &SqGlobal<R&>::template Func11<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, 1, true>;
 }
 
@@ -448,7 +450,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
     return &SqGlobal<R&>::template Func12<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, 1, true>;
 }
 
@@ -459,7 +461,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
     return &SqGlobal<R&>::template Func13<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, 1, true>;
 }
 
@@ -470,7 +472,7 @@ SQFUNCTION SqMemberGlobalOverloadedFunc(R (* /*method*/)(A1, A2, A3, A4, A5, A6,
 }
 
 template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
-SQFUNCTION SqMemberGlobalOverloadedFunc(R & (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
+SQFUNCTION SqMemberGlobalOverloadedFunc(R& (* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
     return &SqGlobal<R&>::template Func14<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, 1, true>;
 }
 
@@ -491,11 +493,11 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)() const) {
 }
 
 template <class C, class R>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)()) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)()) {
     return &SqMember<C, R&>::template Func0<true>;
 }
 template <class C, class R>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)() const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)() const) {
     return &SqMember<C, R&>::template Func0C<true>;
 }
 
@@ -511,12 +513,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1) const) {
 }
 
 template <class C, class R, class A1>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1)) {
     return &SqMember<C, R&>::template Func1<A1, true>;
 }
 
 template <class C, class R, class A1>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1) const) {
     return &SqMember<C, R&>::template Func1C<A1, true>;
 }
 
@@ -532,12 +534,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2) const) {
 }
 
 template <class C, class R, class A1, class A2>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2)) {
     return &SqMember<C, R&>::template Func2<A1, A2, true>;
 }
 
 template <class C, class R, class A1, class A2>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2) const) {
     return &SqMember<C, R&>::template Func2C<A1, A2, true>;
 }
 
@@ -552,12 +554,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3) const) 
     return &SqMember<C, R>::template Func3C<A1, A2, A3, true>;
 }
 template <class C, class R, class A1, class A2, class A3>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3)) {
     return &SqMember<C, R&>::template Func3<A1, A2, A3, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3) const) {
     return &SqMember<C, R&>::template Func3C<A1, A2, A3, true>;
 }
 
@@ -573,12 +575,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4) con
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4)) {
     return &SqMember<C, R&>::template Func4<A1, A2, A3, A4, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4) const) {
     return &SqMember<C, R&>::template Func4C<A1, A2, A3, A4, true>;
 }
 
@@ -594,12 +596,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5)
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5)) {
     return &SqMember<C, R&>::template Func5<A1, A2, A3, A4, A5, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5) const) {
     return &SqMember<C, R&>::template Func5C<A1, A2, A3, A4, A5, true>;
 }
 
@@ -615,12 +617,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6)) {
     return &SqMember<C, R&>::template Func6<A1, A2, A3, A4, A5, A6, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6) const) {
     return &SqMember<C, R&>::template Func6C<A1, A2, A3, A4, A5, A6, true>;
 }
 
@@ -636,12 +638,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7)) {
     return &SqMember<C, R&>::template Func7<A1, A2, A3, A4, A5, A6, A7, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7) const) {
     return &SqMember<C, R&>::template Func7C<A1, A2, A3, A4, A5, A6, A7, true>;
 }
 
@@ -657,12 +659,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8)) {
     return &SqMember<C, R&>::template Func8<A1, A2, A3, A4, A5, A6, A7, A8, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8) const) {
     return &SqMember<C, R&>::template Func8C<A1, A2, A3, A4, A5, A6, A7, A8, true>;
 }
 
@@ -678,12 +680,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9)) {
     return &SqMember<C, R&>::template Func9<A1, A2, A3, A4, A5, A6, A7, A8, A9, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9) const) {
     return &SqMember<C, R&>::template Func9C<A1, A2, A3, A4, A5, A6, A7, A8, A9, true>;
 }
 
@@ -699,12 +701,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)) {
     return &SqMember<C, R&>::template Func10<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) const) {
     return &SqMember<C, R&>::template Func10C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, true>;
 }
 
@@ -720,12 +722,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)) {
     return &SqMember<C, R&>::template Func11<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) const) {
     return &SqMember<C, R&>::template Func11C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, true>;
 }
 
@@ -741,12 +743,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)) {
     return &SqMember<C, R&>::template Func12<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) const) {
     return &SqMember<C, R&>::template Func12C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, true>;
 }
 
@@ -762,12 +764,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)) {
     return &SqMember<C, R&>::template Func13<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) const) {
     return &SqMember<C, R&>::template Func13C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, true>;
 }
 
@@ -783,12 +785,12 @@ inline SQFUNCTION SqMemberOverloadedFunc(R (C::* /*method*/)(A1, A2, A3, A4, A5,
     return &SqMember<C, R>::template Func14C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, true>;
 }
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)) {
     return &SqMember<C, R&>::template Func14<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, true>;
 }
 
 template <class C, class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
-inline SQFUNCTION SqMemberOverloadedFunc(R & (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const) {
+inline SQFUNCTION SqMemberOverloadedFunc(R& (C::* /*method*/)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) const) {
     return &SqMember<C, R&>::template Func14C<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, true>;
 }
 

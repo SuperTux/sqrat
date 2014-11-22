@@ -86,9 +86,7 @@ struct popAsInt
             value = static_cast<T>(sqValuef);
             break;
         default:
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer")));
-#endif
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("integer")));
             value = static_cast<T>(0);
             break;
         }
@@ -129,9 +127,7 @@ struct popAsFloat
             value = static_cast<T>(sqValuef);
             break;
         default:
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float")));
-#endif
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("float")));
             value = 0;
             break;
         }
@@ -162,25 +158,26 @@ struct Var {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
+        SQTRY()
+        T* ptr = ClassType<T>::GetInstance(vm, idx);
+        if (ptr != NULL) {
+            value = *ptr;
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        // don't want to override previous errors
-        if (!Sqrat::Error::Occurred(vm)) {
+        } else if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
+            SQCLEAR(vm); // clear the previous error
+            value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
 #endif
-            // check if return is NULL here because copying (not referencing)
-            T* ptr = ClassType<T>::GetInstance(vm, idx, true);
-            if (ptr != NULL) {
-                value = *ptr;
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            } else if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
-                Sqrat::Error::Clear(vm);
-                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
-            } else
-                // initialize value to avoid warnings
-                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
-#endif
-        } else
+        } else {
             // initialize value to avoid warnings
             value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
+        }
+        SQCATCH(vm) {
+            if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
+                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
+            } else {
+                SQRETHROW(vm, SQWHAT(vm));
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -453,13 +450,10 @@ struct Var<SharedPtr<T> > {
     Var(HSQUIRRELVM vm, SQInteger idx) {
         if (sq_gettype(vm, idx) != OT_NULL) {
             Var<T> instance(vm, idx);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            if (!Error::Occurred(vm)) {
-#endif
-                value.Init(new T(instance.value));
-#if !defined (SCRAT_NO_ERROR_CHECKING)
+            SQCATCH_NOEXCEPT(vm) {
+                return;
             }
-#endif
+            value.Init(new T(instance.value));
         }
     }
 
