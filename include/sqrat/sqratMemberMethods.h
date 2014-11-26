@@ -36,8 +36,6 @@ namespace Sqrat {
 
 /// @cond DEV
 
-const SQChar STATICCALLERROR[] = _SC("this function isn't static");
-
 
 //
 // Squirrel Global Functions
@@ -67,11 +65,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -105,11 +103,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -144,11 +142,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -188,11 +186,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -233,11 +231,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -279,11 +277,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -326,11 +324,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -374,11 +372,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -423,11 +421,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -473,11 +471,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -524,11 +522,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -576,11 +574,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -629,11 +627,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -683,11 +681,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -738,11 +736,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -794,11 +792,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -851,11 +849,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -909,11 +907,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -968,11 +966,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1028,11 +1026,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1090,11 +1088,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1152,11 +1150,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1216,11 +1214,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1280,11 +1278,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1346,11 +1344,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1412,11 +1410,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1479,11 +1477,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1547,11 +1545,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1616,11 +1614,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1686,11 +1684,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1766,11 +1764,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1804,11 +1802,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1843,11 +1841,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1887,11 +1885,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1932,11 +1930,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -1978,11 +1976,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2025,11 +2023,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2073,11 +2071,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2122,11 +2120,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2172,11 +2170,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2223,11 +2221,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2275,11 +2273,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2328,11 +2326,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2382,11 +2380,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2437,11 +2435,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2493,11 +2491,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2550,11 +2548,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2608,11 +2606,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2667,11 +2665,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2727,11 +2725,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2789,11 +2787,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2851,11 +2849,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2915,11 +2913,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -2979,11 +2977,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3045,11 +3043,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3111,11 +3109,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3178,11 +3176,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3246,11 +3244,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3315,11 +3313,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3385,11 +3383,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3466,11 +3464,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3503,11 +3501,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3541,11 +3539,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3584,11 +3582,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3628,11 +3626,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3673,11 +3671,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3719,11 +3717,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3766,11 +3764,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3814,11 +3812,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3863,11 +3861,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3913,11 +3911,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -3964,11 +3962,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4016,11 +4014,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4069,11 +4067,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4123,11 +4121,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4178,11 +4176,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4234,11 +4232,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4291,11 +4289,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4349,11 +4347,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4408,11 +4406,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4468,11 +4466,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4529,11 +4527,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4591,11 +4589,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4654,11 +4652,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4718,11 +4716,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4783,11 +4781,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4849,11 +4847,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4916,11 +4914,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -4984,11 +4982,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -5053,11 +5051,11 @@ public:
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
             assert(0); // may fail because C is not a type bound in the VM
-            return sq_throwerror(vm, STATICCALLERROR);
+            return sq_throwerror(vm, SQWHAT(vm));
         }
 
         SQTRY()
@@ -5435,10 +5433,10 @@ inline SQInteger sqDefaultGet(HSQUIRRELVM vm) {
     ptr = ClassType<C>::GetInstance(vm, 1);
     SQCATCH_NOEXCEPT(vm) {
         SQCLEAR(vm); // clear the previous error
-        return sq_throwerror(vm, STATICCALLERROR);
+        return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
     }
     SQCATCH(vm) {
-        return sq_throwerror(vm, STATICCALLERROR);
+        return sq_throwerror(vm, SQWHAT(vm));
     }
 
     typedef V C::*M;
@@ -5507,10 +5505,10 @@ inline SQInteger sqDefaultSet(HSQUIRRELVM vm) {
     ptr = ClassType<C>::GetInstance(vm, 1);
     SQCATCH_NOEXCEPT(vm) {
         SQCLEAR(vm); // clear the previous error
-        return sq_throwerror(vm, STATICCALLERROR);
+        return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
     }
     SQCATCH(vm) {
-        return sq_throwerror(vm, STATICCALLERROR);
+        return sq_throwerror(vm, SQWHAT(vm));
     }
 
     typedef V C::*M;
