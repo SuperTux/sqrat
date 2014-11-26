@@ -92,14 +92,14 @@ public:
         sq_pushstring(vm, "__classes", -1);
 #ifndef NDEBUG
         SQRESULT r = sq_rawget(vm, -2);
-        assert(r == SQ_OK); // fails if getClassData is called when the data does not exist for the given VM yet
+        assert(SQ_SUCCEEDED(r)); // fails if getClassData is called when the data does not exist for the given VM yet (bind the class)
 #else
         sq_rawget(vm, -2);
 #endif
         sq_pushstring(vm, ClassName().c_str(), -1);
 #ifndef NDEBUG
         r = sq_rawget(vm, -2);
-        assert(r == SQ_OK); // fails if getClassData is called when the data does not exist for the given VM yet
+        assert(SQ_SUCCEEDED(r)); // fails if getClassData is called when the data does not exist for the given VM yet (bind the class)
 #else
         sq_rawget(vm, -2);
 #endif
@@ -132,17 +132,17 @@ public:
     }
 
     static inline AbstractStaticClassData*& BaseClass() {
-        assert(getStaticClassData().Expired() == false); // fails because called before the Sqrat::Class for this type exists
+        assert(getStaticClassData().Expired() == false); // fails because called before a Sqrat::Class for this type exists
         return getStaticClassData().Lock()->baseClass;
     }
 
     static inline string& ClassName() {
-        assert(getStaticClassData().Expired() == false); // fails because called before the Sqrat::Class for this type exists
+        assert(getStaticClassData().Expired() == false); // fails because called before a Sqrat::Class for this type exists
         return getStaticClassData().Lock()->className;
     }
 
     static inline COPYFUNC& CopyFunc() {
-        assert(getStaticClassData().Expired() == false); // fails because called before the Sqrat::Class for this type exists
+        assert(getStaticClassData().Expired() == false); // fails because called before a Sqrat::Class for this type exists
         return getStaticClassData().Lock()->copyFunc;
     }
 

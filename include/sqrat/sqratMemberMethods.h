@@ -66,9 +66,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -102,9 +104,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -139,9 +143,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -181,9 +187,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -224,9 +232,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -268,9 +278,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -313,9 +325,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -359,9 +373,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -406,9 +422,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -454,9 +472,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -503,9 +523,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -553,9 +575,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -604,9 +628,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -656,9 +682,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -709,9 +737,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -763,9 +793,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -818,9 +850,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -874,9 +908,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -931,9 +967,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -989,9 +1027,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1049,9 +1089,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1109,9 +1151,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1171,9 +1215,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1233,9 +1279,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1297,9 +1345,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1361,9 +1411,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1426,9 +1478,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1492,9 +1546,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1559,9 +1615,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1627,9 +1685,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1705,9 +1765,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1741,9 +1803,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1778,9 +1842,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1820,9 +1886,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1863,9 +1931,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1907,9 +1977,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1952,9 +2024,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -1998,9 +2072,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2045,9 +2121,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2093,9 +2171,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2142,9 +2222,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2192,9 +2274,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2243,9 +2327,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2295,9 +2381,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2348,9 +2436,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2402,9 +2492,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2457,9 +2549,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2513,9 +2607,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2570,9 +2666,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2628,9 +2726,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2688,9 +2788,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2748,9 +2850,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2810,9 +2914,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2872,9 +2978,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -2936,9 +3044,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3000,9 +3110,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3065,9 +3177,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3131,9 +3245,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3198,9 +3314,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3266,9 +3384,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3345,9 +3465,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3380,9 +3502,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3416,9 +3540,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3457,9 +3583,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3499,9 +3627,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3542,9 +3672,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3586,9 +3718,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3631,9 +3765,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3677,9 +3813,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3724,9 +3862,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3772,9 +3912,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3821,9 +3963,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3871,9 +4015,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3922,9 +4068,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -3974,9 +4122,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4027,9 +4177,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4081,9 +4233,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4136,9 +4290,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4192,9 +4348,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4249,9 +4407,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4307,9 +4467,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4366,9 +4528,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4426,9 +4590,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4487,9 +4653,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4549,9 +4717,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4612,9 +4782,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4676,9 +4848,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4741,9 +4915,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4807,9 +4983,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
@@ -4874,9 +5052,11 @@ public:
         ptr = ClassType<C>::GetInstance(vm, 1);
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
         SQCATCH(vm) {
+            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, STATICCALLERROR);
         }
 
