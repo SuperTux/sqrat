@@ -523,6 +523,8 @@ protected:
 
     // Initialize the required data structure for the class
     void InitClass(ClassData<C>* cd) {
+        cd->instances.Init(new std::map<C*, HSQOBJECT>);
+
         // push the class
         sq_pushobject(vm, cd->classObj);
 
@@ -915,6 +917,8 @@ protected:
 /// @cond DEV
 
     void InitDerivedClass(HSQUIRRELVM vm, ClassData<C>* cd, ClassData<B>* bd) {
+        cd->instances.Init(new std::map<C*, HSQOBJECT>);
+
         // push the class
         sq_pushobject(vm, cd->classObj);
 

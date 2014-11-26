@@ -65,26 +65,16 @@ struct StaticClassData : public AbstractStaticClassData {
 // Every Squirrel class object created by Sqrat in every VM has its own unique ClassData object stored in the registry table of the VM
 template<class C>
 struct ClassData {
-    HSQOBJECT                          classObj;
-    HSQOBJECT                          getTable;
-    HSQOBJECT                          setTable;
-    std::map<C*, HSQOBJECT>            instances;
-    SharedPtr<AbstractStaticClassData> staticData;
+    HSQOBJECT                           classObj;
+    HSQOBJECT                           getTable;
+    HSQOBJECT                           setTable;
+    SharedPtr<std::map<C*, HSQOBJECT> > instances;
+    SharedPtr<AbstractStaticClassData>  staticData;
 };
 
 // Internal helper class for managing classes
 template<class C>
 class ClassType {
-private:
-
-    static SQInteger instance_cleanup_hook(SQUserPointer ptr, SQInteger size) {
-        SQUNUSED(size);
-        std::pair<C*, std::map<C*, HSQOBJECT>*>* instance = reinterpret_cast<std::pair<C*, std::map<C*, HSQOBJECT>*>*>(ptr);
-        instance->second->erase(instance->first);
-        delete instance;
-        return 0;
-    }
-
 public:
 
     static inline ClassData<C>* getClassData(HSQUIRRELVM vm) {
@@ -146,6 +136,14 @@ public:
         return getStaticClassData().Lock()->copyFunc;
     }
 
+    static SQInteger DeleteInstance(SQUserPointer ptr, SQInteger size) {
+        SQUNUSED(size);
+        std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >* instance = reinterpret_cast<std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >*>(ptr);
+        instance->second->erase(instance->first);
+        delete instance;
+        return 0;
+    }
+
     static void PushInstance(HSQUIRRELVM vm, C* ptr) {
         if (!ptr) {
             sq_pushnull(vm);
@@ -154,8 +152,8 @@ public:
 
         ClassData<C>* cd = getClassData(vm);
 
-        typename std::map<C*, HSQOBJECT>::iterator it = cd->instances.find(ptr);
-        if (it != cd->instances.end()) {
+        typename std::map<C*, HSQOBJECT>::iterator it = cd->instances->find(ptr);
+        if (it != cd->instances->end()) {
             sq_pushobject(vm, it->second);
             return;
         }
@@ -163,9 +161,9 @@ public:
         sq_pushobject(vm, cd->classObj);
         sq_createinstance(vm, -1);
         sq_remove(vm, -2);
-        sq_setinstanceup(vm, -1, new std::pair<C*, std::map<C*, HSQOBJECT>*>(ptr, &(cd->instances)));
-        sq_setreleasehook(vm, -1, &instance_cleanup_hook);
-        sq_getstackobj(vm, -1, &cd->instances[ptr]);
+        sq_setinstanceup(vm, -1, new std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >(ptr, cd->instances));
+        sq_setreleasehook(vm, -1, &DeleteInstance);
+        sq_getstackobj(vm, -1, &((*cd->instances)[ptr]));
     }
 
     static void PushInstanceCopy(HSQUIRRELVM vm, const C& value) {
@@ -176,8 +174,8 @@ public:
     }
 
     static C* GetInstance(HSQUIRRELVM vm, SQInteger idx, bool nullAllowed = false) {
-        AbstractStaticClassData*                 classType = NULL;
-        std::pair<C*, std::map<C*, HSQOBJECT>*>* instance  = NULL;
+        AbstractStaticClassData*                             classType = NULL;
+        std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >* instance  = NULL;
         if (hasClassData(vm)) /* type checking only done if the value has type data else it may be enum */
         {
             if (nullAllowed && sq_gettype(vm, idx) == OT_NULL) {

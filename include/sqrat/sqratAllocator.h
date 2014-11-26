@@ -105,9 +105,9 @@ public:
     static void SetInstance(HSQUIRRELVM vm, SQInteger idx, C* ptr)
     {
         ClassData<C>* cd = ClassType<C>::getClassData(vm);
-        sq_setinstanceup(vm, idx, new std::pair<C*, std::map<C*, HSQOBJECT>*>(ptr, &(cd->instances)));
+        sq_setinstanceup(vm, idx, new std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >(ptr, cd->instances));
         sq_setreleasehook(vm, idx, &Delete);
-        sq_getstackobj(vm, idx, &cd->instances[ptr]);
+        sq_getstackobj(vm, idx, &((*cd->instances)[ptr]));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -368,7 +368,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         SQUNUSED(size);
-        std::pair<C*, std::map<C*, HSQOBJECT>*>* instance = reinterpret_cast<std::pair<C*, std::map<C*, HSQOBJECT>*>*>(ptr);
+        std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >* instance = reinterpret_cast<std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >*>(ptr);
         instance->second->erase(instance->first);
         delete instance->first;
         delete instance;
@@ -400,9 +400,9 @@ public:
     static void SetInstance(HSQUIRRELVM vm, SQInteger idx, C* ptr)
     {
         ClassData<C>* cd = ClassType<C>::getClassData(vm);
-        sq_setinstanceup(vm, idx, new std::pair<C*, std::map<C*, HSQOBJECT>*>(ptr, &(cd->instances)));
+        sq_setinstanceup(vm, idx, new std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >(ptr, cd->instance));
         sq_setreleasehook(vm, idx, &Delete);
-        sq_getstackobj(vm, idx, &cd->instances[ptr]);
+        sq_getstackobj(vm, idx, &((*cd->instances)[ptr]));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -451,7 +451,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         SQUNUSED(size);
-        std::pair<C*, std::map<C*, HSQOBJECT>*>* instance = reinterpret_cast<std::pair<C*, std::map<C*, HSQOBJECT>*>*>(ptr);
+        std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >* instance = reinterpret_cast<std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >*>(ptr);
         instance->second->erase(instance->first);
         delete instance->first;
         delete instance;
@@ -483,9 +483,9 @@ public:
     static void SetInstance(HSQUIRRELVM vm, SQInteger idx, C* ptr)
     {
         ClassData<C>* cd = ClassType<C>::getClassData(vm);
-        sq_setinstanceup(vm, idx, new std::pair<C*, std::map<C*, HSQOBJECT>*>(ptr, &(cd->instances)));
+        sq_setinstanceup(vm, idx, new std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >(ptr, cd->instances));
         sq_setreleasehook(vm, idx, &Delete);
-        sq_getstackobj(vm, idx, &cd->instances[ptr]);
+        sq_getstackobj(vm, idx, &((*cd->instances)[ptr]));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -531,7 +531,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         SQUNUSED(size);
-        std::pair<C*, std::map<C*, HSQOBJECT>*>* instance = reinterpret_cast<std::pair<C*, std::map<C*, HSQOBJECT>*>*>(ptr);
+        std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >* instance = reinterpret_cast<std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >*>(ptr);
         instance->second->erase(instance->first);
         delete instance->first;
         delete instance;
@@ -588,9 +588,9 @@ public:
     static void SetInstance(HSQUIRRELVM vm, SQInteger idx, C* ptr)
     {
         ClassData<C>* cd = ClassType<C>::getClassData(vm);
-        sq_setinstanceup(vm, idx, new std::pair<C*, std::map<C*, HSQOBJECT>*>(ptr, &(cd->instances)));
+        sq_setinstanceup(vm, idx, new std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >(ptr, cd->instances));
         sq_setreleasehook(vm, idx, &Delete);
-        sq_getstackobj(vm, idx, &cd->instances[ptr]);
+        sq_getstackobj(vm, idx, &((*cd->instances)[ptr]));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -852,7 +852,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static SQInteger Delete(SQUserPointer ptr, SQInteger size) {
         SQUNUSED(size);
-        std::pair<C*, std::map<C*, HSQOBJECT>*>* instance = reinterpret_cast<std::pair<C*, std::map<C*, HSQOBJECT>*>*>(ptr);
+        std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >* instance = reinterpret_cast<std::pair<C*, SharedPtr<std::map<C*, HSQOBJECT> > >*>(ptr);
         instance->second->erase(instance->first);
         delete instance->first;
         delete instance;
