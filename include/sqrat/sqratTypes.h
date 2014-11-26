@@ -191,13 +191,15 @@ struct Var {
         if (ClassType<T>::hasClassData(vm))
             ClassType<T>::PushInstanceCopy(vm, value);
         else /* try integral type */
-            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, (value));
+            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, value);
     }
 
 private:
+
     template <class T2, bool b>
     struct pushAsInt {
         void push(HSQUIRRELVM vm, const T2& /*value*/) {
+            assert(false); // fails because called before a Sqrat::Class for T exists and T is not convertible to SQInteger
             sq_pushnull(vm);
         }
     };
@@ -242,8 +244,28 @@ struct Var<T&> {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, T& value) {
-        ClassType<T>::PushInstance(vm, &value);
+        if (ClassType<T>::hasClassData(vm))
+            ClassType<T>::PushInstance(vm, &value);
+        else /* try integral type */
+            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, value);
     }
+
+private:
+
+    template <class T2, bool b>
+    struct pushAsInt {
+        void push(HSQUIRRELVM vm, const T2& /*value*/) {
+            assert(false); // fails because called before a Sqrat::Class for T exists and T is not convertible to SQInteger
+            sq_pushnull(vm);
+        }
+    };
+
+    template <class T2>
+    struct pushAsInt<T2, true> {
+        void push(HSQUIRRELVM vm, const T2& value) {
+            sq_pushinteger(vm, static_cast<SQInteger>(value));
+        }
+    };
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
