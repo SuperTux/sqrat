@@ -483,17 +483,6 @@ struct Var<SharedPtr<T> > {
  };\
  \
  template<> \
- struct Var<const type> { \
-     type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsInt<type, true>(vm, idx).value; \
-     } \
-     static void push(HSQUIRRELVM vm, const type& value) { \
-         sq_pushinteger(vm, static_cast<SQInteger>(value)); \
-     } \
- }; \
- \
- template<> \
  struct Var<const type&> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
@@ -536,16 +525,6 @@ SCRAT_INTEGER(signed __int64)
  }; \
  \
  template<> \
- struct Var<const type> { \
-     type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsFloat<type>(vm, idx).value; \
-     } \
-     static void push(HSQUIRRELVM vm, const type& value) { \
-         sq_pushfloat(vm, static_cast<SQFloat>(value)); \
-     } \
- }; \
- template<> \
  struct Var<const type&> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
@@ -564,39 +543,6 @@ SCRAT_FLOAT(double)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
 struct Var<bool> {
-
-    bool value; ///< The actual value of get operations
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Attempts to get the value off the stack at idx as a bool
-    ///
-    /// \param vm  Target VM
-    /// \param idx Index trying to be read
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
-        SQBool sqValue;
-        sq_tobool(vm, idx, &sqValue);
-        value = (sqValue != 0);
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat::PushVar to put a bool on the stack
-    ///
-    /// \param vm    Target VM
-    /// \param value Value to push on to the VM's stack
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const bool& value) {
-        sq_pushbool(vm, static_cast<SQBool>(value));
-    }
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Used to get and push const bools to and from the stack
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<>
-struct Var<const bool> {
 
     bool value; ///< The actual value of get operations
 
@@ -1075,15 +1021,6 @@ inline void PushVar(HSQUIRRELVM vm, T value) {
     Var<T>::push(vm, value);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @cond DEV
-/// special version for enum values
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<>
-inline void PushVar<int>(HSQUIRRELVM vm, int value) {
-    Var<int>::push(vm, value);
-}
-/// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Pushes a reference on to a given VM's stack (some types cannot be referenced and will be copied instead)
@@ -1104,7 +1041,7 @@ inline void PushVarR(HSQUIRRELVM vm, T& value) {
     if (!is_pointer<T>::value && is_referencable<typename remove_cv<T>::type>::value) {
         Var<T&>::push(vm, value);
     } else {
-        PushVar(vm, value);
+        PushVar<const T&>(vm, value);
     }
 }
 
