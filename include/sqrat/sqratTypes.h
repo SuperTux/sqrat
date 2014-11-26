@@ -1044,6 +1044,22 @@ inline void PushVar(HSQUIRRELVM vm, T value) {
 }
 
 
+/// @cond DEV
+template<class T, bool b>
+struct PushVarR_helper {
+    inline static void push(HSQUIRRELVM vm, const T& value) {
+        PushVar<T>(vm, value);
+    }
+};
+template<class T>
+struct PushVarR_helper<T, false> {
+    inline static void push(HSQUIRRELVM vm, const T& value) {
+        PushVar<const T&>(vm, value);
+    }
+};
+/// @endcond
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Pushes a reference on to a given VM's stack (some types cannot be referenced and will be copied instead)
 ///
@@ -1063,7 +1079,7 @@ inline void PushVarR(HSQUIRRELVM vm, T& value) {
     if (!is_pointer<T>::value && is_referencable<typename remove_cv<T>::type>::value) {
         Var<T&>::push(vm, value);
     } else {
-        PushVar<const T&>(vm, value);
+        PushVarR_helper<T, is_pointer<T>::value>::push(vm, value);
     }
 }
 
