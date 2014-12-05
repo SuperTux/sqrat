@@ -87,11 +87,7 @@ private:
 
 private:
 
-    static std::map<HSQUIRRELVM, SqratVM*>& ms_sqratVMs()
-    {
-        static std::map<HSQUIRRELVM, SqratVM*> ms;
-        return ms;
-    }
+    static SQRAT_API std::map<HSQUIRRELVM, SqratVM*>& ms_sqratVMs();
 
     static void printFunc(HSQUIRRELVM /*v*/, const SQChar *s, ...)
     {
@@ -340,6 +336,13 @@ public:
     }
 
 };
+
+#if !defined(SCRAT_IMPORT)
+std::map<HSQUIRRELVM, SqratVM*>& SqratVM::ms_sqratVMs() {
+    static std::map<HSQUIRRELVM, SqratVM*> ms;
+    return ms;
+}
+#endif
 
 }
 
