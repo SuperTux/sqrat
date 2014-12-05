@@ -38,11 +38,14 @@ namespace Sqrat {
 /// Represents a function in Squirrel
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Function  {
+
     friend class TableBase;
     friend class Table;
     friend class ArrayBase;
     friend struct Var<Function>;
+
 private:
+
     HSQUIRRELVM vm;
     HSQOBJECT env, obj;
 

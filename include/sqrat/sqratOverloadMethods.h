@@ -40,7 +40,6 @@ namespace Sqrat {
 
 /// @cond DEV
 
-
 //
 // Overload name generator
 //

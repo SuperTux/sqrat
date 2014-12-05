@@ -34,9 +34,68 @@
 
 namespace Sqrat {
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @cond DEV
-/// define macros for internal error handling
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Define helpers to create portable import / export macros
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(SCRAT_EXPORT)
+
+    #if defined(_WIN32)
+
+        // Windows compilers need a specific keyword for export
+        #define SQRAT_API __declspec(dllexport)
+
+    #else
+
+        #if __GNUC__ >= 4
+
+            // GCC 4 has special keywords for showing/hiding symbols,
+            // the same keyword is used for both importing and exporting
+            #define SQRAT_API __attribute__ ((__visibility__ ("default")))
+
+        #else
+
+            // GCC < 4 has no mechanism to explicitly hide symbols, everything's exported
+            #define SQRAT_API
+
+        #endif
+
+    #endif
+
+#elif defined(SCRAT_IMPORT)
+
+    #if defined(_WIN32)
+
+        // Windows compilers need a specific keyword for import
+        #define SQRAT_API __declspec(dllimport)
+
+    #else
+
+        #if __GNUC__ >= 4
+
+            // GCC 4 has special keywords for showing/hiding symbols,
+            // the same keyword is used for both importing and exporting
+            #define SQRAT_API __attribute__ ((__visibility__ ("default")))
+
+        #else
+
+            // GCC < 4 has no mechanism to explicitly hide symbols, everything's exported
+            #define SQRAT_API
+
+        #endif
+
+    #endif
+
+#else
+
+    #define SQRAT_API
+
+#endif
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Define macros for internal error handling
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if defined (SCRAT_NO_ERROR_CHECKING)
 #define SQCATCH(vm)          if (false)
@@ -66,15 +125,15 @@ namespace Sqrat {
 #define SQWHAT(vm)           _SC("")
 #define SQWHAT_NOEXCEPT(vm)  Error::Message(vm).c_str()
 #endif
-/// @endcond
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @cond DEV
-/// removes unused variable warnings in a way that Doxygen can understand
+/// Removes unused variable warnings in a way that Doxygen can understand
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
 void SQUNUSED(const T&) {
 }
+
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +148,7 @@ typedef std::basic_string<SQChar> string;
 /**
 * Convert a std::string into a std::wstring
 */
-static std::wstring ascii_string_to_wstring(const std::string& str)
+static std::wstring string_to_wstring(const std::string& str)
 {
     return std::wstring(str.begin(), str.end());
 }
@@ -97,13 +156,11 @@ static std::wstring ascii_string_to_wstring(const std::string& str)
 /**
 * Convert a std::wstring into a std::string
 */
-static std::string ascii_wstring_to_string(const std::wstring& wstr)
+static std::string wstring_to_string(const std::wstring& wstr)
 {
     return std::string(wstr.begin(), wstr.end());
 }
 
-static std::wstring (*string_to_wstring)(const std::string& str) = ascii_string_to_wstring;
-static std::string (*wstring_to_string)(const std::wstring& wstr) = ascii_wstring_to_string;
 #endif // SQUNICODE
 
 template <class T>
@@ -119,11 +176,14 @@ class WeakPtr;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class DefaultVM {
 private:
+
     static HSQUIRRELVM& staticVm() {
         static HSQUIRRELVM vm;
         return vm;
     }
+
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Gets the default VM
     ///
@@ -1097,8 +1157,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @cond DEV
-/// used internally to get and manipulate the underlying type of variables
-/// retrieved from cppreference.com
+/// Used internally to get and manipulate the underlying type of variables - retrieved from cppreference.com
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T> struct remove_const                                                {typedef T type;};
 template<class T> struct remove_const<const T>                                       {typedef T type;};

@@ -99,10 +99,7 @@ public:
         return *ud;
     }
 
-    static inline WeakPtr<AbstractStaticClassData>& getStaticClassData() {
-        static WeakPtr<AbstractStaticClassData> instance;
-        return instance;
-    }
+    static SQRAT_API WeakPtr<AbstractStaticClassData>& getStaticClassData();
 
     static inline bool hasClassData(HSQUIRRELVM vm) {
         if (!getStaticClassData().Expired()) {
@@ -215,6 +212,14 @@ public:
         return static_cast<C*>(instance->first);
     }
 };
+
+#if !defined(SCRAT_IMPORT)
+template<class C>
+WeakPtr<AbstractStaticClassData>& ClassType<C>::getStaticClassData() {
+    static WeakPtr<AbstractStaticClassData> instance;
+    return instance;
+}
+#endif
 
 /// @endcond
 

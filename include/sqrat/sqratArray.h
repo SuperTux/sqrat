@@ -162,12 +162,6 @@ public:
         return *this;
     }
 
-    //template<class F>
-    //ArrayBase& Overload(const SQChar* name, F method) {
-    //    BindOverload(name, &method, sizeof(method), SqGlobalFunc(method), SqOverloadFunc(method), SqGetArgCount(method));
-    //    return *this;
-    //}
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns the element at a given index
     ///

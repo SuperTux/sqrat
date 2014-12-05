@@ -36,13 +36,13 @@ namespace Sqrat {
 
 /// @cond DEV
 
-
 //
 // Squirrel Global Functions
 //
 template <class R>
 class SqGlobal {
 public:
+
     // Arg Count 0
     template <bool overloaded /*= false*/>
     static SQInteger Func0(HSQUIRRELVM vm) {
@@ -708,6 +708,7 @@ public:
 template <class R>
 class SqGlobal<R&> {
 public:
+
     // Arg Count 0
     template <bool overloaded /*= false*/>
     static SQInteger Func0(HSQUIRRELVM vm) {
@@ -1373,6 +1374,7 @@ public:
 template <>
 class SqGlobal<void> {
 public:
+
     // Arg Count 0
     template <bool overloaded /*= false*/>
     static SQInteger Func0(HSQUIRRELVM vm) {
