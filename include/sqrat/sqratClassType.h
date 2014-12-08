@@ -167,7 +167,12 @@ public:
         sq_pushobject(vm, getClassData(vm)->classObj);
         sq_createinstance(vm, -1);
         sq_remove(vm, -2);
+#ifndef NDEBUG
+        SQRESULT result = CopyFunc()(vm, -1, &value);
+        assert(SQ_SUCCEEDED(result)); // fails when trying to copy an object defined as non-copyable
+#else
         CopyFunc()(vm, -1, &value);
+#endif
     }
 
     static C* GetInstance(HSQUIRRELVM vm, SQInteger idx, bool nullAllowed = false) {

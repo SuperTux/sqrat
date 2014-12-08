@@ -436,8 +436,7 @@ public:
         SQUNUSED(vm);
         SQUNUSED(idx);
         SQUNUSED(value);
-        assert(0); // fails when trying to copy an object defined as non-copyable
-        return 0;
+        return sq_throwerror(vm, (ClassType<C>::ClassName() + string(_SC(" cloning is not allowed"))).c_str());
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -837,8 +836,7 @@ public:
         SQUNUSED(vm);
         SQUNUSED(idx);
         SQUNUSED(value);
-        assert(0); // fails when trying to copy an object defined as non-copyable
-        return 0;
+        return sq_throwerror(vm, (ClassType<C>::ClassName() + string(_SC(" cloning is not allowed"))).c_str());
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

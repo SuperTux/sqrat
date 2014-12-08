@@ -36,6 +36,7 @@
 #include "sqratClassType.h"
 #include "sqratMemberMethods.h"
 #include "sqratAllocator.h"
+#include "sqratTypes.h"
 
 namespace Sqrat
 {
@@ -521,6 +522,20 @@ protected:
         return 1;
     }
 
+    static SQInteger ClassCloned(HSQUIRRELVM vm) {
+        Sqrat::Var<const C*> other(vm, 2);
+        if (!Error::Occurred(vm)) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+            return ClassType<C>::CopyFunc()(vm, 1, other.value);
+#else
+            ClassType<C>::CopyFunc()(vm, 1, other.value);
+            return 0;
+#endif
+        }
+        Error::Clear(vm);
+        return SQ_ERROR;
+    }
+
     // Initialize the required data structure for the class
     void InitClass(ClassData<C>* cd) {
         cd->instances.Init(new std::map<C*, HSQOBJECT>);
@@ -574,6 +589,11 @@ protected:
         // add _typeof
         sq_pushstring(vm, _SC("_typeof"), -1);
         sq_newclosure(vm, &Class::ClassTypeof, 0);
+        sq_newslot(vm, -3, false);
+
+        // add _cloned
+        sq_pushstring(vm, _SC("_cloned"), -1);
+        sq_newclosure(vm, &Class::ClassCloned, 0);
         sq_newslot(vm, -3, false);
 
         // pop the class
@@ -972,6 +992,11 @@ protected:
         // add _typeof
         sq_pushstring(vm, _SC("_typeof"), -1);
         sq_newclosure(vm, &Class<C, A>::ClassTypeof, 0);
+        sq_newslot(vm, -3, false);
+
+        // add _cloned
+        sq_pushstring(vm, _SC("_cloned"), -1);
+        sq_newclosure(vm, &Class<C, A>::ClassCloned, 0);
         sq_newslot(vm, -3, false);
 
         // pop the class
