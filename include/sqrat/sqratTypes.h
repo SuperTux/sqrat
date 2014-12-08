@@ -753,7 +753,7 @@ struct Var<string> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = string(ret);
+        value = string(ret, sq_getsize(vm, -1));
         sq_pop(vm,1);
     }
 
@@ -788,7 +788,7 @@ struct Var<const string&> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = string(ret);
+        value = string(ret, sq_getsize(vm, -1));
         sq_pop(vm,1);
     }
 
@@ -824,7 +824,7 @@ struct Var<std::string> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = wstring_to_string(string(ret));
+        value = wstring_to_string(string(ret, sq_getsize(vm, -1)));
         sq_pop(vm,1);
     }
 
@@ -860,7 +860,7 @@ struct Var<const std::string&> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = wstring_to_string(string(ret));
+        value = wstring_to_string(string(ret, sq_getsize(vm, -1)));
         sq_pop(vm,1);
     }
 
