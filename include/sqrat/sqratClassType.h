@@ -30,6 +30,7 @@
 
 #include <squirrel.h>
 #include <map>
+#include <typeinfo>
 
 #include "sqratUtil.h"
 
@@ -72,6 +73,24 @@ struct ClassData {
     SharedPtr<AbstractStaticClassData>  staticData;
 };
 
+// Lookup static class data by type_info rather than a template because C++ cannot export generic templates
+class _ClassType_helper {
+public:
+#if defined(SCRAT_IMPORT)
+    static SQRAT_API WeakPtr<AbstractStaticClassData>& _getStaticClassData(const std::type_info* type);
+#else
+    static SQRAT_API WeakPtr<AbstractStaticClassData>& _getStaticClassData(const std::type_info* type) {
+        struct compare_type_info {
+            bool operator ()(const std::type_info* left, const std::type_info* right) const {
+                return left->before(*right);
+            }
+        };
+        static std::map<const std::type_info*, WeakPtr<AbstractStaticClassData>, compare_type_info> data;
+        return data[type];
+    }
+#endif
+};
+
 // Internal helper class for managing classes
 template<class C>
 class ClassType {
@@ -99,7 +118,9 @@ public:
         return *ud;
     }
 
-    static SQRAT_API WeakPtr<AbstractStaticClassData>& getStaticClassData();
+    static WeakPtr<AbstractStaticClassData>& getStaticClassData() {
+        return _ClassType_helper::_getStaticClassData(&typeid(C));
+    }
 
     static inline bool hasClassData(HSQUIRRELVM vm) {
         if (!getStaticClassData().Expired()) {
@@ -217,14 +238,6 @@ public:
         return static_cast<C*>(instance->first);
     }
 };
-
-#if !defined(SCRAT_IMPORT)
-template<class C>
-WeakPtr<AbstractStaticClassData>& ClassType<C>::getStaticClassData() {
-    static WeakPtr<AbstractStaticClassData> instance;
-    return instance;
-}
-#endif
 
 /// @endcond
 
