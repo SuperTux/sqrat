@@ -523,17 +523,21 @@ protected:
     }
 
     static SQInteger ClassCloned(HSQUIRRELVM vm) {
+        SQTRY()
         Sqrat::Var<const C*> other(vm, 2);
-        if (!Error::Occurred(vm)) {
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            return ClassType<C>::CopyFunc()(vm, 1, other.value);
-#else
-            ClassType<C>::CopyFunc()(vm, 1, other.value);
-            return 0;
-#endif
+        SQCATCH_NOEXCEPT(vm) {
+            SQCLEAR(vm);
+            return SQ_ERROR;
         }
-        Error::Clear(vm);
-        return SQ_ERROR;
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        return ClassType<C>::CopyFunc()(vm, 1, other.value);
+#else
+        ClassType<C>::CopyFunc()(vm, 1, other.value);
+        return 0;
+#endif
+        SQCATCH(vm) {
+            return SQ_ERROR;
+        }
     }
 
     // Initialize the required data structure for the class
