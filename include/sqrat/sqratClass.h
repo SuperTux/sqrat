@@ -536,7 +536,9 @@ protected:
         return 0;
 #endif
         SQCATCH(vm) {
-            SQWHAT(vm) // this is to avoid a warning in MSVC
+#if defined (SCRAT_USE_EXCEPTIONS)
+            SQUNUSED(e); // this is to avoid a warning in MSVC
+#endif
             return SQ_ERROR;
         }
     }
