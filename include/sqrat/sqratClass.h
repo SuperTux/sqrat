@@ -536,6 +536,7 @@ protected:
         return 0;
 #endif
         SQCATCH(vm) {
+            SQWHAT(vm) // this is to avoid a warning in MSVC
             return SQ_ERROR;
         }
     }
