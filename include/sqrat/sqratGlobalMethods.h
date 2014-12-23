@@ -48,7 +48,7 @@ public:
     static SQInteger Func0(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != 2) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -74,7 +74,7 @@ public:
     static SQInteger Func1(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 1) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 1) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -106,7 +106,7 @@ public:
     static SQInteger Func2(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 2) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -140,7 +140,7 @@ public:
     static SQInteger Func3(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 3) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 3) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -176,7 +176,7 @@ public:
     static SQInteger Func4(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 4) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 4) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -214,7 +214,7 @@ public:
     static SQInteger Func5(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 5) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -254,7 +254,7 @@ public:
     static SQInteger Func6(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 6) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -296,7 +296,7 @@ public:
     static SQInteger Func7(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 7) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -340,7 +340,7 @@ public:
     static SQInteger Func8(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 8) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 8) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -386,7 +386,7 @@ public:
     static SQInteger Func9(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 9) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 9) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -434,7 +434,7 @@ public:
     static SQInteger Func10(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 10) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -484,7 +484,7 @@ public:
     static SQInteger Func11(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 11) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 11) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -536,7 +536,7 @@ public:
     static SQInteger Func12(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 12) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 12) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -590,7 +590,7 @@ public:
     static SQInteger Func13(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 13) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -646,7 +646,7 @@ public:
     static SQInteger Func14(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 14) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 14) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -714,7 +714,7 @@ public:
     static SQInteger Func0(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != 2) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -740,7 +740,7 @@ public:
     static SQInteger Func1(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 1) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 1) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -772,7 +772,7 @@ public:
     static SQInteger Func2(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 2) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -806,7 +806,7 @@ public:
     static SQInteger Func3(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 3) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 3) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -842,7 +842,7 @@ public:
     static SQInteger Func4(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 4) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 4) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -880,7 +880,7 @@ public:
     static SQInteger Func5(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 5) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -920,7 +920,7 @@ public:
     static SQInteger Func6(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 6) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -962,7 +962,7 @@ public:
     static SQInteger Func7(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 7) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1006,7 +1006,7 @@ public:
     static SQInteger Func8(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 8) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 8) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1052,7 +1052,7 @@ public:
     static SQInteger Func9(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 9) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 9) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1100,7 +1100,7 @@ public:
     static SQInteger Func10(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 10) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1150,7 +1150,7 @@ public:
     static SQInteger Func11(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 11) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 11) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1202,7 +1202,7 @@ public:
     static SQInteger Func12(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 12) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 12) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1256,7 +1256,7 @@ public:
     static SQInteger Func13(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 13) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1312,7 +1312,7 @@ public:
     static SQInteger Func14(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 14) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 14) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1380,7 +1380,7 @@ public:
     static SQInteger Func0(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != 2) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1405,7 +1405,7 @@ public:
     static SQInteger Func1(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 1) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 1) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1436,7 +1436,7 @@ public:
     static SQInteger Func2(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 2) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 2) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1469,7 +1469,7 @@ public:
     static SQInteger Func3(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 3) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 3) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1504,7 +1504,7 @@ public:
     static SQInteger Func4(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 4) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 4) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1541,7 +1541,7 @@ public:
     static SQInteger Func5(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 5) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 5) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1580,7 +1580,7 @@ public:
     static SQInteger Func6(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 6) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 6) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1621,7 +1621,7 @@ public:
     static SQInteger Func7(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 7) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 7) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1664,7 +1664,7 @@ public:
     static SQInteger Func8(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 8) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 8) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1709,7 +1709,7 @@ public:
     static SQInteger Func9(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 9) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 9) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1756,7 +1756,7 @@ public:
     static SQInteger Func10(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 10) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 10) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1805,7 +1805,7 @@ public:
     static SQInteger Func11(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 11) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 11) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1856,7 +1856,7 @@ public:
     static SQInteger Func12(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 12) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 12) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1909,7 +1909,7 @@ public:
     static SQInteger Func13(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 13) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 13) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
@@ -1964,7 +1964,7 @@ public:
     static SQInteger Func14(HSQUIRRELVM vm) {
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (!overloaded && sq_gettop(vm) != startIdx + 14) {
+        if (!SQRAT_CONST_CONDITION(overloaded) && sq_gettop(vm) != startIdx + 14) {
             return sq_throwerror(vm, _SC("wrong number of parameters"));
         }
 #endif
