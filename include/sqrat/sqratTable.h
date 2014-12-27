@@ -268,8 +268,10 @@ public:
         sq_pop(vm, 2);
         return entry.value;
         SQCATCH(vm) {
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
             sq_pop(vm, 2);
-            SQRETHROW(vm, SQWHAT(vm));
+            SQRETHROW(vm);
+            return SharedPtr<T>(); // avoid "not all control paths return a value" warning
         }
     }
 
@@ -309,8 +311,10 @@ public:
         sq_pop(vm, 2);
         return entry.value;
         SQCATCH(vm) {
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
             sq_pop(vm, 2);
-            SQRETHROW(vm, SQWHAT(vm));
+            SQRETHROW(vm);
+            return SharedPtr<T>(); // avoid "not all control paths return a value" warning
         }
     }
 

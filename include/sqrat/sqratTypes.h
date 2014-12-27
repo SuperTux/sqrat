@@ -172,10 +172,11 @@ struct Var {
             value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
         }
         SQCATCH(vm) {
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
             if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
                 value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
             } else {
-                SQRETHROW(vm, SQWHAT(vm));
+                SQRETHROW(vm);
             }
         }
     }

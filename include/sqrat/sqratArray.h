@@ -198,8 +198,10 @@ public:
         sq_pop(vm, 2);
         return element.value;
         SQCATCH(vm) {
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
             sq_pop(vm, 2);
-            SQRETHROW(vm, SQWHAT(vm));
+            SQRETHROW(vm);
+            return SharedPtr<T>(); // avoid "not all control paths return a value" warning
         }
     }
 
@@ -272,8 +274,9 @@ public:
             sq_pop(vm, 2);
             array[i] = element.value;
             SQCATCH(vm) {
+                SQUNUSED(e); // avoid "unreferenced local variable" warning
                 sq_pop(vm, 4);
-                SQRETHROW(vm, SQWHAT(vm));
+                SQRETHROW(vm);
             }
         }
         sq_pop(vm, 2); // pops the null iterator and the array object

@@ -83,7 +83,6 @@ namespace Sqrat {
     #define SQRAT_API
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Define macros for internal error handling
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +90,7 @@ namespace Sqrat {
     #define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
     #define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
     #define SQCLEAR(vm)
-    #define SQRETHROW(vm, err)
+    #define SQRETHROW(vm)
     #define SQTHROW(vm, err)
     #define SQTRY()
     #define SQWHAT(vm)           _SC("")
@@ -101,10 +100,10 @@ namespace Sqrat {
     #define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
     #define SQCLEAR(vm)
     #ifdef _MSC_VER // avoid MSVC's "unreachable code" warning
-        #define SQRETHROW(vm, err) if (SQRAT_CONST_CONDITION(true)) throw
+        #define SQRETHROW(vm)      if (SQRAT_CONST_CONDITION(true)) throw
         #define SQTHROW(vm, err)   if (SQRAT_CONST_CONDITION(true)) throw Sqrat::Exception(err)
     #else
-        #define SQRETHROW(vm, err) throw
+        #define SQRETHROW(vm)      throw
         #define SQTHROW(vm, err)   throw Sqrat::Exception(err)
     #endif
     #define SQTRY()              try {
@@ -114,7 +113,7 @@ namespace Sqrat {
     #define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
     #define SQCATCH_NOEXCEPT(vm) if (Error::Occurred(vm))
     #define SQCLEAR(vm)          Error::Clear(vm)
-    #define SQRETHROW(vm, err)
+    #define SQRETHROW(vm)
     #define SQTHROW(vm, err)     Error::Throw(vm, err)
     #define SQTRY()
     #define SQWHAT(vm)           _SC("")
