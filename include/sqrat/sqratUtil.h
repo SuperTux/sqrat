@@ -40,68 +40,47 @@ namespace Sqrat {
 /// Define an inline function to avoid MSVC's "conditional expression is constant" warning
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifdef _MSC_VER
-template <typename T>
-inline T _c_def(T value) { return value; }
-#define SQRAT_CONST_CONDITION(value) _c_def(value)
+    template <typename T>
+    inline T _c_def(T value) { return value; }
+    #define SQRAT_CONST_CONDITION(value) _c_def(value)
 #else
-#define SQRAT_CONST_CONDITION(value) value
+    #define SQRAT_CONST_CONDITION(value) value
 #endif
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Define helpers to create portable import / export macros
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if defined(SCRAT_EXPORT)
-
     #if defined(_WIN32)
-
         // Windows compilers need a specific keyword for export
         #define SQRAT_API __declspec(dllexport)
-
     #else
-
         #if __GNUC__ >= 4
-
             // GCC 4 has special keywords for showing/hiding symbols,
             // the same keyword is used for both importing and exporting
             #define SQRAT_API __attribute__ ((__visibility__ ("default")))
-
         #else
-
             // GCC < 4 has no mechanism to explicitly hide symbols, everything's exported
             #define SQRAT_API
 
         #endif
-
     #endif
-
 #elif defined(SCRAT_IMPORT)
-
     #if defined(_WIN32)
-
         // Windows compilers need a specific keyword for import
         #define SQRAT_API __declspec(dllimport)
-
     #else
-
         #if __GNUC__ >= 4
-
             // GCC 4 has special keywords for showing/hiding symbols,
             // the same keyword is used for both importing and exporting
             #define SQRAT_API __attribute__ ((__visibility__ ("default")))
-
         #else
-
             // GCC < 4 has no mechanism to explicitly hide symbols, everything's exported
             #define SQRAT_API
-
         #endif
-
     #endif
-
 #else
-
     #define SQRAT_API
-
 #endif
 
 
@@ -109,32 +88,37 @@ inline T _c_def(T value) { return value; }
 /// Define macros for internal error handling
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if defined (SCRAT_NO_ERROR_CHECKING)
-#define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
-#define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
-#define SQCLEAR(vm)
-#define SQRETHROW(vm, err)
-#define SQTHROW(vm, err)
-#define SQTRY()
-#define SQWHAT(vm)           _SC("")
-#define SQWHAT_NOEXCEPT(vm)  _SC("")
+    #define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
+    #define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
+    #define SQCLEAR(vm)
+    #define SQRETHROW(vm, err)
+    #define SQTHROW(vm, err)
+    #define SQTRY()
+    #define SQWHAT(vm)           _SC("")
+    #define SQWHAT_NOEXCEPT(vm)  _SC("")
 #elif defined (SCRAT_USE_EXCEPTIONS)
-#define SQCATCH(vm)          } catch (const Sqrat::Exception& e)
-#define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
-#define SQCLEAR(vm)
-#define SQRETHROW(vm, err)   throw
-#define SQTHROW(vm, err)     throw Sqrat::Exception(err)
-#define SQTRY()              try {
-#define SQWHAT(vm)           e.Message().c_str()
-#define SQWHAT_NOEXCEPT(vm)  _SC("")
+    #define SQCATCH(vm)          } catch (const Sqrat::Exception& e)
+    #define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
+    #define SQCLEAR(vm)
+    #ifdef _MSC_VER // avoid MSVC's "unreachable code" warning
+        #define SQRETHROW(vm, err) if (SQRAT_CONST_CONDITION(true)) throw
+        #define SQTHROW(vm, err)   if (SQRAT_CONST_CONDITION(true)) throw Sqrat::Exception(err)
+    #else
+        #define SQRETHROW(vm, err) throw
+        #define SQTHROW(vm, err)   throw Sqrat::Exception(err)
+    #endif
+    #define SQTRY()              try {
+    #define SQWHAT(vm)           e.Message().c_str()
+    #define SQWHAT_NOEXCEPT(vm)  _SC("")
 #else
-#define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
-#define SQCATCH_NOEXCEPT(vm) if (Error::Occurred(vm))
-#define SQCLEAR(vm)          Error::Clear(vm)
-#define SQRETHROW(vm, err)
-#define SQTHROW(vm, err)     Error::Throw(vm, err)
-#define SQTRY()
-#define SQWHAT(vm)           _SC("")
-#define SQWHAT_NOEXCEPT(vm)  Error::Message(vm).c_str()
+    #define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
+    #define SQCATCH_NOEXCEPT(vm) if (Error::Occurred(vm))
+    #define SQCLEAR(vm)          Error::Clear(vm)
+    #define SQRETHROW(vm, err)
+    #define SQTHROW(vm, err)     Error::Throw(vm, err)
+    #define SQTRY()
+    #define SQWHAT(vm)           _SC("")
+    #define SQWHAT_NOEXCEPT(vm)  Error::Message(vm).c_str()
 #endif
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
