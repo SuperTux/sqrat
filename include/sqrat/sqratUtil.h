@@ -263,7 +263,7 @@ public:
         sq_pushstring(vm, "__error", -1);
         sq_rawdeleteslot(vm, -2, false);
         sq_pop(vm, 1);
-        return string(_SC("no error has occurred"));
+        return string(_SC("an unknown error has occurred"));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
