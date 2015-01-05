@@ -189,6 +189,10 @@ public:
     ///
     /// \tparam V Type of variable (usually doesnt need to be defined explicitly)
     ///
+    /// \remarks
+    /// If V is not a pointer or reference, then it must have a default constructor.
+    /// See Sqrat::Class::Prop to work around this requirement
+    ///
     /// \return The Class itself so the call can be chained
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,6 +216,10 @@ public:
     /// \param var  Variable to bind
     ///
     /// \tparam V Type of variable (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// If V is not a pointer or reference, then it must have a default constructor.
+    /// See Sqrat::Class::Prop to work around this requirement
     ///
     /// \return The Class itself so the call can be chained
     ///

@@ -141,6 +141,9 @@ struct popAsFloat
 ///
 /// \tparam T Type of instance (usually doesnt need to be defined explicitly)
 ///
+/// \remarks
+/// This specialization requires T to have a default constructor.
+///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
 struct Var {
