@@ -79,12 +79,12 @@ public:
 #if defined(SCRAT_IMPORT)
     static SQRAT_API WeakPtr<AbstractStaticClassData>& _getStaticClassData(const std::type_info* type);
 #else
+    struct compare_type_info {
+        bool operator ()(const std::type_info* left, const std::type_info* right) const {
+            return left->before(*right) != 0;
+        }
+    };
     static SQRAT_API WeakPtr<AbstractStaticClassData>& _getStaticClassData(const std::type_info* type) {
-        struct compare_type_info {
-            bool operator ()(const std::type_info* left, const std::type_info* right) const {
-                return left->before(*right) != 0;
-            }
-        };
         static std::map<const std::type_info*, WeakPtr<AbstractStaticClassData>, compare_type_info> data;
         return data[type];
     }
