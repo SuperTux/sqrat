@@ -175,7 +175,9 @@ struct Var {
             value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
         }
         SQCATCH(vm) {
+#if defined (SCRAT_USE_EXCEPTIONS)
             SQUNUSED(e); // avoid "unreferenced local variable" warning
+#endif
             if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
                 value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
             } else {

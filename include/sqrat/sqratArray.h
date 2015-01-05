@@ -198,7 +198,9 @@ public:
         sq_pop(vm, 2);
         return element.value;
         SQCATCH(vm) {
+#if defined (SCRAT_USE_EXCEPTIONS)
             SQUNUSED(e); // avoid "unreferenced local variable" warning
+#endif
             sq_pop(vm, 2);
             SQRETHROW(vm);
             return SharedPtr<T>(); // avoid "not all control paths return a value" warning
@@ -274,7 +276,9 @@ public:
             sq_pop(vm, 2);
             array[i] = element.value;
             SQCATCH(vm) {
+#if defined (SCRAT_USE_EXCEPTIONS)
                 SQUNUSED(e); // avoid "unreferenced local variable" warning
+#endif
                 sq_pop(vm, 4);
                 SQRETHROW(vm);
             }
