@@ -212,6 +212,11 @@ public:
                 SQTHROW(vm, FormatTypeError(vm, idx, ClassName()));
                 return NULL;
             }
+
+            if (instance == NULL) {
+                SQTHROW(vm, _SC("got unconstructed native class (call base.constructor in the constructor of Squirrel classes that extend native classes)"));
+                return NULL;
+            }
 #else
             sq_getinstanceup(vm, idx, (SQUserPointer*)&instance, 0);
 #endif
