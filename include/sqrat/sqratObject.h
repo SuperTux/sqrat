@@ -535,7 +535,7 @@ struct Var<Object> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, Object& value) {
+    static void push(HSQUIRRELVM vm, const Object& value) {
         sq_pushobject(vm, value.GetObject());
     }
 };

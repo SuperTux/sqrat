@@ -34,7 +34,7 @@ const Sqrat::string GetGreeting()
     return _SC("Hello world!");
 }
 
-const int AddTwo(int a, int b)
+int AddTwo(int a, int b)
 {
     return a + b;
 }

@@ -273,8 +273,8 @@ public:
 #endif
             sq_pop(vm, 2);
             SQRETHROW(vm);
-            return SharedPtr<T>(); // avoid "not all control paths return a value" warning
         }
+        return SharedPtr<T>(); // avoid "not all control paths return a value" warning
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,8 +318,8 @@ public:
 #endif
             sq_pop(vm, 2);
             SQRETHROW(vm);
-            return SharedPtr<T>(); // avoid "not all control paths return a value" warning
         }
+        return SharedPtr<T>(); // avoid "not all control paths return a value" warning
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -514,7 +514,7 @@ struct Var<Table> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const Table & value) {
+    static void push(HSQUIRRELVM vm, const Table& value) {
         HSQOBJECT obj;
         sq_resetobject(&obj);
         obj = value.GetObject();

@@ -492,7 +492,7 @@ struct Var<SharedPtr<T> > {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, SharedPtr<T>& value) {
+    static void push(HSQUIRRELVM vm, const SharedPtr<T>& value) {
         PushVarR(vm, *value);
     }
 };
@@ -770,7 +770,7 @@ struct Var<string> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const string & value) {
+    static void push(HSQUIRRELVM vm, const string& value) {
         sq_pushstring(vm, value.c_str(), value.size());
     }
 };
@@ -805,7 +805,7 @@ struct Var<const string&> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const string & value) {
+    static void push(HSQUIRRELVM vm, const string& value) {
         sq_pushstring(vm, value.c_str(), value.size());
     }
 };
@@ -1051,7 +1051,27 @@ SCRAT_MAKE_NONREFERENCABLE(std::string)
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
-inline void PushVar(HSQUIRRELVM vm, T value) {
+inline void PushVar(HSQUIRRELVM vm, T* value) {
+    Var<T*>::push(vm, value);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Pushes a value on to a given VM's stack
+///
+/// \param vm    VM that the variable will be pushed on to the stack of
+/// \param value The actual value being pushed
+///
+/// \tparam T Type of value (usually doesnt need to be defined explicitly)
+///
+/// \remarks
+/// What this function does is defined by Sqrat::Var template specializations,
+/// and thus you can create custom functionality for it by making new template specializations.
+/// When making a custom type that is not referencable, you must use SCRAT_MAKE_NONREFERENCABLE( type )
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<class T>
+inline void PushVar(HSQUIRRELVM vm, const T& value) {
     Var<T>::push(vm, value);
 }
 
@@ -1059,7 +1079,7 @@ inline void PushVar(HSQUIRRELVM vm, T value) {
 /// @cond DEV
 template<class T, bool b>
 struct PushVarR_helper {
-    inline static void push(HSQUIRRELVM vm, const T& value) {
+    inline static void push(HSQUIRRELVM vm, T value) {
         PushVar<T>(vm, value);
     }
 };

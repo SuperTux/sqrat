@@ -203,8 +203,8 @@ public:
 #endif
             sq_pop(vm, 2);
             SQRETHROW(vm);
-            return SharedPtr<T>(); // avoid "not all control paths return a value" warning
         }
+        return SharedPtr<T>(); // avoid "not all control paths return a value" warning
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
