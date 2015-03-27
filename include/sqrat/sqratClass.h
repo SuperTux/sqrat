@@ -210,6 +210,31 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Binds a class variable without a setter
+    ///
+    /// \param name Name of the variable as it will appear in Squirrel
+    /// \param var  Variable to bind
+    ///
+    /// \tparam V Type of variable (usually doesnt need to be defined explicitly)
+    ///
+    /// \remarks
+    /// If V is not a pointer or reference, then it must have a default constructor.
+    /// See Sqrat::Class::Prop to work around this requirement
+    ///
+    /// \return The Class itself so the call can be chained
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template<class V>
+    Class& ConstVar(const SQChar* name, V C::* var) {
+        ClassData<C>* cd = ClassType<C>::getClassData(vm);
+
+        // Add the getter
+        BindAccessor(name, &var, sizeof(var), &sqDefaultGet<C, V>, cd->getTable);
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Bind a class static variable
     ///
     /// \param name Name of the variable as it will appear in Squirrel
