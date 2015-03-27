@@ -83,7 +83,7 @@ struct popAsInt
         case OT_FLOAT:
             SQFloat sqValuef;
             sq_getfloat(vm, idx, &sqValuef);
-            value = static_cast<T>(sqValuef);
+			value = static_cast<T>(static_cast<int>(sqValuef));
             break;
         default:
             SQTHROW(vm, FormatTypeError(vm, idx, _SC("integer")));
