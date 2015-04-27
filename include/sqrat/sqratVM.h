@@ -337,7 +337,7 @@ public:
 };
 
 #if !defined(SCRAT_IMPORT)
-unordered_map<HSQUIRRELVM, SqratVM*>::type& SqratVM::ms_sqratVMs() {
+inline unordered_map<HSQUIRRELVM, SqratVM*>::type& SqratVM::ms_sqratVMs() {
     static unordered_map<HSQUIRRELVM, SqratVM*>::type ms;
     return ms;
 }
