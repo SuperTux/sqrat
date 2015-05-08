@@ -460,6 +460,7 @@ struct Var<const T* const> {
 /// \tparam T Type of instance (usually doesnt need to be defined explicitly)
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<class T> void PushVarR(HSQUIRRELVM vm, T& value);
 template<class T>
 struct Var<SharedPtr<T> > {
 
