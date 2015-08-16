@@ -462,7 +462,7 @@ inline string LastErrorString(HSQUIRRELVM vm) {
     const SQChar* sqErr;
     sq_getlasterror(vm);
     if (sq_gettype(vm, -1) == OT_NULL) {
-		sq_pop(vm, 1);
+        sq_pop(vm, 1);
         return string();
     }
     sq_tostring(vm, -1);
@@ -486,6 +486,9 @@ inline string LastErrorString(HSQUIRRELVM vm) {
 template <class T>
 class SharedPtr
 {
+    template <class U>
+    friend class SharedPtr;
+
     template <class U>
     friend class WeakPtr;
 
