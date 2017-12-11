@@ -53,7 +53,7 @@ protected:
     HSQOBJECT obj;
     bool release;
 
-    Object(HSQUIRRELVM v, bool releaseOnDestroy = true) : vm(v), release(releaseOnDestroy) {
+    Object(HSQUIRRELVM v, bool releaseOnDestroy = true) : vm(v), obj(), release(releaseOnDestroy) {
         sq_resetobject(&obj);
     }
 /// @endcond
@@ -64,7 +64,7 @@ public:
     /// Default constructor (null)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Object() : vm(0), release(true) {
+    Object() : vm(0), obj(), release(true) {
         sq_resetobject(&obj);
     }
 
@@ -375,9 +375,11 @@ public:
         /// Default constructor (null)
         ///
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        iterator()
+        iterator() :
+            Key(),
+            Value(),
+            Index(0)
         {
-            Index = 0;
             sq_resetobject(&Key);
             sq_resetobject(&Value);
             Key._type = OT_NULL;
@@ -560,7 +562,9 @@ struct Var<Object> {
     /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         HSQOBJECT sqValue;
         sq_getstackobj(vm, idx, &sqValue);
         value = Object(sqValue, vm);
@@ -575,6 +579,12 @@ struct Var<Object> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, const Object& value) {
         sq_pushobject(vm, value.GetObject());
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    virtual ~Var() {
     }
 };
 

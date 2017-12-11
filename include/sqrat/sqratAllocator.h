@@ -41,6 +41,8 @@ namespace Sqrat {
 /// utility taken from http://stackoverflow.com/questions/2733377/is-there-a-way-to-test-whether-a-c-class-has-a-default-constructor-other-than/2770326#2770326
 /// may be obsolete in C++ 11
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 template< class T >
 class is_default_constructible {
     template<int x>
@@ -55,6 +57,7 @@ class is_default_constructible {
 public:
     enum { value = sizeof( sfinae<T>(0) ) == sizeof(int) };
 };
+#pragma GCC diagnostic pop
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -555,9 +558,9 @@ class NoCopy {
     struct NewC
     {
         T* p;
-        NewC()
+        NewC() :
+            p(new T())
         {
-           p = new T();
         }
     };
 
@@ -565,9 +568,9 @@ class NoCopy {
     struct NewC<T, false>
     {
         T* p;
-        NewC()
+        NewC() :
+            p(0)
         {
-           p = 0;
         }
     };
 

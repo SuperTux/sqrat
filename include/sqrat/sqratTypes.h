@@ -44,6 +44,8 @@ namespace Sqrat {
 /// @cond DEV
 
 // copied from http://www.experts-exchange.com/Programming/Languages/CPP/A_223-Determing-if-a-C-type-is-convertable-to-another-at-compile-time.html
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 template <typename T1, typename T2>
 struct is_convertible
 {
@@ -61,12 +63,14 @@ public:
         sizeof(True_) == sizeof(is_convertible::helper(*dummy))
     );
 };
+#pragma GCC diagnostic pop
 
 template <typename T, bool b>
 struct popAsInt
 {
     T value;
-    popAsInt(HSQUIRRELVM vm, SQInteger idx)
+    popAsInt(HSQUIRRELVM vm, SQInteger idx) :
+        value()
     {
         SQObjectType value_type = sq_gettype(vm, idx);
         switch(value_type) {
@@ -97,7 +101,8 @@ template <typename T>
 struct popAsInt<T, false>
 {
     T value;  // cannot be initialized because unknown constructor parameters
-    popAsInt(HSQUIRRELVM /*vm*/, SQInteger /*idx*/)
+    popAsInt(HSQUIRRELVM /*vm*/, SQInteger /*idx*/) :
+        value()
     {
         // keep the current error message already set previously, do not touch that here
     }
@@ -107,7 +112,8 @@ template <typename T>
 struct popAsFloat
 {
     T value;
-    popAsFloat(HSQUIRRELVM vm, SQInteger idx)
+    popAsFloat(HSQUIRRELVM vm, SQInteger idx) :
+        value()
     {
         SQObjectType value_type = sq_gettype(vm, idx);
         switch(value_type) {
@@ -160,7 +166,9 @@ struct Var {
     /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         SQTRY()
         T* ptr = ClassType<T>::GetInstance(vm, idx);
         if (ptr != NULL) {
@@ -212,8 +220,8 @@ private:
 
     template <class T2>
     struct pushAsInt<T2, true> {
-        void push(HSQUIRRELVM vm, const T2& value) {
-            sq_pushinteger(vm, static_cast<SQInteger>(value));
+        void push(HSQUIRRELVM vm, const T2& val) {
+            sq_pushinteger(vm, static_cast<SQInteger>(val));
         }
     };
 };
@@ -268,8 +276,8 @@ private:
 
     template <class T2>
     struct pushAsInt<T2, true> {
-        void push(HSQUIRRELVM vm, const T2& value) {
-            sq_pushinteger(vm, static_cast<SQInteger>(value));
+        void push(HSQUIRRELVM vm, const T2& val) {
+            sq_pushinteger(vm, static_cast<SQInteger>(val));
         }
     };
 };
@@ -305,8 +313,8 @@ struct Var<T*> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, T* value) {
-        ClassType<T>::PushInstance(vm, value);
+    static void push(HSQUIRRELVM vm, T* val) {
+        ClassType<T>::PushInstance(vm, val);
     }
 };
 
@@ -503,8 +511,9 @@ struct Var<SharedPtr<T> > {
  template<> \
  struct Var<type> { \
      type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsInt<type, true>(vm, idx).value; \
+     Var(HSQUIRRELVM vm, SQInteger idx) : \
+        value(popAsInt<type, true>(vm, idx).value) \
+     { \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -514,8 +523,9 @@ struct Var<SharedPtr<T> > {
  template<> \
  struct Var<const type&> { \
      type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsInt<type, true>(vm, idx).value; \
+     Var(HSQUIRRELVM vm, SQInteger idx) : \
+        value(popAsInt<type, true>(vm, idx).value) \
+     { \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
@@ -545,8 +555,9 @@ SCRAT_INTEGER(signed __int64)
  template<> \
  struct Var<type> { \
      type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsFloat<type>(vm, idx).value; \
+     Var(HSQUIRRELVM vm, SQInteger idx) : \
+        value(popAsFloat<type>(vm, idx).value) \
+     { \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushfloat(vm, static_cast<SQFloat>(value)); \
@@ -556,8 +567,9 @@ SCRAT_INTEGER(signed __int64)
  template<> \
  struct Var<const type&> { \
      type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsFloat<type>(vm, idx).value; \
+     Var(HSQUIRRELVM vm, SQInteger idx) : \
+        value(popAsFloat<type>(vm, idx).value) \
+     { \
      } \
      static void push(HSQUIRRELVM vm, const type& value) { \
          sq_pushfloat(vm, static_cast<SQFloat>(value)); \
@@ -582,7 +594,9 @@ struct Var<bool> {
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         SQBool sqValue;
         sq_tobool(vm, idx, &sqValue);
         value = (sqValue != 0);
@@ -615,7 +629,9 @@ struct Var<const bool&> {
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         SQBool sqValue;
         sq_tobool(vm, idx, &sqValue);
         value = (sqValue != 0);
@@ -654,14 +670,25 @@ public:
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        obj(),
+        v(vm),
+        value()
+    {
+        const SQChar* ret = value;
         sq_tostring(vm, idx);
         sq_getstackobj(vm, -1, &obj);
-        sq_getstring(vm, -1, (const SQChar**)&value);
+        sq_getstring(vm, -1, &ret);
         sq_addref(vm, &obj);
         sq_pop(vm,1);
-        v = vm;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Var(const Var&) = delete;
+    Var& operator=(const Var&) = delete;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Destructor
@@ -708,14 +735,25 @@ public:
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        obj(),
+        v(vm),
+        value()
+    {
+        const SQChar** ret = &value;
         sq_tostring(vm, idx);
         sq_getstackobj(vm, -1, &obj);
-        sq_getstring(vm, -1, &value);
+        sq_getstring(vm, -1, ret);
         sq_addref(vm, &obj);
         sq_pop(vm,1);
-        v = vm;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Var(const Var&) = delete;
+    Var& operator=(const Var&) = delete;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Destructor
@@ -756,7 +794,9 @@ struct Var<string> {
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
@@ -791,7 +831,9 @@ struct Var<const string&> {
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
@@ -827,7 +869,9 @@ struct Var<std::string> {
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
@@ -863,7 +907,9 @@ struct Var<const std::string&> {
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
@@ -905,7 +951,11 @@ public:
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        obj(),
+        v(vm),
+        value()
+    {
         std::string holder;
         const SQChar *sv;
         sq_tostring(vm, idx);
@@ -913,7 +963,6 @@ public:
         sq_getstring(vm, -1, &sv);
         sq_addref(vm, &obj);
         sq_pop(vm,1);
-        v = vm;
         holder = wstring_to_string(string(sv));
         value = strdup(holder.c_str());
     }
@@ -964,7 +1013,9 @@ public:
     /// \param idx Index trying to be read
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         std::string holder;
         const SQChar *sv;
         sq_tostring(vm, idx);
@@ -976,6 +1027,13 @@ public:
         holder = wstring_to_string(string(sv));
         value = strdup(holder.c_str());
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Var(const Var&) = delete;
+    Var& operator=(const Var&) = delete;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Destructor

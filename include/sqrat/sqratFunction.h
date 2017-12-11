@@ -54,7 +54,7 @@ public:
     /// Default constructor (null)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Function() {
+    Function() : vm(), env(), obj() {
         sq_resetobject(&env);
         sq_resetobject(&obj);
     }
@@ -80,7 +80,7 @@ public:
     /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Function(const Object& e, const SQChar* slot) : vm(e.GetVM()), env(e.GetObject()) {
+    Function(const Object& e, const SQChar* slot) : vm(e.GetVM()), env(e.GetObject()), obj() {
         sq_addref(vm, &env);
         Object so = e.GetSlot(slot);
         obj = so.GetObject();
@@ -2630,7 +2630,9 @@ struct Var<Function> {
     /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         HSQOBJECT sqEnv;
         HSQOBJECT sqValue;
         sq_getstackobj(vm, 1, &sqEnv);
@@ -2653,6 +2655,13 @@ struct Var<Function> {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, const Function& value) {
         sq_pushobject(vm, value.GetFunc());
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    virtual ~Var()
+    {
     }
 };
 

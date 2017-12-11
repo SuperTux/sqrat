@@ -58,7 +58,7 @@ public:
     /// \param obj An Object that should already represent a Squirrel table
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    TableBase(const Object& obj) : Object(obj) {
+    TableBase(const Object& object) : Object(object) {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,10 +81,10 @@ public:
     /// Bind cannot be called "inline" like other functions because it introduces order-of-initialization bugs.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void Bind(const SQChar* name, Object& obj) {
+    void Bind(const SQChar* name, Object& object) {
         sq_pushobject(vm, GetObject());
         sq_pushstring(vm, name, -1);
-        sq_pushobject(vm, obj.GetObject());
+        sq_pushobject(vm, object.GetObject());
         sq_newslot(vm, -3, false);
         sq_pop(vm,1); // pop table
     }
@@ -420,7 +420,7 @@ public:
     /// \param obj An Object that should already represent a Squirrel table
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Table(const Object& obj) : TableBase(obj) {
+    Table(const Object& object) : TableBase(object) {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -494,7 +494,9 @@ struct Var<Table> {
     /// This function MUST have its Error handled if it occurred.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
+    Var(HSQUIRRELVM vm, SQInteger idx) :
+        value()
+    {
         HSQOBJECT obj;
         sq_resetobject(&obj);
         sq_getstackobj(vm,idx,&obj);
@@ -519,6 +521,13 @@ struct Var<Table> {
         sq_resetobject(&obj);
         obj = value.GetObject();
         sq_pushobject(vm,obj);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    virtual ~Var()
+    {
     }
 };
 

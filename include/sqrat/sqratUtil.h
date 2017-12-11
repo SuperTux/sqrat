@@ -549,7 +549,10 @@ public:
     /// \param copy SharedPtr to copy
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    SharedPtr(const SharedPtr<T>& copy)
+    SharedPtr(const SharedPtr<T>& copy) :
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
         if (copy.Get() != NULL)
         {
@@ -559,12 +562,6 @@ public:
 
             *m_RefCount         += 1;
             *m_RefCountRefCount += 1;
-        }
-        else
-        {
-            m_Ptr              = NULL;
-            m_RefCount         = NULL;
-            m_RefCountRefCount = NULL;
         }
     }
 
