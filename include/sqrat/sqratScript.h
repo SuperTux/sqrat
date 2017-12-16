@@ -193,6 +193,49 @@ public:
 #endif
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the script with a custom table as root table.
+    ///
+    /// \param rootTableName Name of the table to use as root table. This parameter only accepts direct descendant slots
+    ///                      of the root table.
+    ///
+    /// \remarks
+    /// This function MUST have its Error handled if it occurred.
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void RunWithCustomRootTable(const std::string& rootTableName) {
+#if !defined (SCRAT_NO_ERROR_CHECKING)
+        if(!sq_isnull(obj)) {
+            SQRESULT result;
+            SQInteger top = sq_gettop(vm);
+            if(!rootTableName.empty() && RootTable(vm).HasKey(rootTableName.c_str())) {
+                auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
+                sq_pushobject(vm, newRootTable.GetObject());
+                sq_setroottable(vm);
+            }
+            sq_pushobject(vm, obj);
+            sq_pushroottable(vm);
+            result = sq_call(vm, 1, false, true);
+            sq_poptop(vm);
+            sq_settop(vm, top);
+            if(SQ_FAILED(result)) {
+                SQTHROW(vm, LastErrorString(vm));
+                return;
+            }
+        }
+#else
+        SQInteger top = sq_gettop(vm);
+        auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
+        sq_pushobject(vm, newRootTable.GetObject());
+        sq_setroottable(vm);
+        sq_pushobject(vm, obj);
+        sq_pushroottable(vm);
+        sq_call(vm, 1, false, true);
+        sq_poptop(vm);
+        sq_settop(vm, top);
+#endif
+    }
+
 #if !defined (SCRAT_NO_ERROR_CHECKING)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Runs the script
@@ -207,6 +250,35 @@ public:
             sq_pushobject(vm, obj);
             sq_pushroottable(vm);
             result = sq_call(vm, 1, false, true);
+            sq_settop(vm, top);
+            if(SQ_FAILED(result)) {
+                errMsg = LastErrorString(vm);
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Runs the script with a custom table as root table.
+    ///
+    /// \param rootTableName Name of the table to use as root table. This parameter only accepts direct descendant slots
+    ///                      of the root table.
+    /// \param errMsg String that is filled with any errors that may occur
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool RunWithCustomRootTable(string& errMsg, const string& rootTableName) {
+        if(!sq_isnull(obj)) {
+            SQRESULT result;
+            SQInteger top = sq_gettop(vm);
+            auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
+            sq_pushobject(vm, newRootTable.GetObject());
+            sq_setroottable(vm);
+            sq_pushobject(vm, obj);
+            sq_pushroottable(vm);
+            result = sq_call(vm, 1, false, true);
+            sq_poptop(vm);
             sq_settop(vm, top);
             if(SQ_FAILED(result)) {
                 errMsg = LastErrorString(vm);
