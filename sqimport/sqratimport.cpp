@@ -36,7 +36,7 @@
 
 #include <windows.h>
 
-#elif defined(__unix)
+#elif defined(__unix) || defined(__APPLE__)
 
 #include <dlfcn.h>
 
@@ -227,7 +227,7 @@ static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
         FreeLibrary(mod);
         return SQ_ERROR;
     }
-#elif defined(__unix)
+#elif defined(__unix) || defined(__APPLE__)
     /* adding .so to moduleName? */
     void *mod = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
     if (mod == NULL) {
