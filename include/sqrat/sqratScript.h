@@ -270,7 +270,6 @@ public:
             auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
             sq_pushobject(vm, newRootTable.GetObject());
             result = sq_call(vm, 1, false, true);
-            sq_poptop(vm);
             sq_settop(vm, top);
             if(SQ_FAILED(result)) {
                 errMsg = LastErrorString(vm);
