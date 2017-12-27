@@ -208,13 +208,11 @@ public:
         if(!sq_isnull(obj)) {
             SQRESULT result;
             SQInteger top = sq_gettop(vm);
+            sq_pushobject(vm, obj);
             if(!rootTableName.empty() && RootTable(vm).HasKey(rootTableName.c_str())) {
                 auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
                 sq_pushobject(vm, newRootTable.GetObject());
-                sq_setroottable(vm);
             }
-            sq_pushobject(vm, obj);
-            sq_pushroottable(vm);
             result = sq_call(vm, 1, false, true);
             sq_poptop(vm);
             sq_settop(vm, top);
@@ -272,11 +270,9 @@ public:
         if(!sq_isnull(obj)) {
             SQRESULT result;
             SQInteger top = sq_gettop(vm);
+            sq_pushobject(vm, obj);
             auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
             sq_pushobject(vm, newRootTable.GetObject());
-            sq_setroottable(vm);
-            sq_pushobject(vm, obj);
-            sq_pushroottable(vm);
             result = sq_call(vm, 1, false, true);
             sq_poptop(vm);
             sq_settop(vm, top);
