@@ -214,7 +214,6 @@ public:
                 sq_pushobject(vm, newRootTable.GetObject());
             }
             result = sq_call(vm, 1, false, true);
-            sq_poptop(vm);
             sq_settop(vm, top);
             if(SQ_FAILED(result)) {
                 SQTHROW(vm, LastErrorString(vm));
@@ -223,13 +222,10 @@ public:
         }
 #else
         SQInteger top = sq_gettop(vm);
+        sq_pushobject(vm, obj);
         auto newRootTable = RootTable(vm).GetSlot(rootTableName.c_str());
         sq_pushobject(vm, newRootTable.GetObject());
-        sq_setroottable(vm);
-        sq_pushobject(vm, obj);
-        sq_pushroottable(vm);
         sq_call(vm, 1, false, true);
-        sq_poptop(vm);
         sq_settop(vm, top);
 #endif
     }
