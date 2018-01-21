@@ -37,7 +37,7 @@ SET(CMAKE_C_FLAGS "")
 ## define a target for building the library
 
 LIST(SORT SQRATTHREAD_SOURCES)
-ADD_LIBRARY(sqratthread ${SQRATTHREAD_SOURCES})
+ADD_LIBRARY(sqratthread SHARED ${SQRATTHREAD_SOURCES})
 
 # use standardized variable name
 set(LIB_SUBDIR "lib${LIB_SUFFIX}"
