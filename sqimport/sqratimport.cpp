@@ -29,6 +29,7 @@
 #include "sqmodule.h"
 
 //#include "sqratlib/sqratBase.h"
+#include <iostream>
 #include <sqstdio.h>
 #include <string>
 
@@ -227,6 +228,7 @@ SQChar* modName = strdup(moduleName);
     if(mod == NULL) {
         mod = LoadLibrary(modName);
         if(mod == NULL) {
+            std::cout << "Error loading library: " << GetLastError() << std::endl;
             return SQ_ERROR;
         }
     }
@@ -240,8 +242,10 @@ SQChar* modName = strdup(moduleName);
     void *mod = dlopen(modName, RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
     if (mod == NULL) {
         mod = dlopen(modName, RTLD_NOW | RTLD_LOCAL);
-        if (mod == NULL)
+        if (mod == NULL) {
+            std::cout << "Error opening library: " << dlerror() << std::endl;
             return SQ_ERROR;
+        }
     }
     modLoad = (SQMODULELOAD) dlsym(mod, "sqmodule_load");
     if (modLoad == NULL) {
