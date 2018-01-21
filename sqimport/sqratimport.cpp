@@ -43,6 +43,14 @@
 
 #endif
 
+#if defined(_WIN32)
+    #define MOD_EXT ".dll"
+#elif defined(__unix)
+    #define MOD_EXT ".so"
+#elif defined(__APPLE__)
+    #define MOD_EXT ".dylib"
+#endif
+
 typedef SQRESULT (*SQMODULELOAD)(HSQUIRRELVM v, HSQAPI sq);
 
 static HSQAPI sqapi = NULL;
@@ -213,20 +221,14 @@ static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
 #else
     SQMODULELOAD modLoad = 0;
 
-SQChar* modName = strdup(moduleName);
-#if defined(_WIN32)
-    strcat(modName, ".dll");
-#elif defined(__unix)
-    strcat(modName, ".so");
-#elif defined(__APPLE__)
-    strcat(modName, ".dylib");
-#endif
+std::string modName = moduleName;
+modName += MOD_EXT;
 
 #if defined(_WIN32)
     HMODULE mod;
-    mod = GetModuleHandle(modName);
+    mod = GetModuleHandle(modName.c_str());
     if(mod == NULL) {
-        mod = LoadLibrary(modName);
+        mod = LoadLibrary(modName.c_str());
         if(mod == NULL) {
             std::cout << "Error loading library: " << GetLastError() << std::endl;
             return SQ_ERROR;
@@ -239,9 +241,9 @@ SQChar* modName = strdup(moduleName);
         return SQ_ERROR;
     }
 #elif defined(__unix) || defined(__APPLE__)
-    void *mod = dlopen(modName, RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
+    void *mod = dlopen(modName.c_str(), RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
     if (mod == NULL) {
-        mod = dlopen(modName, RTLD_NOW | RTLD_LOCAL);
+        mod = dlopen(modName.c_str(), RTLD_NOW | RTLD_LOCAL);
         if (mod == NULL) {
             std::cout << "Error opening library: " << dlerror() << std::endl;
             return SQ_ERROR;
