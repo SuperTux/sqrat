@@ -212,11 +212,20 @@ static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
 #else
     SQMODULELOAD modLoad = 0;
 
+SQChar* modName = strdup(moduleName);
+#if defined(_WIN32)
+    strcat(modName, ".dll");
+#elif defined(__unix)
+    strcat(modName, ".so");
+#elif defined(__APPLE__)
+    strcat(modName, ".dylib");
+#endif
+
 #if defined(_WIN32)
     HMODULE mod;
-    mod = GetModuleHandle(moduleName);
+    mod = GetModuleHandle(modName);
     if(mod == NULL) {
-        mod = LoadLibrary(moduleName);
+        mod = LoadLibrary(modName);
         if(mod == NULL) {
             return SQ_ERROR;
         }
@@ -228,10 +237,9 @@ static SQRESULT sqrat_importbin(HSQUIRRELVM v, const SQChar* moduleName) {
         return SQ_ERROR;
     }
 #elif defined(__unix) || defined(__APPLE__)
-    /* adding .so to moduleName? */
-    void *mod = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
+    void *mod = dlopen(modName, RTLD_NOW | RTLD_LOCAL | RTLD_NOLOAD); //RTLD_NOLOAD flag is not specified in POSIX.1-2001..so not the best solution :(
     if (mod == NULL) {
-        mod = dlopen(moduleName, RTLD_NOW | RTLD_LOCAL);
+        mod = dlopen(modName, RTLD_NOW | RTLD_LOCAL);
         if (mod == NULL)
             return SQ_ERROR;
     }
