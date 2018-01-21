@@ -29,6 +29,7 @@
 #define _SQRAT_THREAD_H_
 
 #include "sqmodule.h"
+#include "sqrat.h"
 
 #ifdef __cplusplus
 extern "C" {
